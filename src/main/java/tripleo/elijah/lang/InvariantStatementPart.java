@@ -8,26 +8,26 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.Token;
+import antlr.*;
 
 /**
  * @author Tripleo
- *
+ * <p>
  * Created 	Apr 19, 2020 at 00:32:00 AM
  */
 public class InvariantStatementPart {
-    private final Token name;
-    private final InvariantStatement parent;
-    private IExpression expr;
+	private final Token              name;
+	private final InvariantStatement parent;
+	private       IExpression        expr;
 
-    public InvariantStatementPart(final InvariantStatement cr, final Token token) {
-        this.parent = cr;
-        this.name = token;
-    }
+	public InvariantStatementPart(final InvariantStatement cr, final Token token) {
+		this.parent = cr;
+		this.name   = token;
+	}
 
-    public void setExpr(final IExpression expr) {
-        this.expr = expr;
-    }
+	public void setExpr(final IExpression expr) {
+		this.expr = expr;
+	}
 }
 
 //

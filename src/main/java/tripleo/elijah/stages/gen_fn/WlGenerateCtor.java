@@ -8,20 +8,15 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jdeferred2.DoneCallback;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jdeferred2.*;
+import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.ClassInvocation;
-import tripleo.elijah.stages.deduce.FunctionInvocation;
-import tripleo.elijah.util.Holder;
-import tripleo.elijah.work.WorkJob;
-import tripleo.elijah.work.WorkManager;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.util.*;
+import tripleo.elijah.work.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created 7/3/21 6:24 AM
@@ -30,16 +25,18 @@ public class WlGenerateCtor implements WorkJob {
 	private final GenerateFunctions    generateFunctions;
 	private final FunctionInvocation   functionInvocation;
 	private final IdentExpression      constructorName;
+	private final ICodeRegistrar       codeRegistrar;
 	private       boolean              _isDone = false;
 	private       GeneratedConstructor result;
 
 	@Contract(pure = true)
 	public WlGenerateCtor(@NotNull final GenerateFunctions aGenerateFunctions,
 	                      @NotNull final FunctionInvocation aFunctionInvocation,
-	                      @Nullable final IdentExpression aConstructorName) {
+	                      @Nullable final IdentExpression aConstructorName, final ICodeRegistrar aCodeRegistrar) {
 		generateFunctions  = aGenerateFunctions;
 		functionInvocation = aFunctionInvocation;
 		constructorName    = aConstructorName;
+		codeRegistrar      = aCodeRegistrar;
 	}
 
 	@Override
@@ -91,9 +88,9 @@ public class WlGenerateCtor implements WorkJob {
 			final OS_Element classStatement_ = cd.getParent();
 			assert classStatement_ instanceof ClassStatement;
 
-			final ClassStatement classStatement = (ClassStatement) classStatement_;
-			final Collection<ConstructorDef> cs = classStatement.getConstructors();
-			ConstructorDef c = null;
+			final ClassStatement             classStatement = (ClassStatement) classStatement_;
+			final Collection<ConstructorDef> cs             = classStatement.getConstructors();
+			ConstructorDef                   c              = null;
 			if (constructorName != null) {
 				for (final ConstructorDef cc : cs) {
 					if (cc.name().equals(constructorName.getText())) {
@@ -103,7 +100,7 @@ public class WlGenerateCtor implements WorkJob {
 				}
 			} else {
 				// TODO match based on arguments
-				final ProcTableEntry pte = functionInvocation.pte;
+				final ProcTableEntry       pte  = functionInvocation.pte;
 				final List<TypeTableEntry> args = pte.getArgs();
 				// isResolved -> GeneratedNode, etc or getAttached -> OS_Element
 				for (final ConstructorDef cc : cs) {
@@ -147,7 +144,7 @@ public class WlGenerateCtor implements WorkJob {
 			ci.resolvePromise().done(new DoneCallback<GeneratedClass>() {
 				@Override
 				public void onDone(final GeneratedClass result) {
-					gf.setCode(generateFunctions.module.parent.nextFunctionCode());
+					codeRegistrar.registerFunction(gf);
 					gf.setClass(result);
 					result.constructors.put(cd, gf);
 				}
@@ -162,13 +159,13 @@ public class WlGenerateCtor implements WorkJob {
 		_isDone = true;
 	}
 
-	private boolean getPragma(final String aAuto_construct) {
-		return false;
-	}
-
 	@Override
 	public boolean isDone() {
 		return _isDone;
+	}
+
+	private boolean getPragma(final String aAuto_construct) {
+		return false;
 	}
 
 	public GeneratedConstructor getResult() {

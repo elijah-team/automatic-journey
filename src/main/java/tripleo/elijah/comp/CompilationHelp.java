@@ -9,8 +9,9 @@
 package tripleo.elijah.comp;
 
 import com.google.common.base.*;
-import org.jdeferred2.impl.*;
 import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.internal.*;
+import tripleo.vendor.mal.*;
 
 interface RuntimeProcess {
 	void run();
@@ -74,15 +75,15 @@ class RuntimeProcesses {
 }
 
 final class EmptyProcess implements RuntimeProcess {
-	public EmptyProcess(final ICompilationAccess aCompilationAccess, final ProcessRecord aPr) {
-	}
-
-	@Override
-	public void postProcess() {
+	public EmptyProcess(final ICompilationAccess ignoredACompilationAccess, final ProcessRecord ignoredAPr) {
 	}
 
 	@Override
 	public void run() {
+	}
+
+	@Override
+	public void postProcess() {
 	}
 
 	@Override
@@ -116,31 +117,36 @@ class DStageProcess implements RuntimeProcess {
 }
 
 class OStageProcess implements RuntimeProcess {
-	private final ProcessRecord      pr;
+	final         stepA_mal.MalEnv2 env;
+	private final ProcessRecord     pr;
 	private final ICompilationAccess ca;
-
-	private final DeferredObject<PipelineLogic, Void, Void> ppl = new DeferredObject<>();
 
 	OStageProcess(final ICompilationAccess aCa, final ProcessRecord aPr) {
 		ca = aCa;
 		pr = aPr;
+
+		env = new stepA_mal.MalEnv2(null); // TODO what does null mean?
+
+		Preconditions.checkNotNull(pr.ab);
+		env.set(new types.MalSymbol("add-pipeline"), new _AddPipeline__MAL(pr.ab));
 	}
 
 	@Override
 	public void run() {
-		final Compilation comp = ca.getCompilation();
+		final AccessBus ab = pr.ab;
 
-		ppl.then((pl) -> {
-			final Pipeline ps = comp.getPipelines();
+		ab.subscribePipelineLogic((pl) -> {
+			final Compilation comp = ca.getCompilation();
+			final Pipeline    ps   = comp.getPipelines();
 
 			try {
 				ps.run();
+
+				ab.writeLogs();
 			} catch (final Exception ex) {
 //				Logger.getLogger(OStageProcess.class.getName()).log(Level.SEVERE, "Error during Piplines#run from OStageProcess", ex);
 				comp.getErrSink().exception(ex);
 			}
-
-			comp.writeLogs(comp.cfg.silent, comp.elLogs);
 		});
 	}
 
@@ -151,31 +157,51 @@ class OStageProcess implements RuntimeProcess {
 	@Override
 	public void prepare() throws Exception {
 		Preconditions.checkNotNull(pr);
-		Preconditions.checkNotNull(pr.pipelineLogic);
 		Preconditions.checkNotNull(pr.ab.gr);
-
-		ppl.resolve(pr.pipelineLogic);
 
 		final AccessBus ab = pr.ab;
 
-//		ab.add(DeducePipeline::new);
-		ab.add(GeneratePipeline::new);
-		ab.add(WritePipeline::new);
-		ab.add(WriteMesonPipeline::new);
+//		env.re("(def! GeneratePipeline 'native)");
+		env.re("(add-pipeline 'DeducePipeline)"); // FIXME note moved from ...
 
-//		final DeducePipeline     dpl  = new DeducePipeline(ab);
-//		final GeneratePipeline   gpl  = new GeneratePipeline(ab);
-//		final WritePipeline      wpl  = new WritePipeline(ab);
-//		final WriteMesonPipeline wmpl = new WriteMesonPipeline(comp, pr, ppl, wpl);
-//
-//		List_of(dpl, gpl, wpl, wmpl)
-//		  .forEach(ca::addPipeline);
+		env.re("(add-pipeline 'GeneratePipeline)");
+		env.re("(add-pipeline 'WritePipeline)");
+		env.re("(add-pipeline 'WriteMesonPipeline)");
 
-		ppl.then(pl -> {
+		ab.subscribePipelineLogic(pl -> {
 			final Compilation comp = ca.getCompilation();
 
 			comp.mod.modules.stream().forEach(pl::addModule);
 		});
+	}
+
+	private static class _AddPipeline__MAL extends types.MalFunction {
+		private final AccessBus ab;
+
+		public _AddPipeline__MAL(final AccessBus aAb) {
+			ab = aAb;
+		}
+
+		public types.MalVal apply(final types.MalList args) {
+			final types.MalVal a0 = args.nth(0);
+
+			if (a0 instanceof final types.MalSymbol pipelineSymbol) {
+				// 0. accessors
+				final String pipelineName = pipelineSymbol.getName();
+
+				// 1. observe side effect
+				final ProcessRecord.PipelinePlugin pipelinePlugin = ab.getPipelinePlugin(pipelineName);
+				if (pipelinePlugin == null)
+					return types.False;
+
+				// 2. produce effect
+				ab.add(pipelinePlugin::instance);
+				return types.True;
+			} else {
+				// TODO exception? errSink??
+				return types.False;
+			}
+		}
 	}
 }
 

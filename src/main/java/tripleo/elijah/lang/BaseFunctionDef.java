@@ -21,9 +21,9 @@ public abstract class BaseFunctionDef implements Documentable, ClassItem, OS_Con
 
 	public final Attached _a = new Attached();
 	protected    Species  _species;
-	List<AnnotationClause> annotations = null;
 	protected Scope3          scope3;
 	protected FormalArgList   mFal = new FormalArgList(); // remove final for FunctionDefBuilder
+	List<AnnotationClause> annotations = null;
 	private   IdentExpression funName;
 	private   AccessNotation  access_note;
 	private   El_Category     category;
@@ -48,14 +48,11 @@ public abstract class BaseFunctionDef implements Documentable, ClassItem, OS_Con
 		scope3 = sco;
 	}
 
-	@Override // OS_Element
-	public abstract OS_Element getParent();
-
-	// region items
-
 	public boolean hasItem(final OS_Element element) {
 		return scope3.items().contains(element);
 	}
+
+	// region items
 
 	public @NotNull List<FunctionItem> getItems() {
 		final List<FunctionItem> collection = new ArrayList<FunctionItem>();
@@ -86,15 +83,16 @@ public abstract class BaseFunctionDef implements Documentable, ClassItem, OS_Con
 			throw new IllegalStateException(String.format("Cant add %s to FunctionDef", anElement));
 	}
 
-	// endregion
-
-	// region name
-
 	public IdentExpression getNameNode() {
 		return funName;
 	}
 
-	@Override @NotNull // OS_Element2
+	// endregion
+
+	// region name
+
+	@Override
+	@NotNull // OS_Element2
 	public String name() {
 		if (funName == null)
 			return "";
@@ -105,17 +103,20 @@ public abstract class BaseFunctionDef implements Documentable, ClassItem, OS_Con
 		funName = aText;
 	}
 
+	@Override // OS_Element
+	public Context getContext() {
+		return _a._context;
+	}
+
 	// endregion
 
 	// region context
 
+	@Override // OS_Element
+	public abstract OS_Element getParent();
+
 	public void setContext(final FunctionContext ctx) {
 		_a.setContext(ctx);
-	}
-
-	@Override // OS_Element
-	public Context getContext() {
-		return _a._context;
 	}
 
 	// endregion

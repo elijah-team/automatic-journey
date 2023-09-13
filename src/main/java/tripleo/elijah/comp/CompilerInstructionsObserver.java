@@ -8,7 +8,7 @@ import tripleo.elijah.util.*;
 
 import java.util.*;
 
-class CompilerInstructionsObserver implements Observer<CompilerInstructions> {
+public class CompilerInstructionsObserver implements Observer<CompilerInstructions> {
 	private final List<CompilerInstructions> l = new ArrayList<>();
 	private final Compilation                compilation;
 

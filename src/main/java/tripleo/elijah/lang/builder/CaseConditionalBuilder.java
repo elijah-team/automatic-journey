@@ -16,10 +16,10 @@ import java.util.*;
  * Created 12/23/20 5:50 AM
  */
 public class CaseConditionalBuilder extends ElBuilder {
-	private Context _context;
-	private IExpression expr;
-	private BaseScope baseScope;
-    private final List<Part> parts = new ArrayList<Part>();
+	private final List<Part>  parts = new ArrayList<Part>();
+	private       Context     _context;
+	private       IExpression expr;
+	private       BaseScope   baseScope;
 
 	@Override
 	protected CaseConditional build() {
@@ -59,10 +59,10 @@ public class CaseConditionalBuilder extends ElBuilder {
 
 	class Part {
 		IExpression expr;
-		BaseScope scope;
+		BaseScope   scope;
 
 		public Part(final IExpression expr, final BaseScope baseScope) {
-			this.expr = expr;
+			this.expr  = expr;
 			this.scope = baseScope;
 		}
 	}

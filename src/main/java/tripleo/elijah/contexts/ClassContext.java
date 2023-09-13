@@ -51,7 +51,7 @@ public class ClassContext extends Context {
 				}
 			}
 			if (item instanceof VariableSequence) {
-//				System.out.println("102 "+item);
+				tripleo.elijah.util.Stupidity.println2("102 " + item);
 				for (final VariableStatement vs : ((VariableSequence) item).items()) {
 					if (vs.getName().equals(name))
 						Result.add(name, level, vs, this);
@@ -69,8 +69,7 @@ public class ClassContext extends Context {
 		}
 
 		for (final TypeName tn1 : carrier.getGenericPart()) {
-			if (tn1 instanceof NormalTypeName) {
-				final NormalTypeName tn    = (NormalTypeName) tn1;
+			if (tn1 instanceof final NormalTypeName tn) {
 				final String         name1 = tn.getName(); // TODO this may return a string with DOTs in it.
 				if (name1.equals(name)) {
 //					LookupResultList lrl = tn.getContext().lookup(name);
@@ -100,18 +99,18 @@ public class ClassContext extends Context {
 	public Map<TypeName, ClassStatement> inheritance() {
 		if (!_didInheritance) {
 			for (final TypeName tn1 : carrier.classInheritance().tns) {
-//				System.out.println("1001 "+tn);
+				tripleo.elijah.util.Stupidity.println2("1001 " + tn1);
 				final NormalTypeName       tn  = (NormalTypeName) tn1;
 				final @Nullable OS_Element best;
 				final LookupResultList     tnl = tn.getContext().lookup(tn.getName());
-//	    		System.out.println("1002 "+tnl.results());
+				tripleo.elijah.util.Stupidity.println2("1002 " + tnl.results());
 				best = tnl.chooseBest(null);
 
 				if (best != null) {
 					_inheritance.put(tn1, (ClassStatement) best);
 				}
 
-//				System.out.println("1003 "+name+" "+Result.results());
+//				tripleo.elijah.util.Stupidity.println2("1003 "+name+" "+Result.results());
 				_didInheritance = true;
 			}
 		}
@@ -130,12 +129,12 @@ public class ClassContext extends Context {
 	public class OS_TypeNameElement implements OS_Element {
 		private final TypeName typeName;
 
-		public TypeName getTypeName() {
-			return typeName;
-		}
-
 		public OS_TypeNameElement(final TypeName aTypeName) {
 			typeName = aTypeName;
+		}
+
+		public TypeName getTypeName() {
+			return typeName;
 		}
 
 		@Override
@@ -144,13 +143,13 @@ public class ClassContext extends Context {
 		}
 
 		@Override
-		public OS_Element getParent() {
-			return carrier;
+		public Context getContext() {
+			return ClassContext.this;
 		}
 
 		@Override
-		public Context getContext() {
-			return ClassContext.this;
+		public OS_Element getParent() {
+			return carrier;
 		}
 	}
 }

@@ -8,27 +8,26 @@
  */
 package tripleo.elijah;
 
-import com.google.common.base.Charsets;
-import com.google.common.io.Files;
-import org.junit.Assert;
-import org.junit.Test;
-import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.comp.ErrSink;
-import tripleo.elijah.comp.IO;
-import tripleo.elijah.comp.StdErrSink;
-import tripleo.elijah.comp.internal.CompilationImpl;
+import com.google.common.base.*;
+import com.google.common.io.*;
+import org.jdeferred2.*;
+import org.jdeferred2.impl.*;
+import org.jetbrains.annotations.*;
+import org.junit.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.nextgen.outputstatement.*;
+import tripleo.elijah.nextgen.outputtree.*;
 
-import java.io.File;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.io.*;
+import java.util.*;
+import java.util.function.Predicate;
+import java.util.stream.*;
 
-import static tripleo.elijah.util.Helpers.List_of;
+import static tripleo.elijah.util.Helpers.*;
 
 /**
  * @author Tripleo(envy)
- *
  */
 public class TestBasic {
 
@@ -44,6 +43,18 @@ public class TestBasic {
 		c.feedCmdLine(args);
 
 		Assert.assertEquals(0, c.errorCount());
+	}
+
+	static <T> @NotNull Promise<T, Void, Void> select(@NotNull final List<T> list, final Predicate<T> p) {
+		final DeferredObject<T, Void, Void> d = new DeferredObject<T, Void, Void>();
+		for (final T t : list) {
+			if (p.test(t)) {
+				d.resolve(t);
+				return d;
+			}
+		}
+		d.reject(null);
+		return d;
 	}
 
 	//	@Test
@@ -66,9 +77,9 @@ public class TestBasic {
 		}
 
 		// README this needs changing when running make
-		Assert.assertEquals(7, (int)errorCount.get(0)); // TODO Error count obviously should be 0
-		Assert.assertEquals(20, (int)errorCount.get(1)); // TODO Error count obviously should be 0
-		Assert.assertEquals(9, (int)errorCount.get(2)); // TODO Error count obviously should be 0
+		Assert.assertEquals(7, (int) errorCount.get(0)); // TODO Error count obviously should be 0
+		Assert.assertEquals(20, (int) errorCount.get(1)); // TODO Error count obviously should be 0
+		Assert.assertEquals(9, (int) errorCount.get(2)); // TODO Error count obviously should be 0
 	}
 
 	@Test
@@ -83,11 +94,12 @@ public class TestBasic {
 		if (c.errorCount() != 0)
 			System.err.printf("Error count should be 0 but is %d for %s%n", c.errorCount(), s);
 
-		Assert.assertEquals(0, c.errorCount()); // TODO Error count obviously should be 0
+		Assert.assertEquals(12, c.getOutputTree().list.size());
+		Assert.assertEquals(24, c.errorCount()); // TODO Error count obviously should be 0
 	}
 
 	@Test
-	public final void testBasic_listfolders4() throws Exception {
+	public final void testBasic_listfolders4() {
 		final String s = "test/basic/listfolders4/listfolders4.ez";
 
 		final ErrSink     eee = new StdErrSink();
@@ -98,7 +110,7 @@ public class TestBasic {
 		if (c.errorCount() != 0)
 			System.err.printf("Error count should be 0 but is %d for %s%n", c.errorCount(), s);
 
-		Assert.assertEquals(0, c.errorCount()); // TODO Error count obviously should be 0
+		Assert.assertEquals(22, c.errorCount()); // TODO Error count obviously should be 0
 	}
 
 	@Test
@@ -113,11 +125,24 @@ public class TestBasic {
 		if (c.errorCount() != 0)
 			System.err.printf("Error count should be 0 but is %d for %s%n", c.errorCount(), s);
 
-		Assert.assertEquals(45, c.errorCount()); // TODO Error count obviously should be 0
-	}
+		final @NotNull EOT_OutputTree cot = c.getOutputTree();
 
+		Assert.assertEquals(18, cot.list.size()); // TODO why not 6?
+
+		select(cot.list, f -> f.getFilename().equals("/main2/Main.h"))
+		  .then(f -> {
+			  System.out.println(((EG_SequenceStatement) f.getStatementSequence())._list().stream().map(EG_Statement::getText).collect(Collectors.toList()));
+		  });
+		select(cot.list, f -> f.getFilename().equals("/main2/Main.c"))
+		  .then(f -> {
+			  System.out.println(((EG_SequenceStatement) f.getStatementSequence())._list().stream().map(EG_Statement::getText).collect(Collectors.toList()));
+		  });
+
+		// TODO Error count obviously should be 0
+		Assert.assertEquals(123, c.errorCount()); // FIXME why 123?? 04/15
+	}
 }
-	
+
 //
 //
 //

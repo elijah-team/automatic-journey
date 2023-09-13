@@ -8,34 +8,22 @@
  */
 package tripleo.elijah.stages.gen_c;
 
-import tripleo.elijah.lang.AnnotationPart;
-import tripleo.elijah.lang.AnnotationWalker;
-import tripleo.elijah.lang.ClassStatement;
-import tripleo.elijah.lang.IExpression;
-import tripleo.elijah.lang.StringExpression;
-import tripleo.elijah.stages.gen_fn.GeneratedClass;
-import tripleo.elijah.util.Helpers;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.util.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 /**
  * Created 12/24/20 7:42 AM
  */
 public class CClassDecl {
 	private final GeneratedClass generatedClass;
-	public String prim_decl;
-	public boolean prim = false;
+	public        String         prim_decl;
+	public        boolean        prim = false;
 
 	public CClassDecl(final GeneratedClass generatedClass) {
 		this.generatedClass = generatedClass;
-	}
-
-	public void setDecl(final String str) {
-		prim_decl = str;
-	}
-
-	public void setPrimitive() {
-		prim = true;
 	}
 
 	public void evaluatePrimitive() {
@@ -46,12 +34,12 @@ public class CClassDecl {
 				if (anno.annoClass().equals(Helpers.string_to_qualident("C.repr"))) {
 					if (anno.getExprs() != null) {
 						final ArrayList<IExpression> expressions = new ArrayList<IExpression>(anno.getExprs().expressions());
-						final IExpression str0 = expressions.get(0);
+						final IExpression            str0        = expressions.get(0);
 						if (str0 instanceof StringExpression) {
 							final String str = ((StringExpression) str0).getText();
 							setDecl(str);
 						} else {
-							System.out.println("Illegal C.repr");
+							tripleo.elijah.util.Stupidity.println2("Illegal C.repr");
 						}
 					}
 				}
@@ -59,6 +47,14 @@ public class CClassDecl {
 					setPrimitive();
 			}
 		});
+	}
+
+	public void setDecl(final String str) {
+		prim_decl = str;
+	}
+
+	public void setPrimitive() {
+		prim = true;
 	}
 }
 

@@ -8,16 +8,11 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.lang.GenericTypeName;
-import tripleo.elijah.lang.IExpression;
-import tripleo.elijah.lang.OS_Type;
-import tripleo.elijah.lang.TypeName;
-import tripleo.elijah.stages.deduce.ClassInvocation;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created 9/12/20 10:26 PM
@@ -33,10 +28,6 @@ public class TypeTableEntry {
 	private final List<OnSetAttached> osacbs  = new ArrayList<OnSetAttached>();
 	@Nullable
 	private       OS_Type             attached;
-
-	public interface OnSetAttached {
-		void onSetAttached(TypeTableEntry aTypeTableEntry);
-	}
 
 	public TypeTableEntry(final int index,
 	                      @NotNull final Type lifetime,
@@ -58,49 +49,50 @@ public class TypeTableEntry {
 
 	private void _settingAttached(@NotNull final OS_Type aAttached) {
 		switch (aAttached.getType()) {
-			case USER:
-				if (genType.typeName != null) {
-					final TypeName typeName = aAttached.getTypeName();
-					if (!(typeName instanceof GenericTypeName))
-						genType.nonGenericTypeName = typeName;
-				} else
-					genType.typeName = aAttached/*.getTypeName()*/;
-				break;
-			case USER_CLASS:
+		case USER:
+			if (genType.typeName != null) {
+				final TypeName typeName = aAttached.getTypeName();
+				if (!(typeName instanceof GenericTypeName))
+					genType.nonGenericTypeName = typeName;
+			} else
+				genType.typeName = aAttached/*.getTypeName()*/;
+			break;
+		case USER_CLASS:
 //			ClassStatement c = attached.getClassOf();
-				genType.resolved = aAttached/*attached*/; // c
-				break;
-			case UNIT_TYPE:
+			genType.resolved = aAttached/*attached*/; // c
+			break;
+		case UNIT_TYPE:
+			genType.resolved = aAttached;
+		case BUILT_IN:
+			if (genType.typeName != null)
 				genType.resolved = aAttached;
-			case BUILT_IN:
-				if (genType.typeName != null)
-					genType.resolved = aAttached;
-				else
-					genType.typeName = aAttached;
-				break;
-			case FUNCTION:
-				assert genType.resolved == null || genType.resolved == aAttached || /*HACK*/ aAttached.getType() == OS_Type.Type.FUNCTION;
-				genType.resolved = aAttached;
-				break;
-			case FUNC_EXPR:
-				assert genType.resolved == null || genType.resolved == aAttached;// || /*HACK*/ aAttached.getType() == OS_Type.Type.FUNCTION;
-				genType.resolved = aAttached;
-				break;
-			default:
+			else
+				genType.typeName = aAttached;
+			break;
+		case FUNCTION:
+			assert genType.resolved == null || genType.resolved == aAttached || /*HACK*/ aAttached.getType() == OS_Type.Type.FUNCTION;
+			genType.resolved = aAttached;
+			break;
+		case FUNC_EXPR:
+			assert genType.resolved == null || genType.resolved == aAttached;// || /*HACK*/ aAttached.getType() == OS_Type.Type.FUNCTION;
+			genType.resolved = aAttached;
+			break;
+		default:
 //			throw new NotImplementedException();
-				System.err.println("73 " + aAttached);
-				break;
+			tripleo.elijah.util.Stupidity.println_err2("73 " + aAttached);
+			break;
 		}
 	}
 
-	@Override @NotNull
+	@Override
+	@NotNull
 	public String toString() {
 		return "TypeTableEntry{" +
-				"index=" + index +
-				", lifetime=" + lifetime +
-				", attached=" + attached +
-				", expression=" + expression +
-				'}';
+		  "index=" + index +
+		  ", lifetime=" + lifetime +
+		  ", attached=" + attached +
+		  ", expression=" + expression +
+		  '}';
 	}
 
 	public int getIndex() {
@@ -153,6 +145,10 @@ public class TypeTableEntry {
 
 	public enum Type {
 		SPECIFIED, TRANSIENT
+	}
+
+	public interface OnSetAttached {
+		void onSetAttached(TypeTableEntry aTypeTableEntry);
 	}
 
 }

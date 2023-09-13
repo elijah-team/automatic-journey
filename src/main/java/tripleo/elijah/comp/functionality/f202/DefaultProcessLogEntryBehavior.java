@@ -18,7 +18,7 @@ import java.io.*;
  */
 public class DefaultProcessLogEntryBehavior implements ProcessLogEntryBehavior {
 	private PrintStream ps;
-	private String s1;
+	private String      s1;
 
 	@Override
 	public void processLogEntry(final LogEntry entry) {
@@ -53,7 +53,7 @@ public class DefaultProcessLogEntryBehavior implements ProcessLogEntryBehavior {
 		for (int i = 0; i < aPhase.length(); i++) {
 			sb.append('=');
 		}
-		ps.println(sb.toString());
+		ps.println(sb);
 	}
 
 	@Override

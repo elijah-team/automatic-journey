@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 
 /**
  * Created 8/29/21 5:04 AM
@@ -17,12 +17,12 @@ public abstract class BaseTableEntry1 extends BaseTableEntry {
 
 	private ProcTableEntry callable_pte;
 
-	public void setCallablePTE(final ProcTableEntry aProcTableEntry) {
-		callable_pte = aProcTableEntry;
-	}
-
 	public @Nullable ProcTableEntry getCallablePTE() {
 		return callable_pte;
+	}
+
+	public void setCallablePTE(final ProcTableEntry aProcTableEntry) {
+		callable_pte = aProcTableEntry;
 	}
 
 }

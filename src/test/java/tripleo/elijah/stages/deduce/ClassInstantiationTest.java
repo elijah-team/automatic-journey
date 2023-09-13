@@ -8,13 +8,12 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.junit.Test;
-import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.comp.IO;
-import tripleo.elijah.comp.StdErrSink;
-import tripleo.elijah.comp.internal.CompilationImpl;
+import org.junit.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.factory.comp.*;
 
-import static tripleo.elijah.util.Helpers.List_of;
+import static tripleo.elijah.util.Helpers.*;
 
 /**
  * Created 3/5/21 4:32 AM
@@ -40,7 +39,7 @@ public class ClassInstantiationTest {
 	@Test
 	public void classInstantiation3() throws Exception {
 		final String      f = "test/basic1/class_instantiation3/";
-		final Compilation c = new CompilationImpl(new StdErrSink(), new IO());
+		final Compilation c = CompilationFactory.mkCompilation(new StdErrSink(), new IO());
 
 		c.feedCmdLine(List_of(f));
 	}

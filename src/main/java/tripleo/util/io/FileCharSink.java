@@ -1,10 +1,9 @@
 /**
- * 
+ *
  */
 package tripleo.util.io;
 
-import java.io.IOException;
-import java.io.OutputStream;
+import java.io.*;
 
 /**
  * @author Tripleo(sb)
@@ -12,6 +11,13 @@ import java.io.OutputStream;
  * Created 	Dec 9, 2019 at 3:23:57 PM
  */
 public class FileCharSink implements CharSink {
+
+	OutputStream fos;
+
+	public FileCharSink(final OutputStream fos) {
+		super();
+		this.fos = fos;
+	}
 
 	/* (non-Javadoc)
 	 * @see tripleo.util.io.CharSink#accept(char)
@@ -46,13 +52,6 @@ public class FileCharSink implements CharSink {
 			// TODO Auto-generated catch block
 			aE.printStackTrace();
 		}
-	}
-
-	OutputStream fos;
-
-	public FileCharSink(final OutputStream fos) {
-		super();
-		this.fos = fos;
 	}
 
 }

@@ -16,7 +16,8 @@ import java.util.*;
  * Created 12/23/20 4:46 AM
  */
 public class MatchConditionalBuilder extends ElBuilder {
-	private Context _context;
+	List<FakeMC1> parts = new ArrayList<FakeMC1>();
+	private Context     _context;
 	private IExpression expr;
 
 	@Override
@@ -49,22 +50,23 @@ public class MatchConditionalBuilder extends ElBuilder {
 		return typeMatch.scope();
 	}
 
-	interface FakeMC1 {}
-
 	public BaseScope typeMatchscope(final IdentExpression i1, final TypeName tn) {
 		final TypeMatch typeMatch = new TypeMatch(i1, tn);
 		parts.add(typeMatch);
 		return typeMatch.scope();
 	}
 
+	interface FakeMC1 {
+	}
+
 	class TypeMatch implements FakeMC1 {
-		private final TypeName typeName;
+		private final TypeName        typeName;
 		private final IdentExpression matchName;
-		private BaseScope baseScope;
+		private       BaseScope       baseScope;
 
 		public TypeMatch(final IdentExpression i1, final TypeName tn) {
 			this.matchName = i1;
-			this.typeName = tn;
+			this.typeName  = tn;
 		}
 
 		public BaseScope scope() {
@@ -78,7 +80,7 @@ public class MatchConditionalBuilder extends ElBuilder {
 	class Normal implements FakeMC1 {
 
 		private final IExpression expr;
-		private BaseScope baseScope;
+		private       BaseScope   baseScope;
 
 		public Normal(final IExpression expr) {
 			this.expr = expr;
@@ -92,16 +94,15 @@ public class MatchConditionalBuilder extends ElBuilder {
 		}
 	}
 
-	List<FakeMC1> parts = new ArrayList<FakeMC1>();
-
 	class ValNormal implements FakeMC1 {
 
 		private final IdentExpression valMatch;
-		private BaseScope baseScope;
+		private       BaseScope       baseScope;
 
 		public ValNormal(final IdentExpression i1) {
 			this.valMatch = i1;
 		}
+
 		public BaseScope scope() {
 			final BaseScope baseScope = new BaseScope() {
 			};

@@ -8,25 +8,19 @@
  */
 package tripleo.elijah.stages.gen_generic;
 
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.ci.LibraryStatementPart;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.GeneratedClass;
-import tripleo.elijah.stages.gen_fn.GeneratedConstructor;
-import tripleo.elijah.stages.gen_fn.GeneratedNamespace;
-import tripleo.elijah.stages.gen_fn.GeneratedNode;
-import tripleo.util.buffer.Buffer;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.ci.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.util.buffer.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created 4/27/21 1:11 AM
  */
 public class GenerateResult {
-	private int bufferCounter = 0;
-
 	private final List<GenerateResultItem> _res = new ArrayList<GenerateResultItem>();
+	private int bufferCounter = 0;
 
 //	public void add(final Buffer b, final GeneratedNode n, final TY ty) {
 //		_res.add(new GenerateResultItem(ty, b, n, null, null, ++bufferCounter)); // TODO remove nulls
@@ -58,12 +52,12 @@ public class GenerateResult {
 		_res.addAll(aGgr.results());
 	}
 
-	public enum TY {
-		HEADER, IMPL, PRIVATE_HEADER
-	}
-
 	public List<GenerateResultItem> results() {
 		return _res;
+	}
+
+	public enum TY {
+		HEADER, IMPL, PRIVATE_HEADER
 	}
 
 }

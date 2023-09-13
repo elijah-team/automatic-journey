@@ -1,10 +1,10 @@
 /*
  * Elijjah compiler, copyright Tripleo <oluoluolu+elijah@gmail.com>
- * 
- * The contents of this library are released under the LGPL licence v3, 
+ *
+ * The contents of this library are released under the LGPL licence v3,
  * the GNU Lesser General Public License text was downloaded from
  * http://www.gnu.org/licenses/lgpl.html from `Version 3, 29 June 2007'
- * 
+ *
  */
 package tripleo.elijah.lang;
 
@@ -22,6 +22,7 @@ import java.util.*;
  */
 public class ListExpression extends AbstractExpression implements Locatable {
 
+	public final Syntax syntax = new Syntax();
 	ExpressionList contents;
 
 	public void setContents(final ExpressionList aList) {
@@ -33,8 +34,7 @@ public class ListExpression extends AbstractExpression implements Locatable {
 		return false;
 	}
 
-	public final Syntax syntax = new Syntax();
-@Override
+	@Override
 	public OS_Type getType() {
 		return null;
 	}
@@ -43,25 +43,6 @@ public class ListExpression extends AbstractExpression implements Locatable {
 	public void setType(final OS_Type deducedExpression) {
 
 	}
-	@Override
-	public File getFile() {
-		if (syntax.startToken != null) {
-			final String filename = syntax.startToken.getFilename();
-			if (filename != null)
-				return new File(filename);
-		}
-		return null;
-	}
-
-	// region Syntax
-
-
-
-
-
-	// endregion
-
-	// region Locatable
 
 	@Override
 	public int getLine() {
@@ -69,6 +50,13 @@ public class ListExpression extends AbstractExpression implements Locatable {
 			return syntax.startToken.getLine();
 		return 0;
 	}
+
+	// region Syntax
+
+
+	// endregion
+
+	// region Locatable
 
 	@Override
 	public int getColumn() {
@@ -91,10 +79,20 @@ public class ListExpression extends AbstractExpression implements Locatable {
 		return 0;
 	}
 
-public class Syntax {
+	@Override
+	public File getFile() {
+		if (syntax.startToken != null) {
+			final String filename = syntax.startToken.getFilename();
+			if (filename != null)
+				return new File(filename);
+		}
+		return null;
+	}
+
+	public class Syntax {
+		final List<Token> commas = new ArrayList<Token>();
 		Token startToken;
 		Token endToken;
-		final List<Token> commas = new ArrayList<Token>();
 
 		public void start_and_end(final Token startToken, final Token endToken) {
 			this.startToken = startToken;

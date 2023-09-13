@@ -4,7 +4,10 @@
  */
 package tripleo.elijah.nextgen.outputtree;
 
-import java.util.List;
+import tripleo.elijah.nextgen.outputstatement.*;
+
+import java.nio.file.*;
+import java.util.*;
 
 /**
  * @author olu
@@ -14,5 +17,9 @@ public class EOT_OutputTree {
 
 	public void set(final List<EOT_OutputFile> aLeof) {
 		list = aLeof;
+	}
+
+	public void _putSeq(final String aKey, final Path aPath, final EG_Statement aStatement) {
+		System.err.printf("[_putSeq] %s %s {{%s}}%n", aKey, aPath, aStatement.getExplanation().getText());
 	}
 }

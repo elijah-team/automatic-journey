@@ -1,9 +1,10 @@
 package tripleo.elijah.comp;
 
 import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.internal.*;
 import tripleo.elijah.util.*;
 
-enum Stages {
+public enum Stages {
 	E("E") {
 		@Override
 		public void writeLogs(final ICompilationAccess aCompilationAccess) {

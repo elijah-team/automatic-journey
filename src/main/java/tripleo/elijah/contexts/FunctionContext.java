@@ -14,33 +14,34 @@ import java.util.*;
 
 /**
  * @author Tripleo
- *
+ * <p>
  * Created 	Mar 26, 2020 at 6:13:58 AM
  */
 public class FunctionContext extends Context {
 
 	private final BaseFunctionDef carrier;
-	private final Context _parent;
+	private final Context         _parent;
 
 	public FunctionContext(final Context aParent, final BaseFunctionDef fd) {
 		_parent = aParent;
 		carrier = fd;
 	}
 
-	@Override public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	@Override
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(carrier.getContext());
-		for (final FunctionItem item: carrier.getItems()) {
+		for (final FunctionItem item : carrier.getItems()) {
 			if (!(item instanceof ClassStatement) &&
-				!(item instanceof NamespaceStatement) &&
-				!(item instanceof FunctionDef) &&
-				!(item instanceof VariableSequence)
+			  !(item instanceof NamespaceStatement) &&
+			  !(item instanceof FunctionDef) &&
+			  !(item instanceof VariableSequence)
 			) continue;
 			if (item instanceof OS_Element2) {
 				if (((OS_Element2) item).name().equals(name)) {
-					Result.add(name, level, (OS_Element) item, this);
+					Result.add(name, level, item, this);
 				}
 			} else if (item instanceof VariableSequence) {
-//				System.out.println("[FunctionContext#lookup] VariableSequence "+item);
+				tripleo.elijah.util.Stupidity.println2("[FunctionContext#lookup] VariableSequence " + item);
 				for (final VariableStatement vs : ((VariableSequence) item).items()) {
 					if (vs.getName().equals(name))
 						Result.add(name, level, vs, this);

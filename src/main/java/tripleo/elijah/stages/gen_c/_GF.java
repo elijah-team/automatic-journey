@@ -1,36 +1,22 @@
 package tripleo.elijah.stages.gen_c;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.lang.IExpression;
-import tripleo.elijah.lang.IdentExpression;
-import tripleo.elijah.nextgen.outputstatement.EG_CompoundStatement;
-import tripleo.elijah.nextgen.outputstatement.EG_SingleStatement;
-import tripleo.elijah.nextgen.outputstatement.EG_Statement;
-import tripleo.elijah.nextgen.outputstatement.EX_Explanation;
-import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_ProcTableEntry;
-import tripleo.elijah.stages.deduce.post_bytecode.IDeduceElement3;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.ProcTableEntry;
-import tripleo.elijah.stages.instructions.IdentIA;
-import tripleo.elijah.stages.instructions.Instruction;
-import tripleo.elijah.stages.instructions.InstructionArgument;
-import tripleo.elijah.stages.instructions.InstructionFixedList;
-import tripleo.elijah.stages.instructions.IntegerIA;
-import tripleo.elijah.util.Helpers;
-import tripleo.elijah.util.NotImplementedException;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.nextgen.outputstatement.*;
+import tripleo.elijah.stages.deduce.post_bytecode.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.util.*;
 
-import java.util.List;
+import java.util.*;
 
-import static tripleo.elijah.stages.gen_c.Generate_Code_For_Method.AOG.GET;
+import static tripleo.elijah.stages.gen_c.Generate_Code_For_Method.AOG.*;
 
 public class _GF {
 	@Contract("null, _ -> fail")
 	public static @NotNull EG_Statement forDeduceElement3(final IDeduceElement3 deduceElement3, final GenerateC gc) {
 		//return deduceElement3.();
-		if (deduceElement3 instanceof DeduceElement3_ProcTableEntry) {
-			final DeduceElement3_ProcTableEntry de_pte = (DeduceElement3_ProcTableEntry) deduceElement3;
+		if (deduceElement3 instanceof final DeduceElement3_ProcTableEntry de_pte) {
 			return forDeduceElement3_ProcTableEntry(de_pte, gc);
 		}
 
@@ -91,10 +77,8 @@ public class _GF {
 			}
 		});
 
-		beginning   = new EG_SingleStatement("", new EX_Explanation() {
-		});
-		ending      = new EG_SingleStatement("", new EX_Explanation() {
-		});
+		beginning   = new EG_SingleStatement("", EX_Explanation.withMessage("_GF.beginning"));
+		ending      = new EG_SingleStatement("",  EX_Explanation.withMessage(("_GF.ending")));
 		explanation = new EX_ProcTableEntryExplanation(de_pte);
 		middle      = new EG_SingleStatement(sb.toString(), explanation);
 

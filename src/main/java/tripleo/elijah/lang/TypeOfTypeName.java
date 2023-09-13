@@ -30,18 +30,8 @@ public class TypeOfTypeName implements TypeName {
 	}
 
 	@Override
-	public void setContext(final Context context) {
-		_ctx = context;
-	}
-
-	@Override
 	public boolean isNull() {
 		return false;
-	}
-
-	@Override
-	public Type kindOfType() {
-		return Type.TYPE_OF;
 	}
 
 	@Override
@@ -49,8 +39,18 @@ public class TypeOfTypeName implements TypeName {
 		return _ctx;
 	}
 
+	@Override
+	public void setContext(final Context context) {
+		_ctx = context;
+	}
+
+	@Override
+	public Type kindOfType() {
+		return Type.TYPE_OF;
+	}
+
 	public TypeName resolve(final @NotNull Context ctx, final DeduceTypes2 deduceTypes2) throws ResolveError {
-//		System.out.println(_typeOf.toString());
+//		tripleo.elijah.util.Stupidity.println2(_typeOf.toString());
 		final LookupResultList lrl  = DeduceLookupUtils.lookupExpression(_typeOf, ctx, deduceTypes2);
 		final OS_Element       best = lrl.chooseBest(null);
 		if (best instanceof VariableStatement)
@@ -62,14 +62,14 @@ public class TypeOfTypeName implements TypeName {
 
 	// TODO what about keyword
 	@Override
-	public int getColumn() {
-		return _typeOf.parts().get(0).getColumn();
+	public int getLine() {
+		return _typeOf.parts().get(0).getLine();
 	}
 
 	// TODO what about keyword
 	@Override
-	public int getLine() {
-		return _typeOf.parts().get(0).getLine();
+	public int getColumn() {
+		return _typeOf.parts().get(0).getColumn();
 	}
 
 	@Override

@@ -1,13 +1,10 @@
 package tripleo.elijah.stages.gen_c.c_ast1;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.stages.gen_fn.GeneratedClass;
-import tripleo.elijah.stages.gen_fn.GeneratedContainerNC;
-import tripleo.elijah.stages.gen_fn.GeneratedNamespace;
-import tripleo.elijah.stages.logging.ElLog;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.logging.*;
 
-import java.util.function.Supplier;
+import java.util.function.*;
 
 public class C_HeaderString {
 	private final String result;

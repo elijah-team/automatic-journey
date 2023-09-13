@@ -19,6 +19,7 @@ public interface GNCoded {
 	void setCode(int aCode);
 
 	Role getRole();
+
 	enum Role {
 		FUNCTION, CLASS, NAMESPACE
 	}

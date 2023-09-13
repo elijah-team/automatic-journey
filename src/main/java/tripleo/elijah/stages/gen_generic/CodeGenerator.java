@@ -8,8 +8,7 @@
  */
 package tripleo.elijah.stages.gen_generic;
 
-import tripleo.elijah.stages.gen_fn.GeneratedClass;
-import tripleo.elijah.stages.gen_fn.GeneratedNamespace;
+import tripleo.elijah.stages.gen_fn.*;
 
 /**
  * Created 4/26/21 11:22 PM

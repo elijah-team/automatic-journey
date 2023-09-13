@@ -8,35 +8,25 @@
  */
 package tripleo.elijah.util;
 
-import antlr.CommonToken;
-import antlr.Token;
-import org.apache.commons.codec.digest.DigestUtils;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.comp.ErrSink;
-import tripleo.elijah.lang.DotExpression;
-import tripleo.elijah.lang.IExpression;
-import tripleo.elijah.lang.IdentExpression;
-import tripleo.elijah.lang.Qualident;
-import tripleo.elijjah.ElijjahTokenTypes;
+import antlr.*;
+import org.apache.commons.codec.digest.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijjah.*;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
+import java.io.*;
+import java.security.*;
+import java.util.*;
 
-import static org.apache.commons.codec.digest.MessageDigestAlgorithms.SHA_256;
+import static org.apache.commons.codec.digest.MessageDigestAlgorithms.*;
 
 /**
  * Created 9/10/20 3:44 PM
  */
 public class Helpers {
 	public static void printXML(final Object obj, @NotNull final TabbedOutputStream tos) {
-		System.err.println("** XStream support has been disabled");
+		tripleo.elijah.util.Stupidity.println_err2("** XStream support has been disabled");
 /*
 		final XStream x = new XStream();
 		//x.setMode(XStream.ID_REFERENCES);
@@ -65,7 +55,7 @@ public class Helpers {
 		IExpression r = ts.get(0);
 //		int i=1;
 		while (ts.size() > i) {
-			final IExpression dotExpression = qualidentToDotExpression2(ts.subList(i++, ts.size()), i+1);
+			final IExpression dotExpression = qualidentToDotExpression2(ts.subList(i++, ts.size()), i + 1);
 			if (dotExpression == null) break;
 //			r.setRight(dotExpression);
 			r = new DotExpression(r, dotExpression);
@@ -77,12 +67,6 @@ public class Helpers {
 		final CommonToken t = new CommonToken();
 		t.setText(aText);
 		return t;
-	}
-
-	@NotNull
-	public static IdentExpression string_to_ident(final String txt) {
-		final CommonToken t = new CommonToken(ElijjahTokenTypes.IDENT, txt);
-		return new IdentExpression(t);
 	}
 
 	@NotNull
@@ -115,21 +99,10 @@ public class Helpers {
 		return q;
 	}
 
-	public static String getHash(final byte[] aBytes) throws NoSuchAlgorithmException {
-		final MessageDigest md = MessageDigest.getInstance("SHA-256");
-
-//		String input;
-//		md.update(input.getBytes(StandardCharsets.UTF_8));
-		md.update(aBytes);
-
-		final byte[] hashBytes = md.digest();
-
-		final StringBuilder sb = new StringBuilder();
-		for (final byte b : hashBytes) {
-			sb.append(String.format("%02x", b));
-		}
-
-		return sb.toString();
+	@NotNull
+	public static IdentExpression string_to_ident(final String txt) {
+		final CommonToken t = new CommonToken(ElijjahTokenTypes.IDENT, txt);
+		return new IdentExpression(t);
 	}
 
 	public static String getHashForFilename(final String aFilename, final ErrSink aErrSink) throws IOException {
@@ -159,6 +132,23 @@ public class Helpers {
 				bb.close();
 		}
 		return null;
+	}
+
+	public static String getHash(final byte[] aBytes) throws NoSuchAlgorithmException {
+		final MessageDigest md = MessageDigest.getInstance("SHA-256");
+
+//		String input;
+//		md.update(input.getBytes(StandardCharsets.UTF_8));
+		md.update(aBytes);
+
+		final byte[] hashBytes = md.digest();
+
+		final StringBuilder sb = new StringBuilder();
+		for (final byte b : hashBytes) {
+			sb.append(String.format("%02x", b));
+		}
+
+		return sb.toString();
 	}
 }
 

@@ -9,14 +9,12 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.DoneCallback;
-import org.jdeferred2.Promise;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jdeferred2.*;
+import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.IntegerIA;
-import tripleo.elijah.util.NotImplementedException;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.util.*;
 
 /**
  * Created 11/27/21 12:51 PM
@@ -81,7 +79,7 @@ public class VTE_TypePromises {
 			@Override
 			public void onDone(@NotNull final GenType result) {
 				if (result.resolved.getClassOf() != fd.getParent()) {
-					System.err.println("** Failed assertion");
+					tripleo.elijah.util.Stupidity.println_err2("** Failed assertion");
 				}
 
 				@NotNull final ProcTableListener.E_Is_FunctionDef e_Is_FunctionDef = aProcTableListener.new E_Is_FunctionDef(pte, fd, fd.getParent()).invoke(aVariableTableEntry.type.genType.nonGenericTypeName);
@@ -116,8 +114,7 @@ public class VTE_TypePromises {
 					final LookupResultList     lrl2  = rtype.resolved.getClassOf().getContext().lookup("__getitem__");
 					@Nullable final OS_Element best2 = lrl2.chooseBest(null);
 					if (best2 != null) {
-						if (best2 instanceof FunctionDef) {
-							@Nullable final FunctionDef    fd         = (FunctionDef) best2;
+						if (best2 instanceof @Nullable final FunctionDef fd) {
 							@Nullable final ProcTableEntry pte        = null;
 							final IInvocation              invocation = aDeduceTypes2.getInvocation((GeneratedFunction) generatedFunction);
 							aDeduceTypes2.forFunction(aDeduceTypes2.newFunctionInvocation(fd, pte, invocation, aDeduceTypes2.phase), new ForFunction() {
@@ -163,7 +160,7 @@ public class VTE_TypePromises {
 				final boolean found1 = aDeduceTypes2.lookup_name_calls(result.resolved.getClassOf().getContext(), pn, pte);
 				if (found1) {
 					final int y = 2;
-//					System.out.println("3071 "+pte.getStatus());
+//					tripleo.elijah.util.Stupidity.println2("3071 "+pte.getStatus());
 					final IInvocation invocation = result.ci;
 //							final BaseFunctionDef fd = gf.getFD();
 					final BaseFunctionDef fd = pte.getFunctionInvocation().getFunction();
@@ -171,11 +168,11 @@ public class VTE_TypePromises {
 						@NotNull final FunctionInvocation fi = aDeduceTypes2.newFunctionInvocation(fd, pte, invocation, aDeduceTypes2.phase);
 						pte.setFunctionInvocation(fi);
 					} else
-						System.out.println("175 pte.fi is not null");
+						tripleo.elijah.util.Stupidity.println2("175 pte.fi is not null");
 					aIntegerIA.gf.addDependentFunction(pte.getFunctionInvocation()); // TODO is this needed (here)?
 				} else {
 					final int y = 3;
-					System.out.println("3074");
+					tripleo.elijah.util.Stupidity.println2("3074");
 				}
 			}
 		});
@@ -193,26 +190,26 @@ public class VTE_TypePromises {
 				final OS_Type attached1 = result.resolved != null ? result.resolved : result.typeName;
 				if (attached1 != null) {
 					switch (attached1.getType()) {
-						case USER_CLASS:
-							if (ite.type.getAttached() == null)
-								ite.makeType(generatedFunction, TypeTableEntry.Type.TRANSIENT, attached1);
-							else {
-								aDeduceTypes2.LOG.err(String.format("3603 Trying to set %s to %s", ite.type.getAttached(), attached1));
-							}
-							break;
-						case USER:
-							try {
-								@NotNull final GenType ty3 = aDeduceTypes2.resolve_type(attached1, attached1.getTypeName().getContext());
-								// no expression or TableEntryIV below
-								@NotNull final TypeTableEntry tte4 = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, null);
-								// README trying to keep genType up to date
-								tte4.setAttached(attached1);
-								tte4.setAttached(ty3);
-								ite.type = tte4; // or ty2?
-							} catch (final ResolveError aResolveError) {
-								aResolveError.printStackTrace();
-							}
-							break;
+					case USER_CLASS:
+						if (ite.type.getAttached() == null)
+							ite.makeType(generatedFunction, TypeTableEntry.Type.TRANSIENT, attached1);
+						else {
+							aDeduceTypes2.LOG.err(String.format("3603 Trying to set %s to %s", ite.type.getAttached(), attached1));
+						}
+						break;
+					case USER:
+						try {
+							@NotNull final GenType ty3 = aDeduceTypes2.resolve_type(attached1, attached1.getTypeName().getContext());
+							// no expression or TableEntryIV below
+							@NotNull final TypeTableEntry tte4 = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, null);
+							// README trying to keep genType up to date
+							tte4.setAttached(attached1);
+							tte4.setAttached(ty3);
+							ite.type = tte4; // or ty2?
+						} catch (final ResolveError aResolveError) {
+							aResolveError.printStackTrace();
+						}
+						break;
 					}
 				}
 			}

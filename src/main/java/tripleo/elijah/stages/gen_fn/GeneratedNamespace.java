@@ -8,20 +8,17 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.gen_generic.CodeGenerator;
-import tripleo.elijah.stages.gen_generic.GenerateResult;
-import tripleo.elijah.util.Helpers;
-import tripleo.elijah.util.NotImplementedException;
+import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.util.*;
 
 /**
  * Created 12/22/20 5:39 PM
  */
 public class GeneratedNamespace extends GeneratedContainerNC implements GNCoded {
-    private final OS_Module module;
-    private final NamespaceStatement namespaceStatement;
+	private final OS_Module          module;
+	private final NamespaceStatement namespaceStatement;
 	public GeneratedNamespace(final NamespaceStatement namespace1, final OS_Module module) {
 		this.namespaceStatement = namespace1;
 		this.module             = module;
@@ -60,6 +57,11 @@ public class GeneratedNamespace extends GeneratedContainerNC implements GNCoded 
 		return namespaceStatement.getName();
 	}
 
+	@Override
+	public OS_Element getElement() {
+		return getNamespaceStatement();
+	}
+
 	public NamespaceStatement getNamespaceStatement() {
 		return this.namespaceStatement;
 	}
@@ -80,18 +82,13 @@ public class GeneratedNamespace extends GeneratedContainerNC implements GNCoded 
 	}
 
 	@Override
-	public OS_Element getElement() {
-		return getNamespaceStatement();
+	public @NotNull String identityString() {
+		return String.valueOf(namespaceStatement);
 	}
 
 	@Override
 	public OS_Module module() {
 		return module;
-	}
-
-	@Override
-	public @NotNull String identityString() {
-		return "" + namespaceStatement;
 	}
 
 	@Override

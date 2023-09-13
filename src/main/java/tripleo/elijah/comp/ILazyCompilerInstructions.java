@@ -6,15 +6,10 @@ import tripleo.elijah.ci.*;
 import java.io.*;
 import java.util.*;
 
-interface ILazyCompilerInstructions {
+public interface ILazyCompilerInstructions {
 	@Contract(value = "_ -> new", pure = true)
 	static @NotNull ILazyCompilerInstructions of(final CompilerInstructions aCompilerInstructions) {
-		return new ILazyCompilerInstructions() {
-			@Override
-			public CompilerInstructions get() {
-				return aCompilerInstructions;
-			}
-		};
+		return () -> aCompilerInstructions;
 	}
 
 	@Contract(value = "_, _ -> new", pure = true)
@@ -23,9 +18,9 @@ interface ILazyCompilerInstructions {
 			@Override
 			public CompilerInstructions get() {
 				try {
-					final @NotNull Operation<CompilerInstructions> parsed = c.parseEzFile(aFile);
+					final Operation<CompilerInstructions> parsed = CX_ParseEzFile.parseAndCache(aFile, c, c.__cr.ezCache());
 					return Objects.requireNonNull(parsed).success();
-				} catch (Exception aE) {
+				} catch (final Exception aE) {
 					throw new RuntimeException(aE); // TODO ugh
 				}
 			}

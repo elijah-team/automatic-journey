@@ -8,31 +8,30 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jdeferred2.DoneCallback;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.FunctionDef;
-import tripleo.elijah.lang.NamespaceStatement;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.stages.deduce.ClassInvocation;
-import tripleo.elijah.stages.deduce.FunctionInvocation;
-import tripleo.elijah.stages.deduce.NamespaceInvocation;
-import tripleo.elijah.work.WorkJob;
-import tripleo.elijah.work.WorkManager;
+import org.jdeferred2.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.util.*;
+import tripleo.elijah.work.*;
 
 /**
  * Created 5/16/21 12:46 AM
  */
 public class WlGenerateFunction implements WorkJob {
-	private final FunctionDef functionDef;
-	private final GenerateFunctions generateFunctions;
+	private final FunctionDef        functionDef;
+	private final GenerateFunctions  generateFunctions;
 	private final FunctionInvocation functionInvocation;
-	private boolean _isDone = false;
-	private GeneratedFunction result;
+	private final ICodeRegistrar     codeRegistrar;
+	private       boolean            _isDone = false;
+	private       GeneratedFunction  result;
 
-	public WlGenerateFunction(final GenerateFunctions aGenerateFunctions, @NotNull final FunctionInvocation aFunctionInvocation) {
-		functionDef = (FunctionDef) aFunctionInvocation.getFunction();
-		generateFunctions = aGenerateFunctions;
+	public WlGenerateFunction(final GenerateFunctions aGenerateFunctions, @NotNull final FunctionInvocation aFunctionInvocation, final ICodeRegistrar aCodeRegistrar) {
+		functionDef        = (FunctionDef) aFunctionInvocation.getFunction();
+		generateFunctions  = aGenerateFunctions;
 		functionInvocation = aFunctionInvocation;
+		codeRegistrar      = aCodeRegistrar;
 	}
 
 	@Override
@@ -48,7 +47,8 @@ public class WlGenerateFunction implements WorkJob {
 				for (final TypeTableEntry tte : functionInvocation.getArgs()) {
 					i = i + 1;
 					if (tte.getAttached() == null) {
-						System.err.printf("4949 null tte #%d %s in %s%n", i, tte, gf);
+						final String s = String.format("4949 null tte #%d %s in %s%n", i, tte, gf);
+						Stupidity.println_err2(s);
 					}
 				}
 			}
@@ -62,7 +62,7 @@ public class WlGenerateFunction implements WorkJob {
 					@Override
 					public void onDone(final GeneratedNamespace result) {
 						if (result.getFunction(functionDef) == null) {
-							gf.setCode(generateFunctions.module.parent.nextFunctionCode());
+							codeRegistrar.registerFunction(gf);
 							result.addFunction(functionDef, gf);
 						}
 						gf.setClass(result);
@@ -74,7 +74,7 @@ public class WlGenerateFunction implements WorkJob {
 					@Override
 					public void onDone(final GeneratedClass result) {
 						if (result.getFunction(functionDef) == null) {
-							gf.setCode(generateFunctions.module.parent.nextFunctionCode());
+							codeRegistrar.registerFunction(gf);
 							result.addFunction(functionDef, gf);
 						}
 						gf.setClass(result);

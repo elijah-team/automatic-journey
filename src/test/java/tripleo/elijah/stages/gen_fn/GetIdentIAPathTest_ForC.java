@@ -11,11 +11,11 @@ package tripleo.elijah.stages.gen_fn;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
 import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.types.*;
 import tripleo.elijah.stages.gen_c.*;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.test_help.*;
 import tripleo.elijah.util.*;
 
 import static org.easymock.EasyMock.*;
@@ -25,7 +25,7 @@ import static tripleo.elijah.util.Helpers.*;
 public class GetIdentIAPathTest_ForC {
 
 	GeneratedFunction gf;
-	OS_Module mod;
+	OS_Module         mod;
 
 	@Before
 	public void setUp() throws Exception {
@@ -38,7 +38,7 @@ public class GetIdentIAPathTest_ForC {
 
 	@Test
 	public void testManualXDotFoo() {
-		@NotNull final IdentExpression x_ident = IdentExpression.forString("X");
+		@NotNull final IdentExpression x_ident   = IdentExpression.forString("X");
 		@NotNull final IdentExpression foo_ident = IdentExpression.forString("foo");
 		//
 		final VariableSequence vsq = new VariableSequence(null);
@@ -46,21 +46,27 @@ public class GetIdentIAPathTest_ForC {
 		final VariableStatement foo_vs = new VariableStatement(vsq);
 		foo_vs.setName(foo_ident);
 		//
-		final OS_Type type = null;
-		final TypeTableEntry tte = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, type, x_ident);
-		final int int_index = gf.addVariableTableEntry("x", VariableTableType.VAR, tte, mock(VariableStatement.class));
-		final int ite_index = gf.addIdentTableEntry(foo_ident, null);
-		final IdentTableEntry ite = gf.getIdentTableEntry(ite_index);
+		final OS_Type         type      = null;
+		final TypeTableEntry  tte       = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, type, x_ident);
+		final int             int_index = gf.addVariableTableEntry("x", VariableTableType.VAR, tte, mock(VariableStatement.class));
+		final int             ite_index = gf.addIdentTableEntry(foo_ident, null);
+		final IdentTableEntry ite       = gf.getIdentTableEntry(ite_index);
 		ite.setResolvedElement(foo_vs);
 		ite.backlink = new IntegerIA(int_index, gf);
 		final IdentIA ident_ia = new IdentIA(ite_index, gf);
-		final String x = getIdentIAPath(ident_ia, gf);
+		final String  x        = getIdentIAPath(ident_ia, gf);
 		Assert.assertEquals("vvx->vmfoo", x);
+	}
+
+	String getIdentIAPath(final IdentIA ia2, final GeneratedFunction generatedFunction) {
+		final CReference reference = new CReference();
+		reference.getIdentIAPath(ia2, Generate_Code_For_Method.AOG.GET, null); // TODO is null correct?
+		return reference.build();
 	}
 
 	@Test
 	public void testManualXDotFoo2() {
-		@NotNull final IdentExpression x_ident = IdentExpression.forString("x");
+		@NotNull final IdentExpression x_ident   = IdentExpression.forString("x");
 		@NotNull final IdentExpression foo_ident = IdentExpression.forString("foo");
 		//
 		final OS_Element mock_class = mock(ClassStatement.class);
@@ -86,11 +92,14 @@ public class GetIdentIAPathTest_ForC {
 
 		//		el1.add(vsq);
 		//
-		final CompilationImpl   c             = new CompilationImpl(new StdErrSink(), new IO());
-		final ElLog.Verbosity   verbosity1    = Compilation.gitlabCIVerbosity();
+		final Boilerplate b = new Boilerplate();
+		b.get();
+		final Compilation c = b.comp;
+//		final OS_Module mod = b.defaultMod();
+
 		final AccessBus         ab            = new AccessBus(c);
 		final PipelineLogic     pl            = new PipelineLogic(ab);
-		final GeneratePhase     generatePhase = new GeneratePhase(verbosity1, pl);
+		final GeneratePhase     generatePhase = pl.generatePhase;
 		final GenerateFunctions gen           = generatePhase.getGenerateFunctions(mod);
 		final Context           ctx           = mock(Context.class);
 		//
@@ -103,7 +112,7 @@ public class GetIdentIAPathTest_ForC {
 		foo_ite.setResolvedElement(foo_vs);
 		//
 		final IdentIA ident_ia = (IdentIA) xx;
-		final String x = getIdentIAPath(ident_ia, gf);
+		final String  x        = getIdentIAPath(ident_ia, gf);
 //		Assert.assertEquals("vvx->vmfoo", x);  // TODO real expectation, IOW output below is wrong
 		// TODO actually compiler should comlain that it can't find x
 		Assert.assertEquals("->vmx->vmfoo", x);
@@ -114,11 +123,14 @@ public class GetIdentIAPathTest_ForC {
 		final IdentExpression          x_ident   = Helpers.string_to_ident("x");
 		@NotNull final IdentExpression foo_ident = Helpers.string_to_ident("foo");
 		//
-		final CompilationImpl   c             = new CompilationImpl(new StdErrSink(), new IO());
-		final ElLog.Verbosity   verbosity1    = Compilation.gitlabCIVerbosity();
+		final Boilerplate b = new Boilerplate();
+		b.get();
+		final Compilation c = b.comp;
+//		final OS_Module mod = b.defaultMod();
+
 		final AccessBus         ab            = new AccessBus(c);
 		final PipelineLogic     pl            = new PipelineLogic(ab);
-		final GeneratePhase     generatePhase = new GeneratePhase(verbosity1, pl);
+		final GeneratePhase     generatePhase = pl.generatePhase;
 		final GenerateFunctions gen           = generatePhase.getGenerateFunctions(mod);
 		final Context           ctx           = mock(Context.class);
 		//
@@ -139,8 +151,8 @@ public class GetIdentIAPathTest_ForC {
 		final VariableStatement foo_vs = new VariableStatement(vsq);
 		foo_vs.setName(foo_ident);
 
-		final IdentIA ident_ia = (IdentIA) xx;
-		@NotNull final IdentTableEntry ite = ((IdentIA) xx).getEntry();
+		final IdentIA                  ident_ia = (IdentIA) xx;
+		@NotNull final IdentTableEntry ite      = ((IdentIA) xx).getEntry();
 		ite.setResolvedElement(foo_vs);
 
 		final String x = getIdentIAPath(ident_ia, gf);
@@ -150,13 +162,13 @@ public class GetIdentIAPathTest_ForC {
 
 	@Test
 	public void testManualXDotFooWithFooBeingFunction() {
-		@NotNull final IdentExpression x_ident = Helpers.string_to_ident("x");
+		@NotNull final IdentExpression x_ident   = Helpers.string_to_ident("x");
 		@NotNull final IdentExpression foo_ident = Helpers.string_to_ident("foo");
 		//
-		final Context ctx = mock(Context.class);
+		final Context ctx         = mock(Context.class);
 		final Context mockContext = mock(Context.class);
 
-		final LookupResultList lrl = new LookupResultList();
+		final LookupResultList lrl  = new LookupResultList();
 		final LookupResultList lrl2 = new LookupResultList();
 
 		expect(mod.pullPackageName()).andReturn(OS_Package.default_package);
@@ -191,17 +203,20 @@ public class GetIdentIAPathTest_ForC {
 		//
 
 		//
-		final OS_Type        type      = new OS_Type(classStatement);
+		final OS_Type        type      = new OS_UserClassType(classStatement);
 		final TypeTableEntry tte       = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, type, x_ident);
 		final int            int_index = gf.addVariableTableEntry("x", VariableTableType.VAR, tte, mock(VariableStatement.class));
 		//
 		final DotExpression expr = new DotExpression(x_ident, foo_ident);
 		//
-		final CompilationImpl     c             = new CompilationImpl(new StdErrSink(), new IO());
-		final ElLog.Verbosity     verbosity1    = Compilation.gitlabCIVerbosity();
+		final Boilerplate b = new Boilerplate();
+		b.get();
+		final Compilation c = b.comp;
+//		final OS_Module mod = b.defaultMod();
+
 		final AccessBus           ab            = new AccessBus(c);
 		final PipelineLogic       pl            = new PipelineLogic(ab);
-		final GeneratePhase       generatePhase = new GeneratePhase(verbosity1, pl);
+		final GeneratePhase       generatePhase = pl.generatePhase;
 		final GenerateFunctions   gen           = generatePhase.getGenerateFunctions(mod);
 		final InstructionArgument xx            = gen.simplify_expression(expr, gf, ctx);
 
@@ -224,13 +239,7 @@ public class GetIdentIAPathTest_ForC {
 
 		verify(mod, ctx, mockContext);
 
-		Assert.assertEquals("Z-1foo(vvx)", x);
-	}
-
-	String getIdentIAPath(final IdentIA ia2, final GeneratedFunction generatedFunction) {
-		final CReference reference = new CReference();
-		reference.getIdentIAPath(ia2, Generate_Code_For_Method.AOG.GET, null); // TODO is null correct?
-		return reference.build();
+		Assert.assertEquals("z-1foo(vvx)", x); // FIXME (??) if foo is a named ctor then make this cap, otherwise, oops
 	}
 
 

@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.stages.gen_c;
 
-import tripleo.elijah.stages.gen_generic.DependencyRef;
+import tripleo.elijah.stages.gen_generic.*;
 
 /**
  * Created 9/13/21 4:01 AM

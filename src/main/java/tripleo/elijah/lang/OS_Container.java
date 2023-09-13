@@ -1,9 +1,9 @@
 /**
- * 
+ *
  */
 package tripleo.elijah.lang;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Tripleo(sb)

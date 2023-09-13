@@ -8,31 +8,25 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import com.google.common.base.*;
+import com.google.common.collect.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.diagnostic.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.gen_fn.*;
 
-import tripleo.elijah.diagnostic.Diagnostic;
-import tripleo.elijah.diagnostic.Locatable;
-import tripleo.elijah.lang.VariableStatement;
-import tripleo.elijah.stages.gen_fn.TypeTableEntry;
-import tripleo.elijah.stages.gen_fn.VariableTableEntry;
-
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * Created 4/13/21 5:46 AM
  */
 public class CantDecideType implements Diagnostic {
-	private final VariableTableEntry vte;
+	private final          VariableTableEntry         vte;
 	private final @NotNull Collection<TypeTableEntry> types;
 
 	public CantDecideType(final VariableTableEntry aVte, @NotNull final Collection<TypeTableEntry> aTypes) {
-		vte = aVte;
+		vte   = aVte;
 		types = aTypes;
 	}
 
@@ -70,7 +64,7 @@ public class CantDecideType implements Diagnostic {
 
 	@Override
 	public void report(@NotNull final PrintStream stream) {
-		stream.println(String.format("---[%s]---: %s", code(), message()));
+		stream.printf("---[%s]---: %s%n", code(), message());
 		// linecache.print(primary);
 		for (final Locatable sec : secondary()) {
 			//linecache.print(sec)

@@ -1,28 +1,12 @@
 package tripleo.elijah.stages.gen_c;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.AliasStatement;
-import tripleo.elijah.lang.ClassStatement;
-import tripleo.elijah.lang.ConstructorDef;
-import tripleo.elijah.lang.DefFunctionDef;
-import tripleo.elijah.lang.FormalArgListItem;
-import tripleo.elijah.lang.FunctionDef;
-import tripleo.elijah.lang.NamespaceStatement;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.lang.PropertyStatement;
-import tripleo.elijah.lang.VariableSequence;
-import tripleo.elijah.lang.VariableStatement;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.GeneratedClass;
-import tripleo.elijah.stages.gen_fn.GeneratedContainerNC;
-import tripleo.elijah.stages.gen_fn.GeneratedNode;
-import tripleo.elijah.stages.gen_fn.IdentTableEntry;
-import tripleo.elijah.stages.instructions.IdentIA;
-import tripleo.elijah.stages.instructions.InstructionArgument;
-import tripleo.elijah.util.NotImplementedException;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.util.*;
 
-import java.util.List;
+import java.util.*;
 
 class CReference_getIdentIAPath_IdentIAHelper {
 	private final InstructionArgument   ia_next;
@@ -47,14 +31,6 @@ class CReference_getIdentIAPath_IdentIAHelper {
 		this.generatedFunction = generatedFunction;
 		resolved               = aResolved;
 		value                  = aValue;
-	}
-
-	@Contract(pure = true)
-	private static void _act_AliasStatement() {
-		final int y = 2;
-		NotImplementedException.raise();
-		//			text = Emit.emit("/*167*/")+((AliasStatement)resolved_element).name();
-		//			return _getIdentIAPath_IdentIAHelper(text, sl, i, sSize, _res)
 	}
 
 	boolean action(final CRI_Ident aCRI_ident, final CReference aCReference) {
@@ -83,12 +59,6 @@ class CReference_getIdentIAPath_IdentIAHelper {
 			throw new NotImplementedException();
 		}
 		return b;
-	}
-
-	private void _act_FormalArgListItem(final @NotNull CReference aCReference, final @NotNull FormalArgListItem fali) {
-		final int    y     = 2;
-		final String text2 = "va" + fali.getNameToken().getText();
-		aCReference.addRef(text2, CReference.Ref.LOCAL); // TODO
 	}
 
 	@Contract(pure = true)
@@ -151,34 +121,12 @@ class CReference_getIdentIAPath_IdentIAHelper {
 		aCReference.addRef(text2, CReference.Ref.CONSTRUCTOR);
 	}
 
-	private void _act_FunctionDef(final CReference aCReference) {
-		final OS_Element parent = getResolved_element().getParent();
-		int              code   = -1;
-		if (getResolved() != null) {
-			if (getResolved() instanceof BaseGeneratedFunction) {
-				((BaseGeneratedFunction) getResolved()).onGenClass(gc -> {
-//						GeneratedNode gc = rf.getGenClass();
-					if (gc instanceof GeneratedContainerNC) // and not another function
-						this.code = gc.getCode();
-					else
-						this.code = -2;
-				});
-			} else if (getResolved() instanceof GeneratedClass) {
-				final GeneratedClass generatedClass = (GeneratedClass) getResolved();
-				this.code = generatedClass.getCode();
-			}
-		}
-		// TODO what about overloaded functions
-		assert getI() == getsSize() - 1; // Make sure we are ending with a ProcedureCall
-		getSl().clear();
-
-		code = this.code;
-
-		if (code == -1) {
-//				text2 = String.format("ZT%d_%d", enclosing_function._a.getCode(), closure_index);
-		}
-		final String text2 = String.format("Z%d%s", code, ((FunctionDef) getResolved_element()).name());
-		aCReference.addRef(text2, CReference.Ref.FUNCTION);
+	@Contract(pure = true)
+	private static void _act_AliasStatement() {
+		final int y = 2;
+		NotImplementedException.raise();
+		//			text = Emit.emit("/*167*/")+((AliasStatement)resolved_element).name();
+		//			return _getIdentIAPath_IdentIAHelper(text, sl, i, sSize, _res)
 	}
 
 	private void _act_DefFunctionDef(final CReference aCReference) {
@@ -253,6 +201,54 @@ class CReference_getIdentIAPath_IdentIAHelper {
 		//			text = String.format("ZP%dget_%s(%s)", code, ((PropertyStatement) resolved_element).name(), text); // TODO Don't know if get or set!
 		final String text2 = String.format("ZP%dget_%s", code, ((PropertyStatement) getResolved_element()).name()); // TODO Don't know if get or set!
 		aCReference.addRef(text2, CReference.Ref.PROPERTY_GET);
+	}
+
+	private void _act_FunctionDef(final CReference aCReference) {
+		final OS_Element    parent        = getResolved_element().getParent();
+		int                 our_code      = -1;
+		final GeneratedNode resolved_node = getResolved();
+
+		if (resolved_node != null) {
+			if (resolved_node instanceof final BaseGeneratedFunction resolvedFunction) {
+
+				resolvedFunction.onGenClass(gc -> {
+//						GeneratedNode gc = rf.getGenClass();
+					if (gc instanceof GeneratedContainerNC) // and not another function
+						this.code = gc.getCode();
+					else
+						this.code = -2;
+				});
+
+				if (resolvedFunction.getGenClass() instanceof final GeneratedNamespace generatedNamespace) {
+					// FIXME sometimes genClass is not called so above wont work,
+					//  so check if a code was set and use it here
+					final int                cc                 = generatedNamespace.getCode();
+					if (cc > 0) {
+						this.code = cc;
+					}
+				}
+
+			} else if (resolved_node instanceof final GeneratedClass generatedClass) {
+				this.code = generatedClass.getCode();
+			}
+		}
+		// TODO what about overloaded functions
+		assert getI() == getsSize() - 1; // Make sure we are ending with a ProcedureCall
+		getSl().clear();
+
+		our_code = this.code;
+
+		if (our_code == -1) {
+//				text2 = String.format("ZT%d_%d", enclosing_function._a.getCode(), closure_index);
+		}
+		final String text2 = String.format("z%d%s", our_code, ((FunctionDef) getResolved_element()).name());
+		aCReference.addRef(text2, CReference.Ref.FUNCTION);
+	}
+
+	private void _act_FormalArgListItem(final @NotNull CReference aCReference, final @NotNull FormalArgListItem fali) {
+		final int    y     = 2;
+		final String text2 = "va" + fali.getNameToken().getText();
+		aCReference.addRef(text2, CReference.Ref.LOCAL); // TODO
 	}
 
 	@Contract(pure = true)

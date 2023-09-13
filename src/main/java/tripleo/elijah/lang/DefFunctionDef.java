@@ -1,58 +1,30 @@
 /*
  * Elijjah compiler, copyright Tripleo <oluoluolu+elijah@gmail.com>
- * 
- * The contents of this library are released under the LGPL licence v3, 
+ *
+ * The contents of this library are released under the LGPL licence v3,
  * the GNU Lesser General Public License text was downloaded from
  * http://www.gnu.org/licenses/lgpl.html from `Version 3, 29 June 2007'
- * 
+ *
  */
 /*
  * Created on Aug 30, 2005 8:43:27 PM
- * 
+ *
  * $Id$
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.contexts.FunctionContext;
-import tripleo.elijah.lang2.ElElementVisitor;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.contexts.*;
+import tripleo.elijah.lang2.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class DefFunctionDef extends BaseFunctionDef {
 
-	private final OS_Element parent;
-
 	final List<FunctionItem> _items = new ArrayList<FunctionItem>();
-
+	private final OS_Element parent;
 	private TypeName _returnType = null;
-
-	public void setReturnType(final TypeName tn) {
-		this._returnType = tn;
-	}
-
-	/**
-	 * Can be {@code null} under the following circumstances:<br/><br/>
-	 *
-	 * 1. The compiler(parser) didn't get a chance to set it yet<br/>
-	 * 2. The programmer did not specify a return value and the compiler must deduce it<br/>
-	 * 3. The function is a void-type and specification isn't required <br/>
-	 *
-	 * @return the associated TypeName or NULL
-	 */
-	public @Nullable TypeName returnType() {
-		return _returnType;
-	}
-
 	private IExpression _expr;
-//	private FormalArgList fal;
-
-	// wont use parent scope.items.add so this is ok
-	public void setExpr(final IExpression aExpr) {
-		_expr = aExpr;
-		_items.add(new StatementWrapper(_expr, getContext(), this));
-	}
 
 	public DefFunctionDef(final OS_Element aElement, final Context aContext) {
 		parent = aElement;
@@ -65,6 +37,30 @@ public class DefFunctionDef extends BaseFunctionDef {
 		}
 		_a.setContext(new FunctionContext(aContext, this));
 		setSpecies(Species.DEF_FUN);
+	}
+
+	public void setReturnType(final TypeName tn) {
+		this._returnType = tn;
+	}
+//	private FormalArgList fal;
+
+	/**
+	 * Can be {@code null} under the following circumstances:<br/><br/>
+	 * <p>
+	 * 1. The compiler(parser) didn't get a chance to set it yet<br/>
+	 * 2. The programmer did not specify a return value and the compiler must deduce it<br/>
+	 * 3. The function is a void-type and specification isn't required <br/>
+	 *
+	 * @return the associated TypeName or NULL
+	 */
+	public @Nullable TypeName returnType() {
+		return _returnType;
+	}
+
+	// wont use parent scope.items.add so this is ok
+	public void setExpr(final IExpression aExpr) {
+		_expr = aExpr;
+		_items.add(new StatementWrapper(_expr, getContext(), this));
 	}
 
 	@Override
@@ -84,7 +80,7 @@ public class DefFunctionDef extends BaseFunctionDef {
 
 	/**
 	 * see {@link #_expr} for why getItems().size should be 0, or
-	*/
+	 */
 	@Override
 	public void postConstruct() {
 //		super.postConstruct();

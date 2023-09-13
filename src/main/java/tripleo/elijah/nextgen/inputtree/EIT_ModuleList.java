@@ -66,7 +66,7 @@ public class EIT_ModuleList {
 
 		//assert lgc.size() == epl.size(); //hmm
 
-		final Coder coder = new Coder();
+		final Coder coder = new Coder(plp.deducePhase.codeRegistrar);
 
 		for (final GeneratedNode generatedNode : lgc) {
 			coder.codeNodes(mod, resolved_nodes, generatedNode);
@@ -81,11 +81,11 @@ public class EIT_ModuleList {
 //			for (final GeneratedNode gn : lgf) {
 //				if (gn instanceof GeneratedFunction) {
 //					GeneratedFunction gf = (GeneratedFunction) gn;
-//					System.out.println("----------------------------------------------------------");
-//					System.out.println(gf.name());
-//					System.out.println("----------------------------------------------------------");
+//					tripleo.elijah.util.Stupidity.println2("----------------------------------------------------------");
+//					tripleo.elijah.util.Stupidity.println2(gf.name());
+//					tripleo.elijah.util.Stupidity.println2("----------------------------------------------------------");
 //					GeneratedFunction.printTables(gf);
-//					System.out.println("----------------------------------------------------------");
+//					tripleo.elijah.util.Stupidity.println2("----------------------------------------------------------");
 //				}
 //			}
 	}
@@ -130,9 +130,8 @@ public class EIT_ModuleList {
 			return mod;
 		}
 
-		@Contract(pure = true)
-		public DeducePhase.GeneratedClasses getLgc() {
-			return deducePhase.generatedClasses;
+		public void generate() {
+			epl.generate(gfm, deducePhase, getWorkManagerSupplier());
 		}
 
 		@Contract(pure = true)
@@ -140,21 +139,22 @@ public class EIT_ModuleList {
 			return () -> pipelineLogic.generatePhase.wm;
 		}
 
+		public void deduceModule() {
+			deducePhase.deduceModule(mod, getLgc(), getVerbosity());
+		}
+
+		//
+		//
+		//
+
+		@Contract(pure = true)
+		public DeducePhase.GeneratedClasses getLgc() {
+			return deducePhase.generatedClasses;
+		}
+
 		@Contract(pure = true)
 		public ElLog.@NotNull Verbosity getVerbosity() {
 			return pipelineLogic.getVerbosity();
-		}
-
-		//
-		//
-		//
-
-		public void generate() {
-			epl.generate(gfm, deducePhase, getWorkManagerSupplier());
-		}
-
-		public void deduceModule() {
-			deducePhase.deduceModule(mod, getLgc(), getVerbosity());
 		}
 
 	}

@@ -8,28 +8,23 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.Promise;
-import org.jdeferred2.impl.DeferredObject;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.lang.ClassStatement;
-import tripleo.elijah.lang.OS_Type;
-import tripleo.elijah.lang.OS_UnknownType;
-import tripleo.elijah.lang.TypeName;
-import tripleo.elijah.stages.gen_fn.GeneratedClass;
+import org.jdeferred2.*;
+import org.jdeferred2.impl.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.types.*;
+import tripleo.elijah.stages.gen_fn.*;
 
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created 3/5/21 3:51 AM
  */
 public class ClassInvocation implements IInvocation {
-	private final @NotNull ClassStatement cls;
-	public final @Nullable Map<TypeName, OS_Type> genericPart;
-	private final String constructorName;
-	private final DeferredObject<GeneratedClass, Void, Void> resolvePromise = new DeferredObject<GeneratedClass, Void, Void>();
+	public final @Nullable Map<TypeName, OS_Type>                     genericPart;
+	private final @NotNull ClassStatement                             cls;
+	private final          String                                     constructorName;
+	private final          DeferredObject<GeneratedClass, Void, Void> resolvePromise = new DeferredObject<GeneratedClass, Void, Void>();
 
 	public ClassInvocation(@NotNull final ClassStatement aClassStatement, final String aConstructorName) {
 		cls = aClassStatement;
@@ -37,7 +32,7 @@ public class ClassInvocation implements IInvocation {
 		if (genericPart1.size() > 0) {
 			genericPart = new HashMap<TypeName, OS_Type>(genericPart1.size());
 			for (final TypeName typeName : genericPart1) {
-				genericPart.put(typeName, new OS_UnknownType(null));
+				genericPart.put(typeName, new OS_UnknownType(null)); // TODO DeduceType here because deferred
 			}
 		} else {
 			genericPart = null;

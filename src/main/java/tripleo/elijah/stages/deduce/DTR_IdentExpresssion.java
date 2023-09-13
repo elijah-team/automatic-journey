@@ -1,10 +1,10 @@
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.DoneCallback;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.IdentExpression;
+import org.jdeferred2.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.IntegerIA;
+import tripleo.elijah.stages.instructions.*;
 
 public class DTR_IdentExpresssion {
 	private final DeduceTypeResolve deduceTypeResolve;
@@ -18,8 +18,7 @@ public class DTR_IdentExpresssion {
 	}
 
 	public void run(final IElementHolder eh, final GenType genType) {
-		if (eh instanceof GenericElementHolderWithIntegerIA) {
-			final GenericElementHolderWithIntegerIA eh1                = (GenericElementHolderWithIntegerIA) eh;
+		if (eh instanceof final GenericElementHolderWithIntegerIA eh1) {
 			final IntegerIA                         integerIA          = eh1.getIntegerIA();
 			final @NotNull VariableTableEntry       variableTableEntry = integerIA.getEntry();
 

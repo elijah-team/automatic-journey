@@ -8,17 +8,12 @@
  */
 package tripleo.elijah.stages.gen_generic;
 
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.stages.deduce.FunctionInvocation;
-import tripleo.elijah.stages.gen_fn.AbstractDependencyTracker;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.GenType;
-import tripleo.elijah.stages.gen_fn.GeneratedContainerNC;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_fn.*;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created 9/13/21 4:00 AM
@@ -50,14 +45,14 @@ public class Dependency {
 			if (generatedFunction != null)
 				deps.add(generatedFunction.getDependency());
 			else
-				System.err.println("52 false FunctionInvocation " + dependentFunction);
+				tripleo.elijah.util.Stupidity.println_err2("52 false FunctionInvocation " + dependentFunction);
 		}
 		for (final GenType dependentType : aDependentTypes) {
 			final GeneratedContainerNC node = (GeneratedContainerNC) dependentType.node;
 			if (node != null)
 				deps.add(node.getDependency());
 			else {
-				System.err.println("46 node is null " + (dependentType.resolved != null ? dependentType.resolved : dependentType.resolvedn));
+				tripleo.elijah.util.Stupidity.println_err2("46 node is null " + (dependentType.resolved != null ? dependentType.resolved : dependentType.resolvedn));
 				final Dependency d = new Dependency(null);
 				d.resolved = dependentType.resolved != null ? dependentType.resolved.getClassOf() : dependentType.resolvedn;
 				deps.add(d);

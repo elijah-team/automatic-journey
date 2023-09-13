@@ -1,11 +1,10 @@
 package tripleo.elijah.nextgen.outputstatement;
 
-import tripleo.elijah.util.Helpers;
-import tripleo.util.buffer.Buffer;
+import tripleo.elijah.util.*;
+import tripleo.util.buffer.*;
 
-import java.util.Collection;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 public class GE_BuffersStatement implements EG_Statement {
 	private final Map.Entry<String, Collection<Buffer>> entry;

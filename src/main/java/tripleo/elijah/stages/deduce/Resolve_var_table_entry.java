@@ -1,10 +1,9 @@
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.DoneCallback;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.ClassStatement;
-import tripleo.elijah.lang.Context;
-import tripleo.elijah.lang.OS_Type;
+import org.jdeferred2.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.types.*;
 import tripleo.elijah.stages.gen_fn.*;
 
 class Resolve_var_table_entry {
@@ -20,7 +19,7 @@ class Resolve_var_table_entry {
 		{
 			if (vte.type.getAttached() == null && vte.constructable_pte != null) {
 				final ClassStatement   c        = vte.constructable_pte.getFunctionInvocation().getClassInvocation().getKlass();
-				final @NotNull OS_Type attached = new OS_Type(c);
+				final @NotNull OS_Type attached = new OS_UserClassType(c);
 				// TODO this should have been set somewhere already
 				//  typeName and nonGenericTypeName are not set
 				//  but at this point probably wont be needed

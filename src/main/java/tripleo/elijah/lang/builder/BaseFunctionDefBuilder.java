@@ -17,9 +17,9 @@ import java.util.*;
  */
 public abstract class BaseFunctionDefBuilder extends ElBuilder {
 	protected List<AnnotationClause> annotations = new ArrayList<AnnotationClause>();
-	protected IdentExpression _name;
-	protected FormalArgList mFal;
-	protected FunctionDef.Species _species = null;
+	protected IdentExpression        _name;
+	protected FormalArgList          mFal;
+	protected FunctionDef.Species    _species    = null;
 
 	public void addAnnotation(final AnnotationClause a) {
 		annotations.add(a);

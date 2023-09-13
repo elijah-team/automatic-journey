@@ -8,35 +8,36 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jdeferred2.DoneCallback;
-import org.jdeferred2.impl.DeferredObject;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.ClassStatement;
-import tripleo.elijah.stages.deduce.ClassInvocation;
-import tripleo.elijah.stages.deduce.DeducePhase;
-import tripleo.elijah.util.Holder;
-import tripleo.elijah.util.NotImplementedException;
-import tripleo.elijah.work.WorkJob;
-import tripleo.elijah.work.WorkManager;
+import org.jdeferred2.*;
+import org.jdeferred2.impl.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.util.*;
+import tripleo.elijah.work.*;
 
 /**
  * Created 5/16/21 12:41 AM
  */
 public class WlGenerateClass implements WorkJob {
-	private final ClassStatement classStatement;
-	private final GenerateFunctions generateFunctions;
-	private final ClassInvocation classInvocation;
+	private final ClassStatement               classStatement;
+	private final GenerateFunctions            generateFunctions;
+	private final ClassInvocation              classInvocation;
 	private final DeducePhase.GeneratedClasses coll;
-	private boolean _isDone = false;
-	private GeneratedClass Result;
+	private final ICodeRegistrar               codeRegistrar;
+	private       boolean                      _isDone = false;
+	private       GeneratedClass               Result;
 
 	public WlGenerateClass(final GenerateFunctions aGenerateFunctions,
-						   final ClassInvocation aClassInvocation,
-						   final DeducePhase.GeneratedClasses coll) {
-		classStatement = aClassInvocation.getKlass();
+	                       final ClassInvocation aClassInvocation,
+	                       final DeducePhase.GeneratedClasses coll,
+	                       final ICodeRegistrar aCodeRegistrar) {
+		classStatement    = aClassInvocation.getKlass();
 		generateFunctions = aGenerateFunctions;
-		classInvocation = aClassInvocation;
-		this.coll = coll;
+		classInvocation   = aClassInvocation;
+		this.coll         = coll;
+		codeRegistrar     = aCodeRegistrar;
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class WlGenerateClass implements WorkJob {
 		switch (resolvePromise.state()) {
 		case PENDING:
 			@NotNull final GeneratedClass kl = generateFunctions.generateClass(classStatement, classInvocation);
-			kl.setCode(generateFunctions.module.parent.nextClassCode());
+			codeRegistrar.registerClass(kl);
 			if (coll != null)
 				coll.add(kl);
 

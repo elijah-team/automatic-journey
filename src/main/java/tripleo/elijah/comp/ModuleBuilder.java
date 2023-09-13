@@ -10,7 +10,7 @@ public class ModuleBuilder {
 	private       boolean   _addToCompilation = false;
 	private       String    _fn               = null;
 
-	public ModuleBuilder(Compilation aCompilation) {
+	public ModuleBuilder(final Compilation aCompilation) {
 //			compilation = aCompilation;
 		mod = new OS_Module();
 		mod.setParent(aCompilation);
@@ -30,7 +30,7 @@ public class ModuleBuilder {
 		return mod;
 	}
 
-	public ModuleBuilder withPrelude(String aPrelude) {
+	public ModuleBuilder withPrelude(final String aPrelude) {
 		final Operation2<OS_Module> p = mod.getCompilation().findPrelude(aPrelude);
 
 		assert p.mode() == Mode.SUCCESS;
@@ -40,7 +40,7 @@ public class ModuleBuilder {
 		return this;
 	}
 
-	public ModuleBuilder withFileName(String aFn) {
+	public ModuleBuilder withFileName(final String aFn) {
 		_fn = aFn;
 		mod.setFileName(aFn);
 		return this;

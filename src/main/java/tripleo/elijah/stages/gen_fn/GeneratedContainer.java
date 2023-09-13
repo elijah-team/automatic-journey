@@ -9,26 +9,19 @@
 
 package tripleo.elijah.stages.gen_fn;
 
-import org.jdeferred2.DoneCallback;
-import org.jdeferred2.impl.DeferredObject;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.lang.IExpression;
-import tripleo.elijah.lang.IdentExpression;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.lang.OS_Type;
-import tripleo.elijah.lang.TypeName;
-import tripleo.elijah.lang.VariableStatement;
+import org.jdeferred2.*;
+import org.jdeferred2.impl.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.types.*;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created 2/28/21 3:23 AM
  */
 public interface GeneratedContainer extends GeneratedNode {
-    OS_Element getElement();
+	OS_Element getElement();
 
 	@Nullable VarTableEntry getVariable(String aVarName);
 
@@ -54,7 +47,7 @@ public interface GeneratedContainer extends GeneratedNode {
 			nameToken    = aNameToken;
 			initialValue = aInitialValue;
 			typeName     = aTypeName;
-			varType      = new OS_Type(typeName);
+			varType      = new OS_UserType(typeName);
 			parent       = aElement;
 		}
 

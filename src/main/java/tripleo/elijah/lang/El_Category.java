@@ -8,9 +8,9 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.Token;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.util.Helpers;
+import antlr.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.util.*;
 
 /**
  * Created 3/26/21 4:47 AM
@@ -23,7 +23,8 @@ public class El_Category {
 		notation = aNotation;
 	}
 
-	@Nullable public String getCategoryName() {
+	@Nullable
+	public String getCategoryName() {
 		final Token category = notation.getCategory();
 		if (category == null)
 			return null;

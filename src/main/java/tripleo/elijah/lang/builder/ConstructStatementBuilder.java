@@ -14,10 +14,10 @@ import tripleo.elijah.lang.*;
  * Created 12/23/20 2:35 AM
  */
 public class ConstructStatementBuilder extends ElBuilder {
-	private final Qualident q;
+	private final Qualident      q;
 	private final ExpressionList o;
-	private Context _context;
-	private String constructorName = null;
+	private       Context        _context;
+	private       String         constructorName = null;
 
 	public ConstructStatementBuilder(final Qualident q, final ExpressionList o) {
 		super();

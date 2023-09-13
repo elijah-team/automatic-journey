@@ -9,20 +9,13 @@
  */
 package tripleo.elijah.stages.deduce.declarations;
 
-import org.jdeferred2.DoneCallback;
-import org.jdeferred2.Promise;
-import org.jdeferred2.impl.DeferredObject;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.diagnostic.Diagnostic;
-import tripleo.elijah.lang.BaseFunctionDef;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.stages.deduce.DeduceTypes2;
-import tripleo.elijah.stages.deduce.FunctionInvocation;
-import tripleo.elijah.stages.deduce.IInvocation;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.GenType;
-import tripleo.elijah.stages.gen_fn.GeneratedFunction;
+import org.jdeferred2.*;
+import org.jdeferred2.impl.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.diagnostic.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_fn.*;
 
 /**
  * Created 11/21/21 6:32 AM
@@ -53,6 +46,12 @@ public class DeferredMemberFunction {
 		deduceTypes2       = aDeduceTypes2;
 		functionInvocation = aFunctionInvocation;
 		//
+
+		if (functionInvocation == null) {
+			tripleo.elijah.util.Stupidity.println2("**=== functionInvocation == null ");
+			return;
+		}
+
 		functionInvocation.generatePromise().then(new DoneCallback<BaseGeneratedFunction>() {
 			@Override
 			public void onDone(final BaseGeneratedFunction result) {
@@ -77,8 +76,7 @@ public class DeferredMemberFunction {
 
 	public IInvocation getInvocation() {
 		if (invocation == null) {
-			if (parent instanceof DeduceTypes2.OS_SpecialVariable) {
-				final DeduceTypes2.OS_SpecialVariable specialVariable = (DeduceTypes2.OS_SpecialVariable) parent;
+			if (parent instanceof final DeduceTypes2.OS_SpecialVariable specialVariable) {
 				invocation = specialVariable.getInvocation(deduceTypes2);
 			}
 		}

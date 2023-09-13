@@ -10,32 +10,18 @@
 package tripleo.elijah.stages.gen_fn;
 
 //import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
-import org.jdeferred2.DoneCallback;
-import org.jdeferred2.Promise;
-import org.jdeferred2.impl.DeferredObject;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.Context;
-import tripleo.elijah.lang.IExpression;
-import tripleo.elijah.lang.IdentExpression;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.lang.OS_Type;
-import tripleo.elijah.stages.deduce.DeduceElementIdent;
-import tripleo.elijah.stages.deduce.DeducePath;
-import tripleo.elijah.stages.deduce.DeducePhase;
-import tripleo.elijah.stages.deduce.DeduceTypes2;
-import tripleo.elijah.stages.deduce.OnType;
-import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_IdentTableEntry;
-import tripleo.elijah.stages.deduce.post_bytecode.IDeduceElement3;
-import tripleo.elijah.stages.deduce.zero.ITE_Zero;
-import tripleo.elijah.stages.instructions.IdentIA;
-import tripleo.elijah.stages.instructions.InstructionArgument;
-import tripleo.elijah.stages.instructions.IntegerIA;
-import tripleo.elijah.util.Holder;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import org.jdeferred2.*;
+import org.jdeferred2.impl.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.deduce.post_bytecode.*;
+import tripleo.elijah.stages.deduce.zero.*;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.util.*;
+
+import java.util.*;
 
 /**
  * Created 9/12/20 10:27 PM
@@ -107,17 +93,6 @@ public class IdentTableEntry extends BaseTableEntry1 implements Constructable, T
 		  '}';
 	}
 
-	public IdentExpression getIdent() {
-		return ident;
-	}
-
-	@Override
-	public void resolveTypeToClass(final GeneratedNode gn) {
-		resolvedType = gn;
-		if (type != null) // TODO maybe find a more robust solution to this, like another Promise? or just setType? or onPossiblesResolve?
-			type.resolve(gn); // TODO maybe this obviates the above?
-	}
-
 	public boolean isResolved() {
 		return resolvedType != null;
 	}
@@ -142,8 +117,6 @@ public class IdentTableEntry extends BaseTableEntry1 implements Constructable, T
 		phase.onType(this, callback);
 	}
 
-	// region constructable
-
 	//	@SuppressFBWarnings("NP_NONNULL_RETURN_VIOLATION")
 	public @NotNull Collection<TypeTableEntry> potentialTypes() {
 		return potentialTypes.values();
@@ -167,14 +140,28 @@ public class IdentTableEntry extends BaseTableEntry1 implements Constructable, T
 
 	}
 
+	// region constructable
+
+	@Override
+	public void resolveTypeToClass(final GeneratedNode gn) {
+		resolvedType = gn;
+		if (type != null) // TODO maybe find a more robust solution to this, like another Promise? or just setType? or onPossiblesResolve?
+			type.resolve(gn); // TODO maybe this obviates the above?
+	}
+
 	@Override
 	public void setGenType(final GenType aGenType) {
 		if (type != null) {
 			type.genType.copy(aGenType);
 		} else {
 			throw new IllegalStateException("idte-102 Attempting to set a null type");
-//			System.err.println("idte-102 Attempting to set a null type");
+//			tripleo.elijah.util.Stupidity.println_err2("idte-102 Attempting to set a null type");
 		}
+	}
+
+	@Override
+	public Promise<ProcTableEntry, Void, Void> constructablePromise() {
+		return constructableDeferred.promise();
 	}
 
 	public void setGenType(final GenType genType, final BaseGeneratedFunction gf) {
@@ -187,13 +174,16 @@ public class IdentTableEntry extends BaseTableEntry1 implements Constructable, T
 
 	// endregion constructable
 
-	public void setDeduceTypes2(final @NotNull DeduceTypes2 aDeduceTypes2, final Context aContext, final @NotNull BaseGeneratedFunction aGeneratedFunction) {
-		dei.setDeduceTypes2(aDeduceTypes2, aContext, aGeneratedFunction);
+	public void makeType(final BaseGeneratedFunction aGeneratedFunction, final TypeTableEntry.Type aType, final OS_Type aOS_Type) {
+		type = aGeneratedFunction.newTypeTableEntry(aType, aOS_Type, getIdent(), this);
 	}
 
-	@Override
-	public Promise<ProcTableEntry, Void, Void> constructablePromise() {
-		return constructableDeferred.promise();
+	public IdentExpression getIdent() {
+		return ident;
+	}
+
+	public void setDeduceTypes2(final @NotNull DeduceTypes2 aDeduceTypes2, final Context aContext, final @NotNull BaseGeneratedFunction aGeneratedFunction) {
+		dei.setDeduceTypes2(aDeduceTypes2, aContext, aGeneratedFunction);
 	}
 
 	public DeducePath buildDeducePath(final BaseGeneratedFunction generatedFunction) {
@@ -219,7 +209,6 @@ public class IdentTableEntry extends BaseTableEntry1 implements Constructable, T
 		return backlinkSet.promise();
 	}
 
-
 	public void onFefiDone(final DoneCallback<GenType> aCallback) {
 		fefiDone.then(aCallback);
 	}
@@ -235,10 +224,6 @@ public class IdentTableEntry extends BaseTableEntry1 implements Constructable, T
 	public void setBacklink(final InstructionArgument aBacklink) {
 		backlink = aBacklink;
 		backlinkSet.resolve(backlink);
-	}
-
-	public void makeType(final BaseGeneratedFunction aGeneratedFunction, final TypeTableEntry.Type aType, final OS_Type aOS_Type) {
-		type = aGeneratedFunction.newTypeTableEntry(aType, aOS_Type, getIdent(), this);
 	}
 
 	public void makeType(final BaseGeneratedFunction aGeneratedFunction, final TypeTableEntry.Type aType, final IExpression aExpression) {

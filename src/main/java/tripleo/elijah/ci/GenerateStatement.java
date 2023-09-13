@@ -8,11 +8,10 @@
  */
 package tripleo.elijah.ci;
 
-import antlr.Token;
-import tripleo.elijah.lang.IExpression;
+import antlr.*;
+import tripleo.elijah.lang.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created 9/6/20 12:04 PM
@@ -27,10 +26,10 @@ public class GenerateStatement {
 	public class Directive {
 
 		private final IExpression expression;
-		private final String name;
+		private final String      name;
 
 		public Directive(final Token token_, final IExpression expression_) {
-			name = token_.getText();
+			name       = token_.getText();
 			expression = expression_;
 		}
 

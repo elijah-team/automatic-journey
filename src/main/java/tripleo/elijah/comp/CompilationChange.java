@@ -2,7 +2,7 @@ package tripleo.elijah.comp;
 
 import org.jetbrains.annotations.*;
 
-interface CompilationChange {
+public interface CompilationChange {
 	void apply(final Compilation c);
 }
 

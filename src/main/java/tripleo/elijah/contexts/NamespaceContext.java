@@ -7,7 +7,7 @@
  *
  */
 /**
- * 
+ *
  */
 package tripleo.elijah.contexts;
 
@@ -34,15 +34,16 @@ public class NamespaceContext extends Context {
 		carrier = ns;
 	}
 
-	@Override public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	@Override
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(carrier.getContext());
-		for (final ClassItem item: carrier.getItems()) {
+		for (final ClassItem item : carrier.getItems()) {
 			if (!(item instanceof ClassStatement) &&
-				!(item instanceof NamespaceStatement) &&
-				!(item instanceof VariableSequence) &&
-				!(item instanceof AliasStatement) &&
-				!(item instanceof FunctionDef) &&
-				!(item instanceof PropertyStatement)
+			  !(item instanceof NamespaceStatement) &&
+			  !(item instanceof VariableSequence) &&
+			  !(item instanceof AliasStatement) &&
+			  !(item instanceof FunctionDef) &&
+			  !(item instanceof PropertyStatement)
 			) continue;
 			if (item instanceof OS_Element2) {
 				if (((OS_Element2) item).name().equals(name)) {
@@ -50,7 +51,7 @@ public class NamespaceContext extends Context {
 				}
 			}
 			if (item instanceof VariableSequence) {
-//				System.out.println("[NamespaceContext#lookup] VariableSequence "+item);
+				tripleo.elijah.util.Stupidity.println2("[NamespaceContext#lookup] VariableSequence " + item);
 				for (final VariableStatement vs : ((VariableSequence) item).items()) {
 					if (vs.getName().equals(name))
 						Result.add(name, level, vs, this);
@@ -66,7 +67,8 @@ public class NamespaceContext extends Context {
 
 	}
 
-	@Override public Context getParent() {
+	@Override
+	public Context getParent() {
 		return _parent;
 	}
 }

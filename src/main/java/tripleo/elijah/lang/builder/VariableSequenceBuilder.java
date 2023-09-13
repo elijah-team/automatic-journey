@@ -16,24 +16,15 @@ import java.util.*;
  * Created 12/22/20 11:48 PM
  */
 public class VariableSequenceBuilder extends ElBuilder {
-	private IExpression _initial;
-	private IdentExpression _name;
-	private TypeName _tn;
-	private TypeModifiers def = null;
-
-	private Context _context;
 	List<Triple> triples = new ArrayList<Triple>();
+	private IExpression     _initial;
+	private IdentExpression _name;
+	private TypeName        _tn;
+	private TypeModifiers   def = null;
+	private Context _context;
 
 	public void defaultModifiers(final TypeModifiers modifiers) {
 		def = modifiers;
-	}
-
-	public void next() {
-		if (_initial == null) _initial = IExpression.UNASSIGNED;
-		triples.add(new Triple(_initial, _name, _tn));
-		_initial = null;
-		_name = null;
-//		_tn = null;
 	}
 
 	public void setName(final IdentExpression i) {
@@ -68,20 +59,28 @@ public class VariableSequenceBuilder extends ElBuilder {
 		return variableSequence;
 	}
 
+	public void next() {
+		if (_initial == null) _initial = IExpression.UNASSIGNED;
+		triples.add(new Triple(_initial, _name, _tn));
+		_initial = null;
+		_name    = null;
+//		_tn = null;
+	}
+
 	@Override
 	protected void setContext(final Context context) {
 		_context = context;
 	}
 
 	static class Triple {
-		IExpression _initial;
+		IExpression     _initial;
 		IdentExpression _name;
-		TypeName _tn;
+		TypeName        _tn;
 
 		public Triple(final IExpression _initial, final IdentExpression _name, final TypeName _tn) {
 			this._initial = _initial;
-			this._name = _name;
-			this._tn = _tn;
+			this._name    = _name;
+			this._tn      = _tn;
 		}
 	}
 }

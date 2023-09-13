@@ -1,6 +1,6 @@
 package tripleo.elijah.stages.deduce.fluffy.i;
 
-import java.util.List;
+import java.util.*;
 
 public interface FluffyModule {
 	FluffyLsp lsp();

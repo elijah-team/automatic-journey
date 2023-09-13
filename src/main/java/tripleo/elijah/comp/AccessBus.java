@@ -3,10 +3,11 @@ package tripleo.elijah.comp;
 import org.jdeferred2.*;
 import org.jdeferred2.impl.*;
 import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.Compilation.*;
+import tripleo.elijah.comp.internal.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.nextgen.inputtree.*;
 import tripleo.elijah.nextgen.outputtree.*;
-import tripleo.elijah.stages.gen_c.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.gen_generic.*;
 import tripleo.elijah.stages.logging.*;
@@ -18,12 +19,13 @@ import java.util.function.*;
 import java.util.stream.*;
 
 public class AccessBus {
-	public final GenerateResult gr = new GenerateResult();
+	public final  GenerateResult                                  gr                    = new GenerateResult();
+	final         DeferredObject<GenerateResult, Void, Void>      generateResultPromise = new DeferredObject<>();
 	private final Compilation                                     _c;
 	private final DeferredObject<PipelineLogic, Void, Void>       pipeLineLogicPromise  = new DeferredObject<>();
 	private final DeferredObject<List<GeneratedNode>, Void, Void> lgcPromise            = new DeferredObject<>();
 	private final DeferredObject<EIT_ModuleList, Void, Void>      moduleListPromise     = new DeferredObject<>();
-	private final DeferredObject<GenerateResult, Void, Void>      generateResultPromise = new DeferredObject<>();
+	private final Map<String, ProcessRecord.PipelinePlugin>       pipelinePlugins       = new HashMap<>();
 	private       PipelineLogic                                   ____pl;
 
 
@@ -31,16 +33,8 @@ public class AccessBus {
 		_c = aC;
 	}
 
-	public @NotNull Compilation getCompilation() {
-		return _c;
-	}
-
 	public void subscribePipelineLogic(final DoneCallback<PipelineLogic> aPipelineLogicDoneCallback) {
 		pipeLineLogicPromise.then(aPipelineLogicDoneCallback);
-	}
-
-	private void resolvePipelineLogic(final PipelineLogic pl) {
-		pipeLineLogicPromise.resolve(pl);
 	}
 
 	@Deprecated
@@ -73,6 +67,10 @@ public class AccessBus {
 		resolvePipelineLogic(x);
 	}
 
+	private void resolvePipelineLogic(final PipelineLogic pl) {
+		pipeLineLogicPromise.resolve(pl);
+	}
+
 	public void subscribe_lgc(@NotNull final AB_LgcListener aLgcListener) {
 		lgcPromise.then(aLgcListener::lgc_slot);
 	}
@@ -94,7 +92,7 @@ public class AccessBus {
 		final ElLog.Verbosity verbosity = aPipelineLogic.getVerbosity();
 
 		final OutputFileFactoryParams p         = new OutputFileFactoryParams(mod, aErrSink, verbosity, aPipelineLogic);
-		final GenerateC               generateC = new GenerateC(p);
+		final GenerateFiles           generateC = OutputFileFactory.create(CompilationAlways.defaultPrelude(), p);
 
 		final Compilation             ccc = mod.parent;
 		@NotNull final EOT_OutputTree cot = ccc.getOutputTree();
@@ -102,8 +100,7 @@ public class AccessBus {
 		for (final GeneratedNode generatedNode : lgc) {
 			if (generatedNode.module() != mod) continue; // README curious
 
-			if (generatedNode instanceof GeneratedContainerNC) {
-				final GeneratedContainerNC nc = (GeneratedContainerNC) generatedNode;
+			if (generatedNode instanceof final GeneratedContainerNC nc) {
 
 				// 1.
 				nc.generateCode(generateC, gr);
@@ -127,8 +124,28 @@ public class AccessBus {
 //		gr.additional(grx);
 	}
 
+	public void writeLogs() {
+		@NotNull final Compilation comp = getCompilation(); // this._c
+
+		comp.writeLogs(comp.cfg.silent, comp.elLogs);
+	}
+
+	public @NotNull Compilation getCompilation() {
+		return _c;
+	}
+
 	public PipelineLogic __getPL() {
 		return ____pl; // TODO hack. remove soon
+	}
+
+	public void addPipelinePlugin(final ProcessRecord.PipelinePlugin aPlugin) {
+		pipelinePlugins.put(aPlugin.name(), aPlugin);
+	}
+
+	public ProcessRecord.PipelinePlugin getPipelinePlugin(final String aPipelineName) {
+		if (!(pipelinePlugins.containsKey(aPipelineName))) return null;
+
+		return pipelinePlugins.get(aPipelineName);
 	}
 
 	public interface AB_ModuleListListener {

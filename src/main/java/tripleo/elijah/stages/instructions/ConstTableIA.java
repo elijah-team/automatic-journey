@@ -8,29 +8,28 @@
  */
 package tripleo.elijah.stages.instructions;
 
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.ConstantTableEntry;
+import tripleo.elijah.stages.gen_fn.*;
 
 /**
  * Created 9/10/20 3:35 PM
  */
 public class ConstTableIA implements InstructionArgument {
-    private final BaseGeneratedFunction gf;
-    private final int index;
-
-    @Override
-    public String toString() {
-        final ConstantTableEntry constantTableEntry = gf.cte_list.get(index);
-        final String name = constantTableEntry.getName();
-        if (name != null)
-            return String.format("(ct %d) [%s=%s]", index, name, constantTableEntry.initialValue);
-        else
-            return String.format("(ct %d) [%s]", index, constantTableEntry.initialValue);
-    }
+	private final BaseGeneratedFunction gf;
+	private final int                   index;
 
 	public ConstTableIA(final int index, final BaseGeneratedFunction generatedFunction) {
 		this.index = index;
 		this.gf    = generatedFunction;
+	}
+
+	@Override
+	public String toString() {
+		final ConstantTableEntry constantTableEntry = gf.cte_list.get(index);
+		final String             name               = constantTableEntry.getName();
+		if (name != null)
+			return String.format("(ct %d) [%s=%s]", index, name, constantTableEntry.initialValue);
+		else
+			return String.format("(ct %d) [%s]", index, constantTableEntry.initialValue);
 	}
 
 	public int getIndex() {

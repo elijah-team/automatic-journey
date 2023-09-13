@@ -1,28 +1,14 @@
 package tripleo.elijah.stages.gen_c;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.lang.ClassStatement;
-import tripleo.elijah.lang.FunctionDef;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.lang.PropertyStatement;
-import tripleo.elijah.lang.VariableStatement;
-import tripleo.elijah.stages.deduce.FunctionInvocation;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.GeneratedClass;
-import tripleo.elijah.stages.gen_fn.GeneratedContainerNC;
-import tripleo.elijah.stages.gen_fn.GeneratedFunction;
-import tripleo.elijah.stages.gen_fn.GeneratedNamespace;
-import tripleo.elijah.stages.gen_fn.GeneratedNode;
-import tripleo.elijah.stages.gen_fn.IdentTableEntry;
-import tripleo.elijah.stages.gen_fn.ProcTableEntry;
-import tripleo.elijah.stages.instructions.IdentIA;
-import tripleo.elijah.stages.instructions.InstructionArgument;
-import tripleo.elijah.util.NotImplementedException;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.util.*;
 
-import java.util.List;
-import java.util.function.Consumer;
+import java.util.*;
+import java.util.function.*;
 
 class CRI_Ident {
 	private final IdentTableEntry       ite;
@@ -51,13 +37,15 @@ class CRI_Ident {
 		final OS_Element resolved_element = ite.getResolvedElement();
 		final String[]   text             = {null};
 
+		final GeneratedClass _cheat = aCReference._cheat;
+
 		if (resolved_element != null) {
 			GeneratedNode resolved = null;
 			if (resolved_element instanceof ClassStatement) {
 				resolved = _re_is_ClassStatement();
 			} else if (resolved_element instanceof FunctionDef) {
 				@Nullable final ProcTableEntry pte = ite.getCallablePTE();
-				resolved = _re_is_FunctionDef(pte);
+				resolved = _re_is_FunctionDef(pte, _cheat);
 			} else if (resolved_element instanceof PropertyStatement) {
 				resolved = _re_is_PropertyStatement(addRef, aog, sSize, i, aValue, (x) -> skip[0] = true, (x) -> text[0] = x);
 			}
@@ -69,7 +57,7 @@ class CRI_Ident {
 				switch (state) {
 				case 1:
 					if (resolved == null) {
-						tripleo.elijah.util.Stupidity.println_err("***88*** resolved is null for " + ite);
+						Stupidity.println_err("***88*** resolved is null for " + ite);
 					}
 					if (sSize >= i + 1) {
 						_getIdentIAPath_IdentIAHelper(null, sl, i, sSize, resolved_element, generatedFunction, resolved, aValue, aCReference);
@@ -141,7 +129,7 @@ class CRI_Ident {
 		return resolved;
 	}
 
-	private GeneratedNode _re_is_FunctionDef(final @Nullable ProcTableEntry pte) {
+	private GeneratedNode _re_is_FunctionDef(final @Nullable ProcTableEntry pte, final GeneratedClass a_cheat) {
 		GeneratedNode resolved = null;
 		if (pte != null) {
 			final FunctionInvocation fi = pte.getFunctionInvocation();
@@ -164,6 +152,11 @@ class CRI_Ident {
 //								fi.setClassInvocation();
 			}
 		}
+
+		if (resolved == null) {
+			resolved = a_cheat;
+		}
+
 		return resolved;
 	}
 

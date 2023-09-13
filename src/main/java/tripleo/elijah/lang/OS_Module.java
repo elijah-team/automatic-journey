@@ -63,10 +63,6 @@ public class OS_Module implements OS_Element, OS_Container {
 		this._fileName = fileName;
 	}
 
-	public @NotNull Collection<ModuleItem> getItems() {
-		return items;
-	}
-
 	public boolean hasClass(final String className) {
 		for (final ModuleItem item : items) {
 			if (item instanceof ClassStatement) {
@@ -93,11 +89,15 @@ public class OS_Module implements OS_Element, OS_Container {
 		return a;
 	}
 
+	public @NotNull Collection<ModuleItem> getItems() {
+		return items;
+	}
+
 	@Override
 	public void add(final OS_Element anElement) {
 		if (!(anElement instanceof ModuleItem)) {
 			parent.getErrSink().info(String.format(
-					"[Module#add] not adding %s to OS_Module", anElement.getClass().getName()));
+			  "[Module#add] not adding %s to OS_Module", anElement.getClass().getName()));
 			return; // TODO FalseAddDiagnostic
 		}
 		items.add((ModuleItem) anElement);
@@ -105,7 +105,7 @@ public class OS_Module implements OS_Element, OS_Container {
 
 //	public void modify_namespace(Qualident q, NamespaceModify aModification) { // TODO aModification is unused
 ////		NotImplementedException.raise();
-//		System.err.println("[OS_Module#modify_namespace] " + q + " " + aModification);
+//		tripleo.elijah.util.Stupidity.println_err2("[OS_Module#modify_namespace] " + q + " " + aModification);
 //		//
 //		// DON'T MODIFY  NAMETABLE
 //		//
@@ -116,7 +116,7 @@ public class OS_Module implements OS_Element, OS_Container {
 //
 //	public void modify_namespace(ImportStatement imp, Qualident q, NamespaceModify aModification) { // TODO aModification is unused
 ////		NotImplementedException.raise();
-//		System.err.println("[OS_Module#modify_namespace] " + imp + " " + q + " " + aModification);
+//		tripleo.elijah.util.Stupidity.println_err2("[OS_Module#modify_namespace] " + imp + " " + q + " " + aModification);
 ///*
 //		getContext().add(imp, q); // TODO prolly wrong; do a second pass later to add definition...?
 //*/
@@ -133,6 +133,12 @@ public class OS_Module implements OS_Element, OS_Container {
 	 *
 	 * @return null
 	 */
+
+	@Override
+	public Context getContext() {
+		return _a._context;
+	}
+
 	/**
 	 * @ ensures \result == null
 	 */
@@ -145,9 +151,8 @@ public class OS_Module implements OS_Element, OS_Container {
 		this.parent = parent;
 	}
 
-	@Override
-	public Context getContext() {
-		return _a._context;
+	public void setContext(final ModuleContext mctx) {
+		_a.setContext(mctx);
 	}
 
 	/**
@@ -155,7 +160,8 @@ public class OS_Module implements OS_Element, OS_Container {
 	 *
 	 * @return a new OS_Package instance or default_package
 	 */
-	@NotNull public OS_Package pullPackageName() {
+	@NotNull
+	public OS_Package pullPackageName() {
 		if (packageNames_q.empty())
 			return OS_Package.default_package;
 		return parent.makePackage(packageNames_q.peek());
@@ -191,8 +197,8 @@ public class OS_Module implements OS_Element, OS_Container {
 		fm.find_all_entry_points();
 	}
 
-	public void setContext(final ModuleContext mctx) {
-		_a.setContext(mctx);
+	public Compilation getCompilation() {
+		return parent;
 	}
 
 	@Override
@@ -218,10 +224,6 @@ public class OS_Module implements OS_Element, OS_Container {
 
 	public void setLsp(final @NotNull LibraryStatementPart aLsp) {
 		lsp = aLsp;
-	}
-
-	public Compilation getCompilation() {
-		return parent;
 	}
 }
 

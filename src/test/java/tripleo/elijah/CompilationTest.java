@@ -8,22 +8,17 @@
  */
 package tripleo.elijah;
 
-import org.junit.Assert;
-import org.junit.Test;
-import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.comp.ErrSink;
-import tripleo.elijah.comp.IO;
-import tripleo.elijah.comp.StdErrSink;
-import tripleo.elijah.comp.internal.CompilationImpl;
+import org.junit.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.internal.*;
 
-import java.io.File;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
-import static tripleo.elijah.util.Helpers.List_of;
+import static tripleo.elijah.util.Helpers.*;
 
 /**
  * @author Tripleo(envy)
- *
  */
 public class CompilationTest {
 
@@ -43,7 +38,7 @@ public class CompilationTest {
 	}
 
 }
-	
+
 //
 //
 //

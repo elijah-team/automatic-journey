@@ -25,7 +25,7 @@ import static org.easymock.EasyMock.*;
 public class GetRealTargetNameTest {
 
 	GeneratedFunction gf;
-	OS_Module mod;
+	OS_Module         mod;
 
 	@Before
 	public void setUp() throws Exception {
@@ -34,7 +34,7 @@ public class GetRealTargetNameTest {
 		gf = new GeneratedFunction(fd);
 	}
 
-	@Ignore @Test
+	@Ignore  @Test
 	public void testManualXDotFoo() {
 		final IdentExpression          x_ident   = Helpers.string_to_ident("x");
 		@NotNull final IdentExpression foo_ident = Helpers.string_to_ident("foo");

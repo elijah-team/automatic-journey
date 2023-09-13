@@ -4,19 +4,16 @@
 package tripleo.elijah.stages.stage1;
 
 import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.FunctionInvocation;
-import tripleo.elijah.stages.gen_fn.GenType;
-import tripleo.elijah.stages.gen_fn.GenerateFunctions.S1toG_GC_Processor;
-import tripleo.elijah.stages.gen_fn.GeneratedConstructor;
-import tripleo.elijah.stages.gen_fn.TypeTableEntry;
-import tripleo.elijah.stages.instructions.InstructionName;
-import tripleo.elijah.stages.instructions.IntegerIA;
-import tripleo.elijah.stages.instructions.VariableTableType;
-import tripleo.util.range.Range;
+import tripleo.elijah.lang.types.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.gen_fn.GenerateFunctions.*;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.util.range.*;
 
-import java.util.List;
+import java.util.*;
 
-import static tripleo.elijah.util.Helpers.List_of;
+import static tripleo.elijah.util.Helpers.*;
 
 /**
  * @author Created    Oct 7, 2022 at 7:00:43 PM
@@ -60,11 +57,8 @@ public class S1_Constructor {
 	}
 
 	public void parseArgs() {
-		final ConstructorDef     aConstructorDef     = source;
-		final FunctionInvocation aFunctionInvocation = this.invocation;
-
-		final List<FormalArgListItem> fali_args = aConstructorDef.fal().falis;
-		final List<TypeTableEntry>    fi_args   = aFunctionInvocation.getArgs();
+		final List<FormalArgListItem> fali_args = source.fal().falis;
+		final List<TypeTableEntry>    fi_args   = invocation.getArgs();
 
 		for (int i = 0; i < fali_args.size(); i++) {
 			final FormalArgListItem fali = fali_args.get(i);
@@ -76,7 +70,7 @@ public class S1_Constructor {
 			final GenType  genType  = new GenType();
 			final TypeName typeName = fali.typeName();
 			if (typeName != null) {
-				genType.typeName = new OS_Type(typeName);
+				genType.typeName = new OS_UserType(typeName);
 			}
 			genType.resolved = attached;
 
@@ -97,6 +91,11 @@ public class S1_Constructor {
 
 	public GeneratedConstructor getGenerated() {
 		return gf;
+	}
+
+	public void process(final S1toG_GC_Processor aProcessor, final boolean aB) {
+		process(aProcessor);
+		gf.fi = invocation;
 	}
 
 	public void process(final S1toG_GC_Processor p) {

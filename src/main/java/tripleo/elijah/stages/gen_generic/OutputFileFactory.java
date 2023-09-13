@@ -1,11 +1,10 @@
 package tripleo.elijah.stages.gen_generic;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.stages.gen_c.GenerateC;
-import tripleo.elijah.util.NotImplementedException;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.stages.gen_c.*;
+import tripleo.elijah.util.*;
 
-import java.util.Objects;
+import java.util.*;
 
 public final class OutputFileFactory {
 	private OutputFileFactory() {

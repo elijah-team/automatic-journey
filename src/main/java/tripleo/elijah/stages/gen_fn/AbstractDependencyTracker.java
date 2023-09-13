@@ -8,13 +8,11 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import io.reactivex.rxjava3.subjects.ReplaySubject;
-import io.reactivex.rxjava3.subjects.Subject;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.stages.deduce.FunctionInvocation;
+import io.reactivex.rxjava3.subjects.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.stages.deduce.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created 6/21/21 11:36 PM
@@ -36,13 +34,13 @@ public abstract class AbstractDependencyTracker implements DependencyTracker {
 			subscribers.add((Subscriber<FunctionInvocation>) aSubscriber);
 		}
 	};*/
+	private final List<FunctionInvocation> dependentFunctions = new ArrayList<FunctionInvocation>();
+	private final List<GenType>            dependentTypes     = new ArrayList<GenType>();
 
 	@Override
 	public List<GenType> dependentTypes() {
 		return dependentTypes;
 	}
-	private final List<FunctionInvocation> dependentFunctions = new ArrayList<FunctionInvocation>();
-	private final List<GenType>            dependentTypes     = new ArrayList<GenType>();
 
 	@Override
 	public List<FunctionInvocation> dependentFunctions() {

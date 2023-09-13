@@ -1,8 +1,7 @@
 package tripleo.elijah.nextgen.outputstatement;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.OS_Element;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
 
 public class EX_SingleElementExplanation implements EX_Explanation {
 
@@ -15,5 +14,10 @@ public class EX_SingleElementExplanation implements EX_Explanation {
 
 	public @NotNull OS_Element getElement() {
 		return _element;
+	}
+
+	@Override
+	public String getText() {
+		return "EX_SingleElementExplanation{"+ _element +"}";
 	}
 }

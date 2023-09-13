@@ -8,22 +8,20 @@
  */
 package tripleo.elijah.contexts;
 
-import tripleo.elijah.lang.Context;
-import tripleo.elijah.lang.LookupResultList;
-import tripleo.elijah.lang.MatchConditional;
+import tripleo.elijah.lang.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created 9/24/20 6:11 PM
  */
 public class MatchContext extends Context {
 	private final MatchConditional carrier;
-	private final Context _parent;
+	private final Context          _parent;
 
 	public MatchContext(final Context aParent, final MatchConditional mc) {
-		this._parent=aParent;
-		this.carrier=mc;
+		this._parent = aParent;
+		this.carrier = mc;
 	}
 
 	@Override

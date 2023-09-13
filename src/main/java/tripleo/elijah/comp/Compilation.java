@@ -1,10 +1,10 @@
 /*
  * Elijjah compiler, copyright Tripleo <oluoluolu+elijah@gmail.com>
- * 
- * The contents of this library are released under the LGPL licence v3, 
+ *
+ * The contents of this library are released under the LGPL licence v3,
  * the GNU Lesser General Public License text was downloaded from
  * http://www.gnu.org/licenses/lgpl.html from `Version 3, 29 June 2007'
- * 
+ *
  */
 package tripleo.elijah.comp;
 
@@ -13,50 +13,90 @@ import io.reactivex.rxjava3.annotations.*;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.*;
 import io.reactivex.rxjava3.subjects.*;
+import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.ci.*;
 import tripleo.elijah.comp.functionality.f202.*;
-import tripleo.elijah.comp.queries.*;
 import tripleo.elijah.lang.*;
+import tripleo.elijah.nextgen.inputtree.*;
 import tripleo.elijah.nextgen.outputtree.*;
 import tripleo.elijah.nextgen.query.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.deduce.fluffy.i.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.ut.*;
+import tripleo.elijah.util.*;
+import tripleo.elijah.world.i.*;
+import tripleo.elijah.world.impl.*;
 
 import java.io.*;
 import java.util.*;
 
 public abstract class Compilation {
 
-	public final  List<ElLog>             elLogs    = new LinkedList<ElLog>();
-	public final  CompilationConfig       cfg       = new CompilationConfig();
+	public final  List<ElLog>          elLogs = new LinkedList<ElLog>();
+	public final  CompilationConfig    cfg    = new CompilationConfig();
+	public final  CIS                  _cis   = new CIS();
 	//
-	final         MOD                  mod = new MOD(this);
-	private final Pipeline                pipelines;
-	private final int                     _compilationNumber;
-	private final ErrSink                 errSink;
-	private final CIS                     _cis      = new CIS();
-	private final Map<String, OS_Package> _packages = new HashMap<String, OS_Package>();
-	private final USE                  use = new USE(this);
+	public final  DefaultLivingRepo    _repo  = new DefaultLivingRepo();
+	//
+	final         MOD                  mod    = new MOD(this);
+	private final Pipeline             pipelines;
+	private final int                  _compilationNumber;
+	private final ErrSink              errSink;
 	private final IO                   io;
+	private final USE                  use    = new USE(this);
 	//
 	//
 	//
 	public        PipelineLogic        pipelineLogic;
-	private       CompilationRunner    __cr;
-	private       CompilerInstructions rootCI;
-	private int _packageCode  = 1;
-	private int _classCode    = 101;
+	private final   CompFactory                       _con    = new CompFactory() {
+		@Override
+		public @NotNull EIT_ModuleInput createModuleInput(final OS_Module aModule) {
+			return new EIT_ModuleInput(aModule, Compilation.this);
+		}
 
-	//
-	private int _functionCode = 1001;
-	public Compilation(final ErrSink aErrSink, final IO aIO) {
+		@Override
+		public @NotNull Qualident createQualident(final @NotNull List<String> sl) {
+			var R = new Qualident();
+			for (String s : sl) {
+				R.append(Helpers.string_to_ident(s));
+			}
+			return R;
+		}
+
+		@Override
+		public @NotNull InputRequest createInputRequest(final File aFile, final boolean aDo_out, final @Nullable LibraryStatementPart aLsp) {
+			return new InputRequest(aFile, aDo_out, aLsp);
+		}
+
+		@Override
+		public @NotNull WorldModule createWorldModule(final OS_Module m) {
+			CompilationEnclosure ce = getCompilationEnclosure();
+			final WorldModule    R  = new DefaultWorldModule(m, ce);
+
+			return R;
+		}
+	};
+	private       CompilerInstructions rootCI;
+	public        CompilationRunner    __cr;
+	private Finally _f = new Finally();
+
+	public Compilation(final @NotNull ErrSink aErrSink, final IO aIO) {
 		errSink            = aErrSink;
 		io                 = aIO;
 		_compilationNumber = new Random().nextInt(Integer.MAX_VALUE);
 		pipelines          = new Pipeline(aErrSink);
+	}
+
+	public static ElLog.Verbosity gitlabCIVerbosity() {
+		final boolean gitlab_ci = isGitlab_ci();
+		return gitlab_ci ? ElLog.Verbosity.SILENT : ElLog.Verbosity.VERBOSE;
+	}
+
+	private CompilationEnclosure getCompilationEnclosure() {
+		throw new NotImplementedException();
 	}
 
 	public static boolean isGitlab_ci() {
@@ -72,29 +112,23 @@ public abstract class Compilation {
 	}
 
 	public void feedCmdLine(final @NotNull List<String> args) {
+		feedCmdLine(args, new DefaultCompilerController());
+	}
+
+	public void feedCmdLine(final List<String> args, final CompilerController ctl) {
 		if (args.size() == 0) {
-			System.err.println("Usage: eljc [--showtree] [-sE|O] <directory or .ez file names>");
+			ctl.printUsage();
 			return; // ab
 		}
 
-		try {
-			final OptionsProcessor             op  = new ApacheOptionsProcessor();
-			final CompilerInstructionsObserver cio = new CompilerInstructionsObserver(this, op, _cis);
-
-			final String[] args2;
-			args2 = op.process(this, args);
-
-			__cr = new CompilationRunner(this, _cis);
-			__cr.doFindCIs(args2);
-		} catch (final Exception e) {
-			errSink.exception(e);
-			throw new RuntimeException(e);
+		if (ctl instanceof DefaultCompilerController) {
+			((DefaultCompilerController) ctl)._set(this, args);
+		} else if (ctl instanceof final UT_Controller uctl) {
+			uctl._set(this, args);
 		}
-	}
 
-	public static ElLog.Verbosity gitlabCIVerbosity() {
-		final boolean gitlab_ci = isGitlab_ci();
-		return gitlab_ci ? ElLog.Verbosity.SILENT : ElLog.Verbosity.VERBOSE;
+		ctl.processOptions();
+		ctl.runner();
 	}
 
 	public String getProjectName() {
@@ -103,16 +137,6 @@ public abstract class Compilation {
 
 	public OS_Module realParseElijjahFile(final String f, final @NotNull File file, final boolean do_out) throws Exception {
 		return use.realParseElijjahFile(f, file, do_out).success();
-	}
-
-	public Operation<CompilerInstructions> parseEzFile(final @NotNull File aFile) {
-		try {
-			final QueryEzFileToModuleParams       params = new QueryEzFileToModuleParams(aFile.getAbsolutePath(), io.readFile(aFile));
-			final Operation<CompilerInstructions> x      = new QueryEzFileToModule(params).calculate();
-			return x;
-		} catch (final FileNotFoundException aE) {
-			return Operation.failure(aE);
-		}
 	}
 
 	//
@@ -154,35 +178,31 @@ public abstract class Compilation {
 		}
 	}
 
-	public IO getIO() {
-		return io;
-	}
-
 //	public void setIO(final IO io) {
 //		this.io = io;
 //	}
-
-	public void addModule(final OS_Module module, final String fn) {
-		mod.addModule(module, fn);
-	}
-
-    public OS_Module fileNameToModule(final String fileName) {
-	    if (mod.fn2m.containsKey(fileName)) {
-		    return mod.fn2m.get(fileName);
-	    }
-	    return null;
-    }
-
-	//
-	// region MODULE STUFF
-	//
 
 	public ErrSink getErrSink() {
 		return errSink;
 	}
 
-	public boolean getSilence() {
-		return cfg.silent;
+	public IO getIO() {
+		return io;
+	}
+
+	//
+	// region MODULE STUFF
+	//
+
+	public void addModule(final OS_Module module, final String fn) {
+		mod.addModule(module, fn);
+	}
+
+	public OS_Module fileNameToModule(final String fileName) {
+		if (mod.fn2m.containsKey(fileName)) {
+			return mod.fn2m.get(fileName);
+		}
+		return null;
 	}
 
 	// endregion
@@ -190,6 +210,10 @@ public abstract class Compilation {
 	//
 	// region CLASS AND FUNCTION CODES
 	//
+
+	public boolean getSilence() {
+		return cfg.silent;
+	}
 
 	public Operation2<OS_Module> findPrelude(final String prelude_name) {
 		return use.findPrelude(prelude_name);
@@ -205,11 +229,7 @@ public abstract class Compilation {
 	}
 
 	public int nextClassCode() {
-		return _classCode++;
-	}
-
-	public int nextFunctionCode() {
-		return _functionCode++;
+		return _repo.nextClassCode();
 	}
 
 	// endregion
@@ -218,28 +238,19 @@ public abstract class Compilation {
 	// region PACKAGES
 	//
 
-	public boolean isPackage(final String pkg) {
-		return _packages.containsKey(pkg);
+	public int nextFunctionCode() {
+		return _repo.nextFunctionCode();
 	}
 
 	public OS_Package getPackage(final Qualident pkg_name) {
-		return _packages.get(pkg_name.toString());
-	}
-
-	public OS_Package makePackage(final Qualident pkg_name) {
-		if (!isPackage(pkg_name.toString())) {
-			final OS_Package newPackage = new OS_Package(pkg_name, nextPackageCode());
-			_packages.put(pkg_name.toString(), newPackage);
-			return newPackage;
-		} else
-			return _packages.get(pkg_name.toString());
-	}
-
-	private int nextPackageCode() {
-		return _packageCode++;
+		return _repo.getPackage(pkg_name.toString());
 	}
 
 	// endregion
+
+	public OS_Package makePackage(final Qualident pkg_name) {
+		return _repo.makePackage(pkg_name);
+	}
 
 	public int compilationNumber() {
 		return _compilationNumber;
@@ -254,11 +265,6 @@ public abstract class Compilation {
 		return mod.size();
 	}
 
-	@Deprecated
-	public @NotNull List<OS_Module> getModules() {
-		return mod.modules();
-	}
-
 	@NotNull
 	public abstract EOT_OutputTree getOutputTree();
 
@@ -268,12 +274,20 @@ public abstract class Compilation {
 		return getDeducePhase().generatedClasses.copy();
 	}
 
+	public boolean isPackage(final String aPackageName) {
+		return _repo.isPackage(aPackageName);
+	}
+
 	public Pipeline getPipelines() {
 		return pipelines;
 	}
 
 	public ModuleBuilder moduleBuilder() {
 		return new ModuleBuilder(this);
+	}
+
+	public Finally reports() {
+		return _f;
 	}
 
 	static class MOD {
@@ -304,7 +318,7 @@ public abstract class Compilation {
 	//
 	static class CompilationConfig {
 		public    boolean do_out;
-		public Stages stage = Stages.O; // Output
+		public    Stages  stage  = Stages.O; // Output
 		protected boolean silent = false;
 		boolean showTree = false;
 	}
@@ -345,11 +359,14 @@ public abstract class Compilation {
 	}
 
 	public static class CompilationAlways {
+		public static boolean VOODOO = false;
+
 		@NotNull
 		public static String defaultPrelude() {
 			return "c";
 		}
 	}
+
 }
 
 //

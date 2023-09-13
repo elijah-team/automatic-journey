@@ -24,13 +24,10 @@
 */
 package tripleo.elijah.stages.deduce.post_bytecode;
 
-import tripleo.elijah.lang.Context;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.stages.deduce.DeduceTypes2;
-import tripleo.elijah.stages.deduce.FoundElement;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.GenType;
-import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.instructions.*;
 
 public interface IDeduceElement3 {
 	void resolve(IdentIA aIdentIA, Context aContext, FoundElement aFoundElement);

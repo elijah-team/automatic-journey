@@ -15,12 +15,12 @@ import tripleo.elijah.lang.*;
  */
 public class PropertyStatementBuilder extends ElBuilder {
 	private IdentExpression prop_name;
-	private TypeName tn;
-	private Context _context;
-	private BaseScope _get_scope = null;
-	private BaseScope _set_scope = null;
-	private boolean _get_is_abstract = false;
-	private boolean _set_is_abstract = false;
+	private TypeName        tn;
+	private Context         _context;
+	private BaseScope       _get_scope       = null;
+	private BaseScope       _set_scope       = null;
+	private boolean         _get_is_abstract = false;
+	private boolean         _set_is_abstract = false;
 
 	@Override
 	protected OS_Element build() {

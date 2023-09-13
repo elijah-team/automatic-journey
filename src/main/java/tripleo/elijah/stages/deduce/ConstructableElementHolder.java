@@ -8,21 +8,20 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jetbrains.annotations.Contract;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.stages.gen_fn.Constructable;
-import tripleo.elijah.stages.gen_fn.IElementHolder;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.gen_fn.*;
 
 /**
  * Created 6/30/21 2:55 AM
  */
 public class ConstructableElementHolder implements IElementHolder {
-	private final OS_Element element;
+	private final OS_Element    element;
 	private final Constructable constructable;
 
 	@Contract(pure = true)
 	public ConstructableElementHolder(final OS_Element aElement, final Constructable aConstructable) {
-		element = aElement;
+		element       = aElement;
 		constructable = aConstructable;
 	}
 

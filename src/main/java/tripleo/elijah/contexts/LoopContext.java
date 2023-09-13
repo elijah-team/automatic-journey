@@ -7,13 +7,13 @@
  *
  */
 /**
- * 
+ *
  */
 package tripleo.elijah.contexts;
 
 import tripleo.elijah.lang.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * @author Tripleo
@@ -22,7 +22,7 @@ import java.util.List;
  */
 public class LoopContext extends Context {
 
-	private final Loop carrier;
+	private final Loop    carrier;
 	private final Context _parent;
 
 	public LoopContext(final Context cur, final Loop loop) {
@@ -30,7 +30,8 @@ public class LoopContext extends Context {
 		_parent = cur;
 	}
 
-	@Override public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	@Override
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(carrier.getContext());
 
 		if (carrier.getIterNameToken() != null) {
@@ -42,12 +43,12 @@ public class LoopContext extends Context {
 			}
 		}
 
-		for (final StatementItem item: carrier.getItems()) {
+		for (final StatementItem item : carrier.getItems()) {
 			if (!(item instanceof ClassStatement) &&
-					!(item instanceof NamespaceStatement) &&
-					!(item instanceof FunctionDef) &&
-					!(item instanceof VariableSequence) &&
-					!(item instanceof AliasStatement)
+			  !(item instanceof NamespaceStatement) &&
+			  !(item instanceof FunctionDef) &&
+			  !(item instanceof VariableSequence) &&
+			  !(item instanceof AliasStatement)
 			) continue;
 			if (item instanceof OS_Element2) {
 				if (((OS_Element2) item).name().equals(name)) {
@@ -55,7 +56,7 @@ public class LoopContext extends Context {
 				}
 			}
 			if (item instanceof VariableSequence) {
-				System.out.println("1102 "+item);
+				tripleo.elijah.util.Stupidity.println2("1102 " + item);
 				for (final VariableStatement vs : ((VariableSequence) item).items()) {
 					if (vs.getName().equals(name))
 						Result.add(name, level, vs, this);
@@ -69,7 +70,7 @@ public class LoopContext extends Context {
 				context.lookup(name, level + 1, Result, alreadySearched, false); // TODO test this
 		}
 		return Result;
-		
+
 	}
 
 	@Override

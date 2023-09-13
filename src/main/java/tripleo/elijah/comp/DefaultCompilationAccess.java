@@ -1,8 +1,6 @@
 package tripleo.elijah.comp;
 
 import com.google.common.collect.*;
-import io.reactivex.rxjava3.functions.*;
-import org.jdeferred2.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.comp.functionality.f202.*;
 import tripleo.elijah.stages.deduce.*;
@@ -11,7 +9,7 @@ import tripleo.elijah.stages.logging.*;
 
 import java.util.*;
 
-class DefaultCompilationAccess implements ICompilationAccess {
+public class DefaultCompilationAccess implements ICompilationAccess {
 	protected final Compilation                                compilation;
 	private final   DeferredObject2<PipelineLogic, Void, Void> pipelineLogicDeferred = new DeferredObject2<>();
 
@@ -19,32 +17,27 @@ class DefaultCompilationAccess implements ICompilationAccess {
 		compilation = aCompilation;
 	}
 
-	void registerPipelineLogic(final Consumer<PipelineLogic> aPipelineLogicConsumer) {
-		pipelineLogicDeferred.then(new DoneCallback<PipelineLogic>() {
-			@Override
-			public void onDone(final PipelineLogic result) {
-				try {
-					aPipelineLogicConsumer.accept(result);
-				} catch (final Throwable aE) {
-					throw new RuntimeException(aE);
-				}
-			}
-		});
-	}
+//	void registerPipelineLogic(final Consumer<PipelineLogic> aPipelineLogicConsumer) {
+//		pipelineLogicDeferred.then(new DoneCallback<PipelineLogic>() {
+//			@Override
+//			public void onDone(final PipelineLogic result) {
+//				try {
+//					aPipelineLogicConsumer.accept(result);
+//				} catch (final Throwable aE) {
+//					throw new RuntimeException(aE);
+//				}
+//			}
+//		});
+//	}
 
 	@Override
 	public void setPipelineLogic(final PipelineLogic pl) {
-		compilation.pipelineLogic = pl;
-
-		pipelineLogicDeferred.resolve(pl);
+		throw new Error() {
+		};
+//		compilation.pipelineLogic = pl;
+//
+//		pipelineLogicDeferred.resolve(pl);
 	}
-
-/*
-	@Override
-	public void addPipeline(final PipelineMember pl) {
-		compilation.addPipeline(pl);
-	}
-*/
 
 	@Override
 	@NotNull
@@ -69,13 +62,8 @@ class DefaultCompilationAccess implements ICompilationAccess {
 
 	@Override
 	public List<FunctionMapHook> functionMapHooks() {
-		return null;
+		return compilation.getDeducePhase().functionMapHooks;
 	}
-
-//	@Override
-//	public Pipeline pipelines() {
-//		return compilation.getPipelines();
-//	}
 
 	@Override
 	public Stages getStage() {

@@ -8,17 +8,15 @@
  */
 package tripleo.elijah.util;
 
-import tripleo.util.buffer.Buffer;
-import tripleo.util.buffer.DefaultBuffer;
-import tripleo.util.buffer.TextBuffer;
+import tripleo.util.buffer.*;
 
 /**
  * Created 4/26/21 11:36 PM
  */
 public class BufferTabbedOutputStream {
 
-	int tabwidth = 0;
 	final   TextBuffer b       = new DefaultBuffer("");
+	int tabwidth = 0;
 	private boolean    do_tabs = false;
 	private boolean    _closed = false;
 
@@ -36,6 +34,15 @@ public class BufferTabbedOutputStream {
 		b.append("\n");
 //		doIndent();
 		do_tabs = true;
+	}
+
+	public boolean is_connected() {
+		return !_closed;
+	}
+
+	void doIndent() {
+		for (int i = 0; i < tabwidth; i++)
+		     b.append("\t");
 	}
 
 	public void put_string_ln_no_tabs(final String s) {
@@ -73,17 +80,8 @@ public class BufferTabbedOutputStream {
 		doIndent();
 	}
 
-	void doIndent() {
-		for (int i = 0; i < tabwidth; i++)
-			b.append("\t");
-	}
-
 	public int t() {
 		return tabwidth;
-	}
-
-	public boolean is_connected() {
-		return !_closed;
 	}
 
 	public void quote_string(final String s) {

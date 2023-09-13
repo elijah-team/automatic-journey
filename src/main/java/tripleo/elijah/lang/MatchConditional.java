@@ -17,16 +17,16 @@ import java.util.*;
 
 /**
  * @author Tripleo
- *
+ * <p>
  * Created 	Apr 15, 2020 at 10:11:16 PM
  */
 public class MatchConditional implements OS_Element, StatementItem, FunctionItem {
 
-//	private final SingleIdentContext _ctx;
-	private final List<MC1> parts = new ArrayList<MC1>();
-	private IExpression expr;
-	private OS_Element parent;
-	private MatchContext __ctx;
+	//	private final SingleIdentContext _ctx;
+	private final List<MC1>    parts = new ArrayList<MC1>();
+	private       IExpression  expr;
+	private       OS_Element   parent;
+	private       MatchContext __ctx;
 
 	public MatchConditional(final OS_Element parent, final Context parentContext) {
 		this.parent = parent;
@@ -45,6 +45,11 @@ public class MatchConditional implements OS_Element, StatementItem, FunctionItem
 		visit.visitMatchConditional(this);
 	}
 
+	@Override
+	public Context getContext() {
+		return __ctx;
+	}
+
 	/**
 	 * @category OS_Element
 	 */
@@ -53,15 +58,10 @@ public class MatchConditional implements OS_Element, StatementItem, FunctionItem
 		return this.parent;
 	}
 
-	public void setParent(final OS_Element aParent) {
-		this.parent = aParent;
-	}
-
 	// region OS_Element
 
-	@Override
-	public Context getContext() {
-		return __ctx;
+	public void setParent(final OS_Element aParent) {
+		this.parent = aParent;
 	}
 
 	public void setContext(final MatchContext ctx) {
@@ -109,33 +109,28 @@ public class MatchConditional implements OS_Element, StatementItem, FunctionItem
 	public interface MC1 extends OS_Element, Documentable {
 		void add(FunctionItem aItem);
 
-		@Override
-		Context getContext();
-
 		Iterable<? extends FunctionItem> getItems();
 
 		@Override
 		default void visitGen(final ElElementVisitor visit) {
 			visit.visitMC1(this);
 		}
+
+		@Override
+		Context getContext();
 	}
 
 	public class MatchConditionalPart3 implements MC1 {
 
 		private final Context ___ctx = new MatchConditionalContext(MatchConditional.this.getContext(), this);
 
-//		private final List<FunctionItem> items = new ArrayList<FunctionItem>();
-private final List<Token> docstrings = null;
-        private IdentExpression matching_expression;
-		private Scope3 scope3;
+		//		private final List<FunctionItem> items = new ArrayList<FunctionItem>();
+		private final List<Token>     docstrings = null;
+		private       IdentExpression matching_expression;
+		private       Scope3          scope3;
 
 		public void expr(final IdentExpression expr) {
 			this.matching_expression = expr;
-		}
-
-		@Override
-		public Context getContext() {
-			return ___ctx;
 		}
 
 		@Override
@@ -145,11 +140,8 @@ private final List<Token> docstrings = null;
 		}
 
 		@Override
-		public void addDocString(final Token text) {
-//			if (docstrings == null)
-//				docstrings = new ArrayList<Token>();
-//			docstrings.add(text);
-			scope3.addDocString(text);
+		public Context getContext() {
+			return ___ctx;
 		}
 
 		@Override
@@ -164,12 +156,20 @@ private final List<Token> docstrings = null;
 		}
 
 		@Override
+		public void addDocString(final Token text) {
+//			if (docstrings == null)
+//				docstrings = new ArrayList<Token>();
+//			docstrings.add(text);
+			scope3.addDocString(text);
+		}
+
+		@Override
 		public OS_Element getParent() {
 			return MatchConditional.this;
 		}
 
 		public void scope(final Scope3 sco) {
-			scope3=sco;
+			scope3 = sco;
 		}
 	}
 
@@ -177,10 +177,10 @@ private final List<Token> docstrings = null;
 
 		private final Context ___ctx = new MatchConditionalContext(MatchConditional.this.getContext(), this);
 
-//		private final List<FunctionItem> items = new ArrayList<FunctionItem>();
+		//		private final List<FunctionItem> items = new ArrayList<FunctionItem>();
 //		private List<Token> docstrings = new ArrayList<Token>();
 		private IExpression matching_expression;
-		private Scope3 scope3;
+		private Scope3      scope3;
 
 		public IExpression getMatchingExpression() {
 			return matching_expression;
@@ -197,11 +197,8 @@ private final List<Token> docstrings = null;
 		}
 
 		@Override
-		public void addDocString(final Token text) {
-//			if (docstrings == null)
-//				docstrings = new ArrayList<Token>();
-//			docstrings.add(text);
-			scope3.addDocString(text);
+		public Context getContext() {
+			return ___ctx;
 		}
 
 		@Override
@@ -216,8 +213,11 @@ private final List<Token> docstrings = null;
 		}
 
 		@Override
-		public Context getContext() {
-			return ___ctx;
+		public void addDocString(final Token text) {
+//			if (docstrings == null)
+//				docstrings = new ArrayList<Token>();
+//			docstrings.add(text);
+			scope3.addDocString(text);
 		}
 
 		@Override
@@ -232,14 +232,14 @@ private final List<Token> docstrings = null;
 
 	public class MatchArm_TypeMatch implements MC1 {
 
-//		private final List<FunctionItem> items = new ArrayList<FunctionItem>();
+		//		private final List<FunctionItem> items = new ArrayList<FunctionItem>();
 		private final Context ___ctx = new MatchConditionalContext(//MatchConditional.this.getContext(), this);
-			getParent().getParent().getContext(), this);
+		  getParent().getParent().getContext(), this);
 
 		TypeName tn /*= new RegularTypeName()*/;
-//		private List<Token> docstrings = new ArrayList<Token>();
+		//		private List<Token> docstrings = new ArrayList<Token>();
 		private IdentExpression ident;
-		private Scope3 scope3;
+		private Scope3          scope3;
 
 		public void ident(final IdentExpression i1) {
 			this.ident = i1;
@@ -252,11 +252,8 @@ private final List<Token> docstrings = null;
 		}
 
 		@Override
-		public void addDocString(final Token text) {
-//			if (docstrings == null)
-//				docstrings = new ArrayList<Token>();
-//			docstrings.add(text);
-			scope3.addDocString(text);
+		public @NotNull Context getContext() {
+			return ___ctx;
 		}
 
 		@Override
@@ -270,6 +267,14 @@ private final List<Token> docstrings = null;
 //			return items;
 		}
 
+		@Override
+		public void addDocString(final Token text) {
+//			if (docstrings == null)
+//				docstrings = new ArrayList<Token>();
+//			docstrings.add(text);
+			scope3.addDocString(text);
+		}
+
 		public TypeName getTypeName() {
 			return tn;
 		}
@@ -280,11 +285,6 @@ private final List<Token> docstrings = null;
 
 		public IdentExpression getIdent() {
 			return ident;
-		}
-
-		@Override
-		public @NotNull Context getContext() {
-			return ___ctx;
 		}
 
 		@Override

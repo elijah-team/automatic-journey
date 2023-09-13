@@ -1,9 +1,9 @@
 package tripleo.elijah.nextgen.outputstatement;
 
-import tripleo.elijah.util.Helpers;
+import tripleo.elijah.util.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 public class EG_SequenceStatement implements EG_Statement {
 	private final EG_Naming          naming;
@@ -45,5 +45,9 @@ public class EG_SequenceStatement implements EG_Statement {
 	@Override
 	public EX_Explanation getExplanation() {
 		return null;
+	}
+
+	public List<EG_Statement> _list() {
+		return list;
 	}
 }

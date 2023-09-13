@@ -1,16 +1,12 @@
 package tripleo.elijah.stages.deduce.fluffy.impl;
 
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.comp.internal.CompilationImpl;
-import tripleo.elijah.entrypoints.MainClassEntryPoint;
-import tripleo.elijah.lang.ClassItem;
-import tripleo.elijah.lang.FunctionDef;
-import tripleo.elijah.lang.OS_Module;
-import tripleo.elijah.stages.deduce.fluffy.i.FluffyComp;
-import tripleo.elijah.stages.deduce.fluffy.i.FluffyModule;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.entrypoints.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.fluffy.i.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 public class FluffyCompImpl implements FluffyComp {
 

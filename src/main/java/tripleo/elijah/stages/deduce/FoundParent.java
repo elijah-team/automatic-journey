@@ -1,21 +1,16 @@
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.DoneCallback;
-import org.jdeferred2.Promise;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.comp.ErrSink;
-import tripleo.elijah.diagnostic.Diagnostic;
+import org.jdeferred2.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.diagnostic.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.zero.ITE_Zero;
-import tripleo.elijah.stages.deduce.zero.PTE_Zero;
-import tripleo.elijah.stages.deduce.zero.VTE_Zero;
-import tripleo.elijah.stages.deduce.zero.Zero_PotentialTypes;
+import tripleo.elijah.lang.types.*;
+import tripleo.elijah.stages.deduce.zero.*;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.util.NotImplementedException;
+import tripleo.elijah.util.*;
 
-import java.util.ArrayList;
+import java.util.*;
 
 public class FoundParent implements BaseTableEntry.StatusListener {
 	private final DeduceTypes2          deduceTypes2;
@@ -36,14 +31,11 @@ public class FoundParent implements BaseTableEntry.StatusListener {
 	@Override
 	public void onChange(final IElementHolder eh, final BaseTableEntry.Status newStatus) {
 		if (newStatus == BaseTableEntry.Status.KNOWN) {
-			if (bte instanceof VariableTableEntry) {
-				final @NotNull VariableTableEntry vte = (VariableTableEntry) bte;
+			if (bte instanceof final @NotNull VariableTableEntry vte) {
 				onChangeVTE(vte);
-			} else if (bte instanceof ProcTableEntry) {
-				final @NotNull ProcTableEntry pte = (ProcTableEntry) bte;
+			} else if (bte instanceof final @NotNull ProcTableEntry pte) {
 				onChangePTE(pte);
-			} else if (bte instanceof IdentTableEntry) {
-				final @NotNull IdentTableEntry ite = (IdentTableEntry) bte;
+			} else if (bte instanceof final @NotNull IdentTableEntry ite) {
 
 				final ErrSink errSink = deduceTypes2.errSink;
 
@@ -160,7 +152,7 @@ public class FoundParent implements BaseTableEntry.StatusListener {
 	private void postOnChange(@NotNull final IElementHolder eh) {
 		if (ite.type == null && eh.getElement() instanceof VariableStatement) {
 			@NotNull final TypeName typ = ((VariableStatement) eh.getElement()).typeName();
-			@NotNull final OS_Type  ty  = new OS_Type(typ);
+			@NotNull final OS_Type  ty  = new OS_UserType(typ);
 
 			try {
 				@Nullable final GenType ty2 = getTY2(typ, ty);
@@ -179,18 +171,18 @@ public class FoundParent implements BaseTableEntry.StatusListener {
 		}
 	}
 
-	private @Nullable GenType getTY2(@NotNull final TypeName aTyp, @NotNull final OS_Type aTy) throws ResolveError {
-		if (aTy.getType() != OS_Type.Type.USER) {
+	private @Nullable GenType getTY2(@NotNull final TypeName aTyp, final @NotNull OS_Type ty) throws ResolveError {
+		if (ty.getType() != OS_Type.Type.USER) {
 			assert false;
 			@NotNull final GenType genType = new GenType();
-			genType.set(aTy);
+			genType.set(ty);
 			return genType;
 		}
 
 		@Nullable GenType ty2 = null;
 		if (!aTyp.isNull()) {
-			assert aTy.getTypeName() != null;
-			ty2 = deduceTypes2.resolve_type(aTy, aTy.getTypeName().getContext());
+			assert ty.getTypeName() != null;
+			ty2 = deduceTypes2.resolve_type(ty, ty.getTypeName().getContext());
 			return ty2;
 		}
 
@@ -231,22 +223,22 @@ public class FoundParent implements BaseTableEntry.StatusListener {
 				final OS_Type attached1 = result.resolved != null ? result.resolved : result.typeName;
 				if (attached1 != null) {
 					switch (attached1.getType()) {
-						case USER_CLASS:
-							ite.type = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, attached1);
-							break;
-						case USER:
-							try {
-								@NotNull final GenType ty3 = deduceTypes2.resolve_type(attached1, attached1.getTypeName().getContext());
-								// no expression or TableEntryIV below
-								@NotNull final TypeTableEntry tte4 = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, null);
-								// README trying to keep genType up to date
-								tte4.setAttached(attached1);
-								tte4.setAttached(ty3);
-								ite.type = tte4; // or ty2?
-							} catch (final ResolveError aResolveError) {
-								aResolveError.printStackTrace();
-							}
-							break;
+					case USER_CLASS:
+						ite.type = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, attached1);
+						break;
+					case USER:
+						try {
+							@NotNull final GenType ty3 = deduceTypes2.resolve_type(attached1, attached1.getTypeName().getContext());
+							// no expression or TableEntryIV below
+							@NotNull final TypeTableEntry tte4 = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, null);
+							// README trying to keep genType up to date
+							tte4.setAttached(attached1);
+							tte4.setAttached(ty3);
+							ite.type = tte4; // or ty2?
+						} catch (final ResolveError aResolveError) {
+							aResolveError.printStackTrace();
+						}
+						break;
 					}
 				}
 			}

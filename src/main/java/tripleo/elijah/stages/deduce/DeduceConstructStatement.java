@@ -9,14 +9,12 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.ConstructStatement;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.instructions.InstructionArgument;
-import tripleo.elijah.stages.instructions.ProcIA;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.instructions.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created 12/11/21 9:27 PM

@@ -1,13 +1,10 @@
 package tripleo.elijah.stages.deduce.zero;
 
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.BaseFunctionDef;
-import tripleo.elijah.lang.OS_FuncExprType;
-import tripleo.elijah.stages.deduce.DeduceTypes2;
-import tripleo.elijah.stages.deduce.FunctionInvocation;
-import tripleo.elijah.stages.gen_fn.GenerateFunctions;
-import tripleo.elijah.stages.gen_fn.GeneratedFunction;
-import tripleo.elijah.stages.gen_fn.WlGenerateFunction;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.types.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_fn.*;
 
 public class Zero_FuncExprType implements IZero {
 	private final OS_FuncExprType funcExprType;
@@ -22,7 +19,7 @@ public class Zero_FuncExprType implements IZero {
 		  null,
 		  null,
 		  aDeduceTypes2._phase().generatePhase);
-		final WlGenerateFunction gen = new WlGenerateFunction(genf, fi);
+		final WlGenerateFunction gen = new WlGenerateFunction(genf, fi, aDeduceTypes2._phase().codeRegistrar);
 		gen.run(null);
 		return gen.getResult();
 	}

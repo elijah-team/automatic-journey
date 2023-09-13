@@ -1,6 +1,6 @@
 package tripleo.elijah.stages.instructions;
 
-import tripleo.elijah.util.IFixedList;
+import tripleo.elijah.util.*;
 
 public class InstructionFixedList implements IFixedList<InstructionArgument> {
 	private final Instruction instruction;

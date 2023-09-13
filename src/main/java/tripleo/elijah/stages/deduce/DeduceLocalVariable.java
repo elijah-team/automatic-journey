@@ -9,38 +9,17 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.DoneCallback;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.lang.BaseFunctionDef;
-import tripleo.elijah.lang.ClassStatement;
-import tripleo.elijah.lang.Context;
-import tripleo.elijah.lang.FuncExpr;
-import tripleo.elijah.lang.FunctionDef;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.lang.OS_FuncType;
-import tripleo.elijah.lang.OS_Type;
-import tripleo.elijah.lang.TypeName;
-import tripleo.elijah.stages.deduce.declarations.DeferredMemberFunction;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.BaseTableEntry;
-import tripleo.elijah.stages.gen_fn.DeferredObject2;
-import tripleo.elijah.stages.gen_fn.GenType;
-import tripleo.elijah.stages.gen_fn.GeneratedClass;
-import tripleo.elijah.stages.gen_fn.GeneratedFunction;
-import tripleo.elijah.stages.gen_fn.GenericElementHolder;
-import tripleo.elijah.stages.gen_fn.ProcTableEntry;
-import tripleo.elijah.stages.gen_fn.TypeTableEntry;
-import tripleo.elijah.stages.gen_fn.VariableTableEntry;
-import tripleo.elijah.stages.instructions.IdentIA;
-import tripleo.elijah.stages.instructions.InstructionArgument;
-import tripleo.elijah.stages.instructions.IntegerIA;
-import tripleo.elijah.stages.instructions.VariableTableType;
-import tripleo.elijah.util.NotImplementedException;
+import org.jdeferred2.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.types.*;
+import tripleo.elijah.stages.deduce.declarations.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.util.*;
 
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 /**
  * Created 11/30/21 1:32 AM
@@ -56,6 +35,12 @@ public class DeduceLocalVariable {
 		variableTableEntry = aVariableTableEntry;
 	}
 
+	public void setDeduceTypes2(final DeduceTypes2 aDeduceTypes2, final Context aContext, final BaseGeneratedFunction aGeneratedFunction) {
+		deduceTypes2      = aDeduceTypes2;
+		context           = aContext;
+		generatedFunction = aGeneratedFunction;
+	}
+
 	static ClassStatement class_inherits(final ClassStatement aFirstClass, final OS_Element aInherited) {
 		if (!(aInherited instanceof ClassStatement)) return null;
 
@@ -65,12 +50,6 @@ public class DeduceLocalVariable {
 				return (ClassStatement) aInherited;
 		}
 		return null;
-	}
-
-	public void setDeduceTypes2(final DeduceTypes2 aDeduceTypes2, final Context aContext, final BaseGeneratedFunction aGeneratedFunction) {
-		deduceTypes2      = aDeduceTypes2;
-		context           = aContext;
-		generatedFunction = aGeneratedFunction;
 	}
 
 	public void resolve_var_table_entry_for_exit_function() {
@@ -174,19 +153,19 @@ public class DeduceLocalVariable {
 					}
 
 					switch (state) {
-						case 1:
-							genType.genCIForGenType2(deduceTypes2); // TODO what is this doing here? huh?
-							break;
-						case 2: {
-							final FuncExpr                fe  = (FuncExpr) vte.getCallablePTE().expression;
-							final @NotNull DeduceProcCall dpc = vte.getCallablePTE().dpc;
-							final int                     y   = 2;
+					case 1:
+						genType.genCIForGenType2(deduceTypes2); // TODO what is this doing here? huh?
+						break;
+					case 2: {
+						final FuncExpr                fe  = (FuncExpr) vte.getCallablePTE().expression;
+						final @NotNull DeduceProcCall dpc = vte.getCallablePTE().dpc;
+						final int                     y   = 2;
 //							target = (DeduceFuncExpr) dpc.target;
 //							type.resolve(new GenType() {target.prototype}): // DeduceType??
-							// TODO because we can already represent a function expression,
-							//  the question is can we generatedFunction.lookupExpression(fe) and get the DeduceFuncExpr?
-						}
-						break;
+						// TODO because we can already represent a function expression,
+						//  the question is can we generatedFunction.lookupExpression(fe) and get the DeduceFuncExpr?
+					}
+					break;
 					}
 
 					if (genType.ci != null) { // TODO we may need this call...
@@ -195,8 +174,7 @@ public class DeduceLocalVariable {
 							public void onDone(final @NotNull GeneratedClass result) {
 								genType.node = result;
 								if (!vte.typePromise().isResolved()) { // HACK
-									if (genType.resolved instanceof OS_FuncType) {
-										final OS_FuncType resolved = (OS_FuncType) genType.resolved;
+									if (genType.resolved instanceof final OS_FuncType resolved) {
 										result.functionMapDeferred(((FunctionDef) resolved.getElement()), new FunctionMapDeferred() {
 											@Override
 											public void onNotify(final GeneratedFunction aGeneratedFunction) {
@@ -225,8 +203,7 @@ public class DeduceLocalVariable {
 	public void resolve_var_table_entry_potential_types_1(final @NotNull VariableTableEntry vte, final BaseGeneratedFunction generatedFunction) {
 		if (vte.potentialTypes().size() == 1) {
 			final TypeTableEntry tte1 = vte.potentialTypes().iterator().next();
-			if (tte1.tableEntry instanceof ProcTableEntry) {
-				final ProcTableEntry procTableEntry = (ProcTableEntry) tte1.tableEntry;
+			if (tte1.tableEntry instanceof final ProcTableEntry procTableEntry) {
 				final DeduceProcCall dpc            = procTableEntry.deduceProcCall();
 				// TODO for argument, we need a DeduceExpression (DeduceProcCall) which is bounud to self
 				//  (inherited), so we can extract the invocation
@@ -237,7 +214,23 @@ public class DeduceLocalVariable {
 					final @Nullable OS_Element e          = dp.getElement(0);
 					final OS_Element           self_class = generatedFunction.getFD().getParent();
 
-					assert e != null;
+					//assert e != null;
+
+					if (e == null) {
+						System.err.println("=== 397-003 ===================================");
+						System.err.println("=== 397-003 ===================================");
+						System.err.println("=== 397-003 ===================================");
+						System.err.println("=== 397-003 ===================================");
+						System.err.println("=== 397-003 ===================================");
+						System.err.println("=== 397-003 ===================================");
+						System.err.println("=== 397-003 ===================================");
+						System.err.println("=== 397-003 ===================================");
+						System.err.println("=== 397-003 ===================================");
+						System.err.println("=== 397-003 ===================================");
+
+						return;
+					}
+
 					final OS_Element e_parent = e.getParent();
 
 					short          state = 0;
@@ -254,38 +247,50 @@ public class DeduceLocalVariable {
 					}
 
 					switch (state) {
-						case 1:
-							final InstructionArgument self1 = generatedFunction.vte_lookup("self");
-							assert self1 instanceof IntegerIA;
-							Self = new DeduceTypes2.OS_SpecialVariable(((IntegerIA) self1).getEntry(), VariableTableType.SELF, generatedFunction);
-							break;
-						case 2:
-							Self = e_parent;
-							break;
-						case 3:
-							final InstructionArgument self2 = generatedFunction.vte_lookup("self");
-							assert self2 instanceof IntegerIA;
-							Self = new DeduceTypes2.OS_SpecialVariable(((IntegerIA) self2).getEntry(), VariableTableType.SELF, generatedFunction);
-							((DeduceTypes2.OS_SpecialVariable) Self).memberInvocation = new MemberInvocation(b, MemberInvocation.Role.INHERITED);
-							break;
-						default:
-							throw new IllegalStateException();
+					case 1:
+						final InstructionArgument self1 = generatedFunction.vte_lookup("self");
+						assert self1 instanceof IntegerIA;
+						Self = new DeduceTypes2.OS_SpecialVariable(((IntegerIA) self1).getEntry(), VariableTableType.SELF, generatedFunction);
+						break;
+					case 2:
+						Self = e_parent;
+						break;
+					case 3:
+						final InstructionArgument self2 = generatedFunction.vte_lookup("self");
+						assert self2 instanceof IntegerIA;
+						Self = new DeduceTypes2.OS_SpecialVariable(((IntegerIA) self2).getEntry(), VariableTableType.SELF, generatedFunction);
+						((DeduceTypes2.OS_SpecialVariable) Self).memberInvocation = new MemberInvocation(b, MemberInvocation.Role.INHERITED);
+						break;
+					default:
+						throw new IllegalStateException();
 					}
 				} else
 					Self = dp.getElement(dp.size() - 2); // TODO fix this
-				final @Nullable DeferredMemberFunction dm = deduceTypes2.deferred_member_function(Self, null, (BaseFunctionDef) procTableEntry.getResolvedElement(), procTableEntry.getFunctionInvocation());
-				dm.externalRef().then(new DoneCallback<BaseGeneratedFunction>() {
-					@Override
-					public void onDone(final BaseGeneratedFunction result) {
-						NotImplementedException.raise();
+
+				OS_Element resolvedElement = procTableEntry.getResolvedElement();
+				while (resolvedElement instanceof AliasStatement) {
+					try {
+						resolvedElement = DeduceLookupUtils._resolveAlias2((AliasStatement) resolvedElement, deduceTypes2);
+					} catch (final ResolveError aE) {
+						throw new RuntimeException(aE); // TODO
 					}
-				});
-				dm.typePromise().then(new DoneCallback<GenType>() {
-					@Override
-					public void onDone(final GenType result) {
-						procTableEntry.typeDeferred().resolve(result);
-					}
-				});
+				}
+
+				if (resolvedElement != null) { // TODO feb 20
+					final @Nullable DeferredMemberFunction dm = deduceTypes2.deferred_member_function(Self, null, (BaseFunctionDef) resolvedElement, procTableEntry.getFunctionInvocation());
+					dm.externalRef().then(new DoneCallback<BaseGeneratedFunction>() {
+						@Override
+						public void onDone(final BaseGeneratedFunction result) {
+							NotImplementedException.raise();
+						}
+					});
+					dm.typePromise().then(new DoneCallback<GenType>() {
+						@Override
+						public void onDone(final GenType result) {
+							procTableEntry.typeDeferred().resolve(result);
+						}
+					});
+				}
 				procTableEntry.typePromise().then(new DoneCallback<GenType>() {
 					@Override
 					public void onDone(final GenType result) {

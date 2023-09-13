@@ -1,10 +1,9 @@
 package tripleo.elijah.stages.gen_generic;
 
-import org.jetbrains.annotations.Contract;
-import tripleo.elijah.comp.ErrSink;
-import tripleo.elijah.comp.PipelineLogic;
-import tripleo.elijah.lang.OS_Module;
-import tripleo.elijah.stages.logging.ElLog;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.logging.*;
 
 public class OutputFileFactoryParams {
 	private final OS_Module       mod;
@@ -39,11 +38,11 @@ public class OutputFileFactoryParams {
 		return verbosity;
 	}
 
-	public PipelineLogic getPipelineLogic() {
-		return pipelineLogic;
-	}
-
 	public void addLog(final ElLog aLOG) {
 		getPipelineLogic().addLog(aLOG);
+	}
+
+	public PipelineLogic getPipelineLogic() {
+		return pipelineLogic;
 	}
 }

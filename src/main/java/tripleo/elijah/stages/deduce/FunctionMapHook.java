@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import tripleo.elijah.testing.comp.IFunctionMapHook;
+import tripleo.elijah.testing.comp.*;
 
 /**
  * Created 6/8/21 1:31 AM

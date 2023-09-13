@@ -1,16 +1,10 @@
 package tripleo.elijah.stages.deduce.fluffy.i;
 
-import com.google.common.base.Function;
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Collections2;
-import com.google.common.collect.Multimap;
+import com.google.common.collect.*;
 import tripleo.elijah.lang.*;
 
-import java.util.Collection;
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 public interface FluffyComp {
 	default void find_multiple_items(final OS_Module aModule) {
@@ -49,8 +43,8 @@ public interface FluffyComp {
 			if (warn) {
 				final String module_name = aModule.toString(); // TODO print module name or something
 				final String s = String.format(
-						"[Module#add] %s Already has a member by the name of %s",
-						module_name, key);
+				  "[Module#add] %s Already has a member by the name of %s",
+				  module_name, key);
 				aModule.parent.getErrSink().reportWarning(s);
 			}
 		}

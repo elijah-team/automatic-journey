@@ -1,9 +1,8 @@
 package tripleo.elijah.stages.deduce;
 
-import org.jetbrains.annotations.Contract;
-import tripleo.elijah.lang.ProcedureCallExpression;
-import tripleo.elijah.stages.gen_fn.GenType;
-import tripleo.elijah.stages.gen_fn.IElementHolder;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.gen_fn.*;
 
 public class DTR_ProcedureCall {
 	private final DeduceTypeResolve       deduceTypeResolve;

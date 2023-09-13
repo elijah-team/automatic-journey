@@ -8,13 +8,13 @@
  */
 package tripleo.elijah.stages.gen_generic;
 
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.ci.LibraryStatementPart;
-import tripleo.elijah.stages.gen_fn.GeneratedNode;
-import tripleo.util.buffer.Buffer;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.ci.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.util.buffer.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
 /**
  * Created 4/27/21 1:12 AM

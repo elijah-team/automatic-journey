@@ -30,7 +30,7 @@ public class TooManyEz_BeSpecific implements Diagnostic {
 	}
 
 	@Override
-	public void report(PrintStream stream) {
-		stream.println(String.format("%s %s", code(), message));
+	public void report(final PrintStream stream) {
+		stream.printf("%s %s%n", code(), message);
 	}
 }

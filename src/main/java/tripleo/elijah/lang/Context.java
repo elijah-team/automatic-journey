@@ -8,13 +8,11 @@
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.contexts.ModuleContext;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.contexts.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 // TODO is this right, or should be interface??
 public abstract class Context {
@@ -23,19 +21,22 @@ public abstract class Context {
 
 	public Context() {
 	}
-	
+
 //	public Context(OS_Container attached) {
 //		this.attached = attached;
 //	}
-	
+
 	public LookupResultList lookup(@NotNull final String name) {
 		final LookupResultList Result = new LookupResultList();
 		return lookup(name, 0, Result, new ArrayList<Context>(), false);
 	}
-	
+
 	public abstract LookupResultList lookup(String name, int level, LookupResultList Result, List<Context> alreadySearched, boolean one);
 
-	public abstract @Nullable Context getParent();
+	public @NotNull Compilation compilation() {
+		final OS_Module module = module();
+		return module.parent;
+	}
 
 //	@Deprecated public void add(OS_Element element, String name) {
 //		add(element, new IdentExpression(Helpers.makeToken(name)));
@@ -46,16 +47,16 @@ public abstract class Context {
 //	}
 //
 //	public void add(OS_Element element, IExpression name) {
-//		System.out.println(String.format("104 Context.add: %s %s %s", this, element, name));
+//		tripleo.elijah.util.Stupidity.println2(String.format("104 Context.add: %s %s %s", this, element, name));
 //		members.put(name, element);
 //	}
-	
+
 //
 //	Map<IExpression, OS_Element> members = new HashMap<IExpression, OS_Element>();
 //	private NameTable nameTable = new NameTable();
 //
 //	public void add(OS_Element element, IExpression name, OS_Type dtype) {
-//		System.out.println(String.format("105 Context.add: %s %s %s %s", this, element, name, dtype));
+//		tripleo.elijah.util.Stupidity.println2(String.format("105 Context.add: %s %s %s %s", this, element, name, dtype));
 ////		element.setType(dtype);
 //		members.put(name, element);
 //	}
@@ -71,10 +72,7 @@ public abstract class Context {
 		return ((ModuleContext) ctx).getCarrier();
 	}
 
-	public @NotNull Compilation compilation() {
-		final OS_Module module = module();
-		return module.parent;
-	}
+	public abstract @Nullable Context getParent();
 }
 
 //

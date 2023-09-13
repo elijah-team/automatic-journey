@@ -1,10 +1,9 @@
 package tripleo.elijah.stages.deduce.zero;
 
-import tripleo.elijah.lang.OS_Type;
-import tripleo.elijah.stages.deduce.DeduceTypes2;
-import tripleo.elijah.stages.deduce.ResolveError;
-import tripleo.elijah.stages.gen_fn.GenType;
-import tripleo.elijah.util.NotImplementedException;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.util.*;
 
 class ZeroResolver {
 

@@ -48,6 +48,9 @@ public class CompilationImpl extends Compilation {
 		return _fluffyComp;
 	}
 
+	public ICompilationAccess _access() {
+		return new DefaultCompilationAccess(this);
+	}
 }
 
 //

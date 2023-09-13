@@ -9,9 +9,9 @@
 
 package tripleo.elijah.stages.gen_generic;
 
-import tripleo.util.buffer.Buffer;
+import tripleo.util.buffer.*;
 
-import java.util.List;
+import java.util.*;
 
 /**
  * Created 9/13/21 11:12 PM

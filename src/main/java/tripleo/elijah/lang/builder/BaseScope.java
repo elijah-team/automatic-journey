@@ -19,6 +19,7 @@ import java.util.*;
  */
 public class BaseScope implements Documentable {
 	protected final List<ElBuilder> bs = new ArrayList<ElBuilder>();
+	private final List<Token> _docstrings = new ArrayList<Token>();
 
 	public void return_expression(final IExpression expr) {
 		throw new NotImplementedException();
@@ -27,8 +28,6 @@ public class BaseScope implements Documentable {
 	public void add(final ElBuilder b) {
 		bs.add(b);
 	}
-
-	private final List<Token> _docstrings = new ArrayList<Token>();
 
 	@Override
 	public void addDocString(final Token s1) {

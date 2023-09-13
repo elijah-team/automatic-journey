@@ -9,11 +9,9 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.lang.OS_Type;
-import tripleo.elijah.stages.deduce.DeduceTypes2;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.*;
 
 /**
  * Created 11/18/21 8:43 PM

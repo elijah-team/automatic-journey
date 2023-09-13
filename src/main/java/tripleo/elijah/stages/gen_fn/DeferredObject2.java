@@ -8,9 +8,8 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jdeferred2.Deferred;
-import org.jdeferred2.Promise;
-import org.jdeferred2.impl.AbstractPromise;
+import org.jdeferred2.*;
+import org.jdeferred2.impl.*;
 
 /**
  * Created 9/2/21 12:09 AM
@@ -22,13 +21,30 @@ public class DeferredObject2<D, F, P> extends AbstractPromise<D, F, P> implement
 			if (!isPending())
 				throw new IllegalStateException("Deferred object already finished, cannot resolve again");
 
-			this.state = State.RESOLVED;
+			this.state         = State.RESOLVED;
 			this.resolveResult = resolve;
 
 			try {
 				triggerDone(resolve);
 			} finally {
 				triggerAlways(state, resolve, null);
+			}
+		}
+		return this;
+	}
+
+	@Override
+	public Deferred<D, F, P> reject(final F reject) {
+		synchronized (this) {
+			if (!isPending())
+				throw new IllegalStateException("Deferred object already finished, cannot reject again");
+			this.state        = State.REJECTED;
+			this.rejectResult = reject;
+
+			try {
+				triggerFail(reject);
+			} finally {
+				triggerAlways(state, null, reject);
 			}
 		}
 		return this;
@@ -46,30 +62,13 @@ public class DeferredObject2<D, F, P> extends AbstractPromise<D, F, P> implement
 	}
 
 	@Override
-	public Deferred<D, F, P> reject(final F reject) {
-		synchronized (this) {
-			if (!isPending())
-				throw new IllegalStateException("Deferred object already finished, cannot reject again");
-			this.state = State.REJECTED;
-			this.rejectResult = reject;
-
-			try {
-				triggerFail(reject);
-			} finally {
-				triggerAlways(state, null, reject);
-			}
-		}
-		return this;
-	}
-
-	@Override
 	public Promise<D, F, P> promise() {
 		return this;
 	}
 
 	public void reset() {
-		state = State.PENDING;
-		rejectResult = null;
+		state         = State.PENDING;
+		rejectResult  = null;
 		resolveResult = null;
 	}
 }

@@ -8,10 +8,9 @@
  */
 package tripleo.elijah.work;
 
-import org.junit.Test;
+import org.junit.*;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 public class WorkManagerTest {
 
@@ -35,15 +34,15 @@ public class WorkManagerTest {
 
 	static class AppendChar implements WorkJob {
 
-		private final int level;
+		private final int          level;
 		private final List<String> sink;
-		private boolean _done;
-		private final String state;
+		private final String       state;
+		private       boolean      _done;
 
 		public AppendChar(final String s, final int level, final List<String> aSink) {
-			state = s + (char)(level+'A');
+			state      = s + (char) (level + 'A');
 			this.level = level;
-			sink = aSink;
+			sink       = aSink;
 		}
 
 		@Override

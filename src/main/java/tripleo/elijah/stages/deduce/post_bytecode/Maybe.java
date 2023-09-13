@@ -1,7 +1,7 @@
 package tripleo.elijah.stages.deduce.post_bytecode;
 
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.diagnostic.Diagnostic;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.diagnostic.*;
 
 public class Maybe<T> {
 	public final           T          o;

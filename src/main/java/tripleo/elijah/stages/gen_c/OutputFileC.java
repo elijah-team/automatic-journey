@@ -8,17 +8,13 @@
  */
 package tripleo.elijah.stages.gen_c;
 
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.stages.gen_generic.Dependency;
-import tripleo.elijah.stages.gen_generic.DependencyRef;
-import tripleo.elijah.stages.gen_generic.IOutputFile;
-import tripleo.util.buffer.Buffer;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.stages.gen_generic.*;
+import tripleo.util.buffer.*;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.function.*;
+import java.util.stream.*;
 
 /**
  * Created 9/13/21 10:50 PM
@@ -88,7 +84,7 @@ public class OutputFileC implements IOutputFile {
 		sb.append('\n');
 
 		for (final Dependency dependency : wnd) {
-			final String resolvedString = "" + dependency.resolved;
+			final String resolvedString = String.valueOf(dependency.resolved);
 			final String output         = String.format("//#include \"%s\" // for %s\n", "nothing.h", resolvedString);
 			sb.append(output);
 		}

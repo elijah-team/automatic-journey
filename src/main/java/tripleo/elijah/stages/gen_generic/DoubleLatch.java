@@ -1,9 +1,8 @@
 package tripleo.elijah.stages.gen_generic;
 
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.*;
 
-import java.util.function.Consumer;
+import java.util.function.*;
 
 public class DoubleLatch<T> {
 	private final @NotNull Consumer<T> action;

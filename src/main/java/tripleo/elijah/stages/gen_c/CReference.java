@@ -9,40 +9,32 @@
  */
 package tripleo.elijah.stages.gen_c;
 
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.lang.ConstructorDef;
-import tripleo.elijah.lang.IdentExpression;
-import tripleo.elijah.lang.OS_Module;
-import tripleo.elijah.stages.deduce.post_bytecode.IDeduceElement3;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.GeneratedConstructor;
-import tripleo.elijah.stages.gen_fn.GeneratedContainerNC;
-import tripleo.elijah.stages.gen_fn.IdentTableEntry;
-import tripleo.elijah.stages.gen_fn.ProcTableEntry;
-import tripleo.elijah.stages.gen_fn.VariableTableEntry;
-import tripleo.elijah.stages.instructions.IdentIA;
-import tripleo.elijah.stages.instructions.InstructionArgument;
-import tripleo.elijah.stages.instructions.IntegerIA;
-import tripleo.elijah.stages.instructions.ProcIA;
-import tripleo.elijah.util.Helpers;
-import tripleo.elijah.util.NotImplementedException;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.types.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.deduce.post_bytecode.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.util.*;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
-import static tripleo.elijah.stages.deduce.DeduceTypes2.to_int;
+import static tripleo.elijah.stages.deduce.DeduceTypes2.*;
 
 /**
  * Created 1/9/21 7:12 AM
  */
 public class CReference {
 	private final GI_Repo _repo = new GI_Repo();
+	//
+	//
+	GeneratedClass _cheat = null;
 	private String          rtext = null;
 	private List<String>    args;
 	private List<Reference> refs;
+	//
+	//
 
 	@NotNull
 	static List<InstructionArgument> _getIdentIAPathList(@NotNull InstructionArgument oo) {
@@ -81,11 +73,41 @@ public class CReference {
 				// should only be the first element if at all
 				assert i == 0;
 				final VariableTableEntry vte = generatedFunction.getVarTableEntry(to_int(ia));
+
+				if (vte.getName().equals("a1")) {
+					final GenType        gt1 = vte.genType;
+					final GenType        gt2 = vte.type.genType;
+					final GeneratedClass gc1 = (GeneratedClass) vte.genType.node;
+
+					_cheat = gc1;
+
+					// only gt1.node is not null
+
+					assert gc1.getCode() == 106;
+					assert gc1.getName().equals("ConstString");
+
+					// gt2
+
+					assert gt2.resolvedn == null;
+					assert gt2.typeName instanceof OS_UserType;
+					assert gt2.nonGenericTypeName instanceof RegularTypeName;
+					assert gt2.resolved instanceof OS_FuncType; // wrong: should be usertype: GeneratedClass
+					assert ((ClassInvocation) gt2.ci).resolvePromise().isResolved();
+
+					((ClassInvocation) gt2.ci).resolvePromise().then(gc -> { // wrong: should be ConstString
+						assert gc.getCode() == 102;
+						assert gc.getKlass().getName().equals("Arguments");
+					});
+
+					assert gt2.functionInvocation == null;
+
+					final int y = 2;
+				}
+
 				text = "vv" + vte.getName();
 				addRef(vte.getName(), Ref.LOCAL);
 			} else if (ia instanceof IdentIA) {
 				final IdentTableEntry idte = ((IdentIA) ia).getEntry();
-				/*return*/
 				text = CRI_Ident.of(idte, ((IdentIA) ia).gf).getIdentIAPath(i, sSize, aog, sl, aValue, refs::add, s, ia2, this);
 			} else if (ia instanceof ProcIA) {
 				final ProcTableEntry prte = generatedFunction.getProcTableEntry(to_int(ia));
@@ -98,6 +120,10 @@ public class CReference {
 		}
 		rtext = Helpers.String_join(".", sl);
 		return rtext;
+	}
+
+	void addRef(final String text, final Ref type) {
+		refs.add(new Reference(text, type));
 	}
 
 	public String getIdentIAPath_Proc(final @NotNull ProcTableEntry aPrte) {
@@ -151,19 +177,19 @@ public class CReference {
 
 		for (final Reference ref : refs) {
 			switch (ref.type) {
-				case LITERAL:
-				case DIRECT_MEMBER:
-				case INLINE_MEMBER:
-				case MEMBER:
-				case LOCAL:
-				case FUNCTION:
-				case PROPERTY_GET:
-				case PROPERTY_SET:
-				case CONSTRUCTOR:
-					ref.buildHelper(st);
-					break;
-				default:
-					throw new IllegalStateException("Unexpected value: " + ref.type);
+			case LITERAL:
+			case DIRECT_MEMBER:
+			case INLINE_MEMBER:
+			case MEMBER:
+			case LOCAL:
+			case FUNCTION:
+			case PROPERTY_GET:
+			case PROPERTY_SET:
+			case CONSTRUCTOR:
+				ref.buildHelper(st);
+				break;
+			default:
+				throw new IllegalStateException("Unexpected value: " + ref.type);
 			}
 //			sl.add(text);
 		}
@@ -182,10 +208,6 @@ public class CReference {
 		}
 
 		return sb.toString();
-	}
-
-	void addRef(final String text, final Ref type) {
-		refs.add(new Reference(text, type));
 	}
 
 	void addRef(final String text, final Ref type, final String aValue) {

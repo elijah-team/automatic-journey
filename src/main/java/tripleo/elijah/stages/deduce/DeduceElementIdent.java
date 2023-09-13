@@ -9,14 +9,12 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.impl.DeferredObject;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.diagnostic.Diagnostic;
-import tripleo.elijah.lang.Context;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.IdentTableEntry;
-import tripleo.elijah.stages.instructions.IdentIA;
+import org.jdeferred2.impl.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.diagnostic.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.instructions.*;
 
 /**
  * Created 11/22/21 8:23 PM
@@ -69,7 +67,9 @@ public class DeduceElementIdent {
 				}
 			});
 		} catch (final ResolveError aE) {
-			_resolvedElementPromise.reject(aE);
+			System.err.println("** 72 ResolveError: " + identTableEntry.getIdent().getText());
+			if (_resolvedElementPromise.isPending())
+				_resolvedElementPromise.reject(aE); // TODO feb 20
 		}
 	}
 

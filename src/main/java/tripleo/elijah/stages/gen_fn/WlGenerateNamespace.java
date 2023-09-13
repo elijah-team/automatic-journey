@@ -8,35 +8,36 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jdeferred2.DoneCallback;
-import org.jdeferred2.impl.DeferredObject;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.lang.NamespaceStatement;
-import tripleo.elijah.stages.deduce.DeducePhase;
-import tripleo.elijah.stages.deduce.NamespaceInvocation;
-import tripleo.elijah.util.NotImplementedException;
-import tripleo.elijah.work.WorkJob;
-import tripleo.elijah.work.WorkManager;
+import org.jdeferred2.*;
+import org.jdeferred2.impl.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.util.*;
+import tripleo.elijah.work.*;
 
 /**
  * Created 5/31/21 3:01 AM
  */
 public class WlGenerateNamespace implements WorkJob {
-	private final GenerateFunctions generateFunctions;
-	private final NamespaceStatement namespaceStatement;
-	private final NamespaceInvocation namespaceInvocation;
+	private final GenerateFunctions                      generateFunctions;
+	private final NamespaceStatement                     namespaceStatement;
+	private final NamespaceInvocation                    namespaceInvocation;
 	private final DeducePhase.@Nullable GeneratedClasses coll;
-	private boolean _isDone = false;
-	private GeneratedNamespace Result;
+	private final ICodeRegistrar                         codeRegistrar;
+	private       boolean                                _isDone = false;
+	private       GeneratedNamespace                     Result;
 
 	public WlGenerateNamespace(@NotNull final GenerateFunctions aGenerateFunctions,
-							   @NotNull final NamespaceInvocation aNamespaceInvocation,
-							   @Nullable final DeducePhase.GeneratedClasses aColl) {
-		generateFunctions = aGenerateFunctions;
-		namespaceStatement = aNamespaceInvocation.getNamespace();
+	                           @NotNull final NamespaceInvocation aNamespaceInvocation,
+	                           @Nullable final DeducePhase.GeneratedClasses aColl,
+	                           final ICodeRegistrar aCodeRegistrar) {
+		generateFunctions   = aGenerateFunctions;
+		namespaceStatement  = aNamespaceInvocation.getNamespace();
 		namespaceInvocation = aNamespaceInvocation;
-		coll = aColl;
+		coll                = aColl;
+		codeRegistrar       = aCodeRegistrar;
 	}
 
 	@Override
@@ -45,7 +46,7 @@ public class WlGenerateNamespace implements WorkJob {
 		switch (resolvePromise.state()) {
 		case PENDING:
 			@NotNull final GeneratedNamespace ns = generateFunctions.generateNamespace(namespaceStatement);
-			ns.setCode(generateFunctions.module.parent.nextClassCode());
+			codeRegistrar.registerNamespace(ns);
 			if (coll != null)
 				coll.add(ns);
 
@@ -64,7 +65,7 @@ public class WlGenerateNamespace implements WorkJob {
 			throw new NotImplementedException();
 		}
 		_isDone = true;
-//		System.out.println(String.format("** GenerateNamespace %s at %s", namespaceInvocation.getNamespace().getName(), this));
+//		tripleo.elijah.util.Stupidity.println2(String.format("** GenerateNamespace %s at %s", namespaceInvocation.getNamespace().getName(), this));
 	}
 
 	@Override

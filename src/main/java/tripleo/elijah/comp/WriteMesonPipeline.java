@@ -64,6 +64,10 @@ public class WriteMesonPipeline implements PipelineMember, @NotNull Consumer<Sup
 //		});
 //	}
 
+	private void pl_slot(final PipelineLogic pll) {
+		grs = () -> pll.__ab.gr;
+	}
+
 	private void write_makefiles_action(final Multimap<CompilerInstructions, String> lsp_outputs) {
 		final List<String> dep_dirs = new LinkedList<String>();
 
@@ -226,7 +230,7 @@ public class WriteMesonPipeline implements PipelineMember, @NotNull Consumer<Sup
 			@Override
 			public void accept(final Supplier<GenerateResult> aGenerateResultSupplier) {
 				if (grs != null) {
-					System.err.println("234 grs not null " + grs.getClass().getName());
+					tripleo.elijah.util.Stupidity.println_err2("234 grs not null " + grs.getClass().getName());
 					return;
 				}
 
@@ -235,10 +239,6 @@ public class WriteMesonPipeline implements PipelineMember, @NotNull Consumer<Sup
 				//final GenerateResult gr = aGenerateResultSupplier.get();
 			}
 		};
-	}
-
-	private void pl_slot(final PipelineLogic pll) {
-		grs = () -> pll.__ab.gr;
 	}
 }
 

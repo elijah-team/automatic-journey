@@ -8,25 +8,25 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.junit.Assert;
-import org.junit.Test;
+import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.CompilationImpl;
-import tripleo.elijah.contexts.FunctionContext;
-import tripleo.elijah.contexts.ModuleContext;
+import tripleo.elijah.contexts.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.gen_fn.GenType;
-import tripleo.elijah.stages.gen_fn.GeneratePhase;
-import tripleo.elijah.stages.logging.ElLog;
-import tripleo.elijah.util.Helpers;
+import tripleo.elijah.lang.types.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.test_help.*;
+import tripleo.elijah.util.*;
 
 public class DeduceTypesTest2 {
 
 	@Test
 	public void testDeduceIdentExpression() throws ResolveError {
-		final OS_Module   mod = new OS_Module();
-		final Compilation c   = new CompilationImpl(new StdErrSink(), new IO());
-		mod.parent  = c;
+		final Boilerplate b = new Boilerplate();
+		b.get();
+		final Compilation c   = b.comp;
+		final OS_Module   mod = b.defaultMod();
+
 		mod.prelude = mod.parent.findPrelude("c").success();
 		final ModuleContext mctx = new ModuleContext(mod);
 		mod.setContext(mctx);
@@ -53,31 +53,30 @@ public class DeduceTypesTest2 {
 		//
 		//
 		//
-		final ElLog.Verbosity verbosity1    = c.gitlabCIVerbosity();
-		final AccessBus       ab            = new AccessBus(c);
-		final PipelineLogic   pl            = new PipelineLogic(ab);
-		final GeneratePhase   generatePhase = new GeneratePhase(verbosity1, pl);
-		final DeducePhase     dp            = new DeducePhase(generatePhase, pl, verbosity1);
-		final DeduceTypes2    d             = dp.deduceModule(mod, verbosity1);
+		final ElLog.Verbosity verbosity1 = Compilation.gitlabCIVerbosity();
+		final AccessBus       ab         = new AccessBus(c);
+		final PipelineLogic   pl         = new PipelineLogic(ab);
+		final DeducePhase     dp         = pl.dp;
+		final DeduceTypes2    d          = dp.deduceModule(mod, verbosity1);
 //		final DeduceTypes d = new DeduceTypes(mod);
 		final GenType x = DeduceLookupUtils.deduceExpression(d, x1, fc);
 		System.out.println(x);
 //		Assert.assertEquals(new OS_Type(BuiltInTypes.SystemInteger).getBType(), x.getBType());
 //		final RegularTypeName tn = new RegularTypeName();
-		final VariableTypeName tn = new VariableTypeName();
-		final Qualident tnq = new Qualident();
+		final VariableTypeName tn  = new VariableTypeName();
+		final Qualident        tnq = new Qualident();
 		tnq.append(Helpers.string_to_ident("SystemInteger"));
 		tn.setName(tnq);
 		tn.setContext(fd.getContext());
 
 //		Assert.assertEquals(new OS_Type(tn).getTypeName(), x.getTypeName());
-		Assert.assertTrue(genTypeEquals(d.resolve_type(new OS_Type(tn), tn.getContext()), x));
+		Assert.assertTrue(genTypeEquals(d.resolve_type(new OS_UserType(tn), tn.getContext()), x));
 //		Assert.assertEquals(new OS_Type(tn).toString(), x.toString());
 	}
 
 	private boolean genTypeEquals(final GenType a, final GenType b) {
 		// TODO hack
-		return a.typeName.equals(b.typeName) &&
-				a.resolved.equals(b.resolved);
+		return a.typeName.isEqual(b.typeName) &&
+		  a.resolved.isEqual(b.resolved);
 	}
 }

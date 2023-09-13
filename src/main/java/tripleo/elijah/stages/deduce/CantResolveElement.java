@@ -1,13 +1,11 @@
 package tripleo.elijah.stages.deduce;
 
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.diagnostic.Diagnostic;
-import tripleo.elijah.diagnostic.Locatable;
-import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
-import tripleo.elijah.stages.gen_fn.IdentTableEntry;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.diagnostic.*;
+import tripleo.elijah.stages.gen_fn.*;
 
-import java.io.PrintStream;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 public class CantResolveElement implements Diagnostic {
 	private final String                message;

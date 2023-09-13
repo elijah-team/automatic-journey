@@ -4,9 +4,7 @@
  */
 package tripleo.elijah.nextgen.outputstatement;
 
-import tripleo.elijah.nextgen.small.ES_Item;
-import tripleo.elijah.nextgen.small.ES_String;
-import tripleo.elijah.nextgen.small.ES_Symbol;
+import tripleo.elijah.nextgen.small.*;
 
 /**
  * @author Tripleo Nova
@@ -22,14 +20,6 @@ public class EG_SyntheticStatement implements EG_Statement {
 
 		naming = aNaming;
 		s      = new ES_String(aS);
-		rule   = aRule;
-
-		doNaming(naming, s);
-	}
-
-	public EG_SyntheticStatement(final EG_Naming aNaming, final ES_Symbol aSymbol, final EX_Rule aRule) {
-		naming = aNaming;
-		s      = aSymbol;
 		rule   = aRule;
 
 		doNaming(naming, s);
@@ -52,17 +42,25 @@ public class EG_SyntheticStatement implements EG_Statement {
 		}
 	}
 
+	public EG_SyntheticStatement(final EG_Naming aNaming, final ES_Symbol aSymbol, final EX_Rule aRule) {
+		naming = aNaming;
+		s      = aSymbol;
+		rule   = aRule;
+
+		doNaming(naming, s);
+	}
+
 	@Override
 	public String getText() {
 		return text;
 	}
 
-	public void setText(final String aS) {
-		text = aS;
-	}
-
 	@Override
 	public EX_Explanation getExplanation() {
 		return null;
+	}
+
+	public void setText(final String aS) {
+		text = aS;
 	}
 }

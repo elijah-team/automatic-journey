@@ -63,12 +63,10 @@ public class TypeOfTypeNameTest {
 		//
 		// VERIFY EXPECTATIONS
 		//
-		final ElLog.Verbosity verbosity1    = Compilation.gitlabCIVerbosity();
-		final AccessBus       ab            = new AccessBus(c);
-		final PipelineLogic   pl            = new PipelineLogic(ab);
-		final GeneratePhase   generatePhase = new GeneratePhase(verbosity1, pl);
-		final DeduceTypes2    deduceTypes2  = new DeduceTypes2(mod, new DeducePhase(generatePhase, pl, verbosity1));
-		final TypeName        tn            = t.resolve(ctx, deduceTypes2);
+		final AccessBus     ab           = new AccessBus(c);
+		final PipelineLogic pl           = new PipelineLogic(ab);
+		final DeduceTypes2  deduceTypes2 = new DeduceTypes2(mod, pl.dp);
+		final TypeName      tn           = t.resolve(ctx, deduceTypes2);
 //		System.out.println(tn);
 		verify(ctx, mod);
 		Assert.assertEquals(typeNameString, tn.toString());
@@ -86,7 +84,6 @@ public class TypeOfTypeNameTest {
 		//
 		// CREATE VARIABLES
 		//
-		final ErrSink e = new StdErrSink();
 
 		final String typeNameString = "package.AbstractFactory";
 
@@ -118,12 +115,10 @@ public class TypeOfTypeNameTest {
 		//
 		// VERIFY EXPECTATIONS
 		//
-		final ElLog.Verbosity verbosity1    = Compilation.gitlabCIVerbosity();
-		final AccessBus       ab            = new AccessBus(c);
-		final PipelineLogic   pl            = new PipelineLogic(ab);
-		final GeneratePhase   generatePhase = new GeneratePhase(verbosity1, pl);
-		final DeduceTypes2 deduceTypes2 = new DeduceTypes2(mod, new DeducePhase(generatePhase, pl, verbosity1));
-		final TypeName tn = t.resolve(ctx, deduceTypes2);
+		final AccessBus     ab           = new AccessBus(c);
+		final PipelineLogic pl           = new PipelineLogic(ab);
+		final DeduceTypes2  deduceTypes2 = new DeduceTypes2(mod, pl.dp);
+		final TypeName      tn           = t.resolve(ctx, deduceTypes2);
 //		System.out.println(tn);
 		verify(ctx, mod);
 		Assert.assertEquals(typeNameString, tn.toString());
@@ -197,14 +192,14 @@ public class TypeOfTypeNameTest {
 		//
 		// CREATE MOCK
 		//
-		final Context ctx = mock(Context.class);
+		final Context ctx  = mock(Context.class);
 		final Context ctx4 = mock(Context.class);
 
 		//
 		// CREATE VARIABLES
 		//
 		final String typeNameString1 = "AbstractFactory";
-		final String typeNameString = "SystemInteger";
+		final String typeNameString  = "SystemInteger";
 
 		final OS_Module mod = new OS_Module();
 		mod.parent = new CompilationImpl(new StdErrSink(), new IO());
@@ -215,7 +210,7 @@ public class TypeOfTypeNameTest {
 		final ClassStatement sysint = new ClassStatement(mod, mod_ctx);
 		sysint.setName(IdentExpression.forString("SystemInteger"));
 
-		final VariableSequence vs = new VariableSequence(st_af.getContext());
+		final VariableSequence  vs    = new VariableSequence(st_af.getContext());
 		final VariableStatement var_y = vs.next();
 		var_y.setName(IdentExpression.forString("y"));
 		final RegularTypeName rtn_y = new RegularTypeName(ctx);
@@ -256,8 +251,8 @@ public class TypeOfTypeNameTest {
 		final ElLog.Verbosity verbosity1    = Compilation.gitlabCIVerbosity();
 		final AccessBus       ab            = new AccessBus(mod.parent);
 		final PipelineLogic   pl            = new PipelineLogic(ab);
-		final GeneratePhase   generatePhase = new GeneratePhase(verbosity1, pl);
-		final DeduceTypes2    deduceTypes2  = new DeduceTypes2(mod, new DeducePhase(generatePhase, pl, verbosity1));
+		final GeneratePhase   generatePhase = pl.generatePhase;
+		final DeduceTypes2    deduceTypes2  = new DeduceTypes2(mod, pl.dp);
 //		expect(mod.getFileName()).andReturn("foo.elijah");
 		expect(ctx.lookup("x")).andReturn(lrl);
 //		expect(ctx.lookup("y")).andReturn(lrl4);

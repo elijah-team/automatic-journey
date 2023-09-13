@@ -9,27 +9,15 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.DoneCallback;
-import org.jdeferred2.Promise;
-import org.jdeferred2.impl.DeferredObject;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
+import org.jdeferred2.*;
+import org.jdeferred2.impl.*;
+import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang2.AbstractCodeGen;
-import tripleo.elijah.stages.gen_fn.BaseTableEntry;
-import tripleo.elijah.stages.gen_fn.GenType;
-import tripleo.elijah.stages.gen_fn.GeneratedClass;
-import tripleo.elijah.stages.gen_fn.GeneratedFunction;
-import tripleo.elijah.stages.gen_fn.GenericElementHolder;
-import tripleo.elijah.stages.gen_fn.IElementHolder;
-import tripleo.elijah.stages.gen_fn.IdentTableEntry;
-import tripleo.elijah.stages.gen_fn.ProcTableEntry;
-import tripleo.elijah.stages.gen_fn.VariableTableEntry;
-import tripleo.elijah.stages.instructions.IdentIA;
-import tripleo.elijah.stages.instructions.InstructionArgument;
-import tripleo.elijah.stages.instructions.IntegerIA;
-import tripleo.elijah.stages.instructions.ProcIA;
-import tripleo.elijah.util.Stupidity;
+import tripleo.elijah.lang.types.*;
+import tripleo.elijah.lang2.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.util.*;
 
 /**
  * Created 11/18/21 12:02 PM
@@ -104,12 +92,15 @@ public class DeduceTypeResolve {
 							} else
 								throw new IllegalStateException("invalid entry (bte) " + bte);
 
+							final String s;
 							if (attached != null)
-								System.err.printf("** FormalArgListItem %s attached is not null. Type is %s. Points to %s%n",
+								s = String.format("** FormalArgListItem %s attached is not null. Type is %s. Points to %s%n",
 								  aFormalArgListItem.name(), aFormalArgListItem.typeName(), attached);
 							else
-								System.err.printf("** FormalArgListItem %s attached is null. Type is %s.%n",
+								s = String.format("** FormalArgListItem %s attached is null. Type is %s.%n",
 								  aFormalArgListItem.name(), aFormalArgListItem.typeName());
+
+							Stupidity.println_err2(s);
 						}
 
 						@Override
@@ -124,15 +115,14 @@ public class DeduceTypeResolve {
 
 						@Override
 						public void visitMC1(final MatchConditional.MC1 aMC1) {
-							if (aMC1 instanceof MatchConditional.MatchArm_TypeMatch) {
-								final MatchConditional.MatchArm_TypeMatch typeMatch = (MatchConditional.MatchArm_TypeMatch) aMC1;
+							if (aMC1 instanceof final MatchConditional.MatchArm_TypeMatch typeMatch) {
 								final int                                 yy        = 2;
 							}
 						}
 
 						@Override
 						public void visitPropertyStatement(final PropertyStatement aPropertyStatement) {
-							genType.typeName = new OS_Type(aPropertyStatement.getTypeName());
+							genType.typeName = new OS_UserType(aPropertyStatement.getTypeName());
 							// TODO resolve??
 						}
 
@@ -153,7 +143,7 @@ public class DeduceTypeResolve {
 
 						@Override
 						public void defaultAction(final OS_Element anElement) {
-							System.err.println("158 " + anElement);
+							tripleo.elijah.util.Stupidity.println_err2("158 " + anElement);
 							throw new IllegalStateException();
 						}
 
@@ -163,27 +153,6 @@ public class DeduceTypeResolve {
 		}
 
 
-	}
-
-	private static void variableTableEntry_typeResolvePromise(final GenType result, final IElementHolder eh, final VariableTableEntry variableTableEntry) {
-		if (eh instanceof Resolve_Ident_IA.GenericElementHolderWithDC) {
-			final Resolve_Ident_IA.GenericElementHolderWithDC eh1 = (Resolve_Ident_IA.GenericElementHolderWithDC) eh;
-			final DeduceTypes2.DeduceClient3                  dc  = eh1.getDC();
-			dc.genCIForGenType2(result);
-		}
-		// maybe set something in ci to INHERITED, but thats what DeduceProcCall is for
-		if (eh.getElement() instanceof FunctionDef) {
-			if (result.node instanceof GeneratedClass) {
-				final GeneratedClass generatedClass = (GeneratedClass) result.node;
-				generatedClass.functionMapDeferred((FunctionDef) eh.getElement(), new FunctionMapDeferred() {
-					@Override
-					public void onNotify(final GeneratedFunction aGeneratedFunction) {
-						result.node = aGeneratedFunction;
-					}
-				});
-			}
-		}
-		variableTableEntry.type.setAttached(result);
 	}
 
 	private void __setBacklink_for_IdentTableEntry(final InstructionArgument backlink0) {
@@ -199,6 +168,25 @@ public class DeduceTypeResolve {
 		}
 	}
 
+	private static void variableTableEntry_typeResolvePromise(final GenType result, final IElementHolder eh, final VariableTableEntry variableTableEntry) {
+		if (eh instanceof final Resolve_Ident_IA.GenericElementHolderWithDC eh1) {
+			final DeduceTypes2.DeduceClient3                  dc  = eh1.getDC();
+			dc.genCIForGenType2(result);
+		}
+		// maybe set something in ci to INHERITED, but thats what DeduceProcCall is for
+		if (eh.getElement() instanceof FunctionDef) {
+			if (result.node instanceof final GeneratedClass generatedClass) {
+				generatedClass.functionMapDeferred((FunctionDef) eh.getElement(), new FunctionMapDeferred() {
+					@Override
+					public void onNotify(final GeneratedFunction aGeneratedFunction) {
+						result.node = aGeneratedFunction;
+					}
+				});
+			}
+		}
+		variableTableEntry.type.setAttached(result);
+	}
+
 	private void setBacklinkCallback_(final BaseTableEntry aBacklink) {
 		assert bte instanceof IdentTableEntry;
 
@@ -211,21 +199,19 @@ public class DeduceTypeResolve {
 			public void onChange(final IElementHolder eh, final BaseTableEntry.Status newStatus) {
 				if (newStatus != BaseTableEntry.Status.KNOWN) return;
 
-				if (backlink instanceof IdentTableEntry) {
-					final IdentTableEntry identTableEntry = (IdentTableEntry) backlink;
+				if (backlink instanceof final IdentTableEntry identTableEntry) {
 					identTableEntry.typeResolvePromise().done(new DoneCallback<GenType>() {
 						@Override
 						public void onDone(final GenType result) {
-							identTableEntry.type.setAttached(result);
+							if (identTableEntry.type != null) // TODO addPotentialType
+								identTableEntry.type.setAttached(result);
 						}
 					});
-				} else if (backlink instanceof VariableTableEntry) {
-					final VariableTableEntry variableTableEntry = (VariableTableEntry) backlink;
+				} else if (backlink instanceof final VariableTableEntry variableTableEntry) {
 					variableTableEntry.typeResolvePromise()
 					                  .done((aGenType__) ->
 					                    variableTableEntry_typeResolvePromise(aGenType__, eh, variableTableEntry));
-				} else if (backlink instanceof ProcTableEntry) {
-					final ProcTableEntry procTableEntry = (ProcTableEntry) backlink;
+				} else if (backlink instanceof final ProcTableEntry procTableEntry) {
 					procTableEntry.typeResolvePromise()
 					              .done((final GenType aGenType__) ->
 					                procTableEntry_typeResolvePromise(aGenType__, procTableEntry));

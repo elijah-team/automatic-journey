@@ -1,78 +1,191 @@
 package tripleo.elijah.comp;
 
-import antlr.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.ci.*;
+import tripleo.elijah.comp.caches.*;
 import tripleo.elijah.comp.diagnostic.*;
-import tripleo.elijah.comp.queries.*;
+import tripleo.elijah.comp.i.*;
+import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.comp.specs.*;
 import tripleo.elijah.diagnostic.*;
 import tripleo.elijah.nextgen.query.*;
 import tripleo.elijah.stages.deduce.post_bytecode.*;
 
 import java.io.*;
+import java.text.*;
 import java.util.*;
 import java.util.regex.*;
 
-class CompilationRunner {
-	final         Map<String, CompilerInstructions> fn2ci = new HashMap<String, CompilerInstructions>();
+import static tripleo.elijah.util.Helpers.*;
+
+public class CompilationRunner {
 	private final Compilation                       compilation;
 	private final Compilation.CIS                   cis;
 	private final CCI                               cci;
+	private final ICompilationBus                   cb;
+	private final EzCache                           ezCache = new DefaultEzCache();
 
 	@Contract(pure = true)
-	CompilationRunner(final Compilation aCompilation, final Compilation.CIS a_cis) {
+	public CompilationRunner(final Compilation aCompilation, final Compilation.CIS a_cis, final ICompilationBus aCb, final IProgressSink ps1) {
 		compilation = aCompilation;
 		cis         = a_cis;
-		cci         = new CCI(compilation, a_cis);
+		cci         = new CCI(compilation, a_cis, ps1);
+		cb          = aCb;
+//		ps = ps1;
+	}
+
+	@Contract(pure = true)
+	public CompilationRunner(final Compilation aCompilation, final Compilation.CIS a_cis, final ICompilationBus aCb) {
+		compilation = aCompilation;
+		cis         = a_cis;
+		final DefaultProgressSink ps1 = new DefaultProgressSink();
+		cci = new CCI(compilation, a_cis, ps1);
+		cb  = aCb;
 	}
 
 	void start(final CompilerInstructions ci, final boolean do_out) throws Exception {
-		// 0. debugging
-		//NotImplementedException.raise();
+		final CR_State st1 = new CR_State();
 
-		// 1. find stdlib
-		//   -- question placement
-		//   -- ...
-		{
-			final Operation<CompilerInstructions> x = findStdLib(Compilation.CompilationAlways.defaultPrelude(), compilation);
-			if (x.mode() == Mode.FAILURE) {
-				compilation.getErrSink().exception(x.failure());
-				return;
+		cb.add(new ICompilationBus.CB_Process() {
+			@Override
+			public List<ICompilationBus.CB_Action> steps() {
+				// 1. find stdlib
+				//   -- question placement
+				//   -- ...
+				final ICompilationBus.CB_Action a = new ICompilationBus.CB_Action() {
+					private final CR_FindStdlibAction aa = new CR_FindStdlibAction();
+
+					@Override
+					public String name() {
+						return "find stdlib";
+					}
+
+					@Override
+					public void execute() {
+						aa.execute(st1);
+					}
+
+					@Override
+					public ICompilationBus.OutputString[] outputStrings() {
+						return new ICompilationBus.OutputString[0];
+					}
+				};
+				// 2. process the initial
+				final ICompilationBus.CB_Action b = new ICompilationBus.CB_Action() {
+					private final CR_ProcessInitialAction aa = new CR_ProcessInitialAction(ci, do_out);
+
+					@Override
+					public String name() {
+						return "process initial action";
+					}
+
+					@Override
+					public void execute() {
+						aa.execute(st1);
+					}
+
+					@Override
+					public ICompilationBus.OutputString[] outputStrings() {
+						return new ICompilationBus.OutputString[0];
+					}
+				};
+				// 3. do rest
+				final ICompilationBus.CB_Action c = new ICompilationBus.CB_Action() {
+					private final CR_RunBetterAction aa = new CR_RunBetterAction();
+
+					@Override
+					public String name() {
+						return "run better";
+					}
+
+					@Override
+					public void execute() {
+						aa.execute(st1);
+					}
+
+					@Override
+					public ICompilationBus.OutputString[] outputStrings() {
+						return new ICompilationBus.OutputString[0];
+					}
+				};
+
+				return List_of(a, b, c);
 			}
-			logProgress(130, "GEN_LANG: " + x.success().genLang());
-		}
-
-		// 2. process the initial
-		compilation.use(ci, do_out);
-
-		// 3. do rest
-		final ICompilationAccess ca = new DefaultCompilationAccess(compilation);
-		final ProcessRecord      pr = new ProcessRecord(ca);
-		final RuntimeProcesses   rt = StageToRuntime.get(ca.getStage(), ca, pr);
-
-		rt.run_better();
+		});
 	}
 
-	/*
-	 * Design question:
-	 *   - why push and return?
-	 *     we only want to check error
-	 *     utilize exceptions --> only one usage
-	 *     or inline (esp use of Compilation)
-	 */
+	private void logProgress(final int number, final String text) {
+		if (number == 130) return;
+
+		System.err.println(MessageFormat.format("{0} {1}", number, text));
+	}
+
+	public void doFindCIs(final String[] args2, final ICompilationBus cb) {
+		// TODO map + "extract"
+
+		final CR_State st1 = new CR_State();
+
+		cb.add(new ICompilationBus.CB_Process() {
+			@Override
+			public List<ICompilationBus.CB_Action> steps() {
+				final ICompilationBus.CB_Action a = new ICompilationBus.CB_Action() {
+					private final CR_Action a = new CR_FindCIs(args2);
+
+					@Override
+					public String name() {
+						return a.name();
+					}
+
+					@Override
+					public void execute() {
+						st1.cur = this;
+						a.execute(st1);
+						st1.cur = null;
+					}
+
+					@Override
+					public ICompilationBus.OutputString[] outputStrings() {
+						return new ICompilationBus.OutputString[0];
+					}
+				};
+
+				final ICompilationBus.CB_Action b = new ICompilationBus.CB_Action() {
+					private final CR_Action a = new CR_AlmostComplete();
+
+					@Override
+					public String name() {
+						return a.name();
+					}
+
+					@Override
+					public void execute() {
+						a.execute(st1);
+					}
+
+					@Override
+					public ICompilationBus.OutputString[] outputStrings() {
+						return new ICompilationBus.OutputString[0];
+					}
+				};
+
+				return List_of(a, b);
+			}
+		});
+
+	}
+
 	private @NotNull Operation<CompilerInstructions> findStdLib(final String prelude_name, final @NotNull Compilation c) {
 		final ErrSink errSink = c.getErrSink();
 		final IO      io      = c.getIO();
 
-		// TODO stdlib path here
+		// TODO CP_Paths.stdlib(...)
 		final File local_stdlib = new File("lib_elijjah/lib-" + prelude_name + "/stdlib.ez");
 		if (local_stdlib.exists()) {
-			try {
-				final Operation<CompilerInstructions> oci = realParseEzFile(local_stdlib.getName(), io.readFile(local_stdlib), local_stdlib, c);
-				if (oci.mode() == Mode.SUCCESS) {
-					c.pushItem(oci.success());
-					return oci;
-				}
+			final EzSpec spec;
+			try (final InputStream s = io.readFile(local_stdlib)) {
+				spec = new EzSpec(local_stdlib.getName(), s, local_stdlib);
+				final Operation<CompilerInstructions> oci = realParseEzFile(spec, ezCache());
+				return oci;
 			} catch (final Exception e) {
 				return Operation.failure(e);
 			}
@@ -85,96 +198,176 @@ class CompilationRunner {
 		});
 	}
 
-	private void logProgress(final int number, final String text) {
-		if (number == 130) return;
+	/**
+	 * - I don't remember what absolutePath is for
+	 * - Cache doesn't add to QueryDB
+	 * <p>
+	 * STEPS
+	 * ------
+	 * <p>
+	 * 1. Get absolutePath
+	 * 2. Check cache, return early
+	 * 3. Parse (Query is incorrect I think)
+	 * 4. Cache new result
+	 *
+	 * @param spec
+	 * @param cache
+	 * @return
+	 */
+	public Operation<CompilerInstructions> realParseEzFile(final EzSpec spec, final EzCache cache) {
+		final @NotNull File file = spec.file();
 
-		System.err.println("" + number + " " + text);
-	}
-
-	public Operation<CompilerInstructions> realParseEzFile(final String f,
-	                                                       final InputStream s,
-	                                                       final @NotNull File file,
-	                                                       final Compilation c) {
 		final String absolutePath;
 		try {
 			absolutePath = file.getCanonicalFile().toString();
 		} catch (final IOException aE) {
-			//throw new RuntimeException(aE);
 			return Operation.failure(aE);
 		}
 
-		if (fn2ci.containsKey(absolutePath)) { // don't parse twice
-			return Operation.success(fn2ci.get(absolutePath));
+		final Optional<CompilerInstructions> early = cache.get(absolutePath);
+
+		if (early.isPresent()) {
+			return Operation.success(early.get());
 		}
 
-		try {
-			try {
-				final Operation<CompilerInstructions> cio = parseEzFile_(f, s);
+		final Operation<CompilerInstructions> cio = CX_ParseEzFile.parseAndCache(spec, ezCache(), absolutePath);
+		return cio;
+	}
 
-				if (cio.mode() == Mode.FAILURE) {
-					final Exception e = cio.failure();
-					assert e != null;
+	private @NotNull List<CompilerInstructions> searchEzFiles(final @NotNull File directory, final ErrSink errSink, final IO io, final Compilation c) {
+		final QuerySearchEzFiles                     q    = new QuerySearchEzFiles(c, errSink, io, this);
+		final Operation2<List<CompilerInstructions>> olci = q.process(directory);
 
-					System.err.println(("parser exception: " + e));
-					e.printStackTrace(System.err);
-					//s.close();
-					return cio;
-				}
+		if (olci.mode() == Mode.SUCCESS) {
+			return olci.success();
+		}
 
-				final CompilerInstructions R = cio.success();
-				R.setFilename(file.toString());
-				fn2ci.put(absolutePath, R);
-				return cio;
-			} catch (final ANTLRException e) {
-				System.err.println(("parser exception: " + e));
-				e.printStackTrace(System.err);
-				return Operation.failure(e);
+		errSink.reportDiagnostic(olci.failure());
+		return List_of();
+	}
+
+	public EzCache ezCache() {
+		return ezCache;
+	}
+
+	interface CR_Process {
+		List<ICompilationBus.CB_Action> steps();
+	}
+
+	public interface CR_Action {
+		void attach(CompilationRunner cr);
+
+		void execute(CR_State st);
+
+		String name();
+	}
+
+	class CR_State {
+		public ICompilationBus.CB_Action cur;
+		ICompilationAccess ca;
+		ProcessRecord      pr;
+		RuntimeProcesses   rt;
+
+		public ICompilationAccess ca() {
+			if (ca == null) {
+				ca = new DefaultCompilationAccess(compilation);
+				pr = new ProcessRecord(ca);
 			}
-		} finally {
-			if (s != null) {
-				try {
-					s.close();
-				} catch (final IOException aE) {
-					// TODO return inside finally: is this ok??
-					return new Operation<>(null, aE, Mode.FAILURE);
-				}
-			}
+
+			return ca;
 		}
 	}
 
-	private Operation<CompilerInstructions> parseEzFile_(final String f, final InputStream s) throws RecognitionException, TokenStreamException {
-		final QueryEzFileToModuleParams qp = new QueryEzFileToModuleParams(f, s);
-		return new QueryEzFileToModule(qp).calculate();
+	class CR_AlmostComplete implements CR_Action {
+
+		@Override
+		public void attach(final CompilationRunner cr) {
+
+		}
+
+		@Override
+		public void execute(final CR_State st) {
+			cis.almostComplete();
+		}
+
+		@Override
+		public String name() {
+			return "cis almostComplete";
+		}
 	}
 
-	public void doFindCIs(final String[] args2) {
-		final ErrSink errSink1 = compilation.getErrSink();
-		final IO      io       = compilation.getIO();
+//	class CR_FindStdlib implements CR_Action {
+//
+//		private String prelude_name;
+//
+//		CR_FindStdlib(final String aPreludeName) {
+//			prelude_name = aPreludeName;
+//		}
+//
+//		@Override
+//		public void attach(final CompilationRunner cr) {
+//
+//		}
+//
+//		@Override
+//		public void execute(final CR_State st) {
+//			@NotNull final Operation<CompilerInstructions> op = findStdLib(prelude_name, compilation);
+//			assert op.mode() == Mode.SUCCESS; // TODO .NOTHING??
+//		}
 
-		// TODO map + "extract"
-		find_cis(args2, compilation, errSink1, io);
+	class CR_FindCIs implements CR_Action {
 
-		cis.almostComplete();
-	}
+		private final String[] args2;
 
-	protected void find_cis(final @NotNull String @NotNull [] args2,
-	                        final @NotNull Compilation c,
-	                        final @NotNull ErrSink errSink,
-	                        final @NotNull IO io) {
-		CompilerInstructions ez_file;
-		for (int i = 0; i < args2.length; i++) {
-			final String  file_name = args2[i];
-			final File    f         = new File(file_name);
-			final boolean matches2  = Pattern.matches(".+\\.ez$", file_name);
-			if (matches2) {
-				final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(f, c);
-				cci.accept(new Maybe<>(ilci, null));
-			} else {
-				//errSink.reportError("9996 Not an .ez file "+file_name);
-				if (f.isDirectory()) {
-					final List<CompilerInstructions> ezs = searchEzFiles(f, errSink, io, c);
+		CR_FindCIs(final String[] aArgs2) {
+			args2 = aArgs2;
+		}
 
-					switch (ezs.size()) {
+		@Override
+		public void attach(final CompilationRunner cr) {
+
+		}
+
+		@Override
+		public void execute(final CR_State st) {
+			final Compilation c = st.ca().getCompilation();
+
+			final IProgressSink ps = new IProgressSink() {
+				@Override
+				public void note(final int aCode, final ProgressSinkComponent aCci, final int aType, final Object[] aParams) {
+
+				}
+			};
+
+			find_cis(args2, c, c.getErrSink(), c.getIO(), cb, ps);
+		}
+
+		@Override
+		public String name() {
+			return "find cis";
+		}
+
+		protected void find_cis(final @NotNull String @NotNull [] args2,
+		                        final @NotNull Compilation c,
+		                        final @NotNull ErrSink errSink,
+		                        final @NotNull IO io,
+		                        final ICompilationBus cb,
+		                        final IProgressSink ps) {
+			CompilerInstructions ez_file;
+			for (final String file_name : args2) {
+				final File    f        = new File(file_name);
+				final boolean matches2 = Pattern.matches(".+\\.ez$", file_name);
+				if (matches2) {
+					final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(f, c);
+					cci.accept(new Maybe<>(ilci, null));
+
+					cb.inst(ilci);
+				} else {
+					//errSink.reportError("9996 Not an .ez file "+file_name);
+					if (f.isDirectory()) {
+						final List<CompilerInstructions> ezs = searchEzFiles(f, errSink, io, c);
+
+						switch (ezs.size()) {
 						case 0:
 							final Diagnostic d_toomany = new TooManyEz_ActuallyNone();
 							final Maybe<ILazyCompilerInstructions> m = new Maybe<>(null, d_toomany);
@@ -182,7 +375,9 @@ class CompilationRunner {
 							break;
 						case 1:
 							ez_file = ezs.get(0);
-							cci.accept(new Maybe<>(ILazyCompilerInstructions.of(ez_file), null));
+							final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(ez_file);
+							cci.accept(new Maybe<>(ilci, null));
+							cb.inst(ilci);
 							break;
 						default:
 							//final Diagnostic d_toomany = new TooManyEz_UseFirst();
@@ -193,88 +388,91 @@ class CompilationRunner {
 							final Maybe<ILazyCompilerInstructions> m2 = new Maybe<>(null, d_toomany2);
 							cci.accept(m2);
 							break;
-					}
-				} else
-					errSink.reportError("9995 Not a directory " + f.getAbsolutePath());
-			}
-		}
-	}
-
-	private @NotNull List<CompilerInstructions> searchEzFiles(final @NotNull File directory, final ErrSink errSink, final IO io, final Compilation c) {
-		final List<CompilerInstructions> R = new ArrayList<CompilerInstructions>();
-		final FilenameFilter filter = new FilenameFilter() {
-			@Override
-			public boolean accept(final File file, final String s) {
-				final boolean matches2 = Pattern.matches(".+\\.ez$", s);
-				return matches2;
-			}
-		};
-		final String[] list = directory.list(filter);
-		if (list != null) {
-			for (final String file_name : list) {
-				try {
-					final File                 file   = new File(directory, file_name);
-					final CompilerInstructions ezFile = parseEzFile(file, file.toString(), errSink, io, c);
-					if (ezFile != null)
-						R.add(ezFile);
-					else
-						errSink.reportError("9995 ezFile is null " + file);
-				} catch (final Exception e) {
-					errSink.exception(e);
+						}
+					} else
+						errSink.reportError("9995 Not a directory " + f.getAbsolutePath());
 				}
 			}
 		}
-		return R;
 	}
+//	}
 
-	@Nullable CompilerInstructions parseEzFile(final @NotNull File f, final String file_name, final ErrSink errSink, final IO io, final Compilation c) throws Exception {
-		final Operation<CompilerInstructions> om = parseEzFile1(f, file_name, errSink, io, c);
+	private class CR_FindStdlibAction implements CR_Action {
 
-		final CompilerInstructions m;
+		@Override
+		public void attach(final CompilationRunner cr) {
 
-		if (om.mode() == Mode.SUCCESS) {
-			m = om.success();
-
-/*
-		final String prelude;
-		final String xprelude = m.genLang();
-		System.err.println("230 " + prelude);
-		if (xprelude == null)
-			prelude = CompilationAlways.defaultPrelude(); // TODO should be java for eljc
-		else
-			prelude = null;
-*/
-		} else {
-			m = null;
 		}
 
-		return m;
-	}
+		@Override
+		public void execute(final CR_State st) {
+			final Operation<CompilerInstructions> oci = findStdLib(Compilation.CompilationAlways.defaultPrelude(), compilation);
+			switch (oci.mode()) {
+			case SUCCESS -> compilation.pushItem(oci.success()); // caught twice!!
+			case FAILURE -> {
+				compilation.getErrSink().exception(oci.failure());
+				return;
+			}
+			default -> throw new IllegalStateException("Unexpected value: " + oci.mode());
+			}
+			logProgress(130, "GEN_LANG: " + oci.success().genLang());
+		}
 
-	public @NotNull Operation<CompilerInstructions> parseEzFile1(final @NotNull File f,
-	                                                             final String file_name,
-	                                                             final ErrSink errSink,
-	                                                             final IO io,
-	                                                             final Compilation c) {
-		System.out.printf("   %s%n", f.getAbsolutePath());
-		if (!f.exists()) {
-			errSink.reportError(
-			  "File doesn't exist " + f.getAbsolutePath());
-			return null;
-		} else {
-			final Operation<CompilerInstructions> om = realParseEzFile(file_name/*, io.readFile(f), f*/, io, c);
-			return om;
+		@Override
+		public String name() {
+			return "find stdlib";
 		}
 	}
 
-	private Operation<CompilerInstructions> realParseEzFile(final String f, final @NotNull IO io, final Compilation c) {
-		final File file = new File(f);
+	private class CR_ProcessInitialAction implements CR_Action {
+		private final CompilerInstructions ci;
+		private final boolean              do_out;
 
-		try {
-			return realParseEzFile(f, io.readFile(file), file, c);
-		} catch (final FileNotFoundException aE) {
-			return Operation.failure(aE);
+		public CR_ProcessInitialAction(final CompilerInstructions aCi, final boolean aDo_out) {
+			ci     = aCi;
+			do_out = aDo_out;
+		}
+
+		@Override
+		public void attach(final CompilationRunner cr) {
+
+		}
+
+		@Override
+		public void execute(final CR_State st) {
+			try {
+				compilation.use(ci, do_out);
+			} catch (final Exception aE) {
+				throw new RuntimeException(aE); // FIXME
+			}
+		}
+
+		@Override
+		public String name() {
+			return "process initial";
 		}
 	}
 
+	private class CR_RunBetterAction implements CR_Action {
+		@Override
+		public void attach(final CompilationRunner cr) {
+
+		}
+
+		@Override
+		public void execute(final CR_State st) {
+			st.rt = StageToRuntime.get(st.ca().getStage(), st.ca(), st.pr);
+
+			try {
+				st.rt.run_better();
+			} catch (final Exception aE) {
+				throw new RuntimeException(aE); // FIXME
+			}
+		}
+
+		@Override
+		public String name() {
+			return "run better";
+		}
+	}
 }

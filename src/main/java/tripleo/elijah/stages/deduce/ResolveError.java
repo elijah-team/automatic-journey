@@ -8,40 +8,32 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import com.google.common.base.Function;
-import com.google.common.collect.Collections2;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.diagnostic.Diagnostic;
-import tripleo.elijah.diagnostic.Locatable;
-import tripleo.elijah.lang.IdentExpression;
-import tripleo.elijah.lang.LookupResult;
-import tripleo.elijah.lang.LookupResultList;
-import tripleo.elijah.lang.TypeName;
+import com.google.common.base.*;
+import com.google.common.collect.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.diagnostic.*;
+import tripleo.elijah.lang.*;
 
-import java.io.PrintStream;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+import java.io.*;
+import java.util.*;
 
 /**
  * Created 12/26/20 5:08 AM
  */
 public class ResolveError extends Exception implements Diagnostic {
-	private final @org.jetbrains.annotations.Nullable TypeName typeName;
-	private final LookupResultList lrl;
-	private final @org.jetbrains.annotations.Nullable IdentExpression ident;
+	final @org.jetbrains.annotations.Nullable         IdentExpression  ident;
+	private final @org.jetbrains.annotations.Nullable TypeName         typeName;
+	private final                                     LookupResultList lrl;
 
 	public ResolveError(final TypeName typeName, final LookupResultList lrl) {
 		this.typeName = typeName;
-		this.lrl = lrl;
-		this.ident = null;
+		this.lrl      = lrl;
+		this.ident    = null;
 	}
 
 	public ResolveError(final IdentExpression aIdent, final LookupResultList aLrl) {
-		ident = aIdent;
-		lrl = aLrl;
+		ident    = aIdent;
+		lrl      = aLrl;
 		typeName = null;
 	}
 

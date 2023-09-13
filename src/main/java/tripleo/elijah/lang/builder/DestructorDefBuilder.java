@@ -14,8 +14,8 @@ import tripleo.elijah.lang.*;
  * Created 12/23/20 12:13 AM
  */
 public class DestructorDefBuilder extends BaseFunctionDefBuilder {
-	private Context _context;
-    private final DestructorDefScope _scope = new DestructorDefScope();
+	private final DestructorDefScope _scope = new DestructorDefScope();
+	private       Context            _context;
 
 	@Override
 	public DestructorDef build() {

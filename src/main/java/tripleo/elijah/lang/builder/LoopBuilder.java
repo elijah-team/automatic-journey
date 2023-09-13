@@ -14,13 +14,13 @@ import tripleo.elijah.lang.*;
  * Created 12/22/20 11:50 PM
  */
 public class LoopBuilder extends ElBuilder {
-	private LoopTypes _type;
-	private IExpression _frompart;
-	private IExpression _topart;
-	private IdentExpression _iterName;
-    private final LoopScope _scope = new LoopScope();
-    private Context _context;
-	private IExpression expr;
+	private final LoopScope       _scope = new LoopScope();
+	private       LoopTypes       _type;
+	private       IExpression     _frompart;
+	private       IExpression     _topart;
+	private       IdentExpression _iterName;
+	private       Context         _context;
+	private       IExpression     expr;
 
 	public void type(final LoopTypes type) {
 		_type = type;

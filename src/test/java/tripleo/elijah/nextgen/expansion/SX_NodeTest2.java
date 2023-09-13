@@ -1,30 +1,19 @@
 package tripleo.elijah.nextgen.expansion;
 
-import junit.framework.TestCase;
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.comp.IO;
-import tripleo.elijah.comp.StdErrSink;
-import tripleo.elijah.comp.internal.CompilationImpl;
-import tripleo.elijah.nextgen.model.SM_ClassBody;
-import tripleo.elijah.nextgen.model.SM_ClassDeclaration;
-import tripleo.elijah.nextgen.model.SM_ClassInheritance;
-import tripleo.elijah.nextgen.model.SM_ClassSubtype;
-import tripleo.elijah.nextgen.model.SM_Name;
-import tripleo.elijah.nextgen.outputstatement.EG_Naming;
-import tripleo.elijah.nextgen.outputstatement.EG_SequenceStatement;
-import tripleo.elijah.nextgen.outputstatement.EG_SingleStatement;
-import tripleo.elijah.nextgen.outputstatement.EG_Statement;
-import tripleo.elijah.nextgen.outputstatement.EG_SyntheticStatement;
-import tripleo.elijah.nextgen.outputstatement.EX_Rule;
-import tripleo.elijah.nextgen.outputtree.EOT_OutputFile;
-import tripleo.elijah.nextgen.outputtree.EOT_OutputTree;
-import tripleo.elijah.nextgen.small.ES_Symbol;
-import tripleo.elijah.util.Helpers;
+import junit.framework.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.nextgen.model.*;
+import tripleo.elijah.nextgen.outputstatement.*;
+import tripleo.elijah.nextgen.outputtree.*;
+import tripleo.elijah.nextgen.small.*;
+import tripleo.elijah.util.*;
 
-import java.util.List;
-import java.util.stream.Collectors;
+import java.util.*;
+import java.util.stream.*;
 
-import static tripleo.elijah.util.Helpers.List_of;
+import static tripleo.elijah.util.Helpers.*;
 
 public class SX_NodeTest2 extends TestCase {
 

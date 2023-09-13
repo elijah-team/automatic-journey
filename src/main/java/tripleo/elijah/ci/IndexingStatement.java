@@ -8,20 +8,20 @@
  */
 package tripleo.elijah.ci;
 
-import antlr.Token;
-import tripleo.elijah.lang.ExpressionList;
+import antlr.*;
+import tripleo.elijah.lang.*;
 
 /**
  * @author Tripleo
- *
+ * <p>
  * Created 	Apr 15, 2020 at 4:59:21 AM
  * Created 1/8/21 7:19 AM
  */
 public class IndexingStatement {
 
-	private Token name;
-	private ExpressionList exprs;
 	private final CompilerInstructions parent;
+	private       Token                name;
+	private       ExpressionList       exprs;
 
 	public IndexingStatement(final CompilerInstructions module) {
 		this.parent = module;

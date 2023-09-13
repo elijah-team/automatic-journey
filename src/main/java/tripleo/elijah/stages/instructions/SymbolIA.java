@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.stages.instructions;
 
-import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.*;
 
 /**
  * Created 10/18/20 10:35 PM
@@ -20,11 +20,12 @@ public class SymbolIA implements InstructionArgument {
 		this.text = s;
 	}
 
-	@Override @Contract(pure = true)
+	@Override
+	@Contract(pure = true)
 	public String toString() {
 		return "SymbolIA{" +
-				"text='" + text + '\'' +
-				'}';
+		  "text='" + text + '\'' +
+		  '}';
 	}
 }
 

@@ -8,14 +8,13 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.comp.PipelineLogic;
-import tripleo.elijah.lang.OS_Module;
-import tripleo.elijah.stages.logging.ElLog;
-import tripleo.elijah.work.WorkManager;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.work.*;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Created 5/16/21 12:35 AM
@@ -26,10 +25,13 @@ public class GeneratePhase {
 	final         Map<OS_Module, GenerateFunctions> generateFunctions = new HashMap<OS_Module, GenerateFunctions>();
 	private final ElLog.Verbosity                   verbosity;
 	private final PipelineLogic                     pipelineLogic;
+	private final Compilation                       compilation;
 
-	public GeneratePhase(final ElLog.Verbosity aVerbosity, final PipelineLogic aPipelineLogic) {
+	public GeneratePhase(final ElLog.Verbosity aVerbosity, final PipelineLogic aPipelineLogic, final Compilation aCompilation) {
 		verbosity     = aVerbosity;
 		pipelineLogic = aPipelineLogic;
+
+		compilation = aCompilation;
 	}
 
 	@NotNull
