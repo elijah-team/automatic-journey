@@ -5,9 +5,9 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "pg-mainline-k" ]
+    branches: [ "pr-mainline-k" ]
   pull_request:
-    branches: [ "pg-mainline-k",  "pg-mainline-k-2023-09" ]
+    branches: [ "pr-mainline-k",  "pr-mainline-k-2023-09" ]
 
 jobs:
   build:
