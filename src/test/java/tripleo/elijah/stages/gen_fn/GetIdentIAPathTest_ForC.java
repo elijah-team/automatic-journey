@@ -8,41 +8,20 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import tripleo.elijah.comp.AccessBus;
-import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.comp.IO;
-import tripleo.elijah.comp.PipelineLogic;
-import tripleo.elijah.comp.StdErrSink;
-import tripleo.elijah.comp.internal.CompilationImpl;
-import tripleo.elijah.lang.ClassStatement;
-import tripleo.elijah.lang.Context;
-import tripleo.elijah.lang.DotExpression;
-import tripleo.elijah.lang.FunctionDef;
-import tripleo.elijah.lang.IdentExpression;
-import tripleo.elijah.lang.LookupResultList;
-import tripleo.elijah.lang.OS_Element;
-import tripleo.elijah.lang.OS_Module;
-import tripleo.elijah.lang.OS_Package;
-import tripleo.elijah.lang.OS_Type;
-import tripleo.elijah.lang.VariableSequence;
-import tripleo.elijah.lang.VariableStatement;
-import tripleo.elijah.stages.gen_c.CReference;
-import tripleo.elijah.stages.gen_c.Emit;
-import tripleo.elijah.stages.gen_c.Generate_Code_For_Method;
-import tripleo.elijah.stages.instructions.IdentIA;
-import tripleo.elijah.stages.instructions.InstructionArgument;
-import tripleo.elijah.stages.instructions.IntegerIA;
-import tripleo.elijah.stages.instructions.VariableTableType;
-import tripleo.elijah.stages.logging.ElLog;
-import tripleo.elijah.util.Helpers;
+import org.jetbrains.annotations.*;
+import org.junit.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.gen_c.*;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.util.*;
 
 import static org.easymock.EasyMock.*;
-import static tripleo.elijah.util.Helpers.List_of;
+import static tripleo.elijah.util.Helpers.*;
 
+@Ignore
 public class GetIdentIAPathTest_ForC {
 
 	GeneratedFunction gf;

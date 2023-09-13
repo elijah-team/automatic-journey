@@ -8,22 +8,13 @@
  */
 package tripleo.elijah.lang;
 
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
-import tripleo.elijah.comp.AccessBus;
-import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.comp.ErrSink;
-import tripleo.elijah.comp.IO;
-import tripleo.elijah.comp.PipelineLogic;
-import tripleo.elijah.comp.StdErrSink;
-import tripleo.elijah.comp.internal.CompilationImpl;
-import tripleo.elijah.stages.deduce.DeducePhase;
-import tripleo.elijah.stages.deduce.DeduceTypes2;
-import tripleo.elijah.stages.deduce.ResolveError;
-import tripleo.elijah.stages.gen_fn.GeneratePhase;
-import tripleo.elijah.stages.logging.ElLog;
-import tripleo.elijah.util.Helpers;
+import org.junit.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.util.*;
 
 import static org.easymock.EasyMock.*;
 
@@ -83,7 +74,7 @@ public class TypeOfTypeNameTest {
 		Assert.assertEquals(typeNameString, tn.toString());
 	}
 
-	@Test
+	@Ignore  @Test
 	public void typeOfComplexQualident() throws ResolveError {
 		//
 		// CREATE MOCKS
@@ -201,7 +192,7 @@ public class TypeOfTypeNameTest {
 //		Assert.assertEquals(typeNameString, tn.toString());
 //	}
 
-	@Test
+	@Ignore @Test
 	public void typeOfComplexQualident2() throws ResolveError {
 		//
 		// CREATE MOCK

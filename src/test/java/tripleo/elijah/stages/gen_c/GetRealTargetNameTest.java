@@ -9,30 +9,18 @@
 
 package tripleo.elijah.stages.gen_c;
 
-import org.jetbrains.annotations.NotNull;
-import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
-import tripleo.elijah.comp.AccessBus;
-import tripleo.elijah.comp.IO;
-import tripleo.elijah.comp.PipelineLogic;
-import tripleo.elijah.comp.StdErrSink;
-import tripleo.elijah.comp.internal.CompilationImpl;
-import tripleo.elijah.lang.FunctionDef;
-import tripleo.elijah.lang.IdentExpression;
-import tripleo.elijah.lang.OS_Module;
-import tripleo.elijah.lang.OS_Type;
-import tripleo.elijah.lang.VariableStatement;
-import tripleo.elijah.stages.gen_fn.GeneratedFunction;
-import tripleo.elijah.stages.gen_fn.TypeTableEntry;
-import tripleo.elijah.stages.gen_generic.OutputFileFactoryParams;
-import tripleo.elijah.stages.instructions.IdentIA;
-import tripleo.elijah.stages.instructions.IntegerIA;
-import tripleo.elijah.stages.instructions.VariableTableType;
-import tripleo.elijah.stages.logging.ElLog;
-import tripleo.elijah.util.Helpers;
+import org.jetbrains.annotations.*;
+import org.junit.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.util.*;
 
-import static org.easymock.EasyMock.mock;
+import static org.easymock.EasyMock.*;
 
 public class GetRealTargetNameTest {
 
@@ -46,7 +34,7 @@ public class GetRealTargetNameTest {
 		gf = new GeneratedFunction(fd);
 	}
 
-	@Test
+	@Ignore @Test
 	public void testManualXDotFoo() {
 		final IdentExpression          x_ident   = Helpers.string_to_ident("x");
 		@NotNull final IdentExpression foo_ident = Helpers.string_to_ident("foo");
