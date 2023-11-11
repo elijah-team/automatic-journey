@@ -11,6 +11,7 @@ package tripleo.elijah.stages.gen_fn;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.util.*;
 
 import java.util.*;
 
@@ -79,7 +80,7 @@ public class TypeTableEntry {
 			break;
 		default:
 //			throw new NotImplementedException();
-			tripleo.elijah.util.Stupidity.println_err2("73 " + aAttached);
+			SimplePrintLoggerToRemoveSoon.println_err2("73 " + aAttached);
 			break;
 		}
 	}

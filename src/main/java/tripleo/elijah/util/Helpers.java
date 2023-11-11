@@ -26,7 +26,7 @@ import static org.apache.commons.codec.digest.MessageDigestAlgorithms.*;
  */
 public class Helpers {
 	public static void printXML(final Object obj, @NotNull final TabbedOutputStream tos) {
-		tripleo.elijah.util.Stupidity.println_err2("** XStream support has been disabled");
+		SimplePrintLoggerToRemoveSoon.println_err2("** XStream support has been disabled");
 /*
 		final XStream x = new XStream();
 		//x.setMode(XStream.ID_REFERENCES);

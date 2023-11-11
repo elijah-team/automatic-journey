@@ -9,6 +9,7 @@
 package tripleo.elijah.contexts;
 
 import tripleo.elijah.lang.*;
+import tripleo.elijah.util.*;
 
 import java.util.*;
 
@@ -44,7 +45,7 @@ public class MatchConditionalContext extends Context {
 					Result.add(name, level, item, this);
 				}
 			} else if (item instanceof VariableSequence) {
-				tripleo.elijah.util.Stupidity.println2("[FunctionContext#lookup] VariableSequence " + item);
+				SimplePrintLoggerToRemoveSoon.println2("[FunctionContext#lookup] VariableSequence " + item);
 				for (final VariableStatement vs : ((VariableSequence) item).items()) {
 					if (vs.getName().equals(name))
 						Result.add(name, level, vs, this);

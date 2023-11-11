@@ -7,6 +7,7 @@ import tripleo.elijah.lang.types.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.util.*;
 
 public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 	private final ProcTableEntry        principal;
@@ -204,7 +205,7 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 				if (ci != null) {
 					pte.setClassInvocation(ci);
 				} else
-					tripleo.elijah.util.Stupidity.println_err2("542 Null ClassInvocation");
+					SimplePrintLoggerToRemoveSoon.println_err2("542 Null ClassInvocation");
 			}
 
 			pte.setFunctionInvocation(fi);

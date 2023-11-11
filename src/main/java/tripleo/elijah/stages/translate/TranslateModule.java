@@ -39,7 +39,7 @@ public class TranslateModule {
 				} else if (item instanceof NamespaceStatement) {
 					put_namespace_statement((NamespaceStatement) item);
 				} else
-					tripleo.elijah.util.Stupidity.println2("8000 " + item);
+					SimplePrintLoggerToRemoveSoon.println2("8000 " + item);
 			} catch (final IOException e) {
 				module.parent.getErrSink().exception(e);
 			}
@@ -117,13 +117,13 @@ public class TranslateModule {
 				w.dec_tabs();
 				w.put_string_ln("}");
 			} else
-				tripleo.elijah.util.Stupidity.println2("8001 " + item);
+				SimplePrintLoggerToRemoveSoon.println2("8001 " + item);
 		}
 	}
 
 	private void put_namespace_statement_internal(final NamespaceStatement namespaceStatement, final TabbedOutputStream w) {
 		for (final ClassItem item : namespaceStatement.getItems()) {
-			tripleo.elijah.util.Stupidity.println2("8002 " + item);
+			SimplePrintLoggerToRemoveSoon.println2("8002 " + item);
 		}
 	}
 
@@ -138,7 +138,7 @@ public class TranslateModule {
 
 	private void put_function_def(final FunctionDef functionDef, final TabbedOutputStream w) throws IOException {
 		for (final FunctionItem item : functionDef.getItems()) {
-			tripleo.elijah.util.Stupidity.println2("8003 " + item);
+			SimplePrintLoggerToRemoveSoon.println2("8003 " + item);
 			if (item instanceof AliasStatement) {
 
 			} else if (item instanceof CaseConditional) {
@@ -157,10 +157,10 @@ public class TranslateModule {
 
 			} else if (item instanceof VariableSequence) {
 				for (final VariableStatement vs : ((VariableSequence) item).items()) {
-					tripleo.elijah.util.Stupidity.println2("8004 " + vs);
+					SimplePrintLoggerToRemoveSoon.println2("8004 " + vs);
 					final OS_Type type  = vs.initialValue().getType();
 					final String  stype = type == null ? "Unknown" : getTypeString(type);
-					tripleo.elijah.util.Stupidity.println2("8004-1 " + type);
+					SimplePrintLoggerToRemoveSoon.println2("8004-1 " + type);
 					w.put_string_ln(String.format("%s %s;", stype, vs.getName()));
 				}
 			} else if (item instanceof WithStatement) {

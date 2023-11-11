@@ -12,6 +12,7 @@ import org.jetbrains.annotations.*;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.util.*;
 
 import java.util.*;
 
@@ -36,7 +37,7 @@ public class ElSystem {
 		if (verbose) {
 			for (final GenerateResultItem ab : gr.results()) {
 				if (ab.node instanceof GeneratedFunction) continue;
-				tripleo.elijah.util.Stupidity.println2("** " + ab.node + " " + ab.output);
+				SimplePrintLoggerToRemoveSoon.println2("** " + ab.node + " " + ab.output);
 			}
 		}
 	}

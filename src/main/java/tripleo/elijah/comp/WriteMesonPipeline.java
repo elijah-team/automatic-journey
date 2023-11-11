@@ -12,6 +12,7 @@ import com.google.common.collect.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.ci.*;
 import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.util.*;
 import tripleo.util.io.*;
 
 import java.io.*;
@@ -230,7 +231,7 @@ public class WriteMesonPipeline implements PipelineMember, @NotNull Consumer<Sup
 			@Override
 			public void accept(final Supplier<GenerateResult> aGenerateResultSupplier) {
 				if (grs != null) {
-					tripleo.elijah.util.Stupidity.println_err2("234 grs not null " + grs.getClass().getName());
+					SimplePrintLoggerToRemoveSoon.println_err2("234 grs not null " + grs.getClass().getName());
 					return;
 				}
 

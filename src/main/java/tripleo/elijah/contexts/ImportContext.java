@@ -10,6 +10,7 @@ package tripleo.elijah.contexts;
 
 import tripleo.elijah.comp.*;
 import tripleo.elijah.lang.*;
+import tripleo.elijah.util.*;
 
 import java.util.*;
 
@@ -31,12 +32,12 @@ public class ImportContext extends Context {
 //		tripleo.elijah.util.Stupidity.println_err2("2002 " + this.carrier.importList());
 		final Compilation compilation = compilation();
 		for (final Qualident importStatementItem : carrier.parts()) {
-			tripleo.elijah.util.Stupidity.println_err2("2005 " + importStatementItem);
+			SimplePrintLoggerToRemoveSoon.println_err2("2005 " + importStatementItem);
 			if (compilation.isPackage(importStatementItem.toString())) {
 				final OS_Package aPackage = compilation.getPackage(importStatementItem);
 //				LogEvent.logEvent(4003 , ""+aPackage.getElements());
 				for (final OS_Element element : aPackage.getElements()) {
-					tripleo.elijah.util.Stupidity.println_err2("4002 " + element);
+					SimplePrintLoggerToRemoveSoon.println_err2("4002 " + element);
 					if (element instanceof NamespaceStatement && ((NamespaceStatement) element).getKind() == NamespaceTypes.MODULE) {
 //		                LogEvent.logEvent(4103, "");
 						final NamespaceContext namespaceContext = (NamespaceContext) element.getContext();
@@ -63,7 +64,7 @@ public class ImportContext extends Context {
 						final OS_Package aPackage = compilation.getPackage(cl);
 //						LogEvent.logEvent(4003 , ""+aPackage.getElements());
 						for (final OS_Element element : aPackage.getElements()) {
-							tripleo.elijah.util.Stupidity.println_err2("4002 " + element);
+							SimplePrintLoggerToRemoveSoon.println_err2("4002 " + element);
 							if (element instanceof NamespaceStatement && ((NamespaceStatement) element).getKind() == NamespaceTypes.MODULE) {
 //		                		LogEvent.logEvent(4103, "");
 								final NamespaceContext namespaceContext = (NamespaceContext) element.getContext();

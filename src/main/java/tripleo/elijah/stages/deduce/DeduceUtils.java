@@ -62,7 +62,7 @@ public class DeduceUtils {
 
 //				return true; // TODO
 			}
-			tripleo.elijah.util.Stupidity.println2(String.valueOf(o));
+			SimplePrintLoggerToRemoveSoon.println2(String.valueOf(o));
 			return false;
 		}
 	}

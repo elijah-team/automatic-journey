@@ -12,6 +12,7 @@ import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.util.*;
 
 import java.util.*;
 
@@ -45,14 +46,14 @@ public class Dependency {
 			if (generatedFunction != null)
 				deps.add(generatedFunction.getDependency());
 			else
-				tripleo.elijah.util.Stupidity.println_err2("52 false FunctionInvocation " + dependentFunction);
+				SimplePrintLoggerToRemoveSoon.println_err2("52 false FunctionInvocation " + dependentFunction);
 		}
 		for (final GenType dependentType : aDependentTypes) {
 			final GeneratedContainerNC node = (GeneratedContainerNC) dependentType.node;
 			if (node != null)
 				deps.add(node.getDependency());
 			else {
-				tripleo.elijah.util.Stupidity.println_err2("46 node is null " + (dependentType.resolved != null ? dependentType.resolved : dependentType.resolvedn));
+				SimplePrintLoggerToRemoveSoon.println_err2("46 node is null " + (dependentType.resolved != null ? dependentType.resolved : dependentType.resolvedn));
 				final Dependency d = new Dependency(null);
 				d.resolved = dependentType.resolved != null ? dependentType.resolved.getClassOf() : dependentType.resolvedn;
 				deps.add(d);

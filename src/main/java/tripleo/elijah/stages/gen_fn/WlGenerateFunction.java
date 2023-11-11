@@ -48,7 +48,7 @@ public class WlGenerateFunction implements WorkJob {
 					i = i + 1;
 					if (tte.getAttached() == null) {
 						final String s = String.format("4949 null tte #%d %s in %s%n", i, tte, gf);
-						Stupidity.println_err2(s);
+						SimplePrintLoggerToRemoveSoon.println_err2(s);
 					}
 				}
 			}

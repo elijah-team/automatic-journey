@@ -10,6 +10,7 @@ package tripleo.elijah.lang;
 
 import tripleo.elijah.contexts.*;
 import tripleo.elijah.lang2.*;
+import tripleo.elijah.util.*;
 
 import java.util.*;
 
@@ -30,14 +31,14 @@ public class Loop implements StatementItem, FunctionItem, OS_Element {
 	public Loop(final OS_Element aParent) {
 		// document assumption
 		if (!(aParent instanceof FunctionDef) && !(aParent instanceof Loop))
-			tripleo.elijah.util.Stupidity.println2("parent is not FunctionDef or Loop");
+			SimplePrintLoggerToRemoveSoon.println2("parent is not FunctionDef or Loop");
 		parent = aParent;
 	}
 
 	public Loop(final OS_Element aParent, final Context ctx) {
 		// document assumption
 		if (!(aParent instanceof FunctionDef) && !(aParent instanceof Loop))
-			tripleo.elijah.util.Stupidity.println2("parent is not FunctionDef or Loop");
+			SimplePrintLoggerToRemoveSoon.println2("parent is not FunctionDef or Loop");
 		parent = aParent;
 		_a.setContext(new LoopContext(ctx, this));
 	}

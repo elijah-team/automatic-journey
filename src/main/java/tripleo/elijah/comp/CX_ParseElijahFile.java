@@ -5,6 +5,7 @@ import tripleo.elijah.*;
 import tripleo.elijah.comp.specs.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.nextgen.query.*;
+import tripleo.elijah.util.*;
 import tripleo.elijjah.*;
 
 import java.io.*;
@@ -47,7 +48,7 @@ public class CX_ParseElijahFile {
 				final Exception e = om.failure();
 				assert e != null;
 
-				tripleo.elijah.util.Stupidity.println_err2(("parser exception: " + e));
+				SimplePrintLoggerToRemoveSoon.println_err2(("parser exception: " + e));
 				e.printStackTrace(System.err);
 				s.close();
 				return Operation.failure(e);

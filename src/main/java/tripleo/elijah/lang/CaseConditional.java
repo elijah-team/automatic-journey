@@ -70,7 +70,7 @@ public class CaseConditional implements OS_Element, StatementItem, FunctionItem 
 
 	private void addScopeFor(final IExpression expression, final CaseScope caseScope) {
 		if (scopes.containsKey(expression))
-			tripleo.elijah.util.Stupidity.println_err2("already has an expression" + expression); // TODO put in some verify step
+			SimplePrintLoggerToRemoveSoon.println_err2("already has an expression" + expression); // TODO put in some verify step
 		scopes.put(expression, caseScope);
 	}
 

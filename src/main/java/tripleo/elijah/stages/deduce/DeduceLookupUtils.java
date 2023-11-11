@@ -170,7 +170,7 @@ public class DeduceLookupUtils {
 		case PROCEDURE_CALL:
 			@Nullable final GenType result = new GenType();
 			boolean finished = false;
-			tripleo.elijah.util.Stupidity.println_err2("979 During deduceProcedureCall " + n);
+			SimplePrintLoggerToRemoveSoon.println_err2("979 During deduceProcedureCall " + n);
 			@Nullable OS_Element best = null;
 			try {
 				best = lookup(n.getLeft(), context, aDeduceTypes2);
@@ -195,7 +195,7 @@ public class DeduceLookupUtils {
 							result.resolved = new OS_UnknownType(funcExpr);// TODO still must register somewhere
 						}
 					} else {
-						tripleo.elijah.util.Stupidity.println_err2("992 " + best.getClass().getName());
+						SimplePrintLoggerToRemoveSoon.println_err2("992 " + best.getClass().getName());
 						throw new NotImplementedException();
 					}
 				}
@@ -305,7 +305,7 @@ public class DeduceLookupUtils {
 		public void do_deduceProcedureCall(final ProcedureCallExpression pce, final Context ctx, final DeduceTypes2 deduceTypes2) {
 			@Nullable final GenType result = new GenType();
 
-			tripleo.elijah.util.Stupidity.println_err2("979 During deduceProcedureCall " + pce);
+			SimplePrintLoggerToRemoveSoon.println_err2("979 During deduceProcedureCall " + pce);
 			@Nullable OS_Element best = null;
 			try {
 				best = lookup(pce.getLeft(), ctx, deduceTypes2);
@@ -331,7 +331,7 @@ public class DeduceLookupUtils {
 						result.resolved = new OS_UnknownType(funcExpr);// TODO still must register somewhere
 					}
 				} else {
-					tripleo.elijah.util.Stupidity.println_err2("992 " + best.getClass().getName());
+					SimplePrintLoggerToRemoveSoon.println_err2("992 " + best.getClass().getName());
 					throw new NotImplementedException();
 				}
 			}

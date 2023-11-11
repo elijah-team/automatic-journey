@@ -15,6 +15,7 @@ import tripleo.elijah.lang.*;
 import tripleo.elijah.lang.types.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.deduce.zero.*;
+import tripleo.elijah.util.*;
 
 import java.util.*;
 
@@ -115,7 +116,7 @@ public class GenType {
 			resolved = aType;
 			break;
 		default:
-			tripleo.elijah.util.Stupidity.println_err2("48 Unknown in set: " + aType);
+			SimplePrintLoggerToRemoveSoon.println_err2("48 Unknown in set: " + aType);
 		}
 	}
 

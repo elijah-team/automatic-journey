@@ -12,6 +12,7 @@
 package tripleo.elijah.contexts;
 
 import tripleo.elijah.lang.*;
+import tripleo.elijah.util.*;
 
 import java.util.*;
 
@@ -51,7 +52,7 @@ public class NamespaceContext extends Context {
 				}
 			}
 			if (item instanceof VariableSequence) {
-				tripleo.elijah.util.Stupidity.println2("[NamespaceContext#lookup] VariableSequence " + item);
+				SimplePrintLoggerToRemoveSoon.println2("[NamespaceContext#lookup] VariableSequence " + item);
 				for (final VariableStatement vs : ((VariableSequence) item).items()) {
 					if (vs.getName().equals(name))
 						Result.add(name, level, vs, this);

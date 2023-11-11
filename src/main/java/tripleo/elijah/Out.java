@@ -11,6 +11,7 @@ package tripleo.elijah;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.lang.*;
+import tripleo.elijah.util.*;
 
 public class Out {
 
@@ -34,7 +35,7 @@ public class Out {
 	}
 
 	public static void println(final String s) {
-		tripleo.elijah.util.Stupidity.println2(s);
+		SimplePrintLoggerToRemoveSoon.println2(s);
 	}
 
 	//@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("NM_METHOD_NAMING_CONVENTION")

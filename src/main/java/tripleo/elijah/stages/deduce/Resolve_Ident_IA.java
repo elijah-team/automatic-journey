@@ -413,7 +413,7 @@ class Resolve_Ident_IA {
 				if (ci != null) {
 					pte.setClassInvocation(ci);
 				} else
-					tripleo.elijah.util.Stupidity.println_err2("542 Null ClassInvocation");
+					SimplePrintLoggerToRemoveSoon.println_err2("542 Null ClassInvocation");
 			}
 
 			pte.setFunctionInvocation(fi);
@@ -557,7 +557,7 @@ class Resolve_Ident_IA {
 //				assert idte.getStatus() != BaseTableEntry.Status.UNCHECKED;
 				final String normal_path = generatedFunction.getIdentIAPathNormal(identIA);
 				if (idte.resolveExpectation == null) {
-					tripleo.elijah.util.Stupidity.println_err2("385 idte.resolveExpectation is null for " + idte);
+					SimplePrintLoggerToRemoveSoon.println_err2("385 idte.resolveExpectation is null for " + idte);
 				} else
 					idte.resolveExpectation.satisfy(normal_path);
 			} else if (idte.getStatus() == BaseTableEntry.Status.KNOWN) {

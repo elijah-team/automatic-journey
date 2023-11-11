@@ -16,6 +16,7 @@ import tripleo.elijah.diagnostic.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.util.*;
 
 /**
  * Created 11/21/21 6:32 AM
@@ -48,7 +49,7 @@ public class DeferredMemberFunction {
 		//
 
 		if (functionInvocation == null) {
-			tripleo.elijah.util.Stupidity.println2("**=== functionInvocation == null ");
+			SimplePrintLoggerToRemoveSoon.println2("**=== functionInvocation == null ");
 			return;
 		}
 

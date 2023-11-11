@@ -54,7 +54,7 @@ public class IdentExpression implements IExpression, OS_Element, Resolvable, Loc
 	@Override
 	public void setKind(final ExpressionKind aIncrement) {
 		// log and ignore
-		tripleo.elijah.util.Stupidity.println_err2("Trying to set ExpressionType of IdentExpression to " + aIncrement.toString());
+		SimplePrintLoggerToRemoveSoon.println_err2("Trying to set ExpressionType of IdentExpression to " + aIncrement.toString());
 	}
 
 	@Override

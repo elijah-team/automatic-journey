@@ -154,7 +154,7 @@ public class CtorReference {
 				code = aClsinv.getKlass()._a.getCode(); // TODO this will either always be 0 or irrelevant
 			}
 			if (code == 0) {
-				tripleo.elijah.util.Stupidity.println_err2("** 32135 ClassStatement with 0 code " + aClsinv.getKlass());
+				SimplePrintLoggerToRemoveSoon.println_err2("** 32135 ClassStatement with 0 code " + aClsinv.getKlass());
 			}
 			final String text2 = String.format("ZC%d%s", code, ctorName); // TODO what about named constructors
 			sb.append(" = ");

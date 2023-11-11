@@ -11,6 +11,7 @@ package tripleo.elijah.contexts;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.lang2.*;
+import tripleo.elijah.util.*;
 
 import java.util.*;
 
@@ -51,7 +52,7 @@ public class ClassContext extends Context {
 				}
 			}
 			if (item instanceof VariableSequence) {
-				tripleo.elijah.util.Stupidity.println2("102 " + item);
+				SimplePrintLoggerToRemoveSoon.println2("102 " + item);
 				for (final VariableStatement vs : ((VariableSequence) item).items()) {
 					if (vs.getName().equals(name))
 						Result.add(name, level, vs, this);
@@ -99,11 +100,11 @@ public class ClassContext extends Context {
 	public Map<TypeName, ClassStatement> inheritance() {
 		if (!_didInheritance) {
 			for (final TypeName tn1 : carrier.classInheritance().tns) {
-				tripleo.elijah.util.Stupidity.println2("1001 " + tn1);
+				SimplePrintLoggerToRemoveSoon.println2("1001 " + tn1);
 				final NormalTypeName       tn  = (NormalTypeName) tn1;
 				final @Nullable OS_Element best;
 				final LookupResultList     tnl = tn.getContext().lookup(tn.getName());
-				tripleo.elijah.util.Stupidity.println2("1002 " + tnl.results());
+				SimplePrintLoggerToRemoveSoon.println2("1002 " + tnl.results());
 				best = tnl.chooseBest(null);
 
 				if (best != null) {

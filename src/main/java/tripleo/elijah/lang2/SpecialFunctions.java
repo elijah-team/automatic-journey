@@ -59,7 +59,7 @@ public class SpecialFunctions {
 			return null;
 //		if (pn.equals("__eq__"))
 //			return "__req__";
-		Stupidity.println_out("reverse_name: " + pn);
+		SimplePrintLoggerToRemoveSoon.println_out("reverse_name: " + pn);
 //		assert false;
 		return null;
 	}

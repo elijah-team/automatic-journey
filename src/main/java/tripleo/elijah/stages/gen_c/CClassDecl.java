@@ -39,7 +39,7 @@ public class CClassDecl {
 							final String str = ((StringExpression) str0).getText();
 							setDecl(str);
 						} else {
-							tripleo.elijah.util.Stupidity.println2("Illegal C.repr");
+							SimplePrintLoggerToRemoveSoon.println2("Illegal C.repr");
 						}
 					}
 				}

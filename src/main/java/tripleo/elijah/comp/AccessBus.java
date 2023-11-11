@@ -115,7 +115,7 @@ public class AccessBus {
 				final GenerateResult                     gr3 = generateC.generateCode(gn2, wm);
 				gr.additional(gr3);
 			} else {
-				Stupidity.println_out("2009 " + generatedNode.getClass().getName());
+				SimplePrintLoggerToRemoveSoon.println_out("2009 " + generatedNode.getClass().getName());
 			}
 		}
 

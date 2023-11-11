@@ -59,7 +59,7 @@ public class EIT_ModuleList {
 
 		if (size != 0) {
 			NotImplementedException.raise();
-			Stupidity.println_err(String.format("lgc.size() != 0: %d", size));
+			SimplePrintLoggerToRemoveSoon.println_err(String.format("lgc.size() != 0: %d", size));
 		}
 
 		plp.generate();
