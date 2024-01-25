@@ -25,6 +25,7 @@ import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.*;
 import tripleo.elijah.util.*;
 import tripleo.elijah.work.*;
+import tripleo.elijah_prolific.v.V;
 
 import java.util.*;
 
@@ -1526,8 +1527,8 @@ public class DeduceTypes2 {
 		}
 	}
 
-	/**
-	 * See {@link Implement_construct#_implement_construct_type}
+	/* *
+	 * See {@link Implement_construct#_implement_construct_typ e}
 	 */
 	private @Nullable ClassInvocation genCI(@NotNull final TypeTableEntry aType) {
 		final GenType genType = aType.genType;
@@ -2299,7 +2300,9 @@ public class DeduceTypes2 {
 			ria.action();
 		} catch (final ResolveError aE) {
 			//throw new RuntimeException(aE);
-			System.err.printf("** ResolveError: %s not found!%n", aE.ident.getText());
+			final String text = aE.ident.getText();
+			V.asv(V.e.DT2_2304, text);
+//			System.err.printf("** ResolveError: %s not found!%n", text);
 		}
 	}
 

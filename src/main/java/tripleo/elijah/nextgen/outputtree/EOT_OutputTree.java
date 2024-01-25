@@ -5,6 +5,7 @@
 package tripleo.elijah.nextgen.outputtree;
 
 import tripleo.elijah.nextgen.outputstatement.*;
+import tripleo.elijah_prolific.v.V;
 
 import java.nio.file.*;
 import java.util.*;
@@ -20,6 +21,7 @@ public class EOT_OutputTree {
 	}
 
 	public void _putSeq(final String aKey, final Path aPath, final EG_Statement aStatement) {
-		System.err.printf("[_putSeq] %s %s {{%s}}%n", aKey, aPath, aStatement.getExplanation().getText());
+//		System.err.printf("[_putSeq] %s %s {{%s}}%n", aKey, aPath, aStatement.getExplanation().getText());
+		V.asv(V.e._putSeq, aKey);
 	}
 }

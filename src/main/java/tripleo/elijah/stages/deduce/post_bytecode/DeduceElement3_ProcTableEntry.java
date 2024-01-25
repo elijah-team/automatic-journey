@@ -8,6 +8,7 @@ import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.util.*;
+import tripleo.elijah_prolific.deduce.DT_Element3;
 
 public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 	private final ProcTableEntry        principal;
@@ -141,6 +142,8 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 								}
 							});
 							final int y = 2;
+						} else {
+							System.err.println("=== 399-147 ================================");
 						}
 					}
 				}
@@ -148,33 +151,11 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 		}
 	}
 
-	public void _action_002_no_resolved_element(final InstructionArgument _backlink,
-	                                            final ProcTableEntry backlink,
-	                                            final DeduceTypes2.DeduceClient3 dc,
-	                                            final IdentTableEntry ite,
-	                                            final ErrSink errSink,
-	                                            final DeducePhase phase) {
-		final OS_Element resolvedElement = backlink.getResolvedElement();
-
-		if (resolvedElement == null) return; //throw new AssertionError(); // TODO feb 20
-
-		try {
-			final LookupResultList     lrl2 = dc.lookupExpression(ite.getIdent(), resolvedElement.getContext());
-			@Nullable final OS_Element best = lrl2.chooseBest(null);
-			assert best != null;
-			ite.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(best));
-		} catch (final ResolveError aResolveError) {
-			errSink.reportDiagnostic(aResolveError);
-			assert false;
-		}
-
-		action_002_1(principal, ite, false, phase, dc);
-	}
-
-	private void action_002_1(@NotNull final ProcTableEntry pte,
-	                          @NotNull final IdentTableEntry ite,
+	private void action_002_1(final @NotNull ProcTableEntry pte,
+	                          final @NotNull IdentTableEntry ite,
 	                          final boolean setClassInvocation,
-	                          final DeducePhase phase, final DeduceTypes2.DeduceClient3 dc) {
+	                          final DeducePhase phase,
+	                          final DeduceTypes2.DeduceClient3 dc) {
 		final OS_Element resolvedElement = ite.getResolvedElement();
 
 		assert resolvedElement != null;
@@ -216,4 +197,52 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 	}
 
 
+	public void _action_002_no_resolved_element(final Resolve_Ident_IA._action_002_no_resolved_element action) {
+		final @NotNull ProcTableEntry  pte       = action.pte();
+		final @NotNull IdentTableEntry ite       = action.ite();
+		final InstructionArgument      _backlink = ite.getBacklink();
+
+		if (_backlink instanceof ProcIA) {
+			final @NotNull ProcIA         backlink_ = (ProcIA) _backlink;
+			final @NotNull ProcTableEntry backlink  = generatedFunction.getProcTableEntry(backlink_.getIndex());
+			final Resolve_Ident_IA        ria       = action.ria();
+			final IdentTableEntry         ite1      = action.ite();
+			final ErrSink                 errSink1   = ria.getDc()._dt2()._errSink();
+
+			backlink.onResolvedElement(
+					(DT_Element3 dtel) -> {
+						final ErrSink                 errSink   = dtel.getErrSink();
+						assert errSink1 == errSink;
+						final DeducePhase             phase     = ria.getDc().getPhase();
+
+						//dtel.setDeduceTypes2(ria.getDc()._dt2()); //??
+
+						final OS_Element resolvedElement = dtel.getResolvedElement();
+
+						if (resolvedElement == null) {
+							dtel.op_fail(DT_Element3.DTEL.d999_163);
+							return; //throw new AssertionError(); // TODO feb 20
+						}
+
+						try {
+							// TODO 24/01/25 do this next
+							final IdentExpression      ident = ite1.getIdent();
+							if (resolvedElement instanceof OS_Element2 named) {
+								assert ident.sameName(named);
+							}
+
+							final LookupResultList     lrl2 = ria.getDc().lookupExpression(ident, resolvedElement.getContext());
+							@Nullable final OS_Element best  = lrl2.chooseBest(null);
+							assert best != null;
+							ite1.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(best));
+						} catch (final ResolveError aResolveError) {
+							errSink.reportDiagnostic(aResolveError);
+							assert false;
+						}
+
+						action_002_1(principal, ite1, false, phase, ria.getDc());
+					}
+			);
+		} else assert false;
+	}
 }

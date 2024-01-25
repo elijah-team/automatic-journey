@@ -1,45 +1,45 @@
-/* -*- Mode: Java; tab-width: 4; indent-tabs-mode: t; c-basic-offset: 4 -*- */
-/*
- * Elijjah compiler, copyright Tripleo <oluoluolu+elijah@gmail.com>
- *
- * The contents of this library are released under the LGPL licence v3,
- * the GNU Lesser General Public License text was downloaded from
- * http://www.gnu.org/licenses/lgpl.html from `Version 3, 29 June 2007'
- *
- */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import org.jdeferred2.DoneCallback;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.comp.ErrSink;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.stages.deduce.post_bytecode.*;
-import tripleo.elijah.stages.deduce.zero.*;
+import tripleo.elijah.lang.types.OS_UserType;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_ProcTableEntry;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_VariableTableEntry;
+import tripleo.elijah.stages.deduce.zero.ITE_Zero;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.util.*;
-import tripleo.elijah.work.*;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.stages.instructions.InstructionArgument;
+import tripleo.elijah.stages.instructions.IntegerIA;
+import tripleo.elijah.stages.instructions.ProcIA;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.util.NotImplementedException;
+import tripleo.elijah.util.SimplePrintLoggerToRemoveSoon;
+import tripleo.elijah.work.WorkJob;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created 7/8/21 2:31 AM
  */
-class Resolve_Ident_IA {
+public class Resolve_Ident_IA {
 	private final @NotNull Context               context;
 	private final @NotNull IdentIA               identIA;
 	private final          BaseGeneratedFunction generatedFunction;
 	private final @NotNull FoundElement          foundElement;
 	private final @NotNull ErrSink               errSink;
 
-	private final @NotNull DeduceTypes2.DeduceClient3 dc;
+	private final @NotNull  DeduceTypes2.DeduceClient3 dc;
 	private final @NotNull DeducePhase                phase;
 
-	private final @NotNull ElLog LOG;
-	@Nullable OS_Element el;
+	private final @NotNull ElLog      LOG;
+	@Nullable              OS_Element el;
 	Context ectx;
+
 	@Contract(pure = true)
 	public Resolve_Ident_IA(final @NotNull DeduceTypes2.DeduceClient3 aDeduceClient3,
 	                        final @NotNull Context aContext,
@@ -267,42 +267,42 @@ class Resolve_Ident_IA {
 
 	private void action_001(@NotNull final OS_Type aAttached) {
 		switch (aAttached.getType()) {
-		case USER_CLASS: {
-			final ClassStatement x = aAttached.getClassOf();
-			ectx = x.getContext();
-			break;
-		}
-		case FUNCTION: {
-			final int yy = 2;
-			LOG.err("1005");
-			@NotNull final FunctionDef x = (FunctionDef) aAttached.getElement();
-			ectx = x.getContext();
-			break;
-		}
-		case USER:
-			if (el instanceof MatchConditional.MatchArm_TypeMatch) {
-				// for example from match conditional
-				final TypeName tn = ((MatchConditional.MatchArm_TypeMatch) el).getTypeName();
-				try {
-					final @NotNull GenType ty = dc.resolve_type(new OS_UserType(tn), tn.getContext());
-					ectx = ty.resolved.getElement().getContext();
-				} catch (final ResolveError resolveError) {
-					resolveError.printStackTrace();
-					LOG.err("1182 Can't resolve " + tn);
-					throw new IllegalStateException("ResolveError.");
-				}
+			case USER_CLASS: {
+				final ClassStatement x = aAttached.getClassOf();
+				ectx = x.getContext();
+				break;
+			}
+			case FUNCTION: {
+				final int yy = 2;
+				LOG.err("1005");
+				@NotNull final FunctionDef x = (FunctionDef) aAttached.getElement();
+				ectx = x.getContext();
+				break;
+			}
+			case USER:
+				if (el instanceof MatchConditional.MatchArm_TypeMatch) {
+					// for example from match conditional
+					final TypeName tn = ((MatchConditional.MatchArm_TypeMatch) el).getTypeName();
+					try {
+						final @NotNull GenType ty = dc.resolve_type(new OS_UserType(tn), tn.getContext());
+						ectx = ty.resolved.getElement().getContext();
+					} catch (final ResolveError resolveError) {
+						resolveError.printStackTrace();
+						LOG.err("1182 Can't resolve " + tn);
+						throw new IllegalStateException("ResolveError.");
+					}
 //						ectx = el.getContext();
-			} else
-				ectx = aAttached.getTypeName().getContext(); // TODO is this right?
-			break;
-		case FUNC_EXPR: {
-			@NotNull final FuncExpr x = (FuncExpr) aAttached.getElement();
-			ectx = x.getContext();
-			break;
-		}
-		default:
-			LOG.err("1010 " + aAttached.getType());
-			throw new IllegalStateException("Don't know what you're doing here.");
+				} else
+					ectx = aAttached.getTypeName().getContext(); // TODO is this right?
+				break;
+			case FUNC_EXPR: {
+				@NotNull final FuncExpr x = (FuncExpr) aAttached.getElement();
+				ectx = x.getContext();
+				break;
+			}
+			default:
+				LOG.err("1010 " + aAttached.getType());
+				throw new IllegalStateException("Don't know what you're doing here.");
 		}
 	}
 
@@ -315,10 +315,11 @@ class Resolve_Ident_IA {
 		if (tte.expression instanceof ProcedureCallExpression) {
 			if (tte.tableEntry != null) {
 				if (tte.tableEntry instanceof @NotNull final ProcTableEntry pte) {
-					@NotNull final IdentIA         x = (IdentIA) pte.expression_num;
-					@NotNull final IdentTableEntry y = x.getEntry();
+					@NotNull final IdentIA          x   = (IdentIA) pte.expression_num;
+					@NotNull final IdentTableEntry  y   = x.getEntry();
+					_action_002_no_resolved_element foo = new _action_002_no_resolved_element(x, y, pte, this);
 					if (y.getResolvedElement() == null) {
-						action_002_no_resolved_element(pte, y);
+						action_002_no_resolved_element(foo);
 					} else {
 						final OS_Element               res = y.getResolvedElement();
 						final @NotNull IdentTableEntry ite = identIA.getEntry();
@@ -358,27 +359,22 @@ class Resolve_Ident_IA {
 		}
 	}
 
-	private void action_002_no_resolved_element(final @NotNull ProcTableEntry pte, final @NotNull IdentTableEntry ite) {
-		final InstructionArgument _backlink = ite.getBacklink();
-		if (_backlink instanceof ProcIA) {
-			final @NotNull ProcIA         backlink_ = (ProcIA) _backlink;
-			@NotNull final ProcTableEntry backlink  = generatedFunction.getProcTableEntry(backlink_.getIndex());
+	private void action_002_no_resolved_element(final _action_002_no_resolved_element action) {
+		final @NotNull ProcTableEntry  pte       = action.pte();
+		final @NotNull IdentTableEntry ite       = action.ite();
+		final InstructionArgument      _backlink = ite.getBacklink();
 
-			final DeduceElement3_ProcTableEntry pte_de3 = (DeduceElement3_ProcTableEntry) backlink.getDeduceElement3(this.dc._dt2(), this.generatedFunction);
-			pte_de3._action_002_no_resolved_element(_backlink, backlink, dc, ite, errSink, phase);
+		if (_backlink instanceof ProcIA) {
+			action.pte_de3()._action_002_no_resolved_element(action);
 		} else if (_backlink instanceof final @NotNull IntegerIA backlink_) {
 			@NotNull final VariableTableEntry backlink = backlink_.getEntry();
 
 			final DeduceElement3_VariableTableEntry vte_de3 = (DeduceElement3_VariableTableEntry) backlink.getDeduceElement3();
 			vte_de3._action_002_no_resolved_element(errSink, pte, ite, dc, phase);
 		} else {
-			System.err.println("=== 397 ===================================");
-			System.err.println("=== 397 ===================================");
-			System.err.println("=== 397 ===================================");
-			System.err.println("=== 397 ===================================");
-			System.err.println("=== 397 ===================================");
-			System.err.println("=== 397 ===================================");
-			System.err.println("=== 397 ===================================");
+			System.err.println("==> 397-375 ===================================");
+			System.err.println("=== " + _backlink.getClass().getName());
+			System.err.println("==< 397-375 ===================================");
 		}
 	}
 
@@ -460,9 +456,33 @@ class Resolve_Ident_IA {
 			generatedFunction.addDependentFunction(fi);
 	}
 
-
 	enum RIA_STATE {
 		CONTINUE, RETURN, NEXT
+	}
+
+	public record _action_002_no_resolved_element(IdentIA identIA,
+	                                              IdentTableEntry ite,
+	                                              ProcTableEntry pte,
+	                                              Resolve_Ident_IA ria) {
+
+		public DeduceElement3_ProcTableEntry pte_de3() {
+			final DeduceTypes2          deduceTypes2       = getDeduceTypes2();
+			final BaseGeneratedFunction generatedFunction1 = getGeneratedFunction();
+
+			final @NotNull InstructionArgument _backlink = ite.getBacklink();
+			final @NotNull ProcIA              backlink_ = (ProcIA) _backlink;
+			final @NotNull ProcTableEntry      back_link = backlink_.getEntry();
+
+			return (DeduceElement3_ProcTableEntry) back_link.getDeduceElement3(deduceTypes2, generatedFunction1);
+		}
+
+		private BaseGeneratedFunction getGeneratedFunction() {
+			return ria.generatedFunction;
+		}
+
+		private DeduceTypes2 getDeduceTypes2() {
+			return ria.dc._dt2();
+		}
 	}
 
 	static class GenericElementHolderWithDC implements IElementHolder {
@@ -653,8 +673,8 @@ class Resolve_Ident_IA {
 			ectx = aEctx;
 		}
 	}
-}
 
-//
-// vim:set shiftwidth=4 softtabstop=0 noexpandtab:
-//
+	public DeduceTypes2.@NotNull DeduceClient3 getDc() {
+		return dc;
+	}
+}

@@ -1,14 +1,3 @@
-/*
- * Elijjah compiler, copyright Tripleo <oluoluolu+elijah@gmail.com>
- *
- * The contents of this library are released under the LGPL licence v3,
- * the GNU Lesser General Public License text was downloaded from
- * http://www.gnu.org/licenses/lgpl.html from `Version 3, 29 June 2007'
- *
- */
-/**
- * Created Apr 1, 2019 at 3:21:26 PM
- */
 package tripleo.elijah.lang;
 
 import antlr.*;
@@ -175,8 +164,12 @@ public class IdentExpression implements IExpression, OS_Element, Resolvable, Loc
 	}
 
 	// endregion
-}
 
-//
-//
-//
+	public boolean sameName(final String otherName) {
+		return this.text.getText().equals(otherName);
+	}
+
+	public boolean sameName(final OS_Element2 aNamed) {
+		return sameName(aNamed.name());
+	}
+}

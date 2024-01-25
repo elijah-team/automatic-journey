@@ -8,19 +8,34 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.deduce.post_bytecode.*;
-import tripleo.elijah.stages.deduce.zero.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.util.*;
+import org.jdeferred2.DoneCallback;
+import org.jdeferred2.Promise;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.Eventual;
+import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.lang.Context;
+import tripleo.elijah.lang.IExpression;
+import tripleo.elijah.lang.OS_Element;
+import tripleo.elijah.lang.OS_Type;
+import tripleo.elijah.stages.deduce.ClassInvocation;
+import tripleo.elijah.stages.deduce.DeduceProcCall;
+import tripleo.elijah.stages.deduce.DeduceTypes2;
+import tripleo.elijah.stages.deduce.FunctionInvocation;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_ProcTableEntry;
+import tripleo.elijah.stages.deduce.post_bytecode.IDeduceElement3;
+import tripleo.elijah.stages.deduce.zero.PTE_Zero;
+import tripleo.elijah.stages.instructions.InstructionArgument;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.util.Helpers;
+import tripleo.elijah.util.NotImplementedException;
+import tripleo.elijah.util.SimplePrintLoggerToRemoveSoon;
+import tripleo.elijah_prolific.deduce.DT_Element3;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Created 9/12/20 10:07 PM
@@ -36,13 +51,14 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 	public final  IExpression                                     expression;
 	public final  InstructionArgument                             expression_num;
 	public final  DeduceProcCall                                  dpc                   = new DeduceProcCall(this);
-	private final DeferredObject<ProcTableEntry, Void, Void>      completeDeferred      = new DeferredObject<ProcTableEntry, Void, Void>();
-	private final DeferredObject2<FunctionInvocation, Void, Void> onFunctionInvocations = new DeferredObject2<FunctionInvocation, Void, Void>();
-	private final DeferredObject<GenType, Void, Void> typeDeferred = new DeferredObject<GenType, Void, Void>();
+	private final DeferredObject<ProcTableEntry, Void, Void>      completeDeferred      = new DeferredObject<>();
+	private final DeferredObject2<FunctionInvocation, Void, Void> onFunctionInvocations = new DeferredObject2<>();
+	private final DeferredObject<GenType, Void, Void>             typeDeferred          = new DeferredObject<>();
+	private final Eventual<DT_Element3>                           _p_resolvedElement    = new Eventual<>();
 	private       ClassInvocation                                 classInvocation;
 	private       FunctionInvocation                              functionInvocation;
 	private       DeduceElement3_ProcTableEntry                   _de3;
-	private PTE_Zero _zero;
+	private       PTE_Zero                                        _zero;
 
 	public ProcTableEntry(final int aIndex, final IExpression aExpression, final InstructionArgument aExpressionNum, final List<TypeTableEntry> aArgs) {
 		index          = aIndex;
@@ -68,6 +84,10 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 			});
 		}
 
+		elementPromise(
+				p -> _p_resolvedElement.resolve(new __DT_Element3(p)),
+				_p_resolvedElement::fail);
+
 		setupResolve();
 	}
 
@@ -91,41 +111,25 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 			state = 3;
 		}
 		switch (state) {
-		case 0:
-			throw new IllegalStateException();
-		case 1:
-			SimplePrintLoggerToRemoveSoon.println_err2("136 pte not finished resolving " + this);
-			break;
-		case 2:
-			SimplePrintLoggerToRemoveSoon.println_err2("138 Internal compiler error");
-			break;
-		case 3:
-			if (completeDeferred.isPending())
-				completeDeferred.resolve(this);
-			break;
-		default:
-			throw new NotImplementedException();
+			case 0:
+				throw new IllegalStateException();
+			case 1:
+				SimplePrintLoggerToRemoveSoon.println_err2("136 pte not finished resolving " + this);
+				break;
+			case 2:
+				SimplePrintLoggerToRemoveSoon.println_err2("138 Internal compiler error");
+				break;
+			case 3:
+				if (completeDeferred.isPending())
+					completeDeferred.resolve(this);
+				break;
+			default:
+				throw new NotImplementedException();
 		}
 	}
 
-	/**
-	 * Completes when all args have an attached typeEntry
-	 */
-//	@Contract(pure = true)
-//	private DeferredObject<ProcTableEntry, Void, Void> completeDeferred() {
-//		return completeDeferred;
-//	}
-
 	public void setArgType(final int aIndex, final OS_Type aType) {
 		args.get(aIndex).setAttached(aType);
-	}
-
-	/**
-	 * Call {@code cb} when all args have an attached typeEntry
-	 */
-	@Contract(pure = true)
-	private void onComplete(final DoneCallback<ProcTableEntry> cb) {
-		completeDeferred.then(cb);
 	}
 
 	public ClassInvocation getClassInvocation() {
@@ -140,11 +144,11 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 	@NotNull
 	public String toString() {
 		return "ProcTableEntry{" +
-		  "index=" + index +
-		  ", expression=" + expression +
-		  ", expression_num=" + expression_num +
-		  ", args=" + args +
-		  '}';
+				"index=" + index +
+				", expression=" + expression +
+				", expression_num=" + expression_num +
+				", args=" + args +
+				'}';
 	}
 
 	// have no idea what this is for
@@ -202,8 +206,8 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 		}
 
 		final String sb2 = "[" +
-		  Helpers.String_join(", ", l) +
-		  "]";
+				Helpers.String_join(", ", l) +
+				"]";
 		pte_string = sb2;
 		return pte_string;
 	}
@@ -213,6 +217,12 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 	}
 
 	public void setDeduceTypes2(final DeduceTypes2 aDeduceTypes2, final Context aContext, final BaseGeneratedFunction aGeneratedFunction, final ErrSink aErrSink) {
+		_p_resolvedElement.then(xx -> {
+			xx.setDeduceTypes2(aDeduceTypes2);
+			xx.setContext(aContext);
+			xx.setGeneratedFunction(aGeneratedFunction);
+			xx.setErrSink(aErrSink);
+		});
 		dpc.setDeduceTypes2(aDeduceTypes2, aContext, aGeneratedFunction, aErrSink);
 	}
 
@@ -235,6 +245,66 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 			_zero = new PTE_Zero(this);
 
 		return _zero;
+	}
+
+	public void onResolvedElement(final Consumer<DT_Element3> cb) {
+		_p_resolvedElement.then(cb::accept);
+	}
+
+	private static class __DT_Element3 implements DT_Element3 {
+		private final OS_Element            p;
+		private       DeduceTypes2          deduceTypes2;
+		private       BaseGeneratedFunction generatedFunction;
+		private ErrSink errSink;
+
+		public __DT_Element3(final OS_Element aP) {
+			p = aP;
+		}
+
+		@Override
+		public OS_Element getResolvedElement() {
+			return p;
+		}
+
+		@Override
+		public void setErrSink(final ErrSink aErrSink) {
+			errSink=aErrSink;
+		}
+
+		@Override
+		public void setGeneratedFunction(final BaseGeneratedFunction aGeneratedFunction) {
+			this.generatedFunction = aGeneratedFunction;
+		}
+
+		@Override
+		public void setContext(final Context aContext) {
+
+		}
+
+		@Override
+		public void setDeduceTypes2(final DeduceTypes2 aDeduceTypes2) {
+			if (deduceTypes2 == null) {
+				deduceTypes2 = aDeduceTypes2;
+			}
+		}
+
+		@Override
+		public void op_fail(final DTEL aDTEL) {
+			System.err.println("{{DTEL}} "+aDTEL.name());
+		}
+
+		@Override
+		public ErrSink getErrSink() {
+			return errSink;
+		}
+
+		public BaseGeneratedFunction getGeneratedFunction() {
+			return generatedFunction;
+		}
+
+		public DeduceTypes2 getDeduceTypes2() {
+			return deduceTypes2;
+		}
 	}
 }
 
