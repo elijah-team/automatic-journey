@@ -5,5 +5,9 @@ public class V {
 		System.err.println("{{V.asv}} " + aE + " " + aKey);
 	}
 
+	public static void exit() {
+		System.err.println("{{V.exit}}");
+	}
+
 	public enum e {f202_writing_logs, _putSeq, DT2_2304}
 }
