@@ -10,6 +10,7 @@ package tripleo.elijah.comp;
 
 import com.google.common.collect.*;
 import org.jetbrains.annotations.*;
+import tripleo.elijah.*;
 import tripleo.elijah.comp.functionality.f203.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.nextgen.outputstatement.*;
@@ -17,6 +18,7 @@ import tripleo.elijah.nextgen.outputtree.*;
 import tripleo.elijah.stages.gen_generic.*;
 import tripleo.elijah.stages.generate.*;
 import tripleo.elijah.util.*;
+import tripleo.elijah_prolific.v.*;
 import tripleo.util.buffer.*;
 import tripleo.util.io.*;
 
@@ -68,7 +70,7 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 			mb.put(ab.output, ab.buffer);
 		}
 
-		final Map<String, OS_Module> modmap = new HashMap<String, OS_Module>();
+		final Map<String, OS_Module> modmap = new HashMap<>();
 		for (final GenerateResultItem ab : gr.results()) {
 			modmap.put(ab.output, ab.node.module());
 		}
@@ -94,6 +96,7 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 
 		final PrintStream db_stream = new PrintStream(new File(file_prefix, "buffers.txt"));
 		PipelineLogic.debug_buffers(gr, db_stream);
+		V.gri(gr);
 	}
 
 	private @NotNull File choose_dir_name() {
@@ -118,7 +121,9 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 			path.getParent().toFile().mkdirs();
 
 			// TODO functionality
-			System.out.println("201 Writing path: " + path);
+			if (DebugFlags.lgJan25) {
+				System.out.println("201 Writing path: " + path);
+			}
 			final CharSink x = c.getIO().openWrite(path);
 
 			final EG_SingleStatement beginning = new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline.beginning"));

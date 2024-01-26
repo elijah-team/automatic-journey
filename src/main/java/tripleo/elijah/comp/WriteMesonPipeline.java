@@ -31,7 +31,7 @@ public class WriteMesonPipeline implements PipelineMember, @NotNull Consumer<Sup
 //	private final File file_prefix;
 //	private final GenerateResult gr;
 
-	final         Pattern       pullPat = Pattern.compile("/[^/]+/(.+)");
+	private static final         Pattern       pullPat = Pattern.compile("/[^/]+/(.+)");
 	private final WritePipeline writePipeline;
 	private final Compilation   c;
 	DoubleLatch<Multimap<CompilerInstructions, String>> write_makefiles_latch = new DoubleLatch<>(this::write_makefiles_action);

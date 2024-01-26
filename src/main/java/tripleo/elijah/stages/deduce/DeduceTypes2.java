@@ -25,7 +25,7 @@ import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.*;
 import tripleo.elijah.util.*;
 import tripleo.elijah.work.*;
-import tripleo.elijah_prolific.v.V;
+import tripleo.elijah_prolific.v.*;
 
 import java.util.*;
 
@@ -1780,9 +1780,10 @@ public class DeduceTypes2 {
 						throw new NotImplementedException();
 					}
 				} catch (final ResolveError aResolveError) {
-					aResolveError.printStackTrace();
-					final int y = 2;
-					throw new NotImplementedException();
+//					aResolveError.printStackTrace();
+//					final int y = 2;
+//					throw new NotImplementedException();
+					V.asv(V.e.DT2_1785, ""+aResolveError);
 				}
 			}
 			break;

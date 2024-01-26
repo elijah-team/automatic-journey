@@ -8,7 +8,8 @@ import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.util.*;
-import tripleo.elijah_prolific.deduce.DT_Element3;
+import tripleo.elijah_prolific.deduce.*;
+import tripleo.elijah_prolific.v.*;
 
 public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 	private final ProcTableEntry        principal;
@@ -143,7 +144,8 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 							});
 							final int y = 2;
 						} else {
-							System.err.println("=== 399-147 ================================");
+//							System.err.println("=== 399-147 ================================");
+							V.asv(V.e.d399_147, rl.getText());
 						}
 					}
 				}

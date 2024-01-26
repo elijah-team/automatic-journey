@@ -10,6 +10,7 @@ package tripleo.elijah.comp.functionality.f202;
 
 import tripleo.elijah.comp.*;
 import tripleo.elijah.stages.logging.*;
+import tripleo.elijah_prolific.v.*;
 
 import java.io.*;
 import java.util.*;
@@ -33,7 +34,7 @@ public class F202 {
 	}
 
 	public void processLogs(final Collection<ElLog> aElLogs) {
-		if (aElLogs.size() == 0) return; // TODO progress message? should be impossible anyway
+		if (aElLogs.isEmpty()) return; // TODO progress message? should be impossible anyway
 
 		final ElLog firstLog = aElLogs.iterator().next();
 
@@ -42,7 +43,9 @@ public class F202 {
 
 		final File   psf = new File(file2, s2);
 		final String s1  = firstLog.getFileName();
-		pre.reportProgress(psf.toString());
+		final String a = psf.toString();
+		pre.reportProgress(a);
+		V.asv(V.e.f202_writing_logs, a);
 
 		ple.initialize(psf, s1, errSink);
 		ple.start();

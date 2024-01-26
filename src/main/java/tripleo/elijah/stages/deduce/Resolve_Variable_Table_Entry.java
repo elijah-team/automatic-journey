@@ -10,6 +10,7 @@ package tripleo.elijah.stages.deduce;
 
 import org.jdeferred2.*;
 import org.jetbrains.annotations.*;
+import tripleo.elijah.*;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.contexts.*;
 import tripleo.elijah.lang.*;
@@ -78,7 +79,9 @@ class Resolve_Variable_Table_Entry {
 			if (aPot.tableEntry instanceof final @NotNull ProcTableEntry pte1) {
 				@Nullable final OS_Element    e    = DeduceLookupUtils.lookup(pte1.expression, ctx, deduceTypes2);
 				if (e == null) {
-					System.err.println("** 97: " + pte1.expression);
+					if (DebugFlags.lgJan25) {
+						System.err.println("** 97: " + pte1.expression);
+					}
 					return;
 					//throw new AssertionError();
 				}

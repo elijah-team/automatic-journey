@@ -10,6 +10,7 @@ package tripleo.elijah.comp;
 
 import com.google.common.base.*;
 import org.jetbrains.annotations.*;
+import tripleo.elijah.*;
 import tripleo.elijah.comp.internal.*;
 import tripleo.vendor.mal.*;
 
@@ -58,18 +59,26 @@ class RuntimeProcesses {
 		if (ca.getStage() == Stages.E) return;
 
 		// rt.prepare();
-		System.err.println("***** RuntimeProcess [prepare] named " + process);
+		if (DebugFlags.lgJan25) {
+			System.err.println("***** RuntimeProcess [prepare] named " + process);
+		}
 		process.prepare();
 
 		// rt.run();
-		System.err.println("***** RuntimeProcess [run    ] named " + process);
+		if (DebugFlags.lgJan25) {
+			System.err.println("***** RuntimeProcess [run    ] named " + process);
+		}
 		process.run();
 
 		// rt.postProcess(pr);
-		System.err.println("***** RuntimeProcess [postProcess] named " + process);
+		if (DebugFlags.lgJan25) {
+			System.err.println("***** RuntimeProcess [postProcess] named " + process);
+		}
 		process.postProcess();
 
-		System.err.println("***** RuntimeProcess^ [postProcess/writeLogs]");
+		if (DebugFlags.lgJan25) {
+			System.err.println("***** RuntimeProcess^ [postProcess/writeLogs]");
+		}
 		pr.writeLogs(ca);
 	}
 }

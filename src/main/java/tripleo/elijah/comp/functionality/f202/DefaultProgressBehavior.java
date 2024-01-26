@@ -1,14 +1,4 @@
-/*
- * Elijjah compiler, copyright Tripleo <oluoluolu+elijah@gmail.com>
- *
- * The contents of this library are released under the LGPL licence v3,
- * the GNU Lesser General Public License text was downloaded from
- * http://www.gnu.org/licenses/lgpl.html from `Version 3, 29 June 2007'
- *
- */
 package tripleo.elijah.comp.functionality.f202;
-
-import tripleo.elijah_prolific.v.V;
 
 /**
  * Created 8/11/21 6:01 AM
@@ -16,11 +6,6 @@ import tripleo.elijah_prolific.v.V;
 public class DefaultProgressBehavior implements ProgressBehavior {
 	@Override
 	public void reportProgress(final String a) {
-		V.asv(V.e.f202_writing_logs, a);
 //		System.out.println("202 Writing logs: " + a);
 	}
 }
-
-//
-//
-//

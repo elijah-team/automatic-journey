@@ -1,27 +1,20 @@
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.DoneCallback;
-import org.jetbrains.annotations.Contract;
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.comp.ErrSink;
+import org.jdeferred2.*;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.*;
+import tripleo.elijah.comp.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.OS_UserType;
-import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_ProcTableEntry;
-import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_VariableTableEntry;
-import tripleo.elijah.stages.deduce.zero.ITE_Zero;
+import tripleo.elijah.lang.types.*;
+import tripleo.elijah.stages.deduce.post_bytecode.*;
+import tripleo.elijah.stages.deduce.zero.*;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.IdentIA;
-import tripleo.elijah.stages.instructions.InstructionArgument;
-import tripleo.elijah.stages.instructions.IntegerIA;
-import tripleo.elijah.stages.instructions.ProcIA;
-import tripleo.elijah.stages.logging.ElLog;
-import tripleo.elijah.util.NotImplementedException;
-import tripleo.elijah.util.SimplePrintLoggerToRemoveSoon;
-import tripleo.elijah.work.WorkJob;
+import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.util.*;
+import tripleo.elijah.work.*;
 
-import java.util.Collection;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created 7/8/21 2:31 AM
@@ -372,9 +365,12 @@ public class Resolve_Ident_IA {
 			final DeduceElement3_VariableTableEntry vte_de3 = (DeduceElement3_VariableTableEntry) backlink.getDeduceElement3();
 			vte_de3._action_002_no_resolved_element(errSink, pte, ite, dc, phase);
 		} else {
-			System.err.println("==> 397-375 ===================================");
-			System.err.println("=== " + _backlink.getClass().getName());
-			System.err.println("==< 397-375 ===================================");
+			if (DebugFlags.lgJan25) {
+				System.err.println("==> 397-375 ===================================");
+				final String s = _backlink != null ? _backlink.getClass().getName() : "null";
+				System.err.println("=== " + s);
+				System.err.println("==< 397-375 ===================================");
+			}
 		}
 	}
 

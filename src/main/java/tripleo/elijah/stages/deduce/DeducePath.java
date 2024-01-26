@@ -11,6 +11,7 @@ package tripleo.elijah.stages.deduce;
 
 import org.jdeferred2.*;
 import org.jetbrains.annotations.*;
+import tripleo.elijah.*;
 import tripleo.elijah.diagnostic.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_fn.*;
@@ -74,7 +75,9 @@ public class DeducePath {
 //					getEntry(aIndex-1).setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(getElement(aIndex-1)));
 //					el = identTableEntry.resolved_element;
 //				}
-				System.err.println("=== 397-002 ===================================");
+				if (DebugFlags.lgJan25) {
+					System.err.println("=== 397-002 ===================================");
+				}
 //				assert el != null;
 				if (aIndex == 0)
 					if (identTableEntry.getResolvedElement() != el)
