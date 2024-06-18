@@ -15,17 +15,20 @@ import tripleo.elijah.stages.deduce.fluffy.i.*;
 import tripleo.elijah.stages.deduce.fluffy.impl.*;
 import tripleo.elijah.testing.comp.*;
 import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_remnant.startup.*;
 
 import java.util.*;
 
 public class CompilationImpl extends Compilation {
-
-	private final @NotNull FluffyCompImpl _fluffyComp;
-	private @Nullable EOT_OutputTree _output_tree = null;
+	private final @NotNull FluffyCompImpl   _fluffyComp;
+	private final          ProlificStartup2 _startup;
+	private @Nullable      EOT_OutputTree   _output_tree = null;
 
 	public CompilationImpl(final ErrSink aEee, final IO aIo) {
 		super(aEee, aIo);
 		_fluffyComp = new FluffyCompImpl(this);
+		_startup    = new ProlificStartup2(this);
 	}
 
 	public void testMapHooks(final List<IFunctionMapHook> aMapHooks) {
@@ -48,8 +51,14 @@ public class CompilationImpl extends Compilation {
 		return _fluffyComp;
 	}
 
+	@Override
+	public ProlificStartup2 getStartup() {
+		return _startup;
+	}
+
 	public ICompilationAccess _access() {
-		return new DefaultCompilationAccess(this);
+		final Eventual<ICompilationAccess> cap = _startup.getCompilationAccess();
+		return EventualExtract.of(cap);
 	}
 }
 

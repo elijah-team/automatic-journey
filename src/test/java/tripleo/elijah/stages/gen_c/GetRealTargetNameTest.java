@@ -19,6 +19,7 @@ import tripleo.elijah.stages.gen_generic.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.*;
 import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.comp.*;
 
 import static org.easymock.EasyMock.*;
 
@@ -28,7 +29,7 @@ public class GetRealTargetNameTest {
 	OS_Module         mod;
 
 	@Before
-	public void setUp() throws Exception {
+	public void setUp() {
 		mod = mock(OS_Module.class);
 		final FunctionDef fd = mock(FunctionDef.class);
 		gf = new GeneratedFunction(fd);
@@ -51,10 +52,11 @@ public class GetRealTargetNameTest {
 		final IdentIA        ident_ia  = new IdentIA(ite_index, gf);
 		ident_ia.setPrev(new IntegerIA(int_index, gf));
 		//
-		final AccessBus               ab = new AccessBus(new CompilationImpl(new StdErrSink(), new IO()));
+		final CompilationImpl         c1 = new CompilationImpl(new StdErrSink(), new IO());
+		final AccessBus               ab = new AccessBus(c1);
 		final PipelineLogic           pl = new PipelineLogic(ab);
 		final OutputFileFactoryParams p  = new OutputFileFactoryParams(mod, new StdErrSink(), ElLog.Verbosity.SILENT, pl);  // TODO do we want silent?
-		final GenerateC               c  = new GenerateC(p);
+		final GenerateC               c  = (GenerateC) CM_Preludes.C.create(p);
 		//
 		Emit.emitting = false;
 		final String x = c.getRealTargetName(gf, ident_ia, Generate_Code_For_Method.AOG.GET, null); // TODO is null correct?

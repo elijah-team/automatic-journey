@@ -4,48 +4,34 @@ import com.google.common.collect.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.comp.functionality.f202.*;
 import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.logging.*;
+import tripleo.elijah_remnant.startup.*;
 
 import java.util.*;
 
 public class DefaultCompilationAccess implements ICompilationAccess {
-	protected final Compilation                                compilation;
-	private final   DeferredObject2<PipelineLogic, Void, Void> pipelineLogicDeferred = new DeferredObject2<>();
+	protected final Compilation      compilation;
+	private final   ProlificStartup2 _startup;
 
-	public DefaultCompilationAccess(final Compilation aCompilation) {
+	public DefaultCompilationAccess(final Compilation aCompilation, final ProlificStartup2 aStartup) {
 		compilation = aCompilation;
+		_startup    = aStartup;
 	}
-
-//	void registerPipelineLogic(final Consumer<PipelineLogic> aPipelineLogicConsumer) {
-//		pipelineLogicDeferred.then(new DoneCallback<PipelineLogic>() {
-//			@Override
-//			public void onDone(final PipelineLogic result) {
-//				try {
-//					aPipelineLogicConsumer.accept(result);
-//				} catch (final Throwable aE) {
-//					throw new RuntimeException(aE);
-//				}
-//			}
-//		});
-//	}
 
 	@Override
 	public void setPipelineLogic(final PipelineLogic pl) {
-		throw new Error() {
-		};
-//		compilation.pipelineLogic = pl;
-//
-//		pipelineLogicDeferred.resolve(pl);
+		assert false;
 	}
 
 	@Override
 	@NotNull
 	public ElLog.Verbosity testSilence() {
-		//final boolean isSilent = compilation.silent; // TODO No such thing. silent is a local var
-		final boolean isSilent = false; // TODO fix this
-
-		return isSilent ? ElLog.Verbosity.SILENT : ElLog.Verbosity.VERBOSE;
+		final boolean isSilent = compilation.cfg.silent;
+		if (isSilent) {
+			return ElLog.Verbosity.SILENT;
+		} else {
+			return ElLog.Verbosity.VERBOSE;
+		}
 	}
 
 	@Override
@@ -68,6 +54,11 @@ public class DefaultCompilationAccess implements ICompilationAccess {
 	@Override
 	public Stages getStage() {
 		return getCompilation().cfg.stage;
+	}
+
+	@Override
+	public ProlificStartup2 getStartup() {
+		return _startup;
 	}
 
 	private void writeLogs(final boolean aSilent, final List<ElLog> aLogs) {

@@ -12,10 +12,13 @@ import java.io.*;
 
 public class CX_ParseElijahFile {
 
-	public static Operation<OS_Module> parseAndCache(final ElijahSpec aSpec, final ElijahCache aElijahCache, final String absolutePath, final Compilation compilation) {
+	public static Operation<OS_Module> parseAndCache(final ElijahSpec aSpec,
+													 final ElijahCache aElijahCache,
+													 final String absolutePath,
+													 final Compilation compilation) {
 		final Operation<OS_Module> calm;
 		try {
-			calm = parseElijahFile_(aSpec, compilation, aElijahCache, new File(absolutePath), compilation);
+			calm = parseElijahFile_(aSpec, compilation, new File(absolutePath), compilation);
 		} catch (final IOException aE) {
 			return Operation.failure(aE);
 		}
@@ -29,8 +32,7 @@ public class CX_ParseElijahFile {
 
 	private static Operation<OS_Module> parseElijahFile_(final ElijahSpec spec,
 	                                                     final Compilation aCompilation,
-	                                                     final ElijahCache aElijahCache,
-	                                                     final File      file   ,
+														 final File      file   ,
 	                                                     final Compilation c) throws IOException {
 		final IO io = aCompilation.getIO();
 
@@ -77,7 +79,13 @@ public class CX_ParseElijahFile {
 	}
 
 	private static Operation<OS_Module> parseElijahFile(final ElijahSpec spec, final Compilation compilation) {
-		final var absolutePath = new File(spec.f()).getAbsolutePath(); // !!
+        final String absolutePath;
+        try {
+            absolutePath = spec.file().getCanonicalPath();
+        } catch (IOException e) {
+            return Operation.failure(e);
+        }
+        //final var absolutePath = new File(spec.f()).getAbsolutePath(); // !!
 		return parseElijahFile(spec.f(), spec.s(), spec.do_out(), compilation, absolutePath);
 	}
 }

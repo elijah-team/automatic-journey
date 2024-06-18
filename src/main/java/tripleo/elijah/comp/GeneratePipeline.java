@@ -9,6 +9,7 @@
 package tripleo.elijah.comp;
 
 import com.google.common.base.*;
+import org.jdeferred2.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.nextgen.inputtree.*;
@@ -31,12 +32,20 @@ public class GeneratePipeline implements PipelineMember/*, AccessBus.AB_LgcListe
 	private       List<GeneratedNode> lgc;
 
 	public GeneratePipeline(@NotNull final AccessBus ab) {
-		errSink = ab.getCompilation().getErrSink();
+		Compilation compilation = ab.getCompilation();
+		errSink = compilation.getErrSink();
 
 		ab.subscribePipelineLogic(aPl -> pipelineLogic = aPl);
 		ab.subscribe_lgc(aLgc -> lgc = aLgc);
 
 		__ab = ab;
+
+		compilation.world().subscribeLgc(new DoneCallback<CWS_LGC>(){
+			@Override
+			public void onDone(CWS_LGC result) {
+//				assert  false;
+			}
+		});
 	}
 
 	@Override

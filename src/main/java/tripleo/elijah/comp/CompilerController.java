@@ -9,5 +9,5 @@ public interface CompilerController {
 
 	void runner();
 
-	void _set(Compilation aCompilation, List<String> aArgs);
+	void _set(Compilation aCompilation, List<String> aArgumentList);
 }

@@ -1,0 +1,47 @@
+package tripleo.elijah.comp;
+
+import org.apache.commons.lang3.tuple.*;
+import tripleo.elijah.comp.internal.*;
+
+import java.util.*;
+
+public abstract class _CompilerControllerBase implements CompilerController {
+	protected String[] args2;
+	protected CompilationBus cb;
+	protected Compilation c;
+	protected List<String> args;
+
+	@Override
+	public void printUsage() {
+		System.out.println("Usage: eljc [--showtree] [-sE|O] <directory or .ez file names>");
+	}
+
+	@Override
+	public void processOptions() {
+		final OptionsProcessor op = new ApacheOptionsProcessor();
+		final CompilerInstructionsObserver cio = new CompilerInstructionsObserver(c, c._cis);
+
+		var cbp = c.getStartup().getCompilationBus();
+		cb = new CompilationBus(c);
+		cbp.resolve(cb);
+
+		try {
+			args2 = op.process(c, args, cb);
+		} catch (final Exception e) {
+			c.getErrSink().exception(e);
+			throw new RuntimeException(e);
+		}
+	}
+
+	@Override
+	public void runner() {
+		try {
+			CompilationRunner __cr = new CompilationRunner(c, cb);
+			c.register(__cr);
+			c.signal(new CSS2_doFindCIs(), Pair.of(args2, cb));
+		} catch (final Exception e) {
+			c.getErrSink().exception(e);
+			throw new RuntimeException(e);
+		}
+	}
+}

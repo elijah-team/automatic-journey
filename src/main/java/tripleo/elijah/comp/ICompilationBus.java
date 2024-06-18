@@ -11,6 +11,8 @@ public interface ICompilationBus {
 
 	void add(CB_Process aProcess);
 
+	void add(CB_Process aCBProcess, Object aPayload);
+
 	interface CB_Action {
 		String name();
 

@@ -17,24 +17,24 @@ import static tripleo.elijah.util.Helpers.*;
 /**
  * Created 9/9/21 4:16 AM
  */
-public class Feb2021 {
+public class Feb2021Test {
 
 	@Test
-	public void testProperty() throws Exception {
+	public void testProperty() {
 		final Compilation c = new CompilationImpl(new StdErrSink(), new IO());
 
 		c.feedCmdLine(List_of("test/feb2021/property/"));
 	}
 
 	@Test
-	public void testFunction() throws Exception {
+	public void testFunction() {
 		final Compilation c = new CompilationImpl(new StdErrSink(), new IO());
 
 		c.feedCmdLine(List_of("test/feb2021/function/"));
 	}
 
 	@Test
-	public void testHier() throws Exception {
+	public void testHier() {
 		final Compilation c = new CompilationImpl(new StdErrSink(), new IO());
 
 		c.feedCmdLine(List_of("test/feb2021/hier/"));

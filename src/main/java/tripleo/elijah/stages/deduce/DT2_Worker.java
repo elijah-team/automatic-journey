@@ -1,6 +1,6 @@
 package tripleo.elijah.stages.deduce;
 
-import tripleo.elijah.*;
+import tripleo.elijah_fluffy.util.*;
 
 public class DT2_Worker {
 	private final Eventual<DeduceTypes2> trigger = new Eventual<>();

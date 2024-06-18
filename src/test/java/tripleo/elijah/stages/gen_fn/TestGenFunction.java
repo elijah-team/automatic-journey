@@ -17,6 +17,7 @@ import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.work.*;
+import tripleo.elijah_fluffy.comp.*;
 
 import java.io.*;
 import java.util.*;
@@ -37,7 +38,7 @@ public class TestGenFunction {
 		final File      file = new File(f);
 		final OS_Module m    = c.realParseElijjahFile(f, file, false);
 		Assert.assertNotNull("Method parsed correctly", m);
-		m.prelude = c.findPrelude("c").success(); // TODO we dont know which prelude to find yet
+		m.prelude = c.findPrelude2(CM_Preludes.C).success().getModule(); // TODO we dont know which prelude to find yet
 
 		//
 		//

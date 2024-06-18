@@ -28,12 +28,18 @@ public class CompilationBus implements ICompilationBus {
 	public void add(final CB_Process aProcess) {
 //		throw new NotImplementedException();
 
-		aProcess.steps().stream()
-		        .forEach(action -> {
-			        action.execute();
-		        });
+		for (CB_Action action : aProcess.steps()) {
+			action.execute();
+		}
 	}
 
+	@Override
+	public void add(final CB_Process aCBProcess, final Object aPayload) {
+		if (aCBProcess instanceof CSS2_Advisable advisable) {
+			advisable.adviseObject(aPayload);
+		} else {
+			throw new AssertionError();
+		}
+		add(aCBProcess);
+	}
 }
-
-

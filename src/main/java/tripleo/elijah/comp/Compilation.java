@@ -13,6 +13,7 @@ import io.reactivex.rxjava3.annotations.*;
 import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.*;
 import io.reactivex.rxjava3.subjects.*;
+import org.jdeferred2.*;
 import org.jetbrains.annotations.Nullable;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.ci.*;
@@ -28,30 +29,28 @@ import tripleo.elijah.stages.logging.*;
 import tripleo.elijah.util.*;
 import tripleo.elijah.world.i.*;
 import tripleo.elijah.world.impl.*;
+import tripleo.elijah_fluffy.comp.*;
 import tripleo.elijah_prolific.v.*;
+import tripleo.elijah_remnant.startup.*;
 
 import java.io.*;
 import java.util.*;
 
 public abstract class Compilation {
 
-	public final  List<ElLog>          elLogs = new LinkedList<ElLog>();
-	public final  CompilationConfig    cfg    = new CompilationConfig();
-	public final  CIS                  _cis   = new CIS();
+	public final  List<ElLog>                  elLogs = new LinkedList<ElLog>();
+	public final  CompilationConfig            cfg    = new CompilationConfig();
+	public final  CIS                          _cis   = new CIS();
 	//
-	public final  DefaultLivingRepo    _repo  = new DefaultLivingRepo();
+	public final  DefaultLivingRepo            _repo  = new DefaultLivingRepo();
 	//
-	final         MOD                  mod    = new MOD(this);
-	private final Pipeline             pipelines;
-	private final int                  _compilationNumber;
-	private final ErrSink              errSink;
-	private final IO                   io;
-	private final USE                  use    = new USE(this);
-	//
-	//
-	//
-	public        PipelineLogic        pipelineLogic;
-	private final   CompFactory                       _con    = new CompFactory() {
+	final         MOD                          mod    = new MOD(this);
+	private final Pipeline                     pipelines;
+	private final int                          _compilationNumber;
+	private final ErrSink                      errSink;
+	private final IO                           io;
+	private final USE                          use    = new USE(this);
+	private final CompFactory                  _con   = new CompFactory() {
 		@Override
 		public @NotNull EIT_ModuleInput createModuleInput(final OS_Module aModule) {
 			return new EIT_ModuleInput(aModule, Compilation.this);
@@ -67,7 +66,9 @@ public abstract class Compilation {
 		}
 
 		@Override
-		public @NotNull InputRequest createInputRequest(final File aFile, final boolean aDo_out, final @Nullable LibraryStatementPart aLsp) {
+		public @NotNull InputRequest createInputRequest(final File aFile,
+		                                                final boolean aDo_out,
+		                                                final @Nullable LibraryStatementPart aLsp) {
 			return new InputRequest(aFile, aDo_out, aLsp);
 		}
 
@@ -79,9 +80,15 @@ public abstract class Compilation {
 			return R;
 		}
 	};
-	private       CompilerInstructions rootCI;
-	public        CompilationRunner    __cr;
-	private Finally _f = new Finally();
+	//
+	//
+	//
+	public        PipelineLogic                pipelineLogic;
+	public        CompilerInstructionsObserver _cio;
+	public        CompilationRunner            __cr;
+	private       CompilerInstructions         rootCI;
+	private       Finally                      _f     = new Finally();
+	private       World                        world;
 
 	public Compilation(final @NotNull ErrSink aErrSink, final IO aIO) {
 		errSink            = aErrSink;
@@ -95,15 +102,15 @@ public abstract class Compilation {
 		return gitlab_ci ? ElLog.Verbosity.SILENT : ElLog.Verbosity.VERBOSE;
 	}
 
-	private CompilationEnclosure getCompilationEnclosure() {
-		throw new NotImplementedException();
-	}
-
 	public static boolean isGitlab_ci() {
 		return System.getenv("GITLAB_CI") != null;
 	}
 
-	void hasInstructions(final @NotNull List<CompilerInstructions> cis) throws Exception {
+	private CompilationEnclosure getCompilationEnclosure() {
+		throw new NotImplementedException();
+	}
+
+	void hasInstructions(final @NotNull List<CompilerInstructions> cis) {
 		assert cis.size() > 0;
 
 		rootCI = cis.get(0);
@@ -145,7 +152,7 @@ public abstract class Compilation {
 	}
 
 	public List<ClassStatement> findClass(final String string) {
-		final List<ClassStatement> l = new ArrayList<ClassStatement>();
+		final List<ClassStatement> l = new ArrayList<>();
 		for (final OS_Module module : mod.modules) {
 			if (module.hasClass(string)) {
 				l.add((ClassStatement) module.findClass(string));
@@ -162,16 +169,14 @@ public abstract class Compilation {
 		return errSink.errorCount();
 	}
 
-	void writeLogs(final boolean aSilent, final @NotNull List<ElLog> aLogs) {
+	void writeLogs(final @NotNull List<ElLog> aLogs) {
 		final Multimap<String, ElLog> logMap = ArrayListMultimap.create();
-		if (true) {
-			for (final ElLog deduceLog : aLogs) {
-				logMap.put(deduceLog.getFileName(), deduceLog);
-			}
-			for (final Map.Entry<String, Collection<ElLog>> stringCollectionEntry : logMap.asMap().entrySet()) {
-				final F202 f202 = new F202(getErrSink(), this);
-				f202.processLogs(stringCollectionEntry.getValue());
-			}
+		for (final ElLog deduceLog : aLogs) {
+			logMap.put(deduceLog.getFileName(), deduceLog);
+		}
+		for (final Map.Entry<String, Collection<ElLog>> stringCollectionEntry : logMap.asMap().entrySet()) {
+			final F202 f202 = new F202(getErrSink(), this);
+			f202.processLogs(stringCollectionEntry.getValue());
 		}
 	}
 
@@ -287,6 +292,55 @@ public abstract class Compilation {
 		return _f;
 	}
 
+	public void signal(CSS2_Signal signal, Object payload) {
+		signal.trigger(this, payload);
+	}
+
+	public void register(Object registerable) {
+		if (registerable instanceof CompilationRunner cr) {
+			this.__cr = cr;
+		}
+	}
+
+	public World world() {
+		if (this.world == null) this.world = new World();
+		return this.world;
+	}
+
+	public Operation<CM_Prelude> findPrelude2(final CM_Preludes aPreludeTag) {
+		final CM_Prelude            result;
+		final Operation2<OS_Module> x  = findPrelude(aPreludeTag.getName());
+		final var                   _c = this;
+		result = new CM_Prelude() {
+			@Override
+			public OS_Module getModule() {
+				if (x.mode() == Mode.SUCCESS) {
+					return x.success();
+				} else {
+					throw null;
+				}
+			}
+
+			@Override
+			public CM_Preludes getTag() {
+				return aPreludeTag;
+			}
+
+			@Override
+			public LibraryStatementPart getLsp() {
+				return null;
+			}
+
+			@Override
+			public Compilation getCompilation() {
+				return _c;
+			}
+		};
+		return Operation.success(result);
+	}
+
+	public abstract ProlificStartup2 getStartup();
+
 	static class MOD {
 		final         List<OS_Module>        modules = new ArrayList<OS_Module>();
 		private final Map<String, OS_Module> fn2m    = new HashMap<String, OS_Module>();
@@ -321,7 +375,6 @@ public abstract class Compilation {
 	}
 
 	static class CIS implements Observer<CompilerInstructions> {
-
 		private final Subject<CompilerInstructions> compilerInstructionsSubject = ReplaySubject.create();
 		CompilerInstructionsObserver _cio;
 
@@ -346,8 +399,8 @@ public abstract class Compilation {
 			//compilerInstructionsSubject.onComplete();
 		}
 
-		public void almostComplete() {
-			_cio.almostComplete();
+		public void almostComplete(CompilerInstructionsObserver aCio) {
+			aCio.almostComplete();
 		}
 
 		public void subscribe(final Observer<CompilerInstructions> aCio) {
@@ -356,14 +409,23 @@ public abstract class Compilation {
 	}
 
 	public static class CompilationAlways {
-		public static boolean VOODOO = false;
+		public static boolean     VOODOO          = false;
+		public static CM_Preludes _defaultPrelude = CM_Preludes.C;
 
+		/**
+		 * Return the unquoted name
+		 */
 		@NotNull
 		public static String defaultPrelude() {
-			return "c";
+			return _defaultPrelude.getName();
 		}
 	}
 
+	class World {
+		public void subscribeLgc(DoneCallback<CWS_LGC> consumer) {
+//		lgcsub.
+		}
+	}
 }
 
 //

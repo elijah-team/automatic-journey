@@ -127,7 +127,7 @@ public class AccessBus {
 	public void writeLogs() {
 		@NotNull final Compilation comp = getCompilation(); // this._c
 
-		comp.writeLogs(comp.cfg.silent, comp.elLogs);
+		comp.writeLogs(comp.elLogs);
 	}
 
 	public @NotNull Compilation getCompilation() {

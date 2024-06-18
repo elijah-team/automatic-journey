@@ -1,4 +1,4 @@
-package tripleo.elijah;
+package tripleo.elijah_fluffy.util;
 
 import org.jdeferred2.*;
 import org.jdeferred2.impl.*;
@@ -33,5 +33,21 @@ public class Eventual<P> {
 	 */
 	public String description() {
 		return "GENERIC-DESCRIPTION";
+	}
+
+	public boolean isFailed() {
+		return prom.isRejected();
+	}
+
+	public boolean isPending() {
+		return prom.isPending();
+	}
+
+	public void reject(final Diagnostic aDiagnostic) {
+		prom.reject(aDiagnostic);
+	}
+
+	public Promise.State state() {
+		return prom.state();
 	}
 }

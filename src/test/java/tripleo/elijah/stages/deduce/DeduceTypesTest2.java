@@ -17,6 +17,7 @@ import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.logging.*;
 import tripleo.elijah.test_help.*;
 import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.comp.*;
 
 public class DeduceTypesTest2 {
 
@@ -27,7 +28,7 @@ public class DeduceTypesTest2 {
 		final Compilation c   = b.comp;
 		final OS_Module   mod = b.defaultMod();
 
-		mod.prelude = mod.parent.findPrelude("c").success();
+		mod.prelude = mod.parent.findPrelude2(CM_Preludes.C).success().getModule();
 		final ModuleContext mctx = new ModuleContext(mod);
 		mod.setContext(mctx);
 		final ClassStatement cs = new ClassStatement(mod, mctx);

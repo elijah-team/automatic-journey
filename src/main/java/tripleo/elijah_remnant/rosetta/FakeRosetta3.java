@@ -2,9 +2,9 @@ package tripleo.elijah_remnant.rosetta;
 
 import org.apache.commons.lang3.tuple.*;
 import org.jdeferred2.*;
-import tripleo.elijah.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 
