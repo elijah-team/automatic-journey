@@ -10,7 +10,7 @@ package tripleo.elijah.stages.gen_c;
 
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

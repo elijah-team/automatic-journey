@@ -12,7 +12,7 @@ import org.jetbrains.annotations.*;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

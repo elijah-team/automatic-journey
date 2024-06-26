@@ -12,7 +12,7 @@ import com.google.common.collect.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.ci.*;
 import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 import tripleo.util.io.*;
 
 import java.io.*;
@@ -22,7 +22,7 @@ import java.util.function.*;
 import java.util.regex.*;
 import java.util.stream.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 /**
  * Created 9/13/21 11:58 PM

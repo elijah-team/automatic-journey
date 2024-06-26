@@ -18,8 +18,8 @@ import tripleo.elijah.lang.types.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.util.*;
 import tripleo.elijah.work.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

@@ -20,7 +20,7 @@ import com.google.common.collect.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.gen.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 
@@ -44,7 +44,7 @@ public class ExpressionNodeBuilder {
 	public static IExpression binex(final TypeRef rt, final VariableReference left, final ExpressionOperators middle, final TmpSSACtxNode right) { // todo wrong again
 		// TODO Auto-generated method stub
 		final ExpressionKind middle1 = Helpers.ExpressionOperatorToExpressionType(middle);
-		return new BasicBinaryExpression(left, middle1, new StringExpression(tripleo.elijah.util.Helpers.makeToken(right.text()))); // TODO !!!
+		return new BasicBinaryExpression(left, middle1, new StringExpression(tripleo.elijah_fluffy.util.Helpers.makeToken(right.text()))); // TODO !!!
 	}
 
 	@NotNull
@@ -110,7 +110,7 @@ public class ExpressionNodeBuilder {
 		final ProcedureCallExpression pce1 = new ProcedureCallExpression();
 		final Qualident               xyz  = new Qualident();
 		final Token                   t    = new CommonToken();
-		xyz.append(tripleo.elijah.util.Helpers.string_to_ident(aMeth.getTitle()));
+		xyz.append(tripleo.elijah_fluffy.util.Helpers.string_to_ident(aMeth.getTitle()));
 		pce1.identifier(xyz);
 		//
 		//
@@ -165,7 +165,7 @@ public class ExpressionNodeBuilder {
 //					sl.add(s2);
 ////					sb.append(',');
 //				}
-				sb.append(tripleo.elijah.util.Helpers.String_join(",", Collections2.transform(pce1.getArgs().expressions(), new Function<IExpression, String>() {
+				sb.append(tripleo.elijah_fluffy.util.Helpers.String_join(",", Collections2.transform(pce1.getArgs().expressions(), new Function<IExpression, String>() {
 					@Nullable
 					@Override
 					public String apply(@Nullable final IExpression input) {
@@ -209,7 +209,7 @@ public class ExpressionNodeBuilder {
 		final ProcedureCallExpression pce1 = new ProcedureCallExpression();
 		final Qualident               xyz  = new Qualident();
 //		final Token t = tripleo.elijah.util.Helpers.makeToken(string);
-		xyz.append(tripleo.elijah.util.Helpers.string_to_ident(string));
+		xyz.append(tripleo.elijah_fluffy.util.Helpers.string_to_ident(string));
 		pce1.identifier(xyz);
 		//
 		final ExpressionList expl = Helpers.LocalAgnTmpNodeToListVarRef(of);
@@ -282,7 +282,7 @@ public class ExpressionNodeBuilder {
 	@Contract("_ -> new")
 	public static IdentExpression ident(final String string) {
 		// TODO Parser level elements should not be used here
-		return new IdentExpression(tripleo.elijah.util.Helpers.makeToken(string));
+		return new IdentExpression(tripleo.elijah_fluffy.util.Helpers.makeToken(string));
 
 	}
 

@@ -25,7 +25,7 @@ import tripleo.elijah.contexts.*;
 import tripleo.elijah.entrypoints.*;
 import tripleo.elijah.lang2.*;
 import tripleo.elijah.stages.deduce.fluffy.i.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

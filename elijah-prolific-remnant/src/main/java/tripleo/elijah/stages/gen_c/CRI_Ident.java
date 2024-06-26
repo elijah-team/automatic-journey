@@ -5,7 +5,7 @@ import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 import java.util.function.*;

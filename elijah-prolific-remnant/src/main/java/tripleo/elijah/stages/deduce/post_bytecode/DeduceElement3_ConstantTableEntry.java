@@ -7,7 +7,7 @@ import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.deduce.post_bytecode.DED.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 public class DeduceElement3_ConstantTableEntry implements IDeduceElement3 {
 

@@ -7,7 +7,7 @@ import tripleo.elijah.lang.types.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 import tripleo.elijah_prolific.deduce.*;
 import tripleo.elijah_prolific.v.*;
 

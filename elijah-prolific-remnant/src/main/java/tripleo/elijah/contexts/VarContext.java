@@ -9,7 +9,7 @@
 package tripleo.elijah.contexts;
 
 import tripleo.elijah.lang.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

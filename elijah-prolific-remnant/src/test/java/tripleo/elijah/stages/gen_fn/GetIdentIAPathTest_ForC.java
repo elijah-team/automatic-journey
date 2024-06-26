@@ -16,10 +16,10 @@ import tripleo.elijah.lang.types.*;
 import tripleo.elijah.stages.gen_c.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.test_help.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import static org.easymock.EasyMock.*;
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 @Ignore
 public class GetIdentIAPathTest_ForC {

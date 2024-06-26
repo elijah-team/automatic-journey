@@ -1,6 +1,6 @@
 package tripleo.elijah.nextgen.outputstatement;
 
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 import java.util.stream.*;

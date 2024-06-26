@@ -16,7 +16,7 @@ import tripleo.elijah.stages.gen_fn.*;
 
 import java.util.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 /**
  * Created 1/21/21 9:04 PM

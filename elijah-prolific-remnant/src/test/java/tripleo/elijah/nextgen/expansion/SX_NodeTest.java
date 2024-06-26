@@ -11,7 +11,7 @@ import tripleo.elijah.stages.logging.*;
 
 import java.util.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 public class SX_NodeTest extends TestCase {
 

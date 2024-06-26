@@ -11,7 +11,7 @@ package tripleo.elijah;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 public class Out {
 

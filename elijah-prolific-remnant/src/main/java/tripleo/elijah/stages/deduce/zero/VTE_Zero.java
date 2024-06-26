@@ -6,7 +6,7 @@ import tripleo.elijah.comp.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 public class VTE_Zero {
 	private final VariableTableEntry  vte;

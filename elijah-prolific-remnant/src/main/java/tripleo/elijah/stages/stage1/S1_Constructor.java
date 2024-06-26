@@ -13,7 +13,7 @@ import tripleo.util.range.*;
 
 import java.util.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 /**
  * @author Created    Oct 7, 2022 at 7:00:43 PM

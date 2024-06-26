@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * @author Tripleo(sb)

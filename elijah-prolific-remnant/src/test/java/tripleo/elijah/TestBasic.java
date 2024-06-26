@@ -24,7 +24,7 @@ import java.util.*;
 import java.util.function.Predicate;
 import java.util.stream.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 /**
  * @author Tripleo(envy)

@@ -17,7 +17,7 @@ import tripleo.elijah.lang.types.*;
 import tripleo.elijah.lang2.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.test_help.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * Useless tests. We really want to know if a TypeName will resolve to the same types

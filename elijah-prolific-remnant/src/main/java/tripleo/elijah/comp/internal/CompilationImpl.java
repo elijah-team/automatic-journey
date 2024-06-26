@@ -14,7 +14,6 @@ import tripleo.elijah.nextgen.outputtree.*;
 import tripleo.elijah.stages.deduce.fluffy.i.*;
 import tripleo.elijah.stages.deduce.fluffy.impl.*;
 import tripleo.elijah.testing.comp.*;
-import tripleo.elijah.util.*;
 import tripleo.elijah_fluffy.util.*;
 import tripleo.elijah_remnant.startup.*;
 

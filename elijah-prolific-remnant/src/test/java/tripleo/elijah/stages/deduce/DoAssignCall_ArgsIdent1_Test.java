@@ -10,7 +10,7 @@ import tripleo.elijah.lang2.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 import tripleo.elijah_remnant.rosetta.*;
 
 import java.util.*;

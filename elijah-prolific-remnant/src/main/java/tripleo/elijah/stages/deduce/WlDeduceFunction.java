@@ -1,8 +1,8 @@
 package tripleo.elijah.stages.deduce;
 
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.util.*;
 import tripleo.elijah.work.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

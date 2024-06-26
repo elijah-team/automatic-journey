@@ -6,7 +6,7 @@
  * http://www.gnu.org/licenses/lgpl.html from `Version 3, 29 June 2007'
  *
  */
-package tripleo.elijah.util;
+package tripleo.elijah_fluffy.util;
 
 @SuppressWarnings("unused")
 public class NotImplementedException extends RuntimeException {
@@ -18,4 +18,3 @@ public class NotImplementedException extends RuntimeException {
 		final int y = 2;
 	}
 }
-

@@ -11,7 +11,7 @@ package tripleo.elijah.lang;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.contexts.*;
 import tripleo.elijah.lang2.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * Created 8/6/20 4:00 PM

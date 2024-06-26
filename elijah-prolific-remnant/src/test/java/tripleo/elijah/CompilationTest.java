@@ -15,7 +15,7 @@ import tripleo.elijah.comp.internal.*;
 import java.io.*;
 import java.util.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 /**
  * @author Tripleo(envy)

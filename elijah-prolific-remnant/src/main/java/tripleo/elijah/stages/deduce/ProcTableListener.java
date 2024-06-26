@@ -14,7 +14,7 @@ import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * Created 9/10/21 3:42 AM

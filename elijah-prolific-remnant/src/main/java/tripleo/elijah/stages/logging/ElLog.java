@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.stages.logging;
 
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

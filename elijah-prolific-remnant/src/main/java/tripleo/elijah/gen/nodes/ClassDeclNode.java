@@ -7,7 +7,7 @@ import org.eclipse.jdt.annotation.*;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.gen.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

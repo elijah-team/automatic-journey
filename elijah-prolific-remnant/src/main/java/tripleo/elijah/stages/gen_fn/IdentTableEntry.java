@@ -19,7 +19,7 @@ import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.deduce.post_bytecode.*;
 import tripleo.elijah.stages.deduce.zero.*;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

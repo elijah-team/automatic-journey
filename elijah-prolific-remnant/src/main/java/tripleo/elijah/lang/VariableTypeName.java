@@ -19,7 +19,7 @@ import org.jetbrains.annotations.*;
 import java.io.*;
 import java.util.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 public class VariableTypeName extends AbstractTypeName implements NormalTypeName {
 

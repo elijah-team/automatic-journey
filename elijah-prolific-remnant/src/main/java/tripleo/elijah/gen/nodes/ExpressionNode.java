@@ -11,7 +11,7 @@ package tripleo.elijah.gen.nodes;
 import org.eclipse.jdt.annotation.*;
 import tripleo.elijah.gen.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * @author Tripleo(acer)

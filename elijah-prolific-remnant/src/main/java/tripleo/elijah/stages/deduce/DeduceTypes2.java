@@ -22,10 +22,14 @@ import tripleo.elijah.stages.deduce.post_bytecode.*;
 import tripleo.elijah.stages.deduce.zero.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.util.*;
-import tripleo.elijah.work.*;
-import tripleo.elijah_prolific.v.*;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah_fluffy.util.Helpers;
+import tripleo.elijah_fluffy.util.NotImplementedException;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
+import tripleo.elijah.work.WorkJob;
+import tripleo.elijah.work.WorkList;
+import tripleo.elijah.work.WorkManager;
+import tripleo.elijah_prolific.v.V;
 
 import java.util.*;
 

@@ -14,12 +14,12 @@ import tripleo.elijah.gen.*;
 import tripleo.elijah.gen.nodes.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.lang2.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 import tripleo.util.buffer.*;
 
 import java.util.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 /**
  * @author Tripleo(sb)

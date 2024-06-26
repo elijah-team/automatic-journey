@@ -8,12 +8,12 @@ import tripleo.elijah.nextgen.model.*;
 import tripleo.elijah.nextgen.outputstatement.*;
 import tripleo.elijah.nextgen.outputtree.*;
 import tripleo.elijah.nextgen.small.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 import java.util.stream.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 public class SX_NodeTest2 extends TestCase {
 

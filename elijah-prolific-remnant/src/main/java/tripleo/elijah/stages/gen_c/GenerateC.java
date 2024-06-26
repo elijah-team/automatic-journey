@@ -19,8 +19,8 @@ import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.gen_generic.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.util.*;
 import tripleo.elijah.work.*;
+import tripleo.elijah_fluffy.util.*;
 import tripleo.util.buffer.*;
 
 import java.util.*;

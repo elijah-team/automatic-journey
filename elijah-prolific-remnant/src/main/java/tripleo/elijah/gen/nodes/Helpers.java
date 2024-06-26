@@ -2,7 +2,7 @@ package tripleo.elijah.gen.nodes;
 
 import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 
@@ -64,7 +64,7 @@ public class Helpers {
 		for (final IExpression e : expressionList) {
 			ls.add(e.toString());
 		}
-		sb.append(tripleo.elijah.util.Helpers.String_join(", ", ls));
+		sb.append(tripleo.elijah_fluffy.util.Helpers.String_join(", ", ls));
 		sb.append(")");
 		return sb.toString();
 	}

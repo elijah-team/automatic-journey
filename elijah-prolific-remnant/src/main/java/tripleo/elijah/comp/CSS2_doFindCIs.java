@@ -4,7 +4,7 @@ import org.apache.commons.lang3.tuple.*;
 
 import java.util.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 public class CSS2_doFindCIs implements CSS2_Signal {
 	@Override

@@ -13,7 +13,7 @@ import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.internal.*;
 import tripleo.elijah.factory.comp.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 /**
  * Created 3/5/21 4:32 AM

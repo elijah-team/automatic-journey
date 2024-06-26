@@ -12,7 +12,7 @@ import org.junit.*;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.internal.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 /**
  * Created 9/9/21 4:16 AM

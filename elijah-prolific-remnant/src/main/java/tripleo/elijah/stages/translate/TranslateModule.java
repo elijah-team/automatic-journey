@@ -2,7 +2,7 @@ package tripleo.elijah.stages.translate;
 
 import tripleo.elijah.lang.*;
 import tripleo.elijah.lang2.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.io.*;
 

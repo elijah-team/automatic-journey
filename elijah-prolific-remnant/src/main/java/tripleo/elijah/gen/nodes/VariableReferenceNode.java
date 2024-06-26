@@ -10,7 +10,7 @@ package tripleo.elijah.gen.nodes;
 
 import tripleo.elijah.gen.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 public class VariableReferenceNode {
 	private final CompilerContext   _cctx;

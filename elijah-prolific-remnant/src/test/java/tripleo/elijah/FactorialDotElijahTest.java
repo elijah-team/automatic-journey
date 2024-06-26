@@ -14,7 +14,7 @@ import tripleo.elijah.gen.*;
 import tripleo.elijah.gen.nodes.*;
 import tripleo.util.buffer.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 public class FactorialDotElijahTest {
 

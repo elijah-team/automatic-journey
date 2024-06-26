@@ -1,4 +1,4 @@
-package tripleo.elijah.util;
+package tripleo.elijah_fluffy.util;
 
 public class SimplePrintLoggerToRemoveSoon {
 	public static void println_err(final String aS) {

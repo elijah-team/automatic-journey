@@ -16,7 +16,7 @@ import tripleo.elijah.diagnostic.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * Created 11/21/21 6:32 AM

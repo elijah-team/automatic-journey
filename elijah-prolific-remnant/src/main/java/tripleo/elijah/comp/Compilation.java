@@ -26,10 +26,10 @@ import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.deduce.fluffy.i.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.util.*;
 import tripleo.elijah.world.i.*;
 import tripleo.elijah.world.impl.*;
 import tripleo.elijah_fluffy.comp.*;
+import tripleo.elijah_fluffy.util.*;
 import tripleo.elijah_prolific.v.*;
 import tripleo.elijah_remnant.startup.*;
 

@@ -10,7 +10,7 @@ package tripleo.elijah.lang;
 
 import org.jetbrains.annotations.*;
 import tripleo.elijah.lang2.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 public class AliasStatement implements ModuleItem, ClassItem, FunctionItem, OS_Element2, Resolvable {
 	private final OS_Element      parent;

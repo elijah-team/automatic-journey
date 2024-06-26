@@ -13,7 +13,7 @@ import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.internal.*;
 import tripleo.elijah.entrypoints.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 
@@ -24,7 +24,7 @@ public class FindClassesInDemoElNormal {
 
 	@Test
 	public final void testParseFile() throws Exception {
-		final List<String> args = tripleo.elijah.util.Helpers.List_of("test/demo-el-normal", "test/demo-el-normal/main2", "-sE");
+		final List<String> args = Helpers.List_of("test/demo-el-normal", "test/demo-el-normal/main2", "-sE");
 		final ErrSink      eee  = new StdErrSink();
 		final Compilation  c    = new CompilationImpl(eee, new IO());
 

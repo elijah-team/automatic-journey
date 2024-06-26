@@ -13,7 +13,7 @@ import com.google.common.collect.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 
@@ -49,8 +49,8 @@ public class FnCallArgs implements InstructionArgument {
 		});
 		final ProcTableEntry procTableEntry = gf.prte_list.get(index);
 		return String.format("(call %d [%s(%s)] %s)",
-		  index, procTableEntry.expression, procTableEntry.args,
-		  Helpers.String_join(" ", collect2));
+		                     index, procTableEntry.expression, procTableEntry.args,
+		                     Helpers.String_join(" ", collect2));
 
 	}
 

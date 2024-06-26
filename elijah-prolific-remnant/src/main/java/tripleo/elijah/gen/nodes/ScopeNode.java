@@ -9,7 +9,7 @@
 package tripleo.elijah.gen.nodes;
 
 import tripleo.elijah.gen.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 public class ScopeNode implements Node {
 	@Override

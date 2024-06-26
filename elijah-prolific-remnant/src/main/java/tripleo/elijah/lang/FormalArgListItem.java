@@ -9,7 +9,7 @@
 package tripleo.elijah.lang;
 
 import tripleo.elijah.lang2.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 public class FormalArgListItem implements OS_Element, OS_Element2 {
 

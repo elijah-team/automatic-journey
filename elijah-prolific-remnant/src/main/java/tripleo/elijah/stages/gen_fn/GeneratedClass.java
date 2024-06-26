@@ -13,8 +13,8 @@ import tripleo.elijah.lang.*;
 import tripleo.elijah.lang.types.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.util.*;
 import tripleo.elijah.world.i.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

@@ -1,7 +1,7 @@
 package tripleo.elijah.nextgen.outputstatement;
 
 import org.jetbrains.annotations.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

@@ -10,7 +10,7 @@ package tripleo.elijah.lang;
 
 import antlr.*;
 import org.jetbrains.annotations.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * Created 3/26/21 4:47 AM

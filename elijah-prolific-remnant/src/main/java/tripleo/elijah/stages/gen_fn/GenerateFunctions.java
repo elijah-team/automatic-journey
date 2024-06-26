@@ -1810,14 +1810,14 @@ import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.*;
 import tripleo.elijah.stages.stage1.*;
-import tripleo.elijah.util.*;
 import tripleo.elijah.work.*;
+import tripleo.elijah_fluffy.util.*;
 import tripleo.util.range.Range;
 
 import java.util.*;
 
 import static tripleo.elijah.stages.deduce.DeduceTypes2.*;
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 /**
  * Created 9/10/20 2:28 PM

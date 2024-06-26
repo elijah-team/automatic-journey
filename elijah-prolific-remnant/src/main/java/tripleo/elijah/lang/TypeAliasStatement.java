@@ -12,7 +12,7 @@
 package tripleo.elijah.lang;
 
 import tripleo.elijah.lang2.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * @author Tripleo(sb)

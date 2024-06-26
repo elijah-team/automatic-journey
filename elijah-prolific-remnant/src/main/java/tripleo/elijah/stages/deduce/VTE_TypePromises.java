@@ -14,7 +14,7 @@ import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * Created 11/27/21 12:51 PM

@@ -14,7 +14,7 @@ import org.jetbrains.annotations.*;
 import tripleo.elijah.contexts.*;
 import tripleo.elijah.lang.types.*;
 import tripleo.elijah.lang2.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

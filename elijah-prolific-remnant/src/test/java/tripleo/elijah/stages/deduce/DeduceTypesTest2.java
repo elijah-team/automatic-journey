@@ -16,8 +16,8 @@ import tripleo.elijah.lang.types.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.logging.*;
 import tripleo.elijah.test_help.*;
-import tripleo.elijah.util.*;
 import tripleo.elijah_fluffy.comp.*;
+import tripleo.elijah_fluffy.util.*;
 
 public class DeduceTypesTest2 {
 

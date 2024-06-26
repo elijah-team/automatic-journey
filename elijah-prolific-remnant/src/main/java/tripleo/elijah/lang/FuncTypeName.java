@@ -1,6 +1,6 @@
 package tripleo.elijah.lang;
 
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.io.*;
 

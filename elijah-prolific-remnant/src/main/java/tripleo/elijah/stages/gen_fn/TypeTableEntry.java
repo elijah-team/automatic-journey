@@ -11,7 +11,7 @@ package tripleo.elijah.stages.gen_fn;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

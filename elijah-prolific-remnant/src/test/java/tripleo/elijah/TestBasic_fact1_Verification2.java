@@ -3,7 +3,7 @@ package tripleo.elijah;
 import org.junit.*;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.internal.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import static org.junit.Assert.*;
 

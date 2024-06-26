@@ -2,7 +2,7 @@ package tripleo.elijah.comp;
 
 import org.jetbrains.annotations.*;
 import tripleo.elijah.comp.internal.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 public enum Stages {
 	E("E") {

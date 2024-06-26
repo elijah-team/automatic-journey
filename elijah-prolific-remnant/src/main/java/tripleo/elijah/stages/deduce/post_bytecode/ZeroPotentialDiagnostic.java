@@ -2,7 +2,7 @@ package tripleo.elijah.stages.deduce.post_bytecode;
 
 import org.jetbrains.annotations.*;
 import tripleo.elijah.diagnostic.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.io.*;
 import java.util.*;

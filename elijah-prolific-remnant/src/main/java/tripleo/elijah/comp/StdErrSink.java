@@ -12,7 +12,7 @@
 package tripleo.elijah.comp;
 
 import tripleo.elijah.diagnostic.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * @author tripleo(sb)

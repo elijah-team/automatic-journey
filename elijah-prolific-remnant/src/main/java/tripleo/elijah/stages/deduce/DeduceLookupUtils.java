@@ -15,7 +15,7 @@ import tripleo.elijah.lang.*;
 import tripleo.elijah.lang.types.*;
 import tripleo.elijah.lang2.*;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

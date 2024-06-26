@@ -16,7 +16,7 @@ import java.io.*;
 import java.util.*;
 import java.util.regex.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 public class CompilationRunner {
 	private final Compilation         compilation;

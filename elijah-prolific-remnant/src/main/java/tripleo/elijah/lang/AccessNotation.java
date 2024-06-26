@@ -10,7 +10,7 @@ package tripleo.elijah.lang;
 
 import antlr.*;
 import tripleo.elijah.lang2.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 import tripleo.elijjah.*;
 
 /**

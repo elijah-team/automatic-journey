@@ -13,7 +13,7 @@ package tripleo.elijah.gen.nodes;
 
 import tripleo.elijah.comp.*;
 import tripleo.elijah.gen.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * To be used with {@link tripleo.elijah.FindBothSourceFiles#CloseCaseChoice(CompilerContext, CloseCaseNode, GenBuffer)}

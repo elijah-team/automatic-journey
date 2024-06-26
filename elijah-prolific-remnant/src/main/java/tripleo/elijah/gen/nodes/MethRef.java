@@ -9,7 +9,7 @@
 package tripleo.elijah.gen.nodes;
 
 import tripleo.elijah.gen.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /*
  * Created on 5/10/2019 at 11:07

@@ -17,7 +17,7 @@ package tripleo.elijah.lang;
 import antlr.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.diagnostic.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.io.*;
 

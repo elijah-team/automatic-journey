@@ -22,7 +22,7 @@ import tripleo.elijah_fluffy.comp.*;
 import java.io.*;
 import java.util.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 /**
  * Created 9/10/20 2:20 PM

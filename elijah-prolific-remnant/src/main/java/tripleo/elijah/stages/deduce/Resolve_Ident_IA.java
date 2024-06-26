@@ -9,10 +9,14 @@ import tripleo.elijah.lang.types.*;
 import tripleo.elijah.stages.deduce.post_bytecode.*;
 import tripleo.elijah.stages.deduce.zero.*;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.util.*;
-import tripleo.elijah.work.*;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.stages.instructions.InstructionArgument;
+import tripleo.elijah.stages.instructions.IntegerIA;
+import tripleo.elijah.stages.instructions.ProcIA;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah_fluffy.util.NotImplementedException;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
+import tripleo.elijah.work.WorkJob;
 
 import java.util.*;
 

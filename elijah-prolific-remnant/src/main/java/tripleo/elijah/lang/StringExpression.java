@@ -9,7 +9,7 @@
 package tripleo.elijah.lang;
 
 import antlr.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 public class StringExpression extends AbstractExpression {
 

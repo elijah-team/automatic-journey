@@ -12,7 +12,7 @@ package tripleo.elijah.stages.deduce;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

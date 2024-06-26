@@ -10,14 +10,14 @@ package tripleo.elijah.comp;
 
 import com.google.common.collect.*;
 import org.jetbrains.annotations.*;
-import tripleo.elijah.*;
+import tripleo.elijah.DebugFlags;
 import tripleo.elijah.comp.functionality.f203.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.nextgen.outputstatement.*;
 import tripleo.elijah.nextgen.outputtree.*;
 import tripleo.elijah.stages.gen_generic.*;
 import tripleo.elijah.stages.generate.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 import tripleo.elijah_prolific.v.*;
 import tripleo.util.buffer.*;
 import tripleo.util.io.*;

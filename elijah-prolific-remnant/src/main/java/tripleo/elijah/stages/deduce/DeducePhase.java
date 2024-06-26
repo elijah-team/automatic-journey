@@ -24,15 +24,15 @@ import tripleo.elijah.stages.deduce.post_bytecode.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.gen_generic.*;
 import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.util.*;
 import tripleo.elijah.work.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 import java.util.concurrent.*;
 import java.util.function.*;
 import java.util.stream.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 /**
  * Created 12/24/20 3:59 AM

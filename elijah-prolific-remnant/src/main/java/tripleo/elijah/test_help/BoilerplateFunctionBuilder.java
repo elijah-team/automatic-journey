@@ -3,7 +3,7 @@ package tripleo.elijah.test_help;
 import tripleo.elijah.contexts.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

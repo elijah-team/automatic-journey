@@ -11,7 +11,7 @@ package tripleo.elijah.stages.gen_fn;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 /**
  * Created 12/22/20 5:39 PM

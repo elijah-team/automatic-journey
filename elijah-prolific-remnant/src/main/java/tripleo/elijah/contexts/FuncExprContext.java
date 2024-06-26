@@ -10,7 +10,7 @@ package tripleo.elijah.contexts;
 
 import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 

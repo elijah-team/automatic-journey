@@ -10,7 +10,7 @@ import tripleo.util.buffer.*;
 import java.util.*;
 import java.util.stream.*;
 
-import static tripleo.elijah.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.*;
 
 public class EOT_OutputFile {
 	//    private final OS_Module module;

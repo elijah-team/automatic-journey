@@ -24,8 +24,8 @@ import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.gen_generic.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.util.*;
 import tripleo.elijah.work.*;
+import tripleo.elijah_fluffy.util.*;
 import tripleo.util.buffer.*;
 
 import java.io.*;
@@ -38,7 +38,7 @@ import static tripleo.elijah.stages.deduce.DeduceTypes2.*;
  * Created 6/21/21 5:53 AM
  */
 public class Generate_Code_For_Method {
-	final BufferTabbedOutputStream tos = new BufferTabbedOutputStream();
+	final BufferTabbedOutputStream tos    = new BufferTabbedOutputStream();
 	final BufferTabbedOutputStream tosHdr = new BufferTabbedOutputStream();
 	private final ElLog LOG;
 	GenerateC gc;
