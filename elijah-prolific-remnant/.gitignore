@@ -1,0 +1,9 @@
+/bin/
+/docs/
+/out/
+/target/
+/output/
+/COMP*/
+/.idea
+/jcef-bundle/
+/ll.c

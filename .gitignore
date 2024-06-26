@@ -1,9 +1,1 @@
-/bin/
-/docs/
-/out/
-/target/
-/output/
-/COMP*/
-/.idea
-/jcef-bundle/
-/ll.c
+elijah-prolific-remnant/.gitignore
