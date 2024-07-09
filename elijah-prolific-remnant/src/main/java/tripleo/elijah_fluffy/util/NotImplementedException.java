@@ -11,7 +11,12 @@ package tripleo.elijah_fluffy.util;
 @SuppressWarnings("unused")
 public class NotImplementedException extends RuntimeException {
 	public NotImplementedException() {
-		final int y = 2;
+		super();
+//		final int y = 2;
+	}
+
+	public NotImplementedException(final String aS) {
+		super(aS);
 	}
 
 	public static void raise() {

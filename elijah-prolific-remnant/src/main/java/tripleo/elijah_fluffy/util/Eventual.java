@@ -3,6 +3,7 @@ package tripleo.elijah_fluffy.util;
 import org.jdeferred2.*;
 import org.jdeferred2.impl.*;
 import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.diagnostic.*;
 import tripleo.elijah.diagnostic.*;
 
 public class Eventual<P> {
@@ -49,5 +50,18 @@ public class Eventual<P> {
 
 	public Promise.State state() {
 		return prom.state();
+	}
+
+	@Deprecated
+	public void done(final DoneCallback<P> cb) {
+		then(cb);
+	}
+
+	public void onFail(final FailCallback<Diagnostic> fc) {
+		prom.fail(fc);
+	}
+
+	public void fail(final Exception aE) {
+		fail(new ExceptionDiagnostic(aE));
 	}
 }

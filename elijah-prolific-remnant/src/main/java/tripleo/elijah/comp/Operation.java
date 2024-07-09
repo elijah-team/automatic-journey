@@ -1,8 +1,6 @@
 package tripleo.elijah.comp;
 
-import tripleo.elijah.nextgen.query.*;
-
-import static tripleo.elijah.nextgen.query.Mode.*;
+import tripleo.elijah.util.*;
 
 /**
  * An emulation of Rust's Result type
@@ -11,10 +9,10 @@ import static tripleo.elijah.nextgen.query.Mode.*;
  */
 public class Operation<T> {
 	private final T         succ;
-	private final Exception exc;
-	private final Mode      mode;
+	private final Exception                exc;
+	private final tripleo.elijah.util.Mode mode;
 
-	public Operation(final T aSuccess, final Exception aException, final Mode aMode) {
+	public Operation(final T aSuccess, final Exception aException, final tripleo.elijah.util.Mode aMode) {
 		succ = aSuccess;
 		exc  = aException;
 		mode = aMode;
@@ -23,12 +21,12 @@ public class Operation<T> {
 	}
 
 	public static <T> Operation<T> failure(final Exception aException) {
-		final Operation<T> op = new Operation<>(null, aException, FAILURE);
+		final Operation<T> op = new Operation<>(null, aException, Mode.FAILURE);
 		return op;
 	}
 
 	public static <T> Operation<T> success(final T aSuccess) {
-		final Operation<T> op = new Operation<>(aSuccess, null, SUCCESS);
+		final Operation<T> op = new Operation<>(aSuccess, null, Mode.SUCCESS);
 		return op;
 	}
 

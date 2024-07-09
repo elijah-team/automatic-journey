@@ -26,17 +26,14 @@ public class EOT_OutputTree {
 		V.asv(V.e._putSeq, aKey);
 	}
 
-	public List<EOT_OutputFile> list() {
-		if (list == null) return Collections.EMPTY_LIST;
-		return list;
-	}
-
-	@Deprecated
-	public List<EOT_OutputFile> getList() {
-		return list();
-	}
-
 	public int size() {
-		return list.size();
+		return list==null?0:list.size();
+	}
+
+	public List<EOT_OutputFile> list() {
+		if (list == null)
+			//noinspection unchecked
+			return Collections.EMPTY_LIST;
+		return list;
 	}
 }

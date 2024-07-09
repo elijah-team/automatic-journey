@@ -2,7 +2,7 @@ package tripleo.elijah;
 
 import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah_fluffy.util.*;
 
 import static org.junit.Assert.*;
@@ -14,7 +14,7 @@ public class TestBasic_fact1_Verification2 {
 	@Before
 	public void setUp() {
 		final String s = "test/basic/fact1/main2";
-		c = new CompilationImpl(new StdErrSink(), new IO());
+		c = CompilationFactory.mkCompilation();
 		c.reports().turnAllOutputOff();
 		c.feedCmdLine(Helpers.List_of(s, "-sO"));
 	}

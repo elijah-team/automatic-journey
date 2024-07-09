@@ -2,9 +2,11 @@ package tripleo.elijah.test_help;
 
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.*;
 import tripleo.elijah.comp.internal.CompilationImpl;
 import tripleo.elijah.comp.internal.ProcessRecord;
 import tripleo.elijah.contexts.ModuleContext;
+import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.stages.deduce.DeducePhase;
 import tripleo.elijah.stages.deduce.DeduceTypes2;
@@ -22,7 +24,7 @@ public class Boilerplate {
 	OS_Module module;
 
 	public void get() {
-		comp = new CompilationImpl(new StdErrSink(), new IO());
+		comp = CompilationFactory.mkCompilation();
 		aca  = ((CompilationImpl) comp)._access();
 		pr   = new ProcessRecord(aca);
 

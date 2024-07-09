@@ -13,7 +13,7 @@ public class CompilerInstructionsObserver implements Observer<CompilerInstructio
 	private final Compilation                compilation;
 
 	public CompilerInstructionsObserver(final Compilation aCompilation,
-	                                    final Compilation.CIS cis) {
+	                                    final EDR_CIS cis) {
 		compilation = aCompilation;
 		compilation._cio    = this;
 

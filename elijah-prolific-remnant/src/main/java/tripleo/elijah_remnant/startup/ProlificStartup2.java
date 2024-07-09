@@ -2,6 +2,7 @@ package tripleo.elijah_remnant.startup;
 
 import org.jdeferred2.*;
 import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.*;
 import tripleo.elijah.comp.internal.*;
 import tripleo.elijah_fluffy.util.*;
 
@@ -11,6 +12,7 @@ public class ProlificStartup2 {
 	private final Eventual<ICompilationAccess> _p_CompilationAccess = new Eventual<>();
 	private final Eventual<CompilationRunner>  _p_CompilationRunner = new Eventual<>();
 	private final Eventual<ICompilationBus>    _p_CompilationBus    = new Eventual<>();
+	private final Eventual<PipelineLogic>     _p_PipelineLogic     = new Eventual<>();
 	@SuppressWarnings("FieldCanBeLocal")
 	private       ProcessRecord                __processRecord;
 	private       boolean                      _f_processRecord;
@@ -23,6 +25,9 @@ public class ProlificStartup2 {
 	@SuppressWarnings("FieldCanBeLocal")
 	private ICompilationBus __CompilationBus;
 	private boolean         _f_CompilationBus;
+	@SuppressWarnings("FieldCanBeLocal")
+	private       PipelineLogic                __PipelineLogic;
+	private       boolean                      _f_PipelineLogic;
 
 	public ProlificStartup2(final Compilation aCompilation) {
 		_compilation = aCompilation;
@@ -76,5 +81,21 @@ public class ProlificStartup2 {
 			}
 		});
 		return _p_CompilationBus;
+	}
+
+	public Eventual<PipelineLogic> getPipelineLogic() {
+/*
+		if (!_f_PipelineLogic) {
+			_f_PipelineLogic = true;
+			__PipelineLogic  = null;
+			_p_PipelineLogic.resolve(__PipelineLogic);
+		}
+*/
+		return _p_PipelineLogic;
+	}
+
+	public void resolvePipelineLogic(final PipelineLogic aX) {
+		__PipelineLogic  = aX;
+		_p_PipelineLogic.resolve(__PipelineLogic);
 	}
 }

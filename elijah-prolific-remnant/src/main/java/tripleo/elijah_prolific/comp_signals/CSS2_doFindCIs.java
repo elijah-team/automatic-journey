@@ -1,6 +1,9 @@
-package tripleo.elijah.comp;
+package tripleo.elijah_prolific.comp_signals;
 
 import org.apache.commons.lang3.tuple.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.ICompilationBus;
+import tripleo.elijah.comp.i.*;
 
 import java.util.*;
 
@@ -58,7 +61,7 @@ public class CSS2_doFindCIs implements CSS2_Signal {
 	private static class CB_AlmostComplete implements ICompilationBus.CB_Action {
 		private       CompilationRunner.CR_Action a;
 		private final CompilationRunner.CR_State  st;
-		private       CompilationRunner          cr;
+		private       CompilationRunner           cr;
 
 		public CB_AlmostComplete(CompilationRunner.CR_State aCRState) {
 			st = aCRState;

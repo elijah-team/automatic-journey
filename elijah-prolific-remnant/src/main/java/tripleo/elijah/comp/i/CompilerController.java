@@ -1,4 +1,6 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.i;
+
+import tripleo.elijah.comp.*;
 
 import java.util.*;
 

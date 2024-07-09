@@ -1,6 +1,7 @@
-package tripleo.elijah.comp;
+package tripleo.elijah_prolific.comp_signals;
 
 import tripleo.elijah.ci.*;
+import tripleo.elijah.comp.*;
 
 class CSS2_CCI_Next implements CSS2_Signal {
     @Override

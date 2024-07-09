@@ -24,7 +24,7 @@ import tripleo.elijah_fluffy.util.*;
  */
 public class DeduceTypesTest {
 
-	private GenType                              x;
+	private GenType                          x;
 	private Promise<GenType, ResolveError, Void> xx;
 
 	@Before

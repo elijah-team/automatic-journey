@@ -8,60 +8,47 @@
  */
 package tripleo.elijah.comp;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-import io.reactivex.rxjava3.annotations.NonNull;
+import com.google.common.collect.*;
+import io.reactivex.rxjava3.annotations.*;
 import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.disposables.Disposable;
-import io.reactivex.rxjava3.subjects.ReplaySubject;
-import io.reactivex.rxjava3.subjects.Subject;
-import org.jdeferred2.DoneCallback;
-import org.jetbrains.annotations.NotNull;
+import io.reactivex.rxjava3.disposables.*;
+import io.reactivex.rxjava3.subjects.*;
+import org.jdeferred2.*;
 import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.ci.CompilerInstructions;
-import tripleo.elijah.ci.LibraryStatementPart;
-import tripleo.elijah.comp.functionality.f202.F202;
-import tripleo.elijah.lang.ClassStatement;
-import tripleo.elijah.lang.OS_Module;
-import tripleo.elijah.lang.OS_Package;
-import tripleo.elijah.lang.Qualident;
-import tripleo.elijah.nextgen.inputtree.EIT_ModuleInput;
-import tripleo.elijah.nextgen.outputtree.EOT_OutputTree;
-import tripleo.elijah.nextgen.query.Mode;
-import tripleo.elijah.nextgen.query.Operation2;
-import tripleo.elijah.stages.deduce.DeducePhase;
-import tripleo.elijah.stages.deduce.FunctionMapHook;
-import tripleo.elijah.stages.deduce.fluffy.i.FluffyComp;
-import tripleo.elijah.stages.gen_fn.GeneratedNode;
-import tripleo.elijah.stages.logging.ElLog;
-import tripleo.elijah.world.i.WorldModule;
-import tripleo.elijah.world.impl.DefaultLivingRepo;
-import tripleo.elijah.world.impl.DefaultWorldModule;
-import tripleo.elijah_fluffy.comp.CM_Prelude;
-import tripleo.elijah_fluffy.comp.CM_Preludes;
-import tripleo.elijah_fluffy.util.Helpers;
-import tripleo.elijah_fluffy.util.NotImplementedException;
-import tripleo.elijah_prolific.v.V;
-import tripleo.elijah_remnant.startup.ProlificStartup2;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.ci.*;
+import tripleo.elijah.comp.functionality.f202.*;
+import tripleo.elijah.lang.*;
+import tripleo.elijah.nextgen.inputtree.*;
+import tripleo.elijah.nextgen.outputtree.*;
+import tripleo.elijah.nextgen.query.*;
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.deduce.fluffy.i.*;
+import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.world.i.*;
+import tripleo.elijah.world.impl.*;
+import tripleo.elijah_fluffy.comp.*;
+import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_prolific.v.*;
+import tripleo.elijah_remnant.startup.*;
 
 import java.io.File;
 import java.util.*;
 
 public abstract class Compilation {
 
-	public final  List<ElLog>                  elLogs = new LinkedList<ElLog>();
-	public final  CompilationConfig            cfg    = new CompilationConfig();
-	public final  CIS                          _cis   = new CIS();
-	//
-	public final  DefaultLivingRepo            _repo  = new DefaultLivingRepo();
-	//
-	final         MOD                          mod    = new MOD(this);
+	public final  List<ElLog>                  elLogs              = new LinkedList<ElLog>();
+	public final  CompilationConfig            cfg                 = new CompilationConfig();
+	public final  EDR_CIS                      _cis                = new EDR_CIS();
+	public final  DefaultLivingRepo            _repo               = new DefaultLivingRepo();
+	final         EDR_MOD                      mod                 = new EDR_MOD();
 	private final Pipeline                     pipelines;
 	private final int                          _compilationNumber;
 	private final ErrSink                      errSink;
 	private final IO                           io;
-	private final USE                          use    = new USE(this);
-	private final CompFactory                  _con   = new CompFactory() {
+	private final USE                          use                 = new USE(this);
+	private final CompFactory                  _con                = new CompFactory() {
 		@Override
 		public @NotNull EIT_ModuleInput createModuleInput(final OS_Module aModule) {
 			return new EIT_ModuleInput(aModule, Compilation.this);
@@ -91,14 +78,12 @@ public abstract class Compilation {
 			return R;
 		}
 	};
-	//
-	//
-	//
+	private final Eventual<File>               _m_comp_dir_promise = new Eventual<>();
+	private final Finally                      _f                  = new Finally();
 	public        PipelineLogic                pipelineLogic;
 	public        CompilerInstructionsObserver _cio;
 	public        CompilationRunner            __cr;
 	private       CompilerInstructions         rootCI;
-	private       Finally                      _f     = new Finally();
 	private       World                        world;
 
 	public Compilation(final @NotNull ErrSink aErrSink, final IO aIO) {
@@ -117,8 +102,9 @@ public abstract class Compilation {
 		return System.getenv("GITLAB_CI") != null;
 	}
 
-	private CompilationEnclosure getCompilationEnclosure() {
-		throw new NotImplementedException();
+	@Contract(pure = true)
+	private @Nullable CompilationEnclosure getCompilationEnclosure() {
+		return null; //new CompilationEnclosure();
 	}
 
 	void hasInstructions(final @NotNull List<CompilerInstructions> cis) {
@@ -133,7 +119,7 @@ public abstract class Compilation {
 		feedCmdLine(args, new DefaultCompilerController());
 	}
 
-	public void feedCmdLine(final List<String> args, final CompilerController ctl) {
+	public void feedCmdLine(final @NotNull List<String> args, final tripleo.elijah.comp.i.CompilerController ctl) {
 		if (args.isEmpty()) {
 			ctl.printUsage();
 			return; // ab
@@ -153,10 +139,6 @@ public abstract class Compilation {
 	public OS_Module realParseElijjahFile(final String f, final @NotNull File file, final boolean do_out) throws Exception {
 		return use.realParseElijjahFile(f, file, do_out).success();
 	}
-
-	//
-	//
-	//
 
 	public void pushItem(final CompilerInstructions aci) {
 		_cis.onNext(aci);
@@ -191,10 +173,6 @@ public abstract class Compilation {
 		}
 	}
 
-//	public void setIO(final IO io) {
-//		this.io = io;
-//	}
-
 	public ErrSink getErrSink() {
 		return errSink;
 	}
@@ -203,32 +181,22 @@ public abstract class Compilation {
 		return io;
 	}
 
-	//
-	// region MODULE STUFF
-	//
-
 	public void addModule(final OS_Module module, final String fn) {
 		mod.addModule(module, fn);
 	}
 
 	public OS_Module fileNameToModule(final String fileName) {
-		if (mod.fn2m.containsKey(fileName)) {
-			return mod.fn2m.get(fileName);
+		if (mod.containsKey(fileName)) {
+			return mod.get(fileName);
 		}
 		return null;
 	}
-
-	// endregion
-
-	//
-	// region CLASS AND FUNCTION CODES
-	//
 
 	public boolean getSilence() {
 		return cfg.silent;
 	}
 
-	public Operation2<OS_Module> findPrelude(final String prelude_name) {
+	public tripleo.elijah.util.Operation2<OS_Module> findPrelude(final String prelude_name) {
 		return use.findPrelude(prelude_name);
 	}
 
@@ -245,21 +213,13 @@ public abstract class Compilation {
 		return _repo.nextClassCode();
 	}
 
-	// endregion
-
-	//
-	// region PACKAGES
-	//
-
 	public int nextFunctionCode() {
 		return _repo.nextFunctionCode();
 	}
 
-	public OS_Package getPackage(final Qualident pkg_name) {
+	public OS_Package getPackage(final @NotNull Qualident pkg_name) {
 		return _repo.getPackage(pkg_name.toString());
 	}
-
-	// endregion
 
 	public OS_Package makePackage(final Qualident pkg_name) {
 		return _repo.makePackage(pkg_name);
@@ -303,7 +263,7 @@ public abstract class Compilation {
 		return _f;
 	}
 
-	public void signal(CSS2_Signal signal, Object payload) {
+	public void signal(@NotNull CSS2_Signal signal, Object payload) {
 		signal.trigger(this, payload);
 	}
 
@@ -318,14 +278,14 @@ public abstract class Compilation {
 		return this.world;
 	}
 
-	public Operation<CM_Prelude> findPrelude2(final CM_Preludes aPreludeTag) {
-		final CM_Prelude            result;
-		final Operation2<OS_Module> x  = findPrelude(aPreludeTag.getName());
-		final var                   _c = this;
+	public Operation<CM_Prelude> findPrelude2(final @NotNull CM_Preludes aPreludeTag) {
+		final CM_Prelude                                result;
+		final tripleo.elijah.util.Operation2<OS_Module> x  = findPrelude(aPreludeTag.getName());
+		final var                                       _c = this;
 		result = new CM_Prelude() {
 			@Override
 			public OS_Module getModule() {
-				if (x.mode() == Mode.SUCCESS) {
+				if (x.mode() == tripleo.elijah.util.Mode.SUCCESS) {
 					return x.success();
 				} else {
 					throw null;
@@ -352,71 +312,35 @@ public abstract class Compilation {
 
 	public abstract ProlificStartup2 getStartup();
 
-	static class MOD {
-		final         List<OS_Module>        modules = new ArrayList<OS_Module>();
-		private final Map<String, OS_Module> fn2m    = new HashMap<String, OS_Module>();
-//		private final Compilation            c;
-
-		public MOD(final Compilation aCompilation) {
-//			c = aCompilation;
-		}
-
-		public void addModule(final OS_Module module, final String fn) {
-			modules.add(module);
-			fn2m.put(fn, module);
-		}
-
-		public int size() {
-			return modules.size();
-		}
-
-		public List<OS_Module> modules() {
-			return modules;
-		}
+	public Eventual<File> comp_dir_promise() {
+		return _m_comp_dir_promise;
 	}
 
-	//
-	//
-	//
+	public ICompilationAccess _compilationAccess() {
+		final Eventual<ICompilationAccess> e = getStartup().getCompilationAccess();
+		return EventualExtract.of(e);
+	}
+
+	@SuppressWarnings("UnusedReturnValue")
+	public <T, U> File inputFile(final File aDirectory,
+	                             final String aFileName,
+	                             final /*BiFunction<Consumer<T>, Consumer<U>, Void>*/ _Inputter2<CompilerInstructions> func) {
+		//noinspection unchecked
+		final T[] t = (T[]) new Object[1];
+		//noinspection unchecked
+		final U[]  diag = (U[]) new Object[1];
+		final File f    = new File(aDirectory, aFileName);
+		func.acceptFile(f);
+		//noinspection unchecked
+		func.apply(tt -> t[0] = (T) tt, uu -> diag[0] = (U) uu);
+		return f;
+	}
+
 	static class CompilationConfig {
 		public    boolean do_out;
 		public    Stages  stage  = Stages.O; // Output
 		protected boolean silent = false;
 		boolean showTree = false;
-	}
-
-	static class CIS implements Observer<CompilerInstructions> {
-		private final Subject<CompilerInstructions> compilerInstructionsSubject = ReplaySubject.create();
-		CompilerInstructionsObserver _cio;
-
-		@Override
-		public void onSubscribe(@NonNull final Disposable d) {
-			compilerInstructionsSubject.onSubscribe(d);
-		}
-
-		@Override
-		public void onNext(@NonNull final CompilerInstructions aCompilerInstructions) {
-			compilerInstructionsSubject.onNext(aCompilerInstructions);
-		}
-
-		@Override
-		public void onError(@NonNull final Throwable e) {
-			compilerInstructionsSubject.onError(e);
-		}
-
-		@Override
-		public void onComplete() {
-			throw new IllegalStateException();
-			//compilerInstructionsSubject.onComplete();
-		}
-
-		public void almostComplete(CompilerInstructionsObserver aCio) {
-			aCio.almostComplete();
-		}
-
-		public void subscribe(final Observer<CompilerInstructions> aCio) {
-			compilerInstructionsSubject.subscribe(aCio);
-		}
 	}
 
 	public static class CompilationAlways {
@@ -432,7 +356,7 @@ public abstract class Compilation {
 		}
 	}
 
-	class World {
+	public static class World {
 		public void subscribeLgc(DoneCallback<CWS_LGC> consumer) {
 //		lgcsub.
 		}

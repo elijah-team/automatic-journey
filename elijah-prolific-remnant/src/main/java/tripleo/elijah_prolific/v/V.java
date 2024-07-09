@@ -36,7 +36,7 @@ public class V {
 		addLog(x);
 
 		try {
-			final FileOutputStream out1 = new FileOutputStream(new File("out"));
+			final FileOutputStream out1 = new FileOutputStream("out");
 			final PrintStream      out  = new PrintStream(out1);
 			for (String log : logs) {
 				out.println(log);
@@ -49,8 +49,8 @@ public class V {
 
 	private static void addLog(final String x) {
 		logs.add(x);
-		System.err.println(x);
+//		System.err.println(x);
 	}
 
-	public enum e {f202_writing_logs, _putSeq, DT2_1785, d399_147, DT2_2304}
+	public enum e {f202_writing_logs, _putSeq, DT2_1785, d399_147, DT2_2304, DT2_2163}
 }
