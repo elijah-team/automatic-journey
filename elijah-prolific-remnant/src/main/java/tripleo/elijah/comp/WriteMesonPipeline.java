@@ -56,27 +56,8 @@ public class WriteMesonPipeline implements PipelineMember, @NotNull Consumer<Sup
 		ab.subscribePipelineLogic(this::pl_slot);
 	}
 
-//	public WriteMesonPipeline(final Compilation aCompilation,
-//	                          final ProcessRecord ignoredAPr,
-//	                          final @NotNull Promise<PipelineLogic, Void, Void> ppl,
-//	                          final WritePipeline aWritePipeline) {
-//		c = aCompilation;
-////		gr = aGr;
-//		writePipeline = aWritePipeline;
-//
-////		file_prefix = new File("COMP", c.getCompilationNumberString());
-//
-//		ppl.then((x) -> {
-//			final GenerateResult ignoredAGr;
-//
-//			ignoredAGr = x.__ab.gr;
-//
-//			grs = () -> ignoredAGr;
-//		});
-//	}
-
-	private void pl_slot(final PipelineLogic aPipelineLogic) {
-		grs = () -> aPipelineLogic.getAccessBus().getGr();
+	private void pl_slot(final PipelineLogic pll) {
+		grs = pll.__ab::getGr;
 	}
 
 	private void write_makefiles_action(final Multimap<CompilerInstructions, String> lsp_outputs) {

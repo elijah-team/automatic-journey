@@ -10,6 +10,7 @@ import tripleo.elijah.comp.specs.*;
 import tripleo.elijah.diagnostic.*;
 import tripleo.elijah.nextgen.query.*;
 import tripleo.elijah.stages.deduce.post_bytecode.*;
+import tripleo.elijah_prolific.comp_signals.*;
 import tripleo.elijah_remnant.startup.*;
 
 import java.io.*;
@@ -157,6 +158,10 @@ public class CompilationRunner {
 		return cio;
 	}
 
+	public EzCache ezCache() {
+		return ezCache;
+	}
+
 	private @NotNull Operation<CompilerInstructions> findStdLib(final String prelude_name, final @NotNull Compilation c) {
 		final ErrSink errSink = c.getErrSink();
 		final IO      io      = c.getIO();
@@ -181,8 +186,8 @@ public class CompilationRunner {
 		});
 	}
 
-	public EzCache ezCache() {
-		return ezCache;
+	private void cci_accept(Maybe<ILazyCompilerInstructions> mcci) {
+		compilation.signal(cciAcceptSignal, mcci);
 	}
 
 	private @NotNull List<CompilerInstructions> searchEzFiles(final @NotNull File directory, final ErrSink errSink, final IO io, final Compilation c) {
@@ -197,10 +202,6 @@ public class CompilationRunner {
 		return List_of();
 	}
 
-	private void cci_accept(Maybe<ILazyCompilerInstructions> mcci) {
-		compilation.signal(cciAcceptSignal, mcci);
-	}
-
 	interface CR_Process {
 		List<ICompilationBus.CB_Action> steps();
 	}
@@ -211,37 +212,6 @@ public class CompilationRunner {
 		void execute(CR_State st);
 
 		String name();
-	}
-
-//	class CR_FindStdlib implements CR_Action {
-//
-//		private String prelude_name;
-//
-//		CR_FindStdlib(final String aPreludeName) {
-//			prelude_name = aPreludeName;
-//		}
-//
-//		@Override
-//		public void attach(final CompilationRunner cr) {
-//
-//		}
-//
-//		@Override
-//		public void execute(final CR_State st) {
-//			@NotNull final Operation<CompilerInstructions> op = findStdLib(prelude_name, compilation);
-//			assert op.mode() == Mode.SUCCESS; // TODO .NOTHING??
-//		}
-
-	static class CCI {
-		private final @NotNull Compilation compilation;
-
-		@Contract(pure = true)
-		CCI(final @NotNull Compilation aCompilation, final Compilation.CIS aCis, final IProgressSink aProgressSink) {
-			compilation = aCompilation;
-		}
-
-		public void accept(final @NotNull Maybe<ILazyCompilerInstructions> mcci) {
-		}
 	}
 
 	public static class CR_State {
@@ -368,7 +338,7 @@ public class CompilationRunner {
 		}
 	}
 
-	private class CR_RunBetterAction implements CR_Action {
+	private static class CR_RunBetterAction implements CR_Action {
 		@Override
 		public void attach(final CompilationRunner cr) {
 
@@ -394,11 +364,6 @@ public class CompilationRunner {
 	private class CR_FindStdlibAction implements CR_Action {
 
 		@Override
-		public void attach(final CompilationRunner cr) {
-
-		}
-
-		@Override
 		public void execute(final CR_State st) {
 			final Operation<CompilerInstructions> oci = findStdLib(Compilation.CompilationAlways.defaultPrelude(), compilation);
 			switch (oci.mode()) {
@@ -409,12 +374,16 @@ public class CompilationRunner {
 				}
 				default -> throw new IllegalStateException("Unexpected value: " + oci.mode());
 			}
-			logProgress(130, "GEN_LANG: " + oci.success().genLang());
 		}
 
 		@Override
 		public String name() {
-			return "find stdlib";
+			return "run better";
+		}
+
+		@Override
+		public void attach(final CompilationRunner cr) {
+
 		}
 	}
 

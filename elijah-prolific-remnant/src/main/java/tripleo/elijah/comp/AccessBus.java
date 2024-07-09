@@ -1,7 +1,6 @@
 package tripleo.elijah.comp;
 
 import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.comp.Compilation.*;
 import tripleo.elijah.comp.internal.*;
@@ -19,15 +18,14 @@ import java.util.function.*;
 import java.util.stream.*;
 
 public class AccessBus {
-	private final DeferredObject<GenerateResult, Void, Void>      generateResultPromise = new DeferredObject<>();
-	private final GenerateResult                                  gr                    = new GenerateResult();
-	private final Compilation                                     _c;
-	private final DeferredObject<PipelineLogic, Void, Void>       pipeLineLogicPromise  = new DeferredObject<>();
-	private final DeferredObject<List<GeneratedNode>, Void, Void> lgcPromise            = new DeferredObject<>();
-	private final DeferredObject<EIT_ModuleList, Void, Void>      moduleListPromise     = new DeferredObject<>();
-	private final Map<String, ProcessRecord.PipelinePlugin>       pipelinePlugins       = new HashMap<>();
-	private       PipelineLogic                                   ____pl;
-
+	private final Compilation                               _c;
+	private final GenerateResult                            gr                    = new GenerateResult();
+	private final Eventual<GenerateResult>                  generateResultPromise = new Eventual<>();
+	private final Eventual<PipelineLogic>                   pipeLineLogicPromise  = new Eventual<>();
+	private final Eventual<List<GeneratedNode>>             lgcPromise            = new Eventual<>();
+	private final Eventual<EIT_ModuleList>                  moduleListPromise     = new Eventual<>();
+	private final Map<String, ProcessRecord.PipelinePlugin> pipelinePlugins       = new HashMap<>();
+	private       PipelineLogic                             ____pl;
 
 	public AccessBus(final Compilation aC) {
 		_c = aC;
@@ -65,6 +63,8 @@ public class AccessBus {
 		____pl = x;
 
 		resolvePipelineLogic(x);
+
+		_c.getStartup().resolvePipelineLogic(x);
 	}
 
 	private void resolvePipelineLogic(final PipelineLogic pl) {
@@ -135,7 +135,8 @@ public class AccessBus {
 	}
 
 	public PipelineLogic __getPL() {
-		return ____pl; // TODO hack. remove soon
+		final Eventual<PipelineLogic> ep = getCompilation().getStartup().getPipelineLogic();
+		return EventualExtract.of(ep);
 	}
 
 	public void addPipelinePlugin(final ProcessRecord.PipelinePlugin aPlugin) {
@@ -149,7 +150,7 @@ public class AccessBus {
 	}
 
 	public GenerateResult getGr() {
-		return this.gr;
+		return gr;
 	}
 
 	public DeferredObject<GenerateResult, Void, Void> getGenerateResultPromise() {

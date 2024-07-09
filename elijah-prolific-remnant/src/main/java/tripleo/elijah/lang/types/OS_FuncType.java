@@ -12,9 +12,8 @@
  */
 package tripleo.elijah.lang.types;
 
-import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.comp.ErrSink;
+import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.i.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.ClassInvocation;
 import tripleo.elijah.stages.deduce.DeducePhase;
@@ -61,7 +60,7 @@ public class OS_FuncType extends __Abstract_OS_Type {
 		@NotNull final List<TypeName> gp = best.getGenericPart();
 		@Nullable ClassInvocation     clsinv;
 		if (genType.getCi() == null) {
-			clsinv = DeduceTypes2.ClassInvocationMake.withGenericPart(best, constructorName, (NormalTypeName) aGenericTypeName, deduceTypes2, errSink);
+			clsinv = ClassInvocationMake.withGenericPart(best, constructorName, (NormalTypeName) aGenericTypeName, deduceTypes2, errSink);
 			if (clsinv == null) return null;
 			clsinv     = phase.registerClassInvocation(clsinv);
 			genType.setCi(clsinv);

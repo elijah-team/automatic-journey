@@ -1,12 +1,9 @@
 package tripleo.elijah.stages.deduce;
 
-import org.junit.Ignore;
-import org.junit.Test;
-import tripleo.elijah.comp.AccessBus;
-import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.comp.PipelineLogic;
-import tripleo.elijah.contexts.FunctionContext;
-import tripleo.elijah.factory.comp.CompilationFactory;
+import org.junit.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.contexts.*;
+import tripleo.elijah.factory.comp.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.lang.types.OS_BuiltinType;
 import tripleo.elijah.lang.types.OS_UserClassType;
@@ -14,9 +11,9 @@ import tripleo.elijah.lang2.BuiltInTypes;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.Instruction;
 import tripleo.elijah.stages.instructions.VariableTableType;
-import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah_fluffy.deduce.ElLog;
 import tripleo.elijah_fluffy.util.Helpers;
-import tripleo.elijah_remnant.rosetta.FakeRosetta3;
+import tripleo.elijah_remnant.rosetta.*;
 
 import java.util.ArrayList;
 
@@ -52,7 +49,7 @@ public class DoAssignCall_ArgsIdent1_Test {
 
 		replay(mod);
 
-		FakeRosetta3.mkDeduceTypes2(mod, phase, (final DeduceTypes2 d)->{
+		FakeRosetta3.mkDeduceTypes2(mod, phase, (final DeduceTypes2 d) -> {
 			final FunctionDef fd = mock(FunctionDef.class);
 			// final GeneratedFunction generatedFunction = mock(GeneratedFunction.class);
 			final GeneratedFunction generatedFunction = new GeneratedFunction(fd);
@@ -94,14 +91,18 @@ public class DoAssignCall_ArgsIdent1_Test {
 
 			d.do_assign_call_args_ident(generatedFunction, ctx, vte, instructionIndex, pte, i, tte, identExpression);
 
-			final Instruction instruction = null;
-			final Context     fd_ctx      = fd.getContext();
-			final Context     context     = generatedFunction.getContextFromPC(instruction.getIndex());
+
+
+			final Instruction               instruction = null;
+			final Context                   fd_ctx      = fd.getContext();
+			final Context                   context     = generatedFunction.getContextFromPC(instruction.getIndex());
 
 			final _DT_Deducer1 d1 = new _DT_Deducer1(generatedFunction, fd, fd_ctx);
 			final _DT_Deducer2 d2 = new _DT_Deducer2(d1, instruction, context);
 
-			d.onExitFunction(d2, generatedFunction, ctx, ctx, new DCC(d, d._phase(), d._errSink()));
+
+
+			d.onExitFunction(d2, generatedFunction, ctx, ctx, new DCC(d._phase(), d, d._errSink()));
 
 			verify(mod, fd, /*generatedFunction,*/ ctx);
 		});

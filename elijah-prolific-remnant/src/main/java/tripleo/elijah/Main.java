@@ -8,17 +8,18 @@
  */
 package tripleo.elijah;
 
-import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.factory.comp.CompilationFactory;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 public class Main {
 
 	public static void main(final String[] args) throws Exception {
-		final StdErrSink   errSink = new StdErrSink();
-		final Compilation  cc      = new CompilationImpl(errSink, new IO());
-		final List<String> ls      = new ArrayList<String>();
+		final Compilation  cc      = CompilationFactory.mkCompilation();
+		final List<String> ls      = new ArrayList<>();
 		ls.addAll(Arrays.asList(args));
 		cc.feedCmdLine(ls);
 	}

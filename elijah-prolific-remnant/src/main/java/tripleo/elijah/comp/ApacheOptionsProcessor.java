@@ -2,6 +2,7 @@ package tripleo.elijah.comp;
 
 import org.apache.commons.cli.*;
 import org.jetbrains.annotations.*;
+import tripleo.elijah.comp.i.*;
 
 import java.util.*;
 
@@ -18,9 +19,9 @@ public class ApacheOptionsProcessor implements OptionsProcessor {
 	}
 
 	@Override
-	public String[] process(final @NotNull Compilation c,
-	                        final @NotNull List<String> args,
-	                        final @NotNull ICompilationBus cb) throws Exception {
+	public String[] process(@NotNull final Compilation c,
+	                        @NotNull final List<String> args,
+	                        @NotNull final ICompilationBus cb) throws Exception {
 		final CommandLine cmd;
 
 		cmd = clp.parse(options, args.toArray(new String[args.size()]));

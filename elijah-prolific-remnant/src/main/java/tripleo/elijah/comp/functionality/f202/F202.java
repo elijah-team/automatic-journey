@@ -8,7 +8,9 @@
  */
 package tripleo.elijah.comp.functionality.f202;
 
+import org.jetbrains.annotations.*;
 import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.*;
 import tripleo.elijah.stages.logging.*;
 import tripleo.elijah_prolific.v.*;
 
@@ -33,7 +35,7 @@ public class F202 {
 		pre     = new DefaultProgressBehavior();
 	}
 
-	public void processLogs(final Collection<ElLog> aElLogs) {
+	public void processLogs(final @NotNull Collection<ElLog> aElLogs) {
 		if (aElLogs.isEmpty()) return; // TODO progress message? should be impossible anyway
 
 		final ElLog firstLog = aElLogs.iterator().next();

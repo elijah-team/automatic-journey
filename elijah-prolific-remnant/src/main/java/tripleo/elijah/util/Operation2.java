@@ -1,4 +1,4 @@
-package tripleo.elijah.nextgen.query;
+package tripleo.elijah.util;
 
 import tripleo.elijah.diagnostic.*;
 
@@ -21,12 +21,12 @@ public class Operation2<T> {
 	}
 
 	public static <T> Operation2<T> failure(final Diagnostic aException) {
-		final Operation2<T> op = new Operation2<>(null, aException, Mode.FAILURE);
+		final Operation2<T> op = new Operation2<>(null, aException, tripleo.elijah.util.Mode.FAILURE);
 		return op;
 	}
 
 	public static <T> Operation2<T> success(final T aSuccess) {
-		final Operation2<T> op = new Operation2<>(aSuccess, null, Mode.SUCCESS);
+		final Operation2<T> op = new Operation2<>(aSuccess, null, tripleo.elijah.util.Mode.SUCCESS);
 		return op;
 	}
 

@@ -1,6 +1,8 @@
-package tripleo.elijah.comp;
+package tripleo.elijah_prolific.comp_signals;
 
 import tripleo.elijah.ci.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.*;
 import tripleo.elijah.stages.deduce.post_bytecode.*;
 
 public class CSS2_CCI_Accept implements CSS2_Signal {

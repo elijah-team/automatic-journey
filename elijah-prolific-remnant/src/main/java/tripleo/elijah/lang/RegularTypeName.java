@@ -74,9 +74,6 @@ public class RegularTypeName extends AbstractTypeName2 implements NormalTypeName
 		_resolvedElement = element;
 	}
 
-	/* (non-Javadoc)
-	 * @see java.lang.Object#toString()
-	 */
 	@Override
 	public String toString() {
 		final StringBuilder sb = new StringBuilder();
