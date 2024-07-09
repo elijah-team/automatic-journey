@@ -5,7 +5,6 @@ import tripleo.elijah.lang.*;
 
 public interface ElElementVisitor {
 
-
 	void addClass(ClassStatement klass);
 
 	void addModule(OS_Module module);

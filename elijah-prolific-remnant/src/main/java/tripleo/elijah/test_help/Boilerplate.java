@@ -16,22 +16,22 @@ import tripleo.elijah.stages.gen_generic.OutputFileFactoryParams;
 import tripleo.elijah.stages.logging.ElLog;
 
 public class Boilerplate {
-	public Compilation        comp;
+	public Compilation comp;
 	public ICompilationAccess aca;
-	public ProcessRecord      pr;
-	public PipelineLogic      pipelineLogic;
-	public GenerateFiles      generateFiles;
+	public ProcessRecord pr;
+	public PipelineLogic pipelineLogic;
+	public GenerateFiles generateFiles;
 	OS_Module module;
 
 	public void get() {
 		comp = CompilationFactory.mkCompilation();
-		aca  = ((CompilationImpl) comp)._access();
-		pr   = new ProcessRecord(aca);
+		aca = ((CompilationImpl) comp)._access();
+		pr = new ProcessRecord(aca);
 
 //		final RuntimeProcesses rt = StageToRuntime.get(ca.getStage(), ca, pr);
 
 		pipelineLogic = pr.ab.__getPL(); // FIXME make ab private
-		//getGenerateFiles(mod);
+		// getGenerateFiles(mod);
 
 		if (module != null) {
 			module.setParent(comp);
@@ -40,10 +40,7 @@ public class Boilerplate {
 
 	public void getGenerateFiles(final @NotNull OS_Module mod) {
 		generateFiles = OutputFileFactory.create(Compilation.CompilationAlways.defaultPrelude(),
-		  new OutputFileFactoryParams(mod,
-			comp.getErrSink(),
-			aca.testSilence(),
-			pipelineLogic));
+				new OutputFileFactoryParams(mod, comp.getErrSink(), aca.testSilence(), pipelineLogic));
 	}
 
 	public OS_Module defaultMod() {
@@ -63,11 +60,13 @@ public class Boilerplate {
 
 	public DeduceTypes2 simpleDeduceModule3(final OS_Module aMod) {
 		final ElLog.Verbosity verbosity = Compilation.gitlabCIVerbosity();
-		@NotNull final String s         = Compilation.CompilationAlways.defaultPrelude();
+		@NotNull
+		final String s = Compilation.CompilationAlways.defaultPrelude();
 		return simpleDeduceModule2(aMod, s, verbosity);
 	}
 
-	public DeduceTypes2 simpleDeduceModule2(final OS_Module mod, final @NotNull String aS, final ElLog.Verbosity aVerbosity) {
+	public DeduceTypes2 simpleDeduceModule2(final OS_Module mod, final @NotNull String aS,
+			final ElLog.Verbosity aVerbosity) {
 		final Compilation c = mod.getCompilation();
 
 		mod.prelude = c.findPrelude(aS).success();

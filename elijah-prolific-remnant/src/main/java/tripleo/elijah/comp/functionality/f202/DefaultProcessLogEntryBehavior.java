@@ -18,11 +18,12 @@ import java.io.*;
  */
 public class DefaultProcessLogEntryBehavior implements ProcessLogEntryBehavior {
 	private PrintStream ps;
-	private String      s1;
+	private String s1;
 
 	@Override
 	public void processLogEntry(final LogEntry entry) {
-		final String logentry = String.format("[%s] [%tD %tT] %s %s", s1, entry.time, entry.time, entry.level, entry.message);
+		final String logentry = String.format("[%s] [%tD %tT] %s %s", s1, entry.time, entry.time, entry.level,
+				entry.message);
 		ps.println(logentry);
 	}
 

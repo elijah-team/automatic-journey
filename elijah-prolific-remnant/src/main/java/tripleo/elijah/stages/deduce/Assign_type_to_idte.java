@@ -13,37 +13,39 @@ import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 import java.util.Objects;
 
 class Assign_type_to_idte {
-	private final DeduceTypes2          aDeduceTypes2;
-	private final IdentTableEntry       ite;
+	private final DeduceTypes2 aDeduceTypes2;
+	private final IdentTableEntry ite;
 	private final BaseGeneratedFunction generatedFunction;
-	private final Context               aFunctionContext;
-	private final Context               aContext;
+	private final Context aFunctionContext;
+	private final Context aContext;
 
 	@Contract(pure = true)
-	public Assign_type_to_idte(final DeduceTypes2 aDeduceTypes2, final IdentTableEntry ite, final BaseGeneratedFunction generatedFunction, final Context aFunctionContext, final Context aContext) {
-		this.aDeduceTypes2     = aDeduceTypes2;
-		this.ite               = ite;
+	public Assign_type_to_idte(final DeduceTypes2 aDeduceTypes2, final IdentTableEntry ite,
+			final BaseGeneratedFunction generatedFunction, final Context aFunctionContext, final Context aContext) {
+		this.aDeduceTypes2 = aDeduceTypes2;
+		this.ite = ite;
 		this.generatedFunction = generatedFunction;
-		this.aFunctionContext  = aFunctionContext;
-		this.aContext          = aContext;
+		this.aFunctionContext = aFunctionContext;
+		this.aContext = aContext;
 	}
 
 	public void run() {
 		if (!ite.hasResolvedElement()) {
-			@NotNull final IdentIA ident_a = new IdentIA(ite.getIndex(), generatedFunction);
+			@NotNull
+			final IdentIA ident_a = new IdentIA(ite.getIndex(), generatedFunction);
 			aDeduceTypes2.resolveIdentIA_(aContext, ident_a, generatedFunction, new ATTI_FoundElement(ident_a));
 		}
 
 	}
 
 	private class ATTI_FoundElement extends FoundElement {
-		final                  String  path;
+		final String path;
 		private final @NotNull IdentIA ident_a;
 
 		public ATTI_FoundElement(@NotNull final IdentIA ident_a) {
 			super(aDeduceTypes2.phase);
 			this.ident_a = ident_a;
-			path         = generatedFunction.getIdentIAPathNormal(ident_a);
+			path = generatedFunction.getIdentIAPathNormal(ident_a);
 		}
 
 		@Override
@@ -72,7 +74,8 @@ class Assign_type_to_idte {
 
 		private void __foundElement_USER_type() {
 			try {
-				@NotNull final GenType xx = aDeduceTypes2.resolve_type(ite.type.getAttached(), aFunctionContext);
+				@NotNull
+				final GenType xx = aDeduceTypes2.resolve_type(ite.type.getAttached(), aFunctionContext);
 				ite.type.setAttached(xx);
 			} catch (final ResolveError resolveError) {
 				aDeduceTypes2.LOG.info("192 Can't attach type to " + path);
@@ -93,13 +96,14 @@ class Assign_type_to_idte {
 
 		private void __foundElement__FUNCTION_type() {
 			// TODO All this for nothing
-			//  the ite points to a function, not a function call,
-			//  so there is no point in resolving it
+			// the ite points to a function, not a function call,
+			// so there is no point in resolving it
 			if (ite.type.tableEntry instanceof final @NotNull ProcTableEntry pte) {
 
 			} else if (ite.type.tableEntry instanceof final @NotNull IdentTableEntry identTableEntry) {
 				if (identTableEntry.getCallablePTE() != null) {
-					@Nullable final ProcTableEntry cpte = identTableEntry.getCallablePTE();
+					@Nullable
+					final ProcTableEntry cpte = identTableEntry.getCallablePTE();
 					cpte.typePromise().then(new DoneCallback<GenType>() {
 						@Override
 						public void onDone(@NotNull final GenType result) {
@@ -114,12 +118,14 @@ class Assign_type_to_idte {
 			if (ite.hasResolvedElement())
 				return;
 
-			@Nullable LookupResultList lrl      = null;
-			final IdentExpression      iteIdent = ite.getIdent();
+			@Nullable
+			LookupResultList lrl = null;
+			final IdentExpression iteIdent = ite.getIdent();
 
 			try {
 				lrl = DeduceLookupUtils.lookupExpression(iteIdent, aFunctionContext, aDeduceTypes2);
-				@Nullable final OS_Element best = lrl.chooseBest(null);
+				@Nullable
+				final OS_Element best = lrl.chooseBest(null);
 				if (best != null) {
 					// TODO how does best relate to x??
 					ite.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(x));
@@ -131,7 +137,8 @@ class Assign_type_to_idte {
 					if (ite.type != null && ite.type.getAttached() != null) {
 						if (Objects.requireNonNull(ite.type.getAttached().getType()) == OS_Type.Type.USER) {
 							try {
-								@NotNull final GenType xx = aDeduceTypes2.resolve_type(ite.type.getAttached(), aFunctionContext);
+								@NotNull
+								final GenType xx = aDeduceTypes2.resolve_type(ite.type.getAttached(), aFunctionContext);
 								ite.type.setAttached(xx);
 							} catch (final ResolveError resolveError) { // TODO double catch
 								aDeduceTypes2.LOG.info("210 Can't attach type to " + iteIdent);

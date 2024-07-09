@@ -8,16 +8,16 @@ package tripleo.elijah.nextgen.outputstatement;
  * @author Tripleo Nova
  */
 public class EG_SingleStatement implements EG_Statement {
-	private final String         text;
+	private final String text;
 	private final EX_Explanation explanation;
 
 	public EG_SingleStatement(final String aText, final EX_Explanation aExplanation) {
-		text        = aText;
+		text = aText;
 		explanation = aExplanation;
 	}
 
 	public EG_SingleStatement(final String aText) {
-		text        = aText;
+		text = aText;
 		explanation = null;
 	}
 

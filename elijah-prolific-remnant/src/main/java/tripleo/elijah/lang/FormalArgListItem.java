@@ -14,7 +14,7 @@ import tripleo.elijah_fluffy.util.*;
 public class FormalArgListItem implements OS_Element, OS_Element2 {
 
 	private IdentExpression name;
-	private TypeName        tn = null;
+	private TypeName tn = null;
 
 	@Override // OS_Element
 	public void visitGen(final ElElementVisitor visit) {

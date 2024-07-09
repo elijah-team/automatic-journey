@@ -72,8 +72,8 @@ public class GenBuffer {
 
 	public void writeBuffers() throws IOException {
 		for (final Map.Entry<String, TextBuffer> entry : reg_bufs.entrySet()) {
-			final String     module = entry.getKey();
-			final TextBuffer build  = entry.getValue();
+			final String module = entry.getKey();
+			final TextBuffer build = entry.getValue();
 			//
 			final @NotNull FileOutputStream fileOutputStream;
 			fileOutputStream = new FileOutputStream(module + ".c", true); // append

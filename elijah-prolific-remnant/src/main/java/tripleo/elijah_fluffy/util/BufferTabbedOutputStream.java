@@ -15,10 +15,10 @@ import tripleo.util.buffer.*;
  */
 public class BufferTabbedOutputStream {
 
-	final   TextBuffer b       = new DefaultBuffer("");
+	final TextBuffer b = new DefaultBuffer("");
 	int tabwidth = 0;
-	private boolean    do_tabs = false;
-	private boolean    _closed = false;
+	private boolean do_tabs = false;
+	private boolean _closed = false;
 
 	public Buffer getBuffer() {
 		return b;
@@ -42,7 +42,7 @@ public class BufferTabbedOutputStream {
 
 	void doIndent() {
 		for (int i = 0; i < tabwidth; i++)
-		     b.append("\t");
+			b.append("\t");
 	}
 
 	public void put_string_ln_no_tabs(final String s) {

@@ -12,85 +12,15 @@ import tripleo.elijah.lang2.*;
 
 public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 
-	public static final String[] _tokenNames = {
-	  "<0>",
-	  "EOF",
-	  "<2>",
-	  "NULL_TREE_LOOKAHEAD",
-	  "\"program\"",
-	  "\"library\"",
-	  "\"shared\"",
-	  "IDENT",
-	  "\"end\"",
-	  "\"lib\"",
-	  "\"libraries\"",
-	  "TOK_COLON",
-	  "STRING_LITERAL",
-	  "LBRACK",
-	  "RBRACK",
-	  "\"generate\"",
-	  "\"indexing\"",
-	  "CHAR_LITERAL",
-	  "NUM_INT",
-	  "NUM_FLOAT",
-	  "DOT",
-	  "SEMI",
-	  "COMMA",
-	  "LPAREN",
-	  "RPAREN",
-	  "BECOMES",
-	  "PLUS_ASSIGN",
-	  "MINUS_ASSIGN",
-	  "STAR_ASSIGN",
-	  "DIV_ASSIGN",
-	  "MOD_ASSIGN",
-	  "SR_ASSIGN",
-	  "BSR_ASSIGN",
-	  "SL_ASSIGN",
-	  "BAND_ASSIGN",
-	  "BXOR_ASSIGN",
-	  "BOR_ASSIGN",
-	  "LOR",
-	  "LAND",
-	  "BOR",
-	  "BXOR",
-	  "BAND",
-	  "NOT_EQUAL",
-	  "EQUAL",
-	  "LT_",
-	  "GT",
-	  "LE",
-	  "GE",
-	  "SL",
-	  "SR",
-	  "BSR",
-	  "PLUS",
-	  "MINUS",
-	  "STAR",
-	  "DIV",
-	  "MOD",
-	  "INC",
-	  "DEC",
-	  "BNOT",
-	  "LNOT",
-	  "\"true\"",
-	  "\"false\"",
-	  "\"this\"",
-	  "\"null\"",
-	  "QUESTION",
-	  "LCURLY",
-	  "RCURLY",
-	  "TOK_ARROW",
-	  "ANNOT",
-	  "WS",
-	  "SL_COMMENT",
-	  "ML_COMMENT",
-	  "ESC",
-	  "HEX_DIGIT",
-	  "VOCAB",
-	  "EXPONENT",
-	  "FLOAT_SUFFIX"
-	};
+	public static final String[] _tokenNames = { "<0>", "EOF", "<2>", "NULL_TREE_LOOKAHEAD", "\"program\"",
+			"\"library\"", "\"shared\"", "IDENT", "\"end\"", "\"lib\"", "\"libraries\"", "TOK_COLON", "STRING_LITERAL",
+			"LBRACK", "RBRACK", "\"generate\"", "\"indexing\"", "CHAR_LITERAL", "NUM_INT", "NUM_FLOAT", "DOT", "SEMI",
+			"COMMA", "LPAREN", "RPAREN", "BECOMES", "PLUS_ASSIGN", "MINUS_ASSIGN", "STAR_ASSIGN", "DIV_ASSIGN",
+			"MOD_ASSIGN", "SR_ASSIGN", "BSR_ASSIGN", "SL_ASSIGN", "BAND_ASSIGN", "BXOR_ASSIGN", "BOR_ASSIGN", "LOR",
+			"LAND", "BOR", "BXOR", "BAND", "NOT_EQUAL", "EQUAL", "LT_", "GT", "LE", "GE", "SL", "SR", "BSR", "PLUS",
+			"MINUS", "STAR", "DIV", "MOD", "INC", "DEC", "BNOT", "LNOT", "\"true\"", "\"false\"", "\"this\"",
+			"\"null\"", "QUESTION", "LCURLY", "RCURLY", "TOK_ARROW", "ANNOT", "WS", "SL_COMMENT", "ML_COMMENT", "ESC",
+			"HEX_DIGIT", "VOCAB", "EXPONENT", "FLOAT_SUFFIX" };
 	public static final BitSet _tokenSet_0 = new BitSet(mk_tokenSet_0());
 	public static final BitSet _tokenSet_1 = new BitSet(mk_tokenSet_1());
 	public static final BitSet _tokenSet_2 = new BitSet(mk_tokenSet_2());
@@ -105,7 +35,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 	public static final BitSet _tokenSet_11 = new BitSet(mk_tokenSet_11());
 	public CompilerInstructions ci = new CompilerInstructionsImpl();
 	IExpression expr;
-	Context     cur = null;
+	Context cur = null;
 
 	public EzParser(final TokenBuffer tokenBuf) {
 		this(tokenBuf, 2);
@@ -131,71 +61,71 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 	}
 
 	private static final long[] mk_tokenSet_0() {
-		final long[] data = {2L, 0L};
+		final long[] data = { 2L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_1() {
-		final long[] data = {112L, 0L};
+		final long[] data = { 112L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_2() {
-		final long[] data = {32768L, 0L};
+		final long[] data = { 32768L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_3() {
-		final long[] data = {256L, 0L};
+		final long[] data = { 256L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_4() {
-		final long[] data = {36992L, 0L};
+		final long[] data = { 36992L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_5() {
-		final long[] data = {288230376148591088L, 0L};
+		final long[] data = { 288230376148591088L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_6() {
-		final long[] data = {16793840L, 0L};
+		final long[] data = { 16793840L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_7() {
-		final long[] data = {4194306L, 0L};
+		final long[] data = { 4194306L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_8() {
-		final long[] data = {288230376148591090L, 0L};
+		final long[] data = { 288230376148591090L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_9() {
-		final long[] data = {-65302194587553664L, 0L};
+		final long[] data = { -65302194587553664L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_10() {
-		final long[] data = {-2164238L, 0L};
+		final long[] data = { -2164238L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_11() {
-		final long[] data = {-65302194570776448L, 0L};
+		final long[] data = { -65302194570776448L, 0L };
 		return data;
 	}
 
 	public final void program() throws RecognitionException, TokenStreamException {
 
-		Token             i1  = null;
+		Token i1 = null;
 		GenerateStatement gen = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_indexing: {
@@ -253,14 +183,12 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		}
 	}
 
-	public final void indexingStatement(
-	  final IndexingStatement idx
-	) throws RecognitionException, TokenStreamException {
+	public final void indexingStatement(final IndexingStatement idx) throws RecognitionException, TokenStreamException {
 
-		Token          i1 = null;
+		Token i1 = null;
 		ExpressionList el = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_indexing);
 			{
 				do {
@@ -295,7 +223,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 
 		LibraryStatementPartImpl lsp = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_lib: {
@@ -337,12 +265,12 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 	public final LibraryStatementPartImpl library_statement_part() throws RecognitionException, TokenStreamException {
 		final LibraryStatementPartImpl lsp;
 
-		Token i1      = null;
+		Token i1 = null;
 		Token dirname = null;
-		Token i2      = null;
+		Token i2 = null;
 		lsp = new LibraryStatementPartImpl();
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case IDENT: {
@@ -417,7 +345,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		Token i1 = null;
 		gen = new GenerateStatement();
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_generate);
 			{
 				do {
@@ -451,7 +379,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 
 		ee = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = assignmentExpression();
 		} catch (final RecognitionException ex) {
 			if (inputState.guessing == 0) {
@@ -469,7 +397,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 
 		el = new ExpressionList();
 
-		try {      // for error handling
+		try { // for error handling
 			expr = expression();
 			if (inputState.guessing == 0) {
 				el.next(expr);
@@ -508,7 +436,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		Token f = null;
 		e = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case STRING_LITERAL: {
 				s = LT(1);
@@ -557,13 +485,11 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		return e;
 	}
 
-	public final void docstrings(
-	  final Documentable sc
-	) throws RecognitionException, TokenStreamException {
+	public final void docstrings(final Documentable sc) throws RecognitionException, TokenStreamException {
 
 		Token s1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case STRING_LITERAL: {
@@ -574,7 +500,8 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 								s1 = LT(1);
 								match(STRING_LITERAL);
 								if (inputState.guessing == 0) {
-									if (sc != null) sc.addDocString(s1);
+									if (sc != null)
+										sc.addDocString(s1);
 								}
 							} else {
 								if (_cnt28 >= 1) {
@@ -609,8 +536,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 
 	public final void opt_semi() throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case SEMI: {
@@ -635,13 +561,11 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		}
 	}
 
-	public final void identList(
-	  final IdentList ail
-	) throws RecognitionException, TokenStreamException {
+	public final void identList(final IdentList ail) throws RecognitionException, TokenStreamException {
 
 		IdentExpression s = null;
 
-		try {      // for error handling
+		try { // for error handling
 			s = ident();
 			if (inputState.guessing == 0) {
 				ail.push(s);
@@ -676,7 +600,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		Token r1 = null;
 		id = null;
 
-		try {      // for error handling
+		try { // for error handling
 			r1 = LT(1);
 			match(IDENT);
 			if (inputState.guessing == 0) {
@@ -697,11 +621,11 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		IExpression ee;
 
 		ee = null;
-		final IExpression e  = null;
+		final IExpression e = null;
 		final IExpression e2;
-		ExpressionKind    ek = null;
+		ExpressionKind ek = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = conditionalExpression();
 			{
 				if (((LA(1) >= BECOMES && LA(1) <= BOR_ASSIGN)) && (_tokenSet_9.member(LA(2)))) {
@@ -817,13 +741,11 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		return ee;
 	}
 
-	public final void qualidentList(
-	  final QualidentList qal
-	) throws RecognitionException, TokenStreamException {
+	public final void qualidentList(final QualidentList qal) throws RecognitionException, TokenStreamException {
 
 		Qualident qid;
 
-		try {      // for error handling
+		try { // for error handling
 			qid = qualident();
 			if (inputState.guessing == 0) {
 				qal.add(qid);
@@ -859,7 +781,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		q = new Qualident();
 		IdentExpression r1 = null, r2 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			r1 = ident();
 			if (inputState.guessing == 0) {
 				q.append(r1);
@@ -894,13 +816,13 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 	public final IExpression variableReference() throws RecognitionException, TokenStreamException {
 		IExpression ee;
 
-		Token                   lp = null;
+		Token lp = null;
 		ProcedureCallExpression pcx;
-		ExpressionList          el = null;
+		ExpressionList el = null;
 		ee = null;
 		IdentExpression r1 = null, r2 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			r1 = ident();
 			if (inputState.guessing == 0) {
 				ee = r1;
@@ -987,7 +909,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 
 		ee = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = logicalOrExpression();
 		} catch (final RecognitionException ex) {
 			if (inputState.guessing == 0) {
@@ -1006,7 +928,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		ee = null;
 		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = logicalAndExpression();
 			{
 				do {
@@ -1039,7 +961,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		ee = null;
 		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = inclusiveOrExpression();
 			{
 				do {
@@ -1072,7 +994,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		ee = null;
 		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = exclusiveOrExpression();
 			{
 				do {
@@ -1105,7 +1027,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		ee = null;
 		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = andExpression();
 			{
 				do {
@@ -1138,7 +1060,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		ee = null;
 		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = equalityExpression();
 			{
 				do {
@@ -1170,9 +1092,9 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 
 		ee = null;
 		ExpressionKind e2 = null;
-		IExpression    e3 = null;
+		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = relationalExpression();
 			{
 				do {
@@ -1224,10 +1146,10 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 
 		ee = null;
 		ExpressionKind e2 = null; // should never be null (below)
-		IExpression    e3 = null;
+		IExpression e3 = null;
 		final TypeName tn = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = shiftExpression();
 			{
 				{
@@ -1296,9 +1218,9 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 
 		ee = null;
 		ExpressionKind e2 = null;
-		IExpression    e3 = null;
+		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = additiveExpression();
 			{
 				do {
@@ -1357,9 +1279,9 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 
 		ee = null;
 		ExpressionKind e2 = null;
-		IExpression    e3 = null;
+		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = multiplicativeExpression();
 			{
 				do {
@@ -1410,10 +1332,10 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		IExpression ee;
 
 		ee = null;
-		IExpression    e3 = null;
+		IExpression e3 = null;
 		ExpressionKind e2 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = unaryExpression();
 			{
 				do {
@@ -1473,7 +1395,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		ee = null;
 		final IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case INC: {
 				match(INC);
@@ -1544,7 +1466,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		ee = null;
 		final IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case BNOT: {
 				match(BNOT);
@@ -1601,11 +1523,11 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		Token de = null;
 		ee = null;
 		final TypeCastExpression tc = null;
-		final TypeName           tn = null;
-		final IExpression        e3 = null;
-		ExpressionList           el = null;
+		final TypeName tn = null;
+		final IExpression e3 = null;
+		ExpressionList el = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = primaryExpression();
 			{
 				do {
@@ -1618,7 +1540,7 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 						lb = LT(1);
 						match(LBRACK);
 						expr = expression();
-						rb   = LT(1);
+						rb = LT(1);
 						match(RBRACK);
 						if (inputState.guessing == 0) {
 							ee = new GetItemExpression(ee, expr);
@@ -1717,11 +1639,11 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		IExpression ee;
 
 		ee = null;
-		final FuncExpr  ppc = null;
-		IdentExpression e   = null;
-		ExpressionList  el  = null;
+		final FuncExpr ppc = null;
+		IdentExpression e = null;
+		ExpressionList el = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case IDENT: {
 				e = ident();
@@ -1789,17 +1711,16 @@ public class EzParser extends antlr.LLkParser implements EzTokenTypes {
 		return ee;
 	}
 
-	public final IExpression dot_expression_or_procedure_call(
-	  final IExpression e1
-	) throws RecognitionException, TokenStreamException {
+	public final IExpression dot_expression_or_procedure_call(final IExpression e1)
+			throws RecognitionException, TokenStreamException {
 		IExpression ee;
 
 		Token lp2 = null;
 		ee = null;
-		ExpressionList  el = null;
-		IdentExpression e  = null;
+		ExpressionList el = null;
+		IdentExpression e = null;
 
-		try {      // for error handling
+		try { // for error handling
 			e = ident();
 			if (inputState.guessing == 0) {
 				ee = new DotExpression(e1, e);

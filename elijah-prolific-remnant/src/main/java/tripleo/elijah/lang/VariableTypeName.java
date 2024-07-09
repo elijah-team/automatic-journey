@@ -24,16 +24,18 @@ import static tripleo.elijah_fluffy.util.Helpers.*;
 public class VariableTypeName extends AbstractTypeName implements NormalTypeName {
 
 	private TypeNameList genericPart;
-	private Context      _ctx;
-	//private OS_Type _resolved;
-	private OS_Element   _resolvedElement;
+	private Context _ctx;
+	// private OS_Type _resolved;
+	private OS_Element _resolvedElement;
 
 	@Override
 	public void addGenericPart(final TypeNameList tn2) {
 		genericPart = tn2;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	/* #@ requires pr_name != null; */
@@ -101,9 +103,12 @@ public class VariableTypeName extends AbstractTypeName implements NormalTypeName
 
 	@Override
 	public boolean equals(final Object o) {
-		if (this == o) return true;
-		if (!super.equals(o)) return false;
-		if (!(o instanceof final NormalTypeName that)) return false;
+		if (this == o)
+			return true;
+		if (!super.equals(o))
+			return false;
+		if (!(o instanceof final NormalTypeName that))
+			return false;
 		return Objects.equals(genericPart, that.getGenericPart());
 	}
 

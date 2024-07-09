@@ -21,14 +21,14 @@ import tripleo.elijah_remnant.startup.*;
 import java.util.*;
 
 public class CompilationImpl extends Compilation {
-	private final @NotNull FluffyCompImpl   _fluffyComp;
-	private final          ProlificStartup2 _startup;
-	private final @NotNull      EOT_OutputTree   _output_tree;
+	private final @NotNull FluffyCompImpl _fluffyComp;
+	private final ProlificStartup2 _startup;
+	private final @NotNull EOT_OutputTree _output_tree;
 
 	public CompilationImpl(final ErrSink aEee, final IO aIo) {
 		super(aEee, aIo);
 		_fluffyComp = new FluffyCompImpl(this);
-		_startup    = new ProlificStartup2(this);
+		_startup = new ProlificStartup2(this);
 		_output_tree = new EOT_OutputTree();
 	}
 

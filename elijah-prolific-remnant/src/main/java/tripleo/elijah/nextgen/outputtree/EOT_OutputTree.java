@@ -27,12 +27,12 @@ public class EOT_OutputTree {
 	}
 
 	public int size() {
-		return list==null?0:list.size();
+		return list == null ? 0 : list.size();
 	}
 
 	public List<EOT_OutputFile> list() {
 		if (list == null)
-			//noinspection unchecked
+			// noinspection unchecked
 			return Collections.EMPTY_LIST;
 		return list;
 	}

@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class MatchConditionalContext extends Context {
 	private final MatchConditional.MC1 carrier;
-	private final Context              _parent;
+	private final Context _parent;
 
 	public MatchConditionalContext(final Context parent, final MatchConditional.MC1 part) {
 		this._parent = parent;
@@ -26,7 +26,8 @@ public class MatchConditionalContext extends Context {
 	}
 
 	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
+			final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(carrier.getContext());
 
 		if (carrier instanceof final MatchConditional.MatchArm_TypeMatch carrier2) {
@@ -35,11 +36,9 @@ public class MatchConditionalContext extends Context {
 		}
 
 		for (final FunctionItem item : carrier.getItems()) {
-			if (!(item instanceof ClassStatement) &&
-			  !(item instanceof NamespaceStatement) &&
-			  !(item instanceof FunctionDef) &&
-			  !(item instanceof VariableSequence)
-			) continue;
+			if (!(item instanceof ClassStatement) && !(item instanceof NamespaceStatement)
+					&& !(item instanceof FunctionDef) && !(item instanceof VariableSequence))
+				continue;
 			if (item instanceof OS_Element2) {
 				if (((OS_Element2) item).name().equals(name)) {
 					Result.add(name, level, item, this);
@@ -53,7 +52,7 @@ public class MatchConditionalContext extends Context {
 			}
 		}
 
-		/*if (carrier.getParent() != null)*/
+		/* if (carrier.getParent() != null) */
 		{
 			final Context context = getParent();
 			if (!alreadySearched.contains(context) || !one)

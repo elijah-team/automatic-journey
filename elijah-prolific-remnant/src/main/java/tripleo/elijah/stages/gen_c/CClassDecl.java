@@ -19,8 +19,8 @@ import java.util.*;
  */
 public class CClassDecl {
 	private final GeneratedClass generatedClass;
-	public        String         prim_decl;
-	public        boolean        prim = false;
+	public String prim_decl;
+	public boolean prim = false;
 
 	public CClassDecl(final GeneratedClass generatedClass) {
 		this.generatedClass = generatedClass;
@@ -33,8 +33,9 @@ public class CClassDecl {
 			public void annotation(final AnnotationPart anno) {
 				if (anno.annoClass().equals(Helpers.string_to_qualident("C.repr"))) {
 					if (anno.getExprs() != null) {
-						final ArrayList<IExpression> expressions = new ArrayList<IExpression>(anno.getExprs().expressions());
-						final IExpression            str0        = expressions.get(0);
+						final ArrayList<IExpression> expressions = new ArrayList<IExpression>(
+								anno.getExprs().expressions());
+						final IExpression str0 = expressions.get(0);
 						if (str0 instanceof StringExpression) {
 							final String str = ((StringExpression) str0).getText();
 							setDecl(str);

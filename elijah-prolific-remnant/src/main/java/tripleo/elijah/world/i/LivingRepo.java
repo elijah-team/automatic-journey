@@ -19,5 +19,7 @@ public interface LivingRepo {
 
 	void addNamespace(GeneratedNamespace aNamespace, Add aNone);
 
-	enum Add {NONE, MAIN_FUNCTION, MAIN_CLASS}
+	enum Add {
+		NONE, MAIN_FUNCTION, MAIN_CLASS
+	}
 }

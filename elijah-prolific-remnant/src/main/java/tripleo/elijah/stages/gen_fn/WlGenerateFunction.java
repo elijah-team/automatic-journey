@@ -20,18 +20,19 @@ import tripleo.elijah_fluffy.util.*;
  * Created 5/16/21 12:46 AM
  */
 public class WlGenerateFunction implements WorkJob {
-	private final FunctionDef        functionDef;
-	private final GenerateFunctions  generateFunctions;
+	private final FunctionDef functionDef;
+	private final GenerateFunctions generateFunctions;
 	private final FunctionInvocation functionInvocation;
-	private final ICodeRegistrar     codeRegistrar;
-	private       boolean            _isDone = false;
-	private       GeneratedFunction  result;
+	private final ICodeRegistrar codeRegistrar;
+	private boolean _isDone = false;
+	private GeneratedFunction result;
 
-	public WlGenerateFunction(final GenerateFunctions aGenerateFunctions, @NotNull final FunctionInvocation aFunctionInvocation, final ICodeRegistrar aCodeRegistrar) {
-		functionDef        = (FunctionDef) aFunctionInvocation.getFunction();
-		generateFunctions  = aGenerateFunctions;
+	public WlGenerateFunction(final GenerateFunctions aGenerateFunctions,
+			@NotNull final FunctionInvocation aFunctionInvocation, final ICodeRegistrar aCodeRegistrar) {
+		functionDef = (FunctionDef) aFunctionInvocation.getFunction();
+		generateFunctions = aGenerateFunctions;
 		functionInvocation = aFunctionInvocation;
-		codeRegistrar      = aCodeRegistrar;
+		codeRegistrar = aCodeRegistrar;
 	}
 
 	@Override
@@ -39,8 +40,9 @@ public class WlGenerateFunction implements WorkJob {
 //		if (_isDone) return;
 
 		if (functionInvocation.getGenerated() == null) {
-			final OS_Element                 parent = functionDef.getParent();
-			@NotNull final GeneratedFunction gf     = generateFunctions.generateFunction(functionDef, parent, functionInvocation);
+			final OS_Element parent = functionDef.getParent();
+			@NotNull
+			final GeneratedFunction gf = generateFunctions.generateFunction(functionDef, parent, functionInvocation);
 
 			{
 				int i = 0;

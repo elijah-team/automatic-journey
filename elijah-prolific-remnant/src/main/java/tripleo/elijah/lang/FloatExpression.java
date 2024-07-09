@@ -19,12 +19,12 @@ import tripleo.elijah_fluffy.util.*;
 
 public class FloatExpression implements IExpression {
 
-	final         float carrier;
+	final float carrier;
 	private final Token n;
 	OS_Type _type;
 
 	public FloatExpression(final Token n) {
-		this.n  = n;
+		this.n = n;
 		carrier = Float.parseFloat(n.getText());
 	}
 
@@ -36,7 +36,8 @@ public class FloatExpression implements IExpression {
 	@Override
 	public void setKind(final ExpressionKind aType) {
 		// log and ignore
-		SimplePrintLoggerToRemoveSoon.println_err2("Trying to set ExpressionType of FloatExpression to " + aType.toString());
+		SimplePrintLoggerToRemoveSoon
+				.println_err2("Trying to set ExpressionType of FloatExpression to " + aType.toString());
 	}
 
 	@Override

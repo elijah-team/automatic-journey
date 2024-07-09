@@ -21,20 +21,20 @@ import java.util.*;
 /**
  * @author Tripleo
  *
- * Created 	Apr 15, 2020 at 10:09:03 PM
+ *         Created Apr 15, 2020 at 10:09:03 PM
  */
 public class CaseConditional implements OS_Element, StatementItem, FunctionItem {
 
-	private final OS_Element                      parent;
-	private final HashMap<IExpression, CaseScope> scopes             = new LinkedHashMap<IExpression, CaseScope>();
-	private       IExpression                     expr;
-	private       SingleIdentContext              _ctx               = null;
-	private       CaseScope                       default_case_scope = null;
-	private       CaseContext                     __ctx              = null; // TODO look into removing this
+	private final OS_Element parent;
+	private final HashMap<IExpression, CaseScope> scopes = new LinkedHashMap<IExpression, CaseScope>();
+	private IExpression expr;
+	private SingleIdentContext _ctx = null;
+	private CaseScope default_case_scope = null;
+	private CaseContext __ctx = null; // TODO look into removing this
 
 	public CaseConditional(final OS_Element parent, final Context parentContext) {
 		this.parent = parent;
-		this._ctx   = new SingleIdentContext(parentContext, this);
+		this._ctx = new SingleIdentContext(parentContext, this);
 	}
 
 	public void expr(final IExpression expr) {
@@ -70,7 +70,8 @@ public class CaseConditional implements OS_Element, StatementItem, FunctionItem 
 
 	private void addScopeFor(final IExpression expression, final CaseScope caseScope) {
 		if (scopes.containsKey(expression))
-			SimplePrintLoggerToRemoveSoon.println_err2("already has an expression" + expression); // TODO put in some verify step
+			SimplePrintLoggerToRemoveSoon.println_err2("already has an expression" + expression); // TODO put in some
+																									// verify step
 		scopes.put(expression, caseScope);
 	}
 
@@ -89,11 +90,11 @@ public class CaseConditional implements OS_Element, StatementItem, FunctionItem 
 	public class CaseScope implements OS_Container, OS_Element {
 
 		private final IExpression expr;
-		private final Scope3      cscope3;
-		private       boolean     _isDefault = false;
+		private final Scope3 cscope3;
+		private boolean _isDefault = false;
 
 		public CaseScope(final IExpression expression, final Scope3 aScope3) {
-			this.expr    = expression;
+			this.expr = expression;
 			this.cscope3 = aScope3;
 		}
 
@@ -132,9 +133,9 @@ public class CaseConditional implements OS_Element, StatementItem, FunctionItem 
 		}
 
 		public void setDefault() {
-			_isDefault         = true;
+			_isDefault = true;
 			default_case_scope = this;
-			_ctx.carrier       = (IdentExpression) expr;
+			_ctx.carrier = (IdentExpression) expr;
 		}
 	}
 }

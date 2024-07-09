@@ -22,13 +22,14 @@ import java.util.*;
 public class GeneratePhase {
 	public final WorkManager wm = new WorkManager();
 
-	final         Map<OS_Module, GenerateFunctions> generateFunctions = new HashMap<OS_Module, GenerateFunctions>();
-	private final ElLog.Verbosity                   verbosity;
-	private final PipelineLogic                     pipelineLogic;
-	private final Compilation                       compilation;
+	final Map<OS_Module, GenerateFunctions> generateFunctions = new HashMap<OS_Module, GenerateFunctions>();
+	private final ElLog.Verbosity verbosity;
+	private final PipelineLogic pipelineLogic;
+	private final Compilation compilation;
 
-	public GeneratePhase(final ElLog.Verbosity aVerbosity, final PipelineLogic aPipelineLogic, final Compilation aCompilation) {
-		verbosity     = aVerbosity;
+	public GeneratePhase(final ElLog.Verbosity aVerbosity, final PipelineLogic aPipelineLogic,
+			final Compilation aCompilation) {
+		verbosity = aVerbosity;
 		pipelineLogic = aPipelineLogic;
 
 		compilation = aCompilation;

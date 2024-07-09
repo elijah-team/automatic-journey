@@ -25,22 +25,19 @@ import java.util.List;
  */
 public class TypeTableEntry {
 	@NotNull
-	public final  Type                lifetime;
+	public final Type lifetime;
 	@Nullable
-	public final  TableEntryIV        tableEntry;
-	public final  GenType             genType = new GenType();
-	public final  IExpression         expression;
-	final         int                 index;
-	private final List<OnSetAttached> osacbs  = new ArrayList<OnSetAttached>();
+	public final TableEntryIV tableEntry;
+	public final GenType genType = new GenType();
+	public final IExpression expression;
+	final int index;
+	private final List<OnSetAttached> osacbs = new ArrayList<OnSetAttached>();
 	@Nullable
-	private       OS_Type             attached;
+	private OS_Type attached;
 
-	public TypeTableEntry(final int index,
-	                      @NotNull final Type lifetime,
-	                      @Nullable final OS_Type aAttached,
-	                      final IExpression expression,
-	                      @Nullable final TableEntryIV aTableEntryIV) {
-		this.index    = index;
+	public TypeTableEntry(final int index, @NotNull final Type lifetime, @Nullable final OS_Type aAttached,
+			final IExpression expression, @Nullable final TableEntryIV aTableEntryIV) {
+		this.index = index;
 		this.lifetime = lifetime;
 		if (aAttached == null || (aAttached.getType() == OS_Type.Type.USER && aAttached.getTypeName() == null)) {
 			attached = null;
@@ -61,11 +58,11 @@ public class TypeTableEntry {
 				if (!(typeName instanceof GenericTypeName))
 					genType.setNonGenericTypeName(typeName);
 			} else
-				genType.setTypeName(aAttached)/*.getTypeName()*/;
+				genType.setTypeName(aAttached)/* .getTypeName() */;
 			break;
 		case USER_CLASS:
 //			ClassStatement c = attached.getClassOf();
-			genType.setResolved(aAttached)/*attached*/; // c
+			genType.setResolved(aAttached)/* attached */; // c
 			break;
 		case UNIT_TYPE:
 			genType.setResolved(aAttached);
@@ -76,11 +73,13 @@ public class TypeTableEntry {
 				genType.setTypeName(aAttached);
 			break;
 		case FUNCTION:
-			assert genType.getResolved() == null || genType.getResolved() == aAttached || /*HACK*/ aAttached.getType() == OS_Type.Type.FUNCTION;
+			assert genType.getResolved() == null || genType.getResolved() == aAttached
+					|| /* HACK */ aAttached.getType() == OS_Type.Type.FUNCTION;
 			genType.setResolved(aAttached);
 			break;
 		case FUNC_EXPR:
-			assert genType.getResolved() == null || genType.getResolved() == aAttached;// || /*HACK*/ aAttached.getType() == OS_Type.Type.FUNCTION;
+			assert genType.getResolved() == null || genType.getResolved() == aAttached;// || /*HACK*/ aAttached.getType() ==
+																				// OS_Type.Type.FUNCTION;
 			genType.setResolved(aAttached);
 			break;
 		default:
@@ -93,12 +92,8 @@ public class TypeTableEntry {
 	@Override
 	@NotNull
 	public String toString() {
-		return "TypeTableEntry{" +
-		  "index=" + index +
-		  ", lifetime=" + lifetime +
-		  ", attached=" + attached +
-		  ", expression=" + expression +
-		  '}';
+		return "TypeTableEntry{" + "index=" + index + ", lifetime=" + lifetime + ", attached=" + attached
+				+ ", expression=" + expression + '}';
 	}
 
 	public int getIndex() {

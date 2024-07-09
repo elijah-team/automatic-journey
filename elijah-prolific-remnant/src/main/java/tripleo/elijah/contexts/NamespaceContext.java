@@ -19,12 +19,12 @@ import java.util.*;
 /**
  * @author Tripleo
  *
- * Created 	Mar 29, 2020 at 8:59:42 PM
+ *         Created Mar 29, 2020 at 8:59:42 PM
  */
 public class NamespaceContext extends Context {
 
-	public final  NamespaceStatement carrier;
-	private final Context            _parent;
+	public final NamespaceStatement carrier;
+	private final Context _parent;
 
 //	public NamespaceContext(NamespaceStatement namespaceStatement) {
 //		carrier = namespaceStatement;
@@ -36,16 +36,14 @@ public class NamespaceContext extends Context {
 	}
 
 	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
+			final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(carrier.getContext());
 		for (final ClassItem item : carrier.getItems()) {
-			if (!(item instanceof ClassStatement) &&
-			  !(item instanceof NamespaceStatement) &&
-			  !(item instanceof VariableSequence) &&
-			  !(item instanceof AliasStatement) &&
-			  !(item instanceof FunctionDef) &&
-			  !(item instanceof PropertyStatement)
-			) continue;
+			if (!(item instanceof ClassStatement) && !(item instanceof NamespaceStatement)
+					&& !(item instanceof VariableSequence) && !(item instanceof AliasStatement)
+					&& !(item instanceof FunctionDef) && !(item instanceof PropertyStatement))
+				continue;
 			if (item instanceof OS_Element2) {
 				if (((OS_Element2) item).name().equals(name)) {
 					Result.add(name, level, item, this);

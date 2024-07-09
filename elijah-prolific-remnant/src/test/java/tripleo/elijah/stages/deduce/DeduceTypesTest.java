@@ -20,42 +20,41 @@ import tripleo.elijah.test_help.*;
 import tripleo.elijah_fluffy.util.*;
 
 /**
- * Useless tests. We really want to know if a TypeName will resolve to the same types
+ * Useless tests. We really want to know if a TypeName will resolve to the same
+ * types
  */
 public class DeduceTypesTest {
 
-	private GenType                          x;
+	private GenType x;
 	private Promise<GenType, ResolveError, Void> xx;
 
 	@Before
 	public void setUp() {
 		final Boilerplate b = new Boilerplate();
 		b.get();
-		final Compilation c   = b.comp;
-		final OS_Module   mod = b.defaultMod();
+		final Compilation c = b.comp;
+		final OS_Module mod = b.defaultMod();
 
 		final DeduceTypeWatcher dtw = new DeduceTypeWatcher();
 
-		b.withModBuilder(mod)
-		 .addClass(cc -> {
-			 cc.name("Test");
-			 cc.addFunction(f -> {
-				 f.name("test");
-				 f.vars("x", "Integer", dtw);
-			 });
-		 });
+		b.withModBuilder(mod).addClass(cc -> {
+			cc.name("Test");
+			cc.addFunction(f -> {
+				f.name("test");
+				f.vars("x", "Integer", dtw);
+			});
+		});
 
-/*
-		final FunctionDef fd = null;
-		final FunctionContext fc = (FunctionContext) fd.getContext(); // TODO needs to be mocked
-		final IdentExpression x1 = Helpers.string_to_ident("x");
-		x1.setContext(fc);
-*/
+		/*
+		 * final FunctionDef fd = null; final FunctionContext fc = (FunctionContext)
+		 * fd.getContext(); // TODO needs to be mocked final IdentExpression x1 =
+		 * Helpers.string_to_ident("x"); x1.setContext(fc);
+		 */
 
 		final DeduceTypes2 d = b.simpleDeduceModule3(mod);
 
 		final IdentExpression nameToken = ((VariableStatement) dtw.element()).getNameToken();
-		this.xx = DeduceLookupUtils.deduceExpression_p(d, nameToken, nameToken/*dtw.element()*/.getContext());
+		this.xx = DeduceLookupUtils.deduceExpression_p(d, nameToken, nameToken/* dtw.element() */.getContext());
 		xx.then(new DoneCallback<GenType>() {
 			@Override
 			public void onDone(final GenType a) {
@@ -74,7 +73,7 @@ public class DeduceTypesTest {
 
 	/**
 	 * TODO This test fails beacause we are comparing a BUILT_IN vs a USER OS_Type.
-	 *   It fails because Integer is an interface and not a BUILT_IN
+	 * It fails because Integer is an interface and not a BUILT_IN
 	 */
 	@Ignore
 	@Test
@@ -103,14 +102,14 @@ public class DeduceTypesTest {
 	 */
 	@Test
 	public void testDeduceIdentExpression2() {
-		final RegularTypeName tn  = new RegularTypeName();
-		final Qualident       tnq = new Qualident();
+		final RegularTypeName tn = new RegularTypeName();
+		final Qualident tnq = new Qualident();
 		tnq.append(Helpers.string_to_ident("Integer"));
 		tn.setName(tnq);
 
 		Assert.assertTrue("Promise not resolved", xx.isResolved());
 
-		Assert.assertTrue(genTypeTypenameEquals(new OS_UserType(tn), x/*.getTypeName()*/));
+		Assert.assertTrue(genTypeTypenameEquals(new OS_UserType(tn), x/* .getTypeName() */));
 	}
 
 	@Contract(value = "null, _ -> false", pure = true)
@@ -120,8 +119,8 @@ public class DeduceTypesTest {
 
 	@Test
 	public void testDeduceIdentExpression3() {
-		final VariableTypeName tn  = new VariableTypeName();
-		final Qualident        tnq = new Qualident();
+		final VariableTypeName tn = new VariableTypeName();
+		final Qualident tnq = new Qualident();
 		tnq.append(Helpers.string_to_ident("Integer"));
 		tn.setName(tnq);
 
@@ -133,8 +132,8 @@ public class DeduceTypesTest {
 
 	@Test
 	public void testDeduceIdentExpression4() {
-		final VariableTypeName tn  = new VariableTypeName();
-		final Qualident        tnq = new Qualident();
+		final VariableTypeName tn = new VariableTypeName();
+		final Qualident tnq = new Qualident();
 		tnq.append(Helpers.string_to_ident("Integer"));
 		tn.setName(tnq);
 

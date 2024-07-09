@@ -13,6 +13,6 @@ public class EX_ProcTableEntryExplanation implements EX_Explanation {
 
 	@Override
 	public String getText() {
-		return "EX_ProcTableEntryExplanation "+pte.toString();
+		return "EX_ProcTableEntryExplanation " + pte.toString();
 	}
 }

@@ -10,11 +10,10 @@ package tripleo.elijah.lang;
 
 import antlr.*;
 
-
 /**
  * @author Tripleo
- * <p>
- * Created 	Apr 16, 2020 at 7:58:36 AM
+ *         <p>
+ *         Created Apr 16, 2020 at 7:58:36 AM
  */
 public class GetItemExpression extends AbstractExpression { // TODO binary?
 
@@ -22,12 +21,14 @@ public class GetItemExpression extends AbstractExpression { // TODO binary?
 	OS_Type _type;
 
 	public GetItemExpression(final IExpression ee, final IExpression expr) {
-		this.left  = ee;
+		this.left = ee;
 		this.index = expr;
 		this._kind = ExpressionKind.GET_ITEM;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see tripleo.elijah.lang.IExpression#getKind()
 	 */
 	@Override
@@ -35,7 +36,9 @@ public class GetItemExpression extends AbstractExpression { // TODO binary?
 		return ExpressionKind.GET_ITEM;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see tripleo.elijah.lang.IExpression#is_simple()
 	 */
 	@Override

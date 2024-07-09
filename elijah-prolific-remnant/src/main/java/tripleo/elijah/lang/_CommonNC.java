@@ -16,16 +16,16 @@ import java.util.*;
  * Created 3/29/21 5:11 PM
  */
 abstract class _CommonNC {
-	public final    Attached        _a    = new Attached();
+	public final Attached _a = new Attached();
 	protected final List<ClassItem> items = new ArrayList<ClassItem>();
-	private final   List<String>    mDocs = new ArrayList<String>();
+	private final List<String> mDocs = new ArrayList<String>();
 	private final List<AccessNotation> accesses = new ArrayList<AccessNotation>();
-	protected       IdentExpression nameToken;
-	protected       OS_Package      _packageName;
+	protected IdentExpression nameToken;
+	protected OS_Package _packageName;
 	List<AnnotationClause> annotations = null;
 	// region ClassItem
 	private AccessNotation access_note;
-	private El_Category    category;
+	private El_Category category;
 
 	public OS_Package getPackageName() {
 		return _packageName;
@@ -44,7 +44,8 @@ abstract class _CommonNC {
 		final ArrayList<OS_Element2> a = new ArrayList<OS_Element2>();
 		for (final ClassItem functionItem : getItems()) {
 			final boolean b = functionItem instanceof OS_Element2;
-			if (b) a.add((OS_Element2) functionItem);
+			if (b)
+				a.add((OS_Element2) functionItem);
 		}
 		return a;
 	}
@@ -59,7 +60,8 @@ abstract class _CommonNC {
 	}
 
 	public String getName() {
-		if (nameToken == null) return "";
+		if (nameToken == null)
+			return "";
 		return nameToken.getText();
 	}
 
@@ -72,7 +74,8 @@ abstract class _CommonNC {
 	}
 
 	public void walkAnnotations(final AnnotationWalker annotationWalker) {
-		if (annotations == null) return;
+		if (annotations == null)
+			return;
 		for (final AnnotationClause annotationClause : annotations) {
 			for (final AnnotationPart annotationPart : annotationClause.aps) {
 				annotationWalker.annotation(annotationPart);
@@ -81,12 +84,14 @@ abstract class _CommonNC {
 	}
 
 	public boolean hasItem(final OS_Element element) {
-		if (!(element instanceof ClassItem)) return false;
+		if (!(element instanceof ClassItem))
+			return false;
 		return items.contains(element);
 	}
 
 	public void addAnnotations(final List<AnnotationClause> as) {
-		if (as == null) return;
+		if (as == null)
+			return;
 		for (final AnnotationClause annotationClause : as) {
 			addAnnotation(annotationClause);
 		}

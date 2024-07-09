@@ -20,16 +20,16 @@ import java.util.List;
 import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 /**
- * @author Created    Oct 7, 2022 at 7:00:43 PM
+ * @author Created Oct 7, 2022 at 7:00:43 PM
  */
 public class S1_Constructor {
 
 	private GeneratedConstructor gf;
-	private ConstructorDef       source;
-	private FunctionInvocation   invocation;
+	private ConstructorDef source;
+	private FunctionInvocation invocation;
 
 	public S1_Constructor(final ConstructorDef aConstructorDef, final ClassStatement parent,
-	                      final FunctionInvocation aFunctionInvocation) {
+			final FunctionInvocation aFunctionInvocation) {
 		setSource(aConstructorDef);
 		setInvocation(aFunctionInvocation);
 		setParent(parent); // TODO smelly
@@ -38,7 +38,7 @@ public class S1_Constructor {
 
 	public void setSource(final ConstructorDef aConstructorDef) {
 		source = aConstructorDef;
-		gf     = new GeneratedConstructor(source);
+		gf = new GeneratedConstructor(source);
 	}
 
 	public void setInvocation(final FunctionInvocation aFunctionInvocation) {
@@ -53,8 +53,8 @@ public class S1_Constructor {
 		if (parent instanceof ClassStatement) {
 			final IdentExpression selfIdent = IdentExpression.forString("self");
 
-			final OS_Type        parentType = parent.getOS_Type();
-			final TypeTableEntry tte        = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, parentType, selfIdent);
+			final OS_Type parentType = parent.getOS_Type();
+			final TypeTableEntry tte = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, parentType, selfIdent);
 
 			gf.addVariableTableEntry("self", VariableTableType.SELF, tte, null);
 		}
@@ -62,16 +62,16 @@ public class S1_Constructor {
 
 	public void parseArgs() {
 		final List<FormalArgListItem> fali_args = source.fal().falis;
-		final List<TypeTableEntry>    fi_args   = invocation.getArgs();
+		final List<TypeTableEntry> fi_args = invocation.getArgs();
 
 		for (int i = 0; i < fali_args.size(); i++) {
 			final FormalArgListItem fali = fali_args.get(i);
 
-			final TypeTableEntry tte1     = fi_args.get(i);
-			final OS_Type        attached = tte1.getAttached();
+			final TypeTableEntry tte1 = fi_args.get(i);
+			final OS_Type attached = tte1.getAttached();
 
 			// TODO for reference now...
-			final GenType  genType  = new GenType();
+			final GenType genType = new GenType();
 			final TypeName typeName = fali.typeName();
 			if (typeName != null) {
 				genType.setTypeName(new OS_UserType(typeName));
@@ -85,7 +85,8 @@ public class S1_Constructor {
 				attached1 = attached;
 			}
 
-			final TypeTableEntry tte = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, attached1, fali.getNameToken());
+			final TypeTableEntry tte = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, attached1,
+					fali.getNameToken());
 
 //			assert attached != null; // TODO this fails
 
@@ -104,7 +105,7 @@ public class S1_Constructor {
 
 	public void process(final S1toG_GC_Processor p) {
 		final Context cctx = source.getContext();
-		final int     e1   = p.add_i(gf, InstructionName.E, null, cctx);
+		final int e1 = p.add_i(gf, InstructionName.E, null, cctx);
 
 		for (final FunctionItem item : source.getItems()) {
 //			LOG.err("7056 aConstructorDef.getItem = "+item);

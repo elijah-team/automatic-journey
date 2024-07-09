@@ -21,9 +21,9 @@ public class FactorialDotElijahTest {
 	@Test
 	public void testGenMethName() {
 		final ModuleRef prelude = new ModuleRef(null, -1);
-		final TypeRef   u64     = new TypeRef(prelude, prelude, "u64", 81);
-		final ModuleRef main_m  = new ModuleRef("fact.elijah", -2);
-		final TypeRef   main_k  = new TypeRef(main_m, main_m, "Main", 100);
+		final TypeRef u64 = new TypeRef(prelude, prelude, "u64", 81);
+		final ModuleRef main_m = new ModuleRef("fact.elijah", -2);
+		final TypeRef main_k = new TypeRef(main_m, main_m, "Main", 100);
 
 		final ArgumentNode argumentNode = new ArgumentNode("i", u64);
 		Assert.assertEquals("vai", argumentNode.getGenName());
@@ -34,11 +34,11 @@ public class FactorialDotElijahTest {
 
 	@Test
 	public void nMinusOne() {
-		final CompilerContext cctx    = new CompilerContext("ll");
-		final ModuleRef       prelude = new ModuleRef(null, -1);
-		final TypeRef         u64     = new TypeRef(prelude, prelude, "u64", 81);
-		final ModuleRef       main_m  = new ModuleRef("fact.elijah", -2);
-		final TypeRef         main_k  = new TypeRef(main_m, main_m, "Main", 100);
+		final CompilerContext cctx = new CompilerContext("ll");
+		final ModuleRef prelude = new ModuleRef(null, -1);
+		final TypeRef u64 = new TypeRef(prelude, prelude, "u64", 81);
+		final ModuleRef main_m = new ModuleRef("fact.elijah", -2);
+		final TypeRef main_k = new TypeRef(main_m, main_m, "Main", 100);
 
 		final MethHdrNode mhn = new MethHdrNode(u64, main_k, "factorial_r", List_of(new ArgumentNode("i", u64)), 1000);
 		final CaseHdrNode shn = new CaseHdrNode(ExpressionNodeBuilder.varref("i", mhn, u64));
@@ -63,12 +63,12 @@ public class FactorialDotElijahTest {
 	@Test
 	public void testTmpSSACtx() {
 		final CompilerContext cctx = new CompilerContext("ll");
-		final GenBuffer       gbn  = new GenBuffer();
+		final GenBuffer gbn = new GenBuffer();
 
 		final ModuleRef prelude = new ModuleRef(null, -1);
-		final TypeRef   u64     = new TypeRef(prelude, prelude, "u64", 81);
-		final ModuleRef main_m  = new ModuleRef("fact.elijah", -2);
-		final TypeRef   main_k  = new TypeRef(main_m, main_m, "Main", 100);
+		final TypeRef u64 = new TypeRef(prelude, prelude, "u64", 81);
+		final ModuleRef main_m = new ModuleRef("fact.elijah", -2);
+		final TypeRef main_k = new TypeRef(main_m, main_m, "Main", 100);
 
 		final MethRef fact_r = new MethRef("factorial_r", main_k, 1001);
 		fact_r.setReturnType(u64);
@@ -80,7 +80,7 @@ public class FactorialDotElijahTest {
 		final TmpSSACtxNode tccssan = new TmpSSACtxNode(cctx);
 		final LocalAgnTmpNode lamn = new LocalAgnTmpNode(tccssan,
 				ExpressionNodeBuilder.binex(u64, ExpressionNodeBuilder.varref("n", shn, u64),
-		  ExpressionOperators.OP_MINUS, ExpressionNodeBuilder.integer(1)));
+						ExpressionOperators.OP_MINUS, ExpressionNodeBuilder.integer(1)));
 		final TextBuffer b1 = FactorialR.BeginTmpSSACtx(cctx, tccssan, gbn);
 //		Assert.assertEquals("{\n\tu64 ", b1.getText()); // TODO maybe this wll be right in the future.
 		Assert.assertEquals("{\n\tZ81 ", b1.getText());

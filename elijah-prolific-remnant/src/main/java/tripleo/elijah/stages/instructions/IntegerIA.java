@@ -22,14 +22,12 @@ public class IntegerIA implements InstructionArgument, Constructable {
 
 	public IntegerIA(final int anIndex, final BaseGeneratedFunction aGeneratedFunction) {
 		index = anIndex;
-		gf    = aGeneratedFunction;
+		gf = aGeneratedFunction;
 	}
 
 	@Override
 	public String toString() {
-		return "IntegerIA{" +
-		  "index=" + index +
-		  '}';
+		return "IntegerIA{" + "index=" + index + '}';
 	}
 
 	public int getIndex() {

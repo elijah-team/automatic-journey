@@ -21,7 +21,7 @@ public class DeferredObject2<D, F, P> extends AbstractPromise<D, F, P> implement
 			if (!isPending())
 				throw new IllegalStateException("Deferred object already finished, cannot resolve again");
 
-			this.state         = State.RESOLVED;
+			this.state = State.RESOLVED;
 			this.resolveResult = resolve;
 
 			try {
@@ -38,7 +38,7 @@ public class DeferredObject2<D, F, P> extends AbstractPromise<D, F, P> implement
 		synchronized (this) {
 			if (!isPending())
 				throw new IllegalStateException("Deferred object already finished, cannot reject again");
-			this.state        = State.REJECTED;
+			this.state = State.REJECTED;
 			this.rejectResult = reject;
 
 			try {
@@ -67,8 +67,8 @@ public class DeferredObject2<D, F, P> extends AbstractPromise<D, F, P> implement
 	}
 
 	public void reset() {
-		state         = State.PENDING;
-		rejectResult  = null;
+		state = State.PENDING;
+		rejectResult = null;
 		resolveResult = null;
 	}
 }

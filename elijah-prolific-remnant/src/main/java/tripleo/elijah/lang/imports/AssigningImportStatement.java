@@ -10,9 +10,9 @@ import java.util.*;
  * Created 8/7/20 2:09 AM
  */
 public class AssigningImportStatement extends _BaseImportStatement {
-	final         OS_Element parent;
+	final OS_Element parent;
 	private final List<Part> _parts = new ArrayList<Part>();
-	private       Context    _ctx;
+	private Context _ctx;
 
 	public AssigningImportStatement(final OS_Element aParent) {
 		parent = aParent;
@@ -65,10 +65,10 @@ public class AssigningImportStatement extends _BaseImportStatement {
 
 	public static class Part { // public for ImportStatementBuilder
 		final IdentExpression name;
-		final Qualident       value;
+		final Qualident value;
 
 		public Part(final IdentExpression i1, final Qualident q1) {
-			name  = i1;
+			name = i1;
 			value = q1;
 		}
 	}

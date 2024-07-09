@@ -30,11 +30,11 @@ public abstract class ClassOrNamespaceScope extends BaseScope {
 
 	static class IspPart {
 		final IdentExpression ident;
-		final IExpression     expr;
+		final IExpression expr;
 
 		public IspPart(final IdentExpression i1, final IExpression expr) {
 			this.ident = i1;
-			this.expr  = expr;
+			this.expr = expr;
 		}
 	}
 

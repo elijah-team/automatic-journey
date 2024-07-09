@@ -26,9 +26,9 @@ import java.util.stream.Collectors;
  * Created 8/21/21 10:10 PM
  */
 public class DeducePipeline implements PipelineMember, AccessBus.AB_ModuleListListener {
-	private final AccessBus       __ab;
-	private       PipelineLogic   pipelineLogic;
-	private       List<OS_Module> ms;
+	private final AccessBus __ab;
+	private PipelineLogic pipelineLogic;
+	private List<OS_Module> ms;
 
 	public DeducePipeline(final @NotNull AccessBus ab) {
 		__ab = ab;
@@ -40,28 +40,24 @@ public class DeducePipeline implements PipelineMember, AccessBus.AB_ModuleListLi
 	public void run() {
 		// TODO move this into a latch and wait for pipelineLogic and modules
 
-/*
-		final List<OS_Module> ms1 = __ab.getCompilation().getModules();
-
-		if (ms != null) tripleo.elijah.util.Stupidity.println_err2("ms.size() == " + ms.size());
-		else tripleo.elijah.util.Stupidity.println_err2("ms == null");
-		tripleo.elijah.util.Stupidity.println_err2("ms1.size() == " + ms1.size());
-*/
+		/*
+		 * final List<OS_Module> ms1 = __ab.getCompilation().getModules();
+		 * 
+		 * if (ms != null) tripleo.elijah.util.Stupidity.println_err2("ms.size() == " +
+		 * ms.size()); else tripleo.elijah.util.Stupidity.println_err2("ms == null");
+		 * tripleo.elijah.util.Stupidity.println_err2("ms1.size() == " + ms1.size());
+		 */
 
 		final List<GeneratedNode> lgc = pipelineLogic.generatedClassesCopy();
 
 		resolveMods();
 
-		final List<PL_Run2> run2_work = pipelineLogic.mods.stream()
-		                                                  .map(mod -> new PL_Run2(mod,
-		                                                    mod.entryPoints._getMods(),
-		                                                    pipelineLogic::getGenerateFunctions,
-		                                                    pipelineLogic))
-		                                                  .collect(Collectors.toList());
+		final List<PL_Run2> run2_work = pipelineLogic.mods.stream().map(
+				mod -> new PL_Run2(mod, mod.entryPoints._getMods(), pipelineLogic::getGenerateFunctions, pipelineLogic))
+				.collect(Collectors.toList());
 
-		final List<DeducePhase.GeneratedClasses> lgc2 = run2_work.stream()
-		                                                         .map(PL_Run2::run2)
-		                                                         .collect(Collectors.toList());
+		final List<DeducePhase.GeneratedClasses> lgc2 = run2_work.stream().map(PL_Run2::run2)
+				.collect(Collectors.toList());
 
 		final ArrayList<GeneratedNode> lgc3 = new ArrayList<>();
 
@@ -87,29 +83,28 @@ public class DeducePipeline implements PipelineMember, AccessBus.AB_ModuleListLi
 	}
 
 	static class PL_Run2 {
-		private final OS_Module                              mod;
-		private final List<EntryPoint>                       entryPoints;
+		private final OS_Module mod;
+		private final List<EntryPoint> entryPoints;
 		private final Function<OS_Module, GenerateFunctions> mapper;
-		private final PipelineLogic                          pipelineLogic;
+		private final PipelineLogic pipelineLogic;
 
-		public PL_Run2(final OS_Module mod,
-		               final List<EntryPoint> entryPoints,
-		               final Function<OS_Module, GenerateFunctions> mapper,
-		               final PipelineLogic pipelineLogic) {
-			this.mod           = mod;
-			this.entryPoints   = entryPoints;
-			this.mapper        = mapper;
+		public PL_Run2(final OS_Module mod, final List<EntryPoint> entryPoints,
+				final Function<OS_Module, GenerateFunctions> mapper, final PipelineLogic pipelineLogic) {
+			this.mod = mod;
+			this.entryPoints = entryPoints;
+			this.mapper = mapper;
 			this.pipelineLogic = pipelineLogic;
 		}
 
 		protected DeducePhase.@NotNull GeneratedClasses run2() {
-			final GenerateFunctions gfm         = mapper.apply(mod);
-			final DeducePhase       deducePhase = pipelineLogic.getDp();
+			final GenerateFunctions gfm = mapper.apply(mod);
+			final DeducePhase deducePhase = pipelineLogic.getDp();
 
 			gfm.generateFromEntryPoints(entryPoints, deducePhase);
 
-			final List<GeneratedNode>          lgc            = pipelineLogic.generatedClassesCopy();
-			@NotNull final List<GeneratedNode> resolved_nodes = new ArrayList<GeneratedNode>();
+			final List<GeneratedNode> lgc = pipelineLogic.generatedClassesCopy();
+			@NotNull
+			final List<GeneratedNode> resolved_nodes = new ArrayList<GeneratedNode>();
 
 			final Coder coder = new Coder(deducePhase.codeRegistrar);
 

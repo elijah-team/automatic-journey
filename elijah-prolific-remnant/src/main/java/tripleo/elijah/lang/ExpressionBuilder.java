@@ -14,14 +14,14 @@
  */
 package tripleo.elijah.lang;
 
-
 public class ExpressionBuilder {
 
 	public static IBinaryExpression buildPartial(final IExpression left, final ExpressionKind aType) {
 		return new BasicBinaryExpression(left, aType, null);
 	}
 
-	public static IBinaryExpression build(final IExpression left, final ExpressionKind aType, final IExpression aExpression) {
+	public static IBinaryExpression build(final IExpression left, final ExpressionKind aType,
+			final IExpression aExpression) {
 		return new BasicBinaryExpression(left, aType, aExpression);
 	}
 

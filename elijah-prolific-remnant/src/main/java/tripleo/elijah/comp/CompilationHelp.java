@@ -25,9 +25,8 @@ interface RuntimeProcess {
 class StageToRuntime {
 	@Contract("_, _, _ -> new")
 	@NotNull
-	public static RuntimeProcesses get(final @NotNull Stages stage,
-	                                   final @NotNull ICompilationAccess ca,
-	                                   final @NotNull ProcessRecord aPr) {
+	public static RuntimeProcesses get(final @NotNull Stages stage, final @NotNull ICompilationAccess ca,
+			final @NotNull ProcessRecord aPr) {
 		final RuntimeProcesses r = new RuntimeProcesses(ca, aPr);
 
 		r.add(stage.getProcess(ca, aPr));
@@ -38,8 +37,8 @@ class StageToRuntime {
 
 class RuntimeProcesses {
 	private final ICompilationAccess ca;
-	private final ProcessRecord      pr;
-	private       RuntimeProcess     process;
+	private final ProcessRecord pr;
+	private RuntimeProcess process;
 
 	public RuntimeProcesses(final @NotNull ICompilationAccess aca, final @NotNull ProcessRecord aPr) {
 		ca = aca;
@@ -56,7 +55,8 @@ class RuntimeProcesses {
 
 	public void run_better() throws Exception {
 		// do nothing. job over
-		if (ca.getStage() == Stages.E) return;
+		if (ca.getStage() == Stages.E)
+			return;
 
 		// rt.prepare();
 		if (DebugFlags.lgJan25) {
@@ -102,7 +102,7 @@ final class EmptyProcess implements RuntimeProcess {
 
 class DStageProcess implements RuntimeProcess {
 	private final ICompilationAccess ca;
-	private final ProcessRecord      pr;
+	private final ProcessRecord pr;
 
 	@Contract(pure = true)
 	public DStageProcess(final ICompilationAccess aCa, final ProcessRecord aPr) {
@@ -126,8 +126,8 @@ class DStageProcess implements RuntimeProcess {
 }
 
 class OStageProcess implements RuntimeProcess {
-	final         stepA_mal.MalEnv2 env;
-	private final ProcessRecord     pr;
+	final stepA_mal.MalEnv2 env;
+	private final ProcessRecord pr;
 	private final ICompilationAccess ca;
 
 	OStageProcess(final ICompilationAccess aCa, final ProcessRecord aPr) {
@@ -146,7 +146,7 @@ class OStageProcess implements RuntimeProcess {
 
 		ab.subscribePipelineLogic((pl) -> {
 			final Compilation comp = ca.getCompilation();
-			final Pipeline    ps   = comp.getPipelines();
+			final Pipeline ps = comp.getPipelines();
 
 			try {
 				ps.run();

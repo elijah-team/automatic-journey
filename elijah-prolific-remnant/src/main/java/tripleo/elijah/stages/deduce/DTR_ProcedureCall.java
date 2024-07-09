@@ -5,12 +5,13 @@ import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_fn.*;
 
 public class DTR_ProcedureCall {
-	private final DeduceTypeResolve       deduceTypeResolve;
+	private final DeduceTypeResolve deduceTypeResolve;
 	private final ProcedureCallExpression procedureCallExpression;
 
 	@Contract(pure = true)
-	public DTR_ProcedureCall(final DeduceTypeResolve aDeduceTypeResolve, final ProcedureCallExpression aProcedureCallExpression) {
-		deduceTypeResolve       = aDeduceTypeResolve;
+	public DTR_ProcedureCall(final DeduceTypeResolve aDeduceTypeResolve,
+			final ProcedureCallExpression aProcedureCallExpression) {
+		deduceTypeResolve = aDeduceTypeResolve;
 		procedureCallExpression = aProcedureCallExpression;
 	}
 

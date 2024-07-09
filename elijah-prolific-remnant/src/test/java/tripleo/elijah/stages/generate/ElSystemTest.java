@@ -16,7 +16,7 @@ import tripleo.elijah_fluffy.util.*;
 
 public class ElSystemTest {
 
-	ElSystem    sys;
+	ElSystem sys;
 	Compilation c;
 	private AccessBus ab;
 

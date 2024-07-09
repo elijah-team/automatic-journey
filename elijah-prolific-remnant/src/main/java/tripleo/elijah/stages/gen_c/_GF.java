@@ -15,7 +15,7 @@ import static tripleo.elijah.stages.gen_c.Generate_Code_For_Method.AOG.*;
 public class _GF {
 	@Contract("null, _ -> fail")
 	public static @NotNull EG_Statement forDeduceElement3(final IDeduceElement3 deduceElement3, final GenerateC gc) {
-		//return deduceElement3.();
+		// return deduceElement3.();
 		if (deduceElement3 instanceof final DeduceElement3_ProcTableEntry de_pte) {
 			return forDeduceElement3_ProcTableEntry(de_pte, gc);
 		}
@@ -23,30 +23,31 @@ public class _GF {
 		throw new NotImplementedException();
 	}
 
-	private static @NotNull EG_Statement forDeduceElement3_ProcTableEntry(@NotNull final DeduceElement3_ProcTableEntry de_pte, final GenerateC gc) {
+	private static @NotNull EG_Statement forDeduceElement3_ProcTableEntry(
+			@NotNull final DeduceElement3_ProcTableEntry de_pte, final GenerateC gc) {
 		final EG_SingleStatement beginning;
 		final EG_SingleStatement ending;
-		final EG_Statement       middle;
-		final boolean            indent = false;
-		final EX_Explanation     explanation;
-
+		final EG_Statement middle;
+		final boolean indent = false;
+		final EX_Explanation explanation;
 
 		final ProcTableEntry pte = de_pte.getTablePrincipal();
 
-		final BaseGeneratedFunction gf          = de_pte.getGeneratedFunction();
-		final Instruction           instruction = de_pte.getInstruction();
+		final BaseGeneratedFunction gf = de_pte.getGeneratedFunction();
+		final Instruction instruction = de_pte.getInstruction();
 
 		final StringBuilder sb = XXX_YYY.dispatch(pte, new XXX_YYY() {
 			@Override
 			public StringBuilder itsABoy(final IExpression expression) {
 				final IdentExpression ptex = (IdentExpression) expression;
-				final String          text = ptex.getText();
+				final String text = ptex.getText();
 
-				@Nullable final InstructionArgument xx = gf.vte_lookup(text);
+				@Nullable
+				final InstructionArgument xx = gf.vte_lookup(text);
 				assert xx != null;
 
-				final String       realTargetName = gc.getRealTargetName((IntegerIA) xx, GET);
-				final List<String> sl3            = gc.getArgumentStrings(() -> new InstructionFixedList(instruction));
+				final String realTargetName = gc.getRealTargetName((IntegerIA) xx, GET);
+				final List<String> sl3 = gc.getArgumentStrings(() -> new InstructionFixedList(instruction));
 
 				final StringBuilder sb = new StringBuilder();
 				sb.append(Emit.emit("/*424*/"));
@@ -77,13 +78,13 @@ public class _GF {
 			}
 		});
 
-		beginning   = new EG_SingleStatement("", EX_Explanation.withMessage("_GF.beginning"));
-		ending      = new EG_SingleStatement("",  EX_Explanation.withMessage(("_GF.ending")));
+		beginning = new EG_SingleStatement("", EX_Explanation.withMessage("_GF.beginning"));
+		ending = new EG_SingleStatement("", EX_Explanation.withMessage(("_GF.ending")));
 		explanation = new EX_ProcTableEntryExplanation(de_pte);
-		middle      = new EG_SingleStatement(sb.toString(), explanation);
+		middle = new EG_SingleStatement(sb.toString(), explanation);
 
 		final EG_CompoundStatement stmt = new EG_CompoundStatement(beginning, ending, middle, indent, explanation);
-		//new EX_TableEntryExplanation();
+		// new EX_TableEntryExplanation();
 		return stmt;
 	}
 

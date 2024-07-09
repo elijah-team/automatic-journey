@@ -29,8 +29,8 @@ public class DeduceTypesTest2 {
 	public void testDeduceIdentExpression() throws ResolveError {
 		final Boilerplate b = new Boilerplate();
 		b.get();
-		final Compilation c   = b.comp;
-		final OS_Module   mod = b.defaultMod();
+		final Compilation c = b.comp;
+		final OS_Module mod = b.defaultMod();
 
 		mod.prelude = mod.parent.findPrelude2(CM_Preludes.C).success().getModule();
 		final ModuleContext mctx = new ModuleContext(mod);
@@ -39,9 +39,9 @@ public class DeduceTypesTest2 {
 		cs.setName(Helpers.string_to_ident("Test"));
 		final FunctionDef fd = cs.funcDef();
 		fd.setName((Helpers.string_to_ident("test")));
-		final Scope3            scope3 = new Scope3(fd);
-		final VariableSequence  vss    = scope3.varSeq();
-		final VariableStatement vs     = vss.next();
+		final Scope3 scope3 = new Scope3(fd);
+		final VariableSequence vss = scope3.varSeq();
+		final VariableStatement vs = vss.next();
 		vs.setName((Helpers.string_to_ident("x")));
 		final Qualident qu = new Qualident();
 		qu.append(Helpers.string_to_ident("SystemInteger"));
@@ -59,17 +59,17 @@ public class DeduceTypesTest2 {
 		//
 		//
 		final ElLog.Verbosity verbosity1 = Compilation.gitlabCIVerbosity();
-		final AccessBus       ab         = new AccessBus(c);
-		final PipelineLogic   pl         = new PipelineLogic(ab);
-		final DeducePhase     dp         = pl.getDp();
-		final DeduceTypes2    d          = dp.deduceModule(mod, verbosity1);
+		final AccessBus ab = new AccessBus(c);
+		final PipelineLogic pl = new PipelineLogic(ab);
+		final DeducePhase dp = pl.getDp();
+		final DeduceTypes2 d = dp.deduceModule(mod, verbosity1);
 //		final DeduceTypes d = new DeduceTypes(mod);
 		final GenType x = DeduceLookupUtils.deduceExpression(d, x1, fc);
 		System.out.println(x);
 //		Assert.assertEquals(new OS_Type(BuiltInTypes.SystemInteger).getBType(), x.getBType());
 //		final RegularTypeName tn = new RegularTypeName();
-		final VariableTypeName tn  = new VariableTypeName();
-		final Qualident        tnq = new Qualident();
+		final VariableTypeName tn = new VariableTypeName();
+		final Qualident tnq = new Qualident();
 		tnq.append(Helpers.string_to_ident("SystemInteger"));
 		tn.setName(tnq);
 		tn.setContext(fd.getContext());
@@ -81,7 +81,6 @@ public class DeduceTypesTest2 {
 
 	private boolean genTypeEquals(final GenType a, final GenType b) {
 		// TODO hack
-		return a.getTypeName().isEqual(b.getTypeName()) &&
-		  a.getResolved().isEqual(b.getResolved());
+		return a.getTypeName().isEqual(b.getTypeName()) && a.getResolved().isEqual(b.getResolved());
 	}
 }

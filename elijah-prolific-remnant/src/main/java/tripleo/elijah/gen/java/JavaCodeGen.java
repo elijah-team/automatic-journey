@@ -9,7 +9,7 @@ package tripleo.elijah.gen.java;
 //import java.util.ArrayList;
 //import java.util.List;
 //
-public class JavaCodeGen /*implements ICodeGen*/ {
+public class JavaCodeGen /* implements ICodeGen */ {
 //
 //	final ClassPool cp = new ClassPool();
 //

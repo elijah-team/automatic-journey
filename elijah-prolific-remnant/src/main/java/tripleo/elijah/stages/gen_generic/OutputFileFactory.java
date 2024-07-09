@@ -9,9 +9,10 @@ public final class OutputFileFactory {
 
 	@Contract("_, _ -> new")
 	public static @Nullable GenerateFiles create(final @NotNull String lang,
-	                                            final @NotNull OutputFileFactoryParams params) {
+			final @NotNull OutputFileFactoryParams params) {
 		final CM_Preludes._Creator dispatch = CM_Preludes.dispatch(lang);
-		if (dispatch == null) return null;
+		if (dispatch == null)
+			return null;
 		return dispatch.create(params);
 	}
 }

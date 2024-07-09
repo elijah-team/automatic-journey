@@ -26,15 +26,18 @@ public class GenerateResult {
 //		_res.add(new GenerateResultItem(ty, b, n, null, null, ++bufferCounter)); // TODO remove nulls
 //	}
 
-	public void addConstructor(final GeneratedConstructor aGeneratedConstructor, final Buffer aBuffer, final TY aTY, final LibraryStatementPart aLsp) {
+	public void addConstructor(final GeneratedConstructor aGeneratedConstructor, final Buffer aBuffer, final TY aTY,
+			final LibraryStatementPart aLsp) {
 		addFunction(aGeneratedConstructor, aBuffer, aTY, aLsp);
 	}
 
-	public void addFunction(final BaseGeneratedFunction aGeneratedFunction, final Buffer aBuffer, final TY aTY, final @NotNull LibraryStatementPart aLsp) {
+	public void addFunction(final BaseGeneratedFunction aGeneratedFunction, final Buffer aBuffer, final TY aTY,
+			final @NotNull LibraryStatementPart aLsp) {
 		add(aBuffer, aGeneratedFunction, aTY, aLsp, aGeneratedFunction.getDependency());
 	}
 
-	public void add(final Buffer b, final GeneratedNode n, final TY ty, final LibraryStatementPart aLsp, @NotNull final Dependency d) {
+	public void add(final Buffer b, final GeneratedNode n, final TY ty, final LibraryStatementPart aLsp,
+			@NotNull final Dependency d) {
 		final GenerateResultItem item = new GenerateResultItem(ty, b, n, aLsp, d, ++bufferCounter);
 		_res.add(item);
 //		items.onNext(item);
@@ -44,7 +47,8 @@ public class GenerateResult {
 		add(aBuf, aClass, ty, aLsp, aClass.getDependency());
 	}
 
-	public void addNamespace(final TY ty, final GeneratedNamespace aNamespace, final Buffer aBuf, final LibraryStatementPart aLsp) {
+	public void addNamespace(final TY ty, final GeneratedNamespace aNamespace, final Buffer aBuf,
+			final LibraryStatementPart aLsp) {
 		add(aBuf, aNamespace, ty, aLsp, aNamespace.getDependency());
 	}
 

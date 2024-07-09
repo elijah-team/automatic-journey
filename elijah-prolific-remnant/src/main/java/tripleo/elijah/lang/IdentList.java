@@ -13,7 +13,7 @@ import java.util.*;
 
 public class IdentList {
 
-	//	List<OS_Ident> idents=new ArrayList<OS_Ident>();
+	// List<OS_Ident> idents=new ArrayList<OS_Ident>();
 	final List<IdentExpression> idents2 = new ArrayList<IdentExpression>();
 
 //	public void push(String aa){
@@ -24,4 +24,3 @@ public class IdentList {
 		idents2.add(s);
 	}
 }
-

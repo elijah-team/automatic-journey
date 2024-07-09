@@ -30,26 +30,28 @@ import java.util.ArrayList;
  */
 class Resolve_Variable_Table_Entry {
 	private final BaseGeneratedFunction generatedFunction;
-	private final Context               ctx;
+	private final Context ctx;
 
-	private final          DeduceTypes2 deduceTypes2;
-	private final @NotNull ElLog        LOG;
-	private final @NotNull WorkManager  wm;
-	private final @NotNull DeducePhase  phase;
-	private final          ErrSink      errSink;
+	private final DeduceTypes2 deduceTypes2;
+	private final @NotNull ElLog LOG;
+	private final @NotNull WorkManager wm;
+	private final @NotNull DeducePhase phase;
+	private final ErrSink errSink;
 
-	public Resolve_Variable_Table_Entry(final BaseGeneratedFunction aGeneratedFunction, final Context aCtx, final DeduceTypes2 aDeduceTypes2) {
+	public Resolve_Variable_Table_Entry(final BaseGeneratedFunction aGeneratedFunction, final Context aCtx,
+			final DeduceTypes2 aDeduceTypes2) {
 		generatedFunction = aGeneratedFunction;
-		ctx               = aCtx;
-		deduceTypes2      = aDeduceTypes2;
+		ctx = aCtx;
+		deduceTypes2 = aDeduceTypes2;
 		//
-		LOG     = deduceTypes2.LOG;
-		wm      = deduceTypes2.wm;
+		LOG = deduceTypes2.LOG;
+		wm = deduceTypes2.wm;
 		errSink = deduceTypes2.errSink;
-		phase   = deduceTypes2.phase;
+		phase = deduceTypes2.phase;
 	}
 
-	public void action(final @NotNull VariableTableEntry vte, final @NotNull DeduceTypes2.IVariableConnector aConnector) {
+	public void action(final @NotNull VariableTableEntry vte,
+			final @NotNull DeduceTypes2.IVariableConnector aConnector) {
 		switch (vte.vtt) {
 		case ARG:
 			action_ARG(vte);
@@ -65,7 +67,8 @@ class Resolve_Variable_Table_Entry {
 		if (vte.type.getAttached() == null && vte.potentialTypes.size() == 1) {
 			final TypeTableEntry pot = new ArrayList<>(vte.potentialTypes()).get(0);
 			if (pot.getAttached() instanceof OS_FuncExprType) {
-				action_VAR_potsize_1_and_FuncExprType(vte, (OS_FuncExprType) pot.getAttached(), pot.genType, pot.expression);
+				action_VAR_potsize_1_and_FuncExprType(vte, (OS_FuncExprType) pot.getAttached(), pot.genType,
+						pot.expression);
 			} else if (pot.getAttached() != null && pot.getAttached().getType() == OS_Type.Type.USER_CLASS) {
 				final int y = 1;
 				vte.type = pot;
@@ -79,19 +82,22 @@ class Resolve_Variable_Table_Entry {
 	public void action_VAR_potsize_1_other(@NotNull final VariableTableEntry vte, @NotNull final TypeTableEntry aPot) {
 		try {
 			if (aPot.tableEntry instanceof final @NotNull ProcTableEntry pte1) {
-				@Nullable final OS_Element    e    = DeduceLookupUtils.lookup(pte1.expression, ctx, deduceTypes2);
+				@Nullable
+				final OS_Element e = DeduceLookupUtils.lookup(pte1.expression, ctx, deduceTypes2);
 				if (e == null) {
 					if (DebugFlags.lgJan25) {
 						System.err.println("** 97: " + pte1.expression);
 					}
 					return;
-					//throw new AssertionError();
+					// throw new AssertionError();
 				}
 				if (e instanceof FunctionDef) {
 //						final FunctionDef fd = (FunctionDef) e;
-					@NotNull final IdentTableEntry ite1 = ((IdentIA) pte1.expression_num).getEntry();
-					final DeducePath               dp   = ite1.buildDeducePath(generatedFunction);
-					@Nullable final GenType        t    = dp.getType(dp.size() - 1);
+					@NotNull
+					final IdentTableEntry ite1 = ((IdentIA) pte1.expression_num).getEntry();
+					final DeducePath dp = ite1.buildDeducePath(generatedFunction);
+					@Nullable
+					final GenType t = dp.getType(dp.size() - 1);
 					ite1.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(e));
 					pte1.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(e));
 					pte1.typePromise().then(new DoneCallback<GenType>() {
@@ -136,17 +142,17 @@ class Resolve_Variable_Table_Entry {
 		final @NotNull IExpression iv = aVariableStatement.initialValue();
 		if (iv != IExpression.UNASSIGNED) {
 			if (iv instanceof final ProcedureCallExpression procedureCallExpression) {
-				final IExpression             name_exp                = procedureCallExpression.getLeft();
+				final IExpression name_exp = procedureCallExpression.getLeft();
 				assert name_exp instanceof IdentExpression;
 
-				final IdentExpression      name2 = (IdentExpression) name_exp;
-				final LookupResultList     lrl2  = ((IdentExpression) name_exp).getContext().lookup(name2.getText());
-				final @Nullable OS_Element el2   = lrl2.chooseBest(null);
+				final IdentExpression name2 = (IdentExpression) name_exp;
+				final LookupResultList lrl2 = ((IdentExpression) name_exp).getContext().lookup(name2.getText());
+				final @Nullable OS_Element el2 = lrl2.chooseBest(null);
 
 				if (el2 != null) {
 					if (el2 instanceof final ClassStatement classStatement) {
-						final GenType        genType        = new GenType(classStatement);
-						//deferredMember.typeResolved().resolve(genType);
+						final GenType genType = new GenType(classStatement);
+						// deferredMember.typeResolved().resolve(genType);
 						genCIForGenType2(genType);
 					}
 				}
@@ -166,15 +172,18 @@ class Resolve_Variable_Table_Entry {
 		} else if (element instanceof final @NotNull ClassStatement classStatement) {
 			aGt.setResolved(((ClassStatement) element).getOS_Type());
 			// TODO genCI ??
-			@Nullable ClassInvocation ci = new ClassInvocation(classStatement, null);
-			ci     = phase.registerClassInvocation(ci);
+			@Nullable
+			ClassInvocation ci = new ClassInvocation(classStatement, null);
+			ci = phase.registerClassInvocation(ci);
 			aGt.setCi(ci);
 //			pte.setClassInvocation(ci);
 //			fi = newFunctionInvocation(fd, pte, ci, phase);
 		} else if (element instanceof final @NotNull FunctionDef functionDef) {
-			// TODO this seems to be an elaborate copy of the above with no differentiation for functionDef
-			final OS_Element            parent      = functionDef.getParent();
-			@Nullable final IInvocation inv;
+			// TODO this seems to be an elaborate copy of the above with no differentiation
+			// for functionDef
+			final OS_Element parent = functionDef.getParent();
+			@Nullable
+			final IInvocation inv;
 			switch (DecideElObjectType.getElObjectType(parent)) {
 			case CLASS:
 				aGt.setResolved(((ClassStatement) parent).getOS_Type());
@@ -211,7 +220,8 @@ class Resolve_Variable_Table_Entry {
 			}
 			aGt.setCi(inv);
 		} else if (element instanceof AliasStatement) {
-			@Nullable OS_Element el = element;
+			@Nullable
+			OS_Element el = element;
 			while (el instanceof AliasStatement) {
 				el = DeduceLookupUtils._resolveAlias((AliasStatement) el, deduceTypes2);
 			}
@@ -221,22 +231,25 @@ class Resolve_Variable_Table_Entry {
 	}
 
 	public void action_VAR_potsize_1_and_FuncExprType(@NotNull final VariableTableEntry vte,
-	                                                  @NotNull final OS_FuncExprType funcExprType,
-	                                                  @NotNull final GenType aGenType,
-	                                                  final IExpression aPotentialExpression) {
+			@NotNull final OS_FuncExprType funcExprType, @NotNull final GenType aGenType,
+			final IExpression aPotentialExpression) {
 		aGenType.setTypeName(funcExprType);
 
 		final @NotNull FuncExpr fe = (FuncExpr) funcExprType.getElement();
 
 		// add namespace
-		@NotNull final OS_Module           mod1   = fe.getContext().module();
-		@Nullable final NamespaceStatement mod_ns = lookup_module_namespace(mod1);
+		@NotNull
+		final OS_Module mod1 = fe.getContext().module();
+		@Nullable
+		final NamespaceStatement mod_ns = lookup_module_namespace(mod1);
 
-		@Nullable ProcTableEntry callable_pte = null;
+		@Nullable
+		ProcTableEntry callable_pte = null;
 
 		if (mod_ns != null) {
 			// add func_expr to namespace
-			@NotNull final FunctionDef fd1 = new FunctionDef(mod_ns, mod_ns.getContext());
+			@NotNull
+			final FunctionDef fd1 = new FunctionDef(mod_ns, mod_ns.getContext());
 			fd1.setFal(fe.fal());
 			fd1.setContext((FunctionContext) fe.getContext());
 			fd1.scope(fe.getScope());
@@ -244,14 +257,21 @@ class Resolve_Variable_Table_Entry {
 //			tripleo.elijah.util.Stupidity.println_out("1630 "+mod_ns.getItems()); // element 0 is ctor$0
 			fd1.setName(IdentExpression.forString(String.format("$%d", mod_ns.getItems().size() + 1)));
 
-			@NotNull final WorkList            wl   = new WorkList();
-			@NotNull final GenerateFunctions   gen  = phase.generatePhase.getGenerateFunctions(mod1);
-			@NotNull final NamespaceInvocation modi = new NamespaceInvocation(mod_ns);
-			final @Nullable ProcTableEntry     pte  = findProcTableEntry(generatedFunction, aPotentialExpression);
+			@NotNull
+			final WorkList wl = new WorkList();
+			@NotNull
+			final GenerateFunctions gen = phase.generatePhase.getGenerateFunctions(mod1);
+			@NotNull
+			final NamespaceInvocation modi = new NamespaceInvocation(mod_ns);
+			final @Nullable ProcTableEntry pte = findProcTableEntry(generatedFunction, aPotentialExpression);
 			assert pte != null;
 			callable_pte = pte;
-			@NotNull final FunctionInvocation fi = new FunctionInvocation(fd1, pte, modi, phase.generatePhase);
-			wl.addJob(new WlGenerateNamespace(gen, modi, phase.generatedClasses, phase.codeRegistrar)); // TODO hope this works (for more than one)
+			@NotNull
+			final FunctionInvocation fi = new FunctionInvocation(fd1, pte, modi, phase.generatePhase);
+			wl.addJob(new WlGenerateNamespace(gen, modi, phase.generatedClasses, phase.codeRegistrar)); // TODO hope
+																										// this works
+																										// (for more
+																										// than one)
 			final @Nullable WlGenerateFunction wlgf = new WlGenerateFunction(gen, fi, phase.codeRegistrar);
 			wl.addJob(wlgf);
 			wm.addJobs(wl);
@@ -260,12 +280,13 @@ class Resolve_Variable_Table_Entry {
 			aGenType.setCi(modi);
 			aGenType.setNode(wlgf.getResult());
 
-			final DeduceTypes2.@NotNull PromiseExpectation<GenType> pe = deduceTypes2.promiseExpectation(/*pot.genType.node*/new DeduceTypes2.ExpectationBase() {
-				@Override
-				public @NotNull String expectationString() {
-					return "FuncType..."; // TODO
-				}
-			}, "FuncType Result");
+			final DeduceTypes2.@NotNull PromiseExpectation<GenType> pe = deduceTypes2
+					.promiseExpectation(/* pot.genType.node */new DeduceTypes2.ExpectationBase() {
+						@Override
+						public @NotNull String expectationString() {
+							return "FuncType..."; // TODO
+						}
+					}, "FuncType Result");
 			((GeneratedFunction) aGenType.getNode()).onType(new DoneCallback<GenType>() {
 				@Override
 				public void onDone(final GenType result) {
@@ -274,15 +295,17 @@ class Resolve_Variable_Table_Entry {
 				}
 			});
 
-			//vte.typeDeferred().resolve(pot.genType); // this is wrong
+			// vte.typeDeferred().resolve(pot.genType); // this is wrong
 		}
 
 		if (callable_pte != null)
 			vte.setCallablePTE(callable_pte);
 	}
 
-	private @Nullable ProcTableEntry findProcTableEntry(@NotNull final BaseGeneratedFunction aGeneratedFunction, final IExpression aExpression) {
-		for (@NotNull final ProcTableEntry procTableEntry : aGeneratedFunction.prte_list) {
+	private @Nullable ProcTableEntry findProcTableEntry(@NotNull final BaseGeneratedFunction aGeneratedFunction,
+			final IExpression aExpression) {
+		for (@NotNull
+		final ProcTableEntry procTableEntry : aGeneratedFunction.prte_list) {
 			if (procTableEntry.expression == aExpression)
 				return procTableEntry;
 		}
@@ -292,7 +315,8 @@ class Resolve_Variable_Table_Entry {
 	public @Nullable NamespaceStatement lookup_module_namespace(@NotNull final OS_Module aModule) {
 		try {
 			final @NotNull IdentExpression module_ident = IdentExpression.forString("__MODULE__");
-			@Nullable final OS_Element     e            = DeduceLookupUtils.lookup(module_ident, aModule.getContext(), deduceTypes2);
+			@Nullable
+			final OS_Element e = DeduceLookupUtils.lookup(module_ident, aModule.getContext(), deduceTypes2);
 			if (e != null) {
 				if (e instanceof NamespaceStatement) {
 					return (NamespaceStatement) e;
@@ -302,7 +326,8 @@ class Resolve_Variable_Table_Entry {
 				}
 			} else {
 				// not found, so add. this is where AST would come in handy
-				@NotNull final NamespaceStatement ns = new NamespaceStatement(aModule, aModule.getContext());
+				@NotNull
+				final NamespaceStatement ns = new NamespaceStatement(aModule, aModule.getContext());
 				ns.setName(module_ident);
 				return ns;
 			}
@@ -314,8 +339,8 @@ class Resolve_Variable_Table_Entry {
 	}
 
 	public void action_ARG(@NotNull final VariableTableEntry vte) {
-		final TypeTableEntry tte      = vte.type;
-		final OS_Type        attached = tte.getAttached();
+		final TypeTableEntry tte = vte.type;
+		final OS_Type attached = tte.getAttached();
 		if (attached != null) {
 			switch (attached.getType()) {
 			case USER:
@@ -351,10 +376,12 @@ class Resolve_Variable_Table_Entry {
 	/**
 	 * Sets the invocation ({@code genType#ci}) and the node for a GenType
 	 *
-	 * @param aGenType the GenType to modify. must be set to a nonGenericTypeName that is non-null and generic
+	 * @param aGenType the GenType to modify. must be set to a nonGenericTypeName
+	 *                 that is non-null and generic
 	 */
 	public void genCIForGenType(final GenType aGenType) {
-		assert aGenType.getNonGenericTypeName() != null;//&& ((NormalTypeName) aGenType.nonGenericTypeName).getGenericPart().size() > 0;
+		assert aGenType.getNonGenericTypeName() != null;// && ((NormalTypeName)
+													// aGenType.nonGenericTypeName).getGenericPart().size() > 0;
 
 		aGenType.genCI(aGenType.getNonGenericTypeName(), deduceTypes2, deduceTypes2.errSink, deduceTypes2.phase);
 		final IInvocation invocation = aGenType.getCi();
@@ -379,7 +406,8 @@ class Resolve_Variable_Table_Entry {
 	/**
 	 * Sets the node for a GenType, given an invocation
 	 *
-	 * @param aGenType the GenType to modify. must be set to a nonGenericTypeName that is non-null and generic
+	 * @param aGenType the GenType to modify. must be set to a nonGenericTypeName
+	 *                 that is non-null and generic
 	 */
 	public void genNodeForGenType(final GenType aGenType, final IInvocation invocation) {
 		assert aGenType.getNonGenericTypeName() != null;
@@ -408,7 +436,7 @@ class Resolve_Variable_Table_Entry {
 	/**
 	 * Sets the invocation ({@code genType#ci}) and the node for a GenType
 	 *
-	 * @param aGenType the GenType to modify. doesn;t care about  nonGenericTypeName
+	 * @param aGenType the GenType to modify. doesn;t care about nonGenericTypeName
 	 */
 	public void genCIForGenType2(final GenType aGenType) {
 		aGenType.genCI(aGenType.getNonGenericTypeName(), deduceTypes2, deduceTypes2.errSink, deduceTypes2.phase);

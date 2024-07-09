@@ -19,27 +19,27 @@ import java.util.*;
 public abstract class AbstractTypeName2 implements NormalTypeName {
 
 	protected final Collection<TypeModifiers> _ltm = new LinkedHashSet<TypeModifiers>();
-	protected       TypeModifiers             tm;
-	protected       Qualident                 typeName;
+	protected TypeModifiers tm;
+	protected Qualident typeName;
 
 	@Override
 	public boolean isNull() {
-		//return tm == null && (typeName == null /*|| typeName.isNull()*/);
-		if (typeName == null) return false;
+		// return tm == null && (typeName == null /*|| typeName.isNull()*/);
+		if (typeName == null)
+			return false;
 		return _ltm.isEmpty() && typeName == null; // TODO check for correctness
 	}
 
 	@Override
 	public boolean equals(final Object o) {
-		if (this == o) return true;
-		if (!(o instanceof final NormalTypeName that)) return false;
-		return getConstant() == that.getConstant() &&
-		  getReference() == that.getReference() &&
-		  getOut() == that.getOut() &&
-		  getIn() == that.getIn() &&
+		if (this == o)
+			return true;
+		if (!(o instanceof final NormalTypeName that))
+			return false;
+		return getConstant() == that.getConstant() && getReference() == that.getReference() && getOut() == that.getOut()
+				&& getIn() == that.getIn() &&
 //				type == that.type &&
-		  getModifiers().containsAll(that.getModifiers()) &&
-		  getName().equals(that.getName());
+				getModifiers().containsAll(that.getModifiers()) && getName().equals(that.getName());
 	}
 
 	@Override

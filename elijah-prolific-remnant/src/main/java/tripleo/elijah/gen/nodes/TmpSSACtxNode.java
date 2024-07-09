@@ -22,9 +22,9 @@ import tripleo.elijah.lang.*;
 public class TmpSSACtxNode {
 
 	private final CompilerContext _ctx;
-	public        LocalAgnTmpNode _tmp = null;
-	private       IExpression     __expr;
-	private       IExpressionNode _node;
+	public LocalAgnTmpNode _tmp = null;
+	private IExpression __expr;
+	private IExpressionNode _node;
 
 	public TmpSSACtxNode(final CompilerContext cctx) {
 		// TODO Auto-generated constructor stub
@@ -33,7 +33,7 @@ public class TmpSSACtxNode {
 
 	public String text() {
 		return ExpressionNode.getStringPCE((ProcedureCallExpression) getExprType());
-		//"--------------------"; // TODO hardcoded
+		// "--------------------"; // TODO hardcoded
 	}
 
 	public IExpression getExprType() {

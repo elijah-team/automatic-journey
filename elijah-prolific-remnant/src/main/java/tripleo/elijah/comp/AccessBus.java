@@ -18,14 +18,14 @@ import java.util.function.*;
 import java.util.stream.*;
 
 public class AccessBus {
-	private final Compilation                               _c;
-	private final GenerateResult                            gr                    = new GenerateResult();
-	private final Eventual<GenerateResult>                  generateResultPromise = new Eventual<>();
-	private final Eventual<PipelineLogic>                   pipeLineLogicPromise  = new Eventual<>();
-	private final Eventual<List<GeneratedNode>>             lgcPromise            = new Eventual<>();
-	private final Eventual<EIT_ModuleList>                  moduleListPromise     = new Eventual<>();
-	private final Map<String, ProcessRecord.PipelinePlugin> pipelinePlugins       = new HashMap<>();
-	private       PipelineLogic                             ____pl;
+	private final Compilation _c;
+	private final GenerateResult gr = new GenerateResult();
+	private final Eventual<GenerateResult> generateResultPromise = new Eventual<>();
+	private final Eventual<PipelineLogic> pipeLineLogicPromise = new Eventual<>();
+	private final Eventual<List<GeneratedNode>> lgcPromise = new Eventual<>();
+	private final Eventual<EIT_ModuleList> moduleListPromise = new Eventual<>();
+	private final Map<String, ProcessRecord.PipelinePlugin> pipelinePlugins = new HashMap<>();
+	private PipelineLogic ____pl;
 
 	public AccessBus(final Compilation aC) {
 		_c = aC;
@@ -83,22 +83,21 @@ public class AccessBus {
 		generateResultPromise.then(aGenerateResultListener::gr_slot);
 	}
 
-	void doModule(final @NotNull List<GeneratedNode> lgc,
-	              final @NotNull WorkManager wm,
-	              final @NotNull OS_Module mod,
-	              final @NotNull PipelineLogic aPipelineLogic,
-	              final @NotNull ErrSink aErrSink) {
-		final ErrSink         errSink   = mod.parent.getErrSink();
+	void doModule(final @NotNull List<GeneratedNode> lgc, final @NotNull WorkManager wm, final @NotNull OS_Module mod,
+			final @NotNull PipelineLogic aPipelineLogic, final @NotNull ErrSink aErrSink) {
+		final ErrSink errSink = mod.parent.getErrSink();
 		final ElLog.Verbosity verbosity = aPipelineLogic.getVerbosity();
 
-		final OutputFileFactoryParams p         = new OutputFileFactoryParams(mod, aErrSink, verbosity, aPipelineLogic);
-		final GenerateFiles           generateC = OutputFileFactory.create(CompilationAlways.defaultPrelude(), p);
+		final OutputFileFactoryParams p = new OutputFileFactoryParams(mod, aErrSink, verbosity, aPipelineLogic);
+		final GenerateFiles generateC = OutputFileFactory.create(CompilationAlways.defaultPrelude(), p);
 
-		final Compilation             ccc = mod.parent;
-		@NotNull final EOT_OutputTree cot = ccc.getOutputTree();
+		final Compilation ccc = mod.parent;
+		@NotNull
+		final EOT_OutputTree cot = ccc.getOutputTree();
 
 		for (final GeneratedNode generatedNode : lgc) {
-			if (generatedNode.module() != mod) continue; // README curious
+			if (generatedNode.module() != mod)
+				continue; // README curious
 
 			if (generatedNode instanceof final GeneratedContainerNC nc) {
 
@@ -106,13 +105,15 @@ public class AccessBus {
 				nc.generateCode(generateC, gr);
 
 				// 2.
-				final @NotNull Collection<GeneratedNode> gn1 = (nc.functionMap.values()).stream().map(x -> (GeneratedNode) x).collect(Collectors.toList());
-				final GenerateResult                     gr2 = generateC.generateCode(gn1, wm);
+				final @NotNull Collection<GeneratedNode> gn1 = (nc.functionMap.values()).stream()
+						.map(x -> (GeneratedNode) x).collect(Collectors.toList());
+				final GenerateResult gr2 = generateC.generateCode(gn1, wm);
 				gr.additional(gr2);
 
 				// 3.
-				final @NotNull Collection<GeneratedNode> gn2 = (nc.classMap.values()).stream().map(x -> (GeneratedNode) x).collect(Collectors.toList());
-				final GenerateResult                     gr3 = generateC.generateCode(gn2, wm);
+				final @NotNull Collection<GeneratedNode> gn2 = (nc.classMap.values()).stream()
+						.map(x -> (GeneratedNode) x).collect(Collectors.toList());
+				final GenerateResult gr3 = generateC.generateCode(gn2, wm);
 				gr.additional(gr3);
 			} else {
 				SimplePrintLoggerToRemoveSoon.println_out("2009 " + generatedNode.getClass().getName());
@@ -125,7 +126,8 @@ public class AccessBus {
 	}
 
 	public void writeLogs() {
-		@NotNull final Compilation comp = getCompilation(); // this._c
+		@NotNull
+		final Compilation comp = getCompilation(); // this._c
 
 		comp.writeLogs(comp.elLogs);
 	}
@@ -144,7 +146,8 @@ public class AccessBus {
 	}
 
 	public ProcessRecord.PipelinePlugin getPipelinePlugin(final String aPipelineName) {
-		if (!(pipelinePlugins.containsKey(aPipelineName))) return null;
+		if (!(pipelinePlugins.containsKey(aPipelineName)))
+			return null;
 
 		return pipelinePlugins.get(aPipelineName);
 	}

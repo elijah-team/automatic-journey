@@ -18,14 +18,14 @@ import tripleo.elijah_fluffy.util.*;
  *
  */
 public class MethRef {
-	private final int     _code;
+	private final int _code;
 	private final TypeRef _parent;
-	private final String  _title;
+	private final String _title;
 
 	public MethRef(final String title, final TypeRef parent, final int code) {
-		_title  = title;
+		_title = title;
 		_parent = parent;
-		_code   = code;
+		_code = code;
 	}
 
 	public void setArgTypes(final TypeRef... types) {

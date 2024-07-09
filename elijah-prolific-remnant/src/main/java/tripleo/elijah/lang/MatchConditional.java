@@ -17,16 +17,16 @@ import java.util.*;
 
 /**
  * @author Tripleo
- * <p>
- * Created 	Apr 15, 2020 at 10:11:16 PM
+ *         <p>
+ *         Created Apr 15, 2020 at 10:11:16 PM
  */
 public class MatchConditional implements OS_Element, StatementItem, FunctionItem {
 
-	//	private final SingleIdentContext _ctx;
-	private final List<MC1>    parts = new ArrayList<MC1>();
-	private       IExpression  expr;
-	private       OS_Element   parent;
-	private       MatchContext __ctx;
+	// private final SingleIdentContext _ctx;
+	private final List<MC1> parts = new ArrayList<MC1>();
+	private IExpression expr;
+	private OS_Element parent;
+	private MatchContext __ctx;
 
 	public MatchConditional(final OS_Element parent, final Context parentContext) {
 		this.parent = parent;
@@ -124,10 +124,10 @@ public class MatchConditional implements OS_Element, StatementItem, FunctionItem
 
 		private final Context ___ctx = new MatchConditionalContext(MatchConditional.this.getContext(), this);
 
-		//		private final List<FunctionItem> items = new ArrayList<FunctionItem>();
-		private final List<Token>     docstrings = null;
-		private       IdentExpression matching_expression;
-		private       Scope3          scope3;
+		// private final List<FunctionItem> items = new ArrayList<FunctionItem>();
+		private final List<Token> docstrings = null;
+		private IdentExpression matching_expression;
+		private Scope3 scope3;
 
 		public void expr(final IdentExpression expr) {
 			this.matching_expression = expr;
@@ -136,7 +136,7 @@ public class MatchConditional implements OS_Element, StatementItem, FunctionItem
 		@Override
 		public void add(final FunctionItem aItem) {
 			scope3.add(aItem);
-			//items.add(aItem);
+			// items.add(aItem);
 		}
 
 		@Override
@@ -177,10 +177,10 @@ public class MatchConditional implements OS_Element, StatementItem, FunctionItem
 
 		private final Context ___ctx = new MatchConditionalContext(MatchConditional.this.getContext(), this);
 
-		//		private final List<FunctionItem> items = new ArrayList<FunctionItem>();
+		// private final List<FunctionItem> items = new ArrayList<FunctionItem>();
 //		private List<Token> docstrings = new ArrayList<Token>();
 		private IExpression matching_expression;
-		private Scope3      scope3;
+		private Scope3 scope3;
 
 		public IExpression getMatchingExpression() {
 			return matching_expression;
@@ -193,7 +193,7 @@ public class MatchConditional implements OS_Element, StatementItem, FunctionItem
 		@Override
 		public void add(final FunctionItem aItem) {
 			scope3.add(aItem);
-			//items.add(aItem);
+			// items.add(aItem);
 		}
 
 		@Override
@@ -232,14 +232,14 @@ public class MatchConditional implements OS_Element, StatementItem, FunctionItem
 
 	public class MatchArm_TypeMatch implements MC1 {
 
-		//		private final List<FunctionItem> items = new ArrayList<FunctionItem>();
-		private final Context ___ctx = new MatchConditionalContext(//MatchConditional.this.getContext(), this);
-		  getParent().getParent().getContext(), this);
+		// private final List<FunctionItem> items = new ArrayList<FunctionItem>();
+		private final Context ___ctx = new MatchConditionalContext(// MatchConditional.this.getContext(), this);
+				getParent().getParent().getContext(), this);
 
-		TypeName tn /*= new RegularTypeName()*/;
-		//		private List<Token> docstrings = new ArrayList<Token>();
+		TypeName tn /* = new RegularTypeName() */;
+		// private List<Token> docstrings = new ArrayList<Token>();
 		private IdentExpression ident;
-		private Scope3          scope3;
+		private Scope3 scope3;
 
 		public void ident(final IdentExpression i1) {
 			this.ident = i1;
@@ -248,7 +248,7 @@ public class MatchConditional implements OS_Element, StatementItem, FunctionItem
 		@Override
 		public void add(final FunctionItem aItem) {
 			scope3.add(aItem);
-			//items.add(aItem);
+			// items.add(aItem);
 		}
 
 		@Override

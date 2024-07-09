@@ -18,32 +18,32 @@ import java.util.regex.*;
 class USE {
 	private static final FilenameFilter accept_source_files = (directory, file_name) -> {
 		final boolean matches = Pattern.matches(".+\\.elijah$", file_name)
-		  || Pattern.matches(".+\\.elijjah$", file_name);
+				|| Pattern.matches(".+\\.elijjah$", file_name);
 		return matches;
 	};
-	private final        Compilation            c;
-	private final        ErrSink                errSink;
-
+	private final Compilation c;
+	private final ErrSink errSink;
 
 	@Contract(pure = true)
 	public USE(final Compilation aCompilation) {
-		c       = aCompilation;
+		c = aCompilation;
 		errSink = c.getErrSink();
 	}
+
 	private final ElijahCache elijahCache = new DefaultElijahCache();
 
 	public void use(final @NotNull CompilerInstructions compilerInstructions, final boolean do_out) throws Exception {
 		// TODO
 
-		if (compilerInstructions.getFilename() == null) return;
-
+		if (compilerInstructions.getFilename() == null)
+			return;
 
 		final File instruction_dir = new File(compilerInstructions.getFilename()).getParentFile();
 		for (final LibraryStatementPart lsp : compilerInstructions.getLibraryStatementParts()) {
 			final String dir_name = Helpers.remove_single_quotes_from_string(lsp.getDirName());
-			final File   dir;// = new File(dir_name);
+			final File dir;// = new File(dir_name);
 			if (dir_name.equals(".."))
-				dir = instruction_dir/*.getAbsoluteFile()*/.getParentFile();
+				dir = instruction_dir/* .getAbsoluteFile() */.getParentFile();
 			else
 				dir = new File(instruction_dir, dir_name);
 			use_internal(dir, do_out, lsp);
@@ -70,7 +70,7 @@ class USE {
 			final CompilerInstructions instructions = new CompilerInstructionsImpl();
 			instructions.setName("prelude");
 			final GenerateStatement generateStatement = new GenerateStatement();
-			final StringExpression  expression        = new StringExpression(Helpers.makeToken("\"c\"")); // TODO
+			final StringExpression expression = new StringExpression(Helpers.makeToken("\"c\"")); // TODO
 			generateStatement.addDirective(Helpers.makeToken("gen"), expression);
 			instructions.add(generateStatement);
 			final LibraryStatementPart lsp = new LibraryStatementPartImpl();
@@ -86,10 +86,8 @@ class USE {
 		}
 	}
 
-	private Operation2<OS_Module> parseElijjahFile(final @NotNull File f,
-	                                               final @NotNull String file_name,
-	                                               final boolean do_out,
-	                                               final @NotNull LibraryStatementPart lsp) {
+	private Operation2<OS_Module> parseElijjahFile(final @NotNull File f, final @NotNull String file_name,
+			final boolean do_out, final @NotNull LibraryStatementPart lsp) {
 		System.out.printf("   %s%n", f.getAbsolutePath());
 
 		if (f.exists()) {
@@ -98,8 +96,8 @@ class USE {
 			if (om.mode() == Mode.SUCCESS) {
 				final OS_Module mm = om.success();
 
-				//assert mm.getLsp() == null;
-				//assert mm.prelude == null;
+				// assert mm.getLsp() == null;
+				// assert mm.prelude == null;
 
 				if (mm.getLsp() == null) {
 					// TODO we dont know which prelude to find yet
@@ -139,7 +137,7 @@ class USE {
 				parseElijjahFile(file, file_name, do_out, lsp);
 
 //				c.reports().addInput(inp, Finally.Out2.ELIJAH);
-				c.reports().addInput(()->file_name, Finally.Out2.ELIJAH);
+				c.reports().addInput(() -> file_name, Finally.Out2.ELIJAH);
 			}
 		}
 	}
@@ -166,7 +164,8 @@ class USE {
 		}
 	}
 
-	public Operation<OS_Module> realParseElijjahFile(final String f, final @NotNull File file, final boolean do_out) throws Exception {
+	public Operation<OS_Module> realParseElijjahFile(final String f, final @NotNull File file, final boolean do_out)
+			throws Exception {
 		try (final InputStream s = c.getIO().readFile(file)) {
 			final ElijahSpec spec = new ElijahSpec(f, file, s, do_out);
 			return realParseElijjahFile(spec);

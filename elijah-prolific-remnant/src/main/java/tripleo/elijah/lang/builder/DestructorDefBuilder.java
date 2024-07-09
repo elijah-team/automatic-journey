@@ -15,7 +15,7 @@ import tripleo.elijah.lang.*;
  */
 public class DestructorDefBuilder extends BaseFunctionDefBuilder {
 	private final DestructorDefScope _scope = new DestructorDefScope();
-	private       Context            _context;
+	private Context _context;
 
 	@Override
 	public DestructorDef build() {

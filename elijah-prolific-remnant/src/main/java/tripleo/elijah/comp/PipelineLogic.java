@@ -32,19 +32,19 @@ public class PipelineLogic implements AccessBus.AB_ModuleListListener {
 	private final ElLog.Verbosity verbosity;
 
 	private final List<OS_Module> __mods_BACKING = new ArrayList<OS_Module>();
-	final         EIT_ModuleList  mods           = new EIT_ModuleList(__mods_BACKING);
+	final EIT_ModuleList mods = new EIT_ModuleList(__mods_BACKING);
 
 	public PipelineLogic(final AccessBus iab) {
 		__ab = iab; // we're watching you
 
 		final boolean sil = __ab.getCompilation().getSilence(); // ca.testSilence
 
-		verbosity     = sil ? ElLog.Verbosity.SILENT : ElLog.Verbosity.VERBOSE;
+		verbosity = sil ? ElLog.Verbosity.SILENT : ElLog.Verbosity.VERBOSE;
 		generatePhase = new GeneratePhase(verbosity, this, __ab.getCompilation());
-		dp            = new DeducePhase(generatePhase, this, verbosity, __ab.getCompilation());
+		dp = new DeducePhase(generatePhase, this, verbosity, __ab.getCompilation());
 
 		// FIXME examine if this is necessary and possibly or actually elsewhere
-		//  and/or just another section
+		// and/or just another section
 		subscribeMods(this);
 	}
 
@@ -85,16 +85,12 @@ public class PipelineLogic implements AccessBus.AB_ModuleListListener {
 	}
 
 	/*
-	public void generate__new(List<GeneratedNode> lgc) {
-		final WorkManager wm = new WorkManager();
-		// README use any errSink, they should all be the same
-		for (OS_Module mod : mods.getMods()) {
-			__ab.doModule(lgc, wm, mod, this);
-		}
-
-		__ab.resolveGenerateResult(gr);
-	}
-*/
+	 * public void generate__new(List<GeneratedNode> lgc) { final WorkManager wm =
+	 * new WorkManager(); // README use any errSink, they should all be the same for
+	 * (OS_Module mod : mods.getMods()) { __ab.doModule(lgc, wm, mod, this); }
+	 * 
+	 * __ab.resolveGenerateResult(gr); }
+	 */
 
 	public static void debug_buffers(@NotNull final GenerateResult gr, final PrintStream stream) {
 		for (final GenerateResultItem ab : gr.results()) {
@@ -136,7 +132,8 @@ public class PipelineLogic implements AccessBus.AB_ModuleListListener {
 //		dp.generatedClasses.addAll(lgc);
 	}
 
-	@NotNull GenerateFunctions getGenerateFunctions(final OS_Module mod) {
+	@NotNull
+	GenerateFunctions getGenerateFunctions(final OS_Module mod) {
 		return generatePhase.getGenerateFunctions(mod);
 	}
 

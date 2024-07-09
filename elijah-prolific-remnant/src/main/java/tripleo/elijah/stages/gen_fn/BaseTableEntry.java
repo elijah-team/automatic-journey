@@ -25,7 +25,7 @@ public abstract class BaseTableEntry {
 	private final List<StatusListener> statusListenerList = new ArrayList<StatusListener>();
 	protected OS_Element resolved_element;
 	// region status
-	protected     Status               status             = Status.UNCHECKED;
+	protected Status status = Status.UNCHECKED;
 	DeduceTypeResolve typeResolve;
 
 	// endregion resolved_element
@@ -90,7 +90,6 @@ public abstract class BaseTableEntry {
 	public interface StatusListener {
 		void onChange(IElementHolder eh, Status newStatus);
 	}
-
 
 }
 

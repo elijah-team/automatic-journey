@@ -18,6 +18,6 @@ public class EX_SingleElementExplanation implements EX_Explanation {
 
 	@Override
 	public String getText() {
-		return "EX_SingleElementExplanation{"+ _element +"}";
+		return "EX_SingleElementExplanation{" + _element + "}";
 	}
 }

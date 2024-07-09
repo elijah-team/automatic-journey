@@ -15,10 +15,10 @@ import tripleo.elijah_fluffy.util.*;
  */
 public class LocalAgnTmpNode {
 
-	//	private IExpression expr;
-	private TmpSSACtxNode   agnTo;
+	// private IExpression expr;
+	private TmpSSACtxNode agnTo;
 	private IExpressionNode agnWhat;
-	private int             n;
+	private int n;
 	private String declared = null;
 
 	public LocalAgnTmpNode(final TmpSSACtxNode tmpSSACtxNode, final IExpressionNode node) {
@@ -32,7 +32,7 @@ public class LocalAgnTmpNode {
 		//
 		// set ctx_node name (vt1, vt2, etc)
 		//
-		n             = tmpSSACtxNode.getCtx().nextTmp();
+		n = tmpSSACtxNode.getCtx().nextTmp();
 		this.declared = "vt" + n;
 		//
 		tmpSSACtxNode._tmp = this;

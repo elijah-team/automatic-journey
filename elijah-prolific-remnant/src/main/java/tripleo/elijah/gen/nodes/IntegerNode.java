@@ -19,7 +19,7 @@ import tripleo.elijah.lang.*;
  */
 public class IntegerNode implements IExpressionNode {
 	private final IExpression _expr;
-	private final TypeRef     _type;
+	private final TypeRef _type;
 
 	public IntegerNode(final NumericExpression aInteger, final TypeRef aTypeRef) {
 		_expr = aInteger;

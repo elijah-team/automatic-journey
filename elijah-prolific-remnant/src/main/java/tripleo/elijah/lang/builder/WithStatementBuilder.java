@@ -14,9 +14,9 @@ import tripleo.elijah.lang.*;
  * Created 12/23/20 4:57 AM
  */
 public class WithStatementBuilder extends ElBuilder {
-	private final VariableSequenceBuilder _sb    = new VariableSequenceBuilder();
-	private final WithStatementScope      _scope = new WithStatementScope();
-	private       Context                 _context;
+	private final VariableSequenceBuilder _sb = new VariableSequenceBuilder();
+	private final WithStatementScope _scope = new WithStatementScope();
+	private Context _context;
 
 	@Override
 	protected WithStatement build() {

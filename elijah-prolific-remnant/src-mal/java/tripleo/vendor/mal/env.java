@@ -6,8 +6,8 @@ import java.util.*;
 
 public class env {
 	public static class Env {
-		Env                     outer = null;
-		HashMap<String, MalVal> data  = new HashMap<String, MalVal>();
+		Env outer = null;
+		HashMap<String, MalVal> data = new HashMap<String, MalVal>();
 
 		public Env(final Env outer) {
 			this.outer = outer;
@@ -18,8 +18,7 @@ public class env {
 			for (Integer i = 0; i < binds.size(); i++) {
 				final String sym = ((MalSymbol) binds.nth(i)).getName();
 				if (sym.equals("&")) {
-					data.put(((MalSymbol) binds.nth(i + 1)).getName(),
-					  exprs.slice(i));
+					data.put(((MalSymbol) binds.nth(i + 1)).getName(), exprs.slice(i));
 					break;
 				} else {
 					data.put(sym, exprs.nth(i));
@@ -40,8 +39,7 @@ public class env {
 		public MalVal get(final MalSymbol key) throws MalThrowable {
 			final Env e = find(key);
 			if (e == null) {
-				throw new MalException(
-				  "'" + key.getName() + "' not found");
+				throw new MalException("'" + key.getName() + "' not found");
 			} else {
 				return e.data.get(key.getName());
 			}

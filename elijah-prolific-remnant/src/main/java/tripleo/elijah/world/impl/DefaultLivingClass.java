@@ -11,12 +11,12 @@ public class DefaultLivingClass implements LivingClass {
 
 	public DefaultLivingClass(final ClassStatement aElement) {
 		_element = aElement;
-		_gc      = null;
+		_gc = null;
 	}
 
 	public DefaultLivingClass(final @NotNull GeneratedClass aClass) {
 		_element = aClass.getKlass();
-		_gc      = aClass;
+		_gc = aClass;
 	}
 
 	@Override

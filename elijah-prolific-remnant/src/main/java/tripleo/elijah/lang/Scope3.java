@@ -18,10 +18,10 @@ import java.util.*;
  * Created 1/4/21 3:10 AM
  */
 public class Scope3 implements Documentable {
-	private final OS_Element             parent;
-	private final Scope3StatementClosure asc         = new Scope3StatementClosure();
-	private final List<OS_Element>       _items      = new ArrayList<OS_Element>();
-	private final List<Token>            _docstrings = new ArrayList<Token>();
+	private final OS_Element parent;
+	private final Scope3StatementClosure asc = new Scope3StatementClosure();
+	private final List<OS_Element> _items = new ArrayList<OS_Element>();
+	private final List<Token> _docstrings = new ArrayList<Token>();
 
 	public Scope3(final OS_Element aParent) {
 		parent = aParent;
@@ -87,7 +87,8 @@ public class Scope3 implements Documentable {
 
 		@Override
 		public void constructExpression(final @NotNull IExpression aExpr, final ExpressionList aO) {
-			final ConstructStatement constructExpression = new ConstructStatement(parent, parent.getContext(), aExpr, null, aO); // TODO provide for name
+			final ConstructStatement constructExpression = new ConstructStatement(parent, parent.getContext(), aExpr,
+					null, aO); // TODO provide for name
 			add(constructExpression);
 		}
 

@@ -7,15 +7,16 @@ import tripleo.elijah_fluffy.util.*;
 import java.util.*;
 
 class WlDeduceFunction implements WorkJob {
-	private final WorkJob                     workJob;
+	private final WorkJob workJob;
 	private final List<BaseGeneratedFunction> coll;
-	private final DeduceTypes2                dt2;
-	private       boolean                     _isDone;
+	private final DeduceTypes2 dt2;
+	private boolean _isDone;
 
-	public WlDeduceFunction(final WorkJob aWorkJob, final List<BaseGeneratedFunction> aColl, final DeduceTypes2 aDeduceTypes2) {
+	public WlDeduceFunction(final WorkJob aWorkJob, final List<BaseGeneratedFunction> aColl,
+			final DeduceTypes2 aDeduceTypes2) {
 		workJob = aWorkJob;
-		coll    = aColl;
-		dt2     = aDeduceTypes2;
+		coll = aColl;
+		dt2 = aDeduceTypes2;
 	}
 
 	@Override
@@ -32,7 +33,8 @@ class WlDeduceFunction implements WorkJob {
 				generatedFunction1.deducedAlready = true;
 			}
 		} else if (workJob instanceof WlGenerateDefaultCtor) {
-			final GeneratedConstructor generatedConstructor = (GeneratedConstructor) ((WlGenerateDefaultCtor) workJob).getResult();
+			final GeneratedConstructor generatedConstructor = (GeneratedConstructor) ((WlGenerateDefaultCtor) workJob)
+					.getResult();
 			if (!coll.contains(generatedConstructor)) {
 				coll.add(generatedConstructor);
 				if (!generatedConstructor.deducedAlready) {

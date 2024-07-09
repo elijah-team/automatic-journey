@@ -10,8 +10,8 @@ import java.util.function.*;
 
 public class BoilerplateClassBuilder {
 	final private List<BCB_Child> children = new ArrayList<>();
-	private       OS_Element      parent;
-	private       String          classNameString;
+	private OS_Element parent;
+	private String classNameString;
 
 	public BoilerplateClassBuilder() {
 	}
@@ -34,9 +34,9 @@ public class BoilerplateClassBuilder {
 	}
 
 	public ClassStatement build() {
-		final OS_Module      mod  = (OS_Module) parent;
-		final ModuleContext  mctx = (ModuleContext) mod.getContext();
-		final ClassStatement cs   = new ClassStatement(mod, mctx);
+		final OS_Module mod = (OS_Module) parent;
+		final ModuleContext mctx = (ModuleContext) mod.getContext();
+		final ClassStatement cs = new ClassStatement(mod, mctx);
 
 		cs.setName(Helpers.string_to_ident(classNameString));
 

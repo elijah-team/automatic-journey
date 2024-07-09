@@ -14,8 +14,8 @@ package tripleo.elijah.gen.nodes;
 import tripleo.elijah.lang.*;
 
 public class AnnotationNode {
-	//Qualident name;
-	//ExpressionList arguments;
+	// Qualident name;
+	// ExpressionList arguments;
 
 	AnnotationClause ac;
 

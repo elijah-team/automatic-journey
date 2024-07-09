@@ -11,16 +11,16 @@ package tripleo.elijah.lang;
 
 public abstract class AbstractExpression implements IExpression {
 
-	public IExpression    left;
+	public IExpression left;
 	public ExpressionKind _kind;
 
 	public AbstractExpression() {
-		left  = null;
+		left = null;
 		_kind = null;
 	}
 
 	public AbstractExpression(final IExpression aLeft, final ExpressionKind aType) {
-		left  = aLeft;
+		left = aLeft;
 		_kind = aType;
 	}
 

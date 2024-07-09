@@ -20,27 +20,24 @@ import java.util.stream.*;
  * Created 4/27/21 1:12 AM
  */
 public class GenerateResultItem {
-	public final @NotNull GenerateResult.TY    ty;
-	public final @NotNull Buffer               buffer;
-	public final @NotNull GeneratedNode        node;
+	public final @NotNull GenerateResult.TY ty;
+	public final @NotNull Buffer buffer;
+	public final @NotNull GeneratedNode node;
 	public final @NotNull LibraryStatementPart lsp;
-	public final          int                  counter;
-	private final         Dependency           dependency;
-	public                String               output;
-	public                IOutputFile          outputFile;
+	public final int counter;
+	private final Dependency dependency;
+	public String output;
+	public IOutputFile outputFile;
 
-	public GenerateResultItem(final @NotNull GenerateResult.TY aTy,
-	                          final @NotNull Buffer aBuffer,
-	                          final @NotNull GeneratedNode aNode,
-	                          final @NotNull LibraryStatementPart aLsp,
-	                          final @NotNull Dependency aDependency,
-	                          final int aCounter) {
-		ty         = aTy;
-		buffer     = aBuffer;
-		node       = aNode;
-		lsp        = aLsp;
+	public GenerateResultItem(final @NotNull GenerateResult.TY aTy, final @NotNull Buffer aBuffer,
+			final @NotNull GeneratedNode aNode, final @NotNull LibraryStatementPart aLsp,
+			final @NotNull Dependency aDependency, final int aCounter) {
+		ty = aTy;
+		buffer = aBuffer;
+		node = aNode;
+		lsp = aLsp;
 		dependency = aDependency;
-		counter    = aCounter;
+		counter = aCounter;
 	}
 
 	public Dependency getDependency() {
@@ -56,9 +53,8 @@ public class GenerateResultItem {
 //				return input.dref;
 //			}
 //		});
-		final List<DependencyRef> x = dependency.getNotedDeps().stream()
-		                                        .map(dep -> dep.dref)
-		                                        .collect(Collectors.toList());
+		final List<DependencyRef> x = dependency.getNotedDeps().stream().map(dep -> dep.dref)
+				.collect(Collectors.toList());
 		return x;
 	}
 }

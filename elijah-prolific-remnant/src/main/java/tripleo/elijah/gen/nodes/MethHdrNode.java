@@ -25,32 +25,34 @@ import java.util.*;
  */
 public class MethHdrNode implements Node {
 
-	final public  MethNameNode       methName;
-	private final TypeRef            returnType2;
-	private final Node               _parent;
+	final public MethNameNode methName;
+	private final TypeRef returnType2;
+	private final Node _parent;
 	private final List<ArgumentNode> argument_types;
-	private final int                _code;
-	public        int                argCount;
-	public        TypeNameNode       returnType;
+	private final int _code;
+	public int argCount;
+	public TypeNameNode returnType;
 
-	public MethHdrNode(final Node parent, @NonNull final IdentExpression return_type, final String method_name, final List<ArgumentNode> argument_types, final int code) {
-		_parent             = parent;
-		_code               = code;
-		methName            = new MethNameNode(method_name, this);
-		argCount            = argument_types.size();
-		this.argument_types = argument_types;//.stream().map(ArgumentNode::make).collect(Collections);
-		returnType          = new TypeNameNode(return_type);
+	public MethHdrNode(final Node parent, @NonNull final IdentExpression return_type, final String method_name,
+			final List<ArgumentNode> argument_types, final int code) {
+		_parent = parent;
+		_code = code;
+		methName = new MethNameNode(method_name, this);
+		argCount = argument_types.size();
+		this.argument_types = argument_types;// .stream().map(ArgumentNode::make).collect(Collections);
+		returnType = new TypeNameNode(return_type);
 		//
 		returnType2 = null;
 	}
 
-	public MethHdrNode(final TypeRef retType, final Node parent, final String methodName, final List<ArgumentNode> argumentTypes, final int code) {
-		_parent        = parent;
-		_code          = code;
-		methName       = new MethNameNode(methodName, this);
-		argCount       = argumentTypes.size();
+	public MethHdrNode(final TypeRef retType, final Node parent, final String methodName,
+			final List<ArgumentNode> argumentTypes, final int code) {
+		_parent = parent;
+		_code = code;
+		methName = new MethNameNode(methodName, this);
+		argCount = argumentTypes.size();
 		argument_types = argumentTypes;
-		returnType2    = retType;
+		returnType2 = retType;
 		//
 		returnType = null;
 	}

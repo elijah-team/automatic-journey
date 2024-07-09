@@ -23,10 +23,10 @@ import static tripleo.elijah.stages.deduce.DeduceTypes2.*;
  */
 public class CtorReference {
 
-	final   List<CReference.Reference> refs     = new ArrayList<CReference.Reference>();
-	private String                     ctorName = "";
-	private List<String>               args;
-	private GeneratedNode              _resolved;
+	final List<CReference.Reference> refs = new ArrayList<CReference.Reference>();
+	private String ctorName = "";
+	private List<String> args;
+	private GeneratedNode _resolved;
 
 	public void getConstructorPath(final InstructionArgument ia2, final BaseGeneratedFunction gf) {
 		final List<InstructionArgument> s = CReference._getIdentIAPathList(ia2);
@@ -47,32 +47,31 @@ public class CtorReference {
 				}
 				addRef(vte.getName(), CReference.Ref.LOCAL);
 			} else if (ia instanceof IdentIA) {
-				final IdentTableEntry idte             = gf.getIdentTableEntry(to_int(ia));
-				final OS_Element      resolved_element = idte.getResolvedElement();
+				final IdentTableEntry idte = gf.getIdentTableEntry(to_int(ia));
+				final OS_Element resolved_element = idte.getResolvedElement();
 				if (idte.resolvedType() != null) {
 					_resolved = idte.resolvedType();
-					ctorName  = ((ConstructorDef) resolved_element).name();
-				} /*else if (resolved_element != null) {
-					assert false;
-					if (resolved_element instanceof VariableStatement) {
-						addRef(((VariableStatement) resolved_element).getName(), CReference.Ref.MEMBER);
-					} else if (resolved_element instanceof ConstructorDef) {
-						assert i == sSize - 1; // Make sure we are ending with a constructor call
-						int code = ((ClassStatement) resolved_element.getParent())._a.getCode();
-						if (code == 0) {
-							tripleo.elijah.util.Stupidity.println_err2("** 31161 ClassStatement with 0 code " + resolved_element.getParent());
-						}
-						// README Assuming this is for named constructors
-						String text = ((ConstructorDef) resolved_element).name();
-						String text2 = String.format("ZC%d%s", code, text);
-
-						ctorName = text;
-
-//						addRef(text2, CReference.Ref.CONSTRUCTOR);
-
-//						addRef(((ConstructorDef) resolved_element).name(), CReference.Ref.CONSTRUCTOR);
-					}
-				}*/
+					ctorName = ((ConstructorDef) resolved_element).name();
+				} /*
+					 * else if (resolved_element != null) { assert false; if (resolved_element
+					 * instanceof VariableStatement) { addRef(((VariableStatement)
+					 * resolved_element).getName(), CReference.Ref.MEMBER); } else if
+					 * (resolved_element instanceof ConstructorDef) { assert i == sSize - 1; // Make
+					 * sure we are ending with a constructor call int code = ((ClassStatement)
+					 * resolved_element.getParent())._a.getCode(); if (code == 0) {
+					 * tripleo.elijah.util.Stupidity.
+					 * println_err2("** 31161 ClassStatement with 0 code " +
+					 * resolved_element.getParent()); } // README Assuming this is for named
+					 * constructors String text = ((ConstructorDef) resolved_element).name(); String
+					 * text2 = String.format("ZC%d%s", code, text);
+					 * 
+					 * ctorName = text;
+					 * 
+					 * // addRef(text2, CReference.Ref.CONSTRUCTOR);
+					 * 
+					 * // addRef(((ConstructorDef) resolved_element).name(),
+					 * CReference.Ref.CONSTRUCTOR); } }
+					 */
 			} else if (ia instanceof ProcIA) {
 //				final ProcTableEntry prte = generatedFunction.getProcTableEntry(to_int(ia));
 //				text = (prte.expression.getLeft()).toString();
@@ -91,8 +90,8 @@ public class CtorReference {
 	}
 
 	public String build(final ClassInvocation aClsinv) {
-		StringBuilder sb   = new StringBuilder();
-		boolean       open = false, needs_comma = false;
+		StringBuilder sb = new StringBuilder();
+		boolean open = false, needs_comma = false;
 //		List<String> sl = new ArrayList<String>();
 		String text = "";
 		for (final CReference.Reference ref : refs) {
@@ -116,27 +115,30 @@ public class CtorReference {
 			case FUNCTION: {
 				final String s = sb.toString();
 				text = String.format("%s(%s", ref.text, s);
-				sb   = new StringBuilder();
+				sb = new StringBuilder();
 				open = true;
-				if (!s.equals("")) needs_comma = true;
+				if (!s.equals(""))
+					needs_comma = true;
 				sb.append(text);
 				break;
 			}
 			case CONSTRUCTOR: {
 				final String s = sb.toString();
 				text = String.format("%s(%s", ref.text, s);
-				sb   = new StringBuilder();
+				sb = new StringBuilder();
 				open = true;
-				if (!s.equals("")) needs_comma = true;
+				if (!s.equals(""))
+					needs_comma = true;
 				sb.append(text);
 				break;
 			}
 			case PROPERTY_GET: {
 				final String s = sb.toString();
 				text = String.format("%s(%s", ref.text, s);
-				sb   = new StringBuilder();
+				sb = new StringBuilder();
 				open = true;
-				if (!s.equals("")) needs_comma = true;
+				if (!s.equals(""))
+					needs_comma = true;
 				sb.append(text);
 				break;
 			}

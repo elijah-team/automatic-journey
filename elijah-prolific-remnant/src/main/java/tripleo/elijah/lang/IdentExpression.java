@@ -14,19 +14,19 @@ import java.io.*;
  */
 public class IdentExpression implements IExpression, OS_Element, Resolvable, Locatable {
 
-	public final  Attached   _a;
-	private final Token      text;
+	public final Attached _a;
+	private final Token text;
 	OS_Type _type;
-	private       OS_Element _resolvedElement;
+	private OS_Element _resolvedElement;
 
 	public IdentExpression(final Token r1) {
 		this.text = r1;
-		this._a   = new Attached();
+		this._a = new Attached();
 	}
 
 	public IdentExpression(final Token r1, final Context cur) {
 		this.text = r1;
-		this._a   = new Attached();
+		this._a = new Attached();
 		setContext(cur);
 	}
 
@@ -43,7 +43,8 @@ public class IdentExpression implements IExpression, OS_Element, Resolvable, Loc
 	@Override
 	public void setKind(final ExpressionKind aIncrement) {
 		// log and ignore
-		SimplePrintLoggerToRemoveSoon.println_err2("Trying to set ExpressionType of IdentExpression to " + aIncrement.toString());
+		SimplePrintLoggerToRemoveSoon
+				.println_err2("Trying to set ExpressionType of IdentExpression to " + aIncrement.toString());
 	}
 
 	@Override

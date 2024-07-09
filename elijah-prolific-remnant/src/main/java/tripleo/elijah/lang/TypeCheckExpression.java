@@ -13,12 +13,12 @@ import tripleo.elijah.lang2.*;
 
 /**
  * @author Tripleo
- * <p>
- * Created 	Apr 18, 2020 at 2:43:00 AM
+ *         <p>
+ *         Created Apr 18, 2020 at 2:43:00 AM
  */
 public class TypeCheckExpression extends AbstractExpression implements IExpression {
 	private final IExpression checking;
-	private final TypeName    checkfor;
+	private final TypeName checkfor;
 
 	public TypeCheckExpression(final IExpression ee, final TypeName p1) {
 		this.checking = ee;

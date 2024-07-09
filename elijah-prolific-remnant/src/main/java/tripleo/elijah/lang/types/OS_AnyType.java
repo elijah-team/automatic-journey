@@ -8,7 +8,6 @@
  */
 package tripleo.elijah.lang.types;
 
-
 import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.lang2.*;

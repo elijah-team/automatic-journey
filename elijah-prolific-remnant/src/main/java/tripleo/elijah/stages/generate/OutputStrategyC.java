@@ -28,7 +28,8 @@ public class OutputStrategyC {
 
 	public String nameForFunction(final @NotNull GeneratedFunction generatedFunction, final GenerateResult.TY aTy) {
 		GeneratedNode c = generatedFunction.getGenClass();
-		if (c == null) c = generatedFunction.getParent(); // TODO fixme
+		if (c == null)
+			c = generatedFunction.getParent(); // TODO fixme
 		if (c instanceof GeneratedClass)
 			return nameForClass((GeneratedClass) c, aTy);
 		else if (c instanceof GeneratedNamespace)
@@ -68,21 +69,21 @@ public class OutputStrategyC {
 			else
 				sb.append(generatedClass.getName());
 		}
-		break;
+			break;
 		case PER_MODULE: {
 //					mod = generatedClass.getKlass().getContext().module();
 			final OS_Module mod = generatedClass.module();
-			final File      f   = new File(mod.getFileName());
-			String          ff  = f.getName();
-			final int       y   = 2;
+			final File f = new File(mod.getFileName());
+			String ff = f.getName();
+			final int y = 2;
 			ff = strip_elijah_extension(ff);
 			sb.append(ff);
 //					sb.append('/');
 		}
-		break;
+			break;
 		case PER_PACKAGE: {
 			final OS_Package pkg2 = generatedClass.getKlass().getPackageName();
-			final String     pkgName;
+			final String pkgName;
 			if (pkg2 != OS_Package.default_package) {
 				pkgName = "$default_package";
 			} else
@@ -90,14 +91,14 @@ public class OutputStrategyC {
 			sb.append(pkgName);
 //					sb.append('/');
 		}
-		break;
+			break;
 		case PER_PROGRAM: {
 			final CompilerInstructions xx = lsp.getInstructions();
-			final String               n  = xx.getName();
+			final String n = xx.getName();
 			sb.append(n);
 //					sb.append('/');
 		}
-		break;
+			break;
 		default:
 			throw new IllegalStateException("Unexpected value: " + outputStrategy.per());
 		}
@@ -117,7 +118,7 @@ public class OutputStrategyC {
 		String filename;
 		if (generatedNamespace.getNamespaceStatement().getKind() == NamespaceTypes.MODULE) {
 			final String moduleFileName = generatedNamespace.module().getFileName();
-			final File   moduleFile     = new File(moduleFileName);
+			final File moduleFile = new File(moduleFileName);
 			filename = moduleFile.getName();
 			filename = strip_elijah_extension(filename);
 		} else
@@ -161,7 +162,8 @@ public class OutputStrategyC {
 			if (e.getContext().getParent() == e.getContext())
 				e = null;
 			else {
-				@NotNull final ElObjectType t = DecideElObjectType.getElObjectType(e);
+				@NotNull
+				final ElObjectType t = DecideElObjectType.getElObjectType(e);
 				switch (t) {
 				case NAMESPACE:
 					if (((NamespaceStatement) e).getPackageName() != null)
@@ -191,9 +193,11 @@ public class OutputStrategyC {
 		return aFilename;
 	}
 
-	public String nameForConstructor(final GeneratedConstructor generatedConstructor, final GenerateResult.@NotNull TY aTy) {
+	public String nameForConstructor(final GeneratedConstructor generatedConstructor,
+			final GenerateResult.@NotNull TY aTy) {
 		GeneratedNode c = generatedConstructor.getGenClass();
-		if (c == null) c = generatedConstructor.getParent(); // TODO fixme
+		if (c == null)
+			c = generatedConstructor.getParent(); // TODO fixme
 		if (c instanceof GeneratedClass)
 			return nameForClass((GeneratedClass) c, aTy);
 		else if (c instanceof GeneratedNamespace)

@@ -20,10 +20,10 @@ import tripleo.elijah.lang.*;
  */
 public class ArgumentNode {
 
-	private final TypeRef         typeRef;
-	private       IdentExpression ident;
-	private       String          genType;
-	private       String          varName;
+	private final TypeRef typeRef;
+	private IdentExpression ident;
+	private String genType;
+	private String varName;
 
 	public ArgumentNode(final String varName, final TypeRef typeRef) {
 		this.varName = varName;

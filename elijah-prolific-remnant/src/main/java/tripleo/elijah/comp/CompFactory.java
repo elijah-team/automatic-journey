@@ -21,15 +21,15 @@ public interface CompFactory {
 	WorldModule createWorldModule(OS_Module aM);
 
 	class InputRequest {
-		private final File                    _file;
-		private final boolean                 _do_out;
-		private final LibraryStatementPart    lsp;
-		private       Operation2<WorldModule> op;
+		private final File _file;
+		private final boolean _do_out;
+		private final LibraryStatementPart lsp;
+		private Operation2<WorldModule> op;
 
 		public InputRequest(final File aFile, final boolean aDoOut, final @Nullable LibraryStatementPart aLsp) {
-			_file   = aFile;
+			_file = aFile;
 			_do_out = aDoOut;
-			lsp     = aLsp;
+			lsp = aLsp;
 		}
 
 		public File file() {

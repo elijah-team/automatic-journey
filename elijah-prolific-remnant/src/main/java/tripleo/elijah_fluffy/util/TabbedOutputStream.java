@@ -15,21 +15,23 @@ import java.io.*;
 public class TabbedOutputStream {
 
 	int tabwidth;
-	@Nullable Writer  myStream;
+	@Nullable
+	Writer myStream;
 	private boolean dont_close = false;
-	private   boolean do_tabs = false;
+	private boolean do_tabs = false;
 
 	public TabbedOutputStream(final OutputStream os) {
 		tabwidth = 0;
-		if (os == System.out) dont_close = true;
+		if (os == System.out)
+			dont_close = true;
 		myStream = new BufferedWriter(new OutputStreamWriter(os));
 	}
 
 	public TabbedOutputStream(final Writer w, final boolean buffer_it) {
 		tabwidth = 0;
-		//if (os == System.out) dont_close = true;
+		// if (os == System.out) dont_close = true;
 		if (buffer_it)
-			myStream = new BufferedWriter(w);//new BufferedWriter(new OutputStreamWriter(os));
+			myStream = new BufferedWriter(w);// new BufferedWriter(new OutputStreamWriter(os));
 		else
 			myStream = w;
 	}
@@ -98,7 +100,7 @@ public class TabbedOutputStream {
 
 	void doIndent() throws IOException {
 		for (int i = 0; i < tabwidth; i++)
-		     myStream.write('\t');
+			myStream.write('\t');
 	}
 
 	public void put_string_ln_no_tabs(final String s) throws IOException {

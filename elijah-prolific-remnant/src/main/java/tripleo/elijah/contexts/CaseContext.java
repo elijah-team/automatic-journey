@@ -18,7 +18,7 @@ import java.util.*;
  */
 public class CaseContext extends Context {
 	private final CaseConditional carrier;
-	private final Context         _parent;
+	private final Context _parent;
 
 	public CaseContext(final Context aParent, final CaseConditional mc) {
 		this._parent = aParent;
@@ -26,28 +26,23 @@ public class CaseContext extends Context {
 	}
 
 	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
+			final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(carrier.getContext());
 
-/*
-		if (carrier.getIterName() != null) {
-			if (name.equals(carrier.getIterName())) { // reversed to prevent NPEs
-				IdentExpression ie = carrier.getIterNameToken();
-				Result.add(name, level, ie, this);
-			}
-		}
-*/
+		/*
+		 * if (carrier.getIterName() != null) { if (name.equals(carrier.getIterName()))
+		 * { // reversed to prevent NPEs IdentExpression ie =
+		 * carrier.getIterNameToken(); Result.add(name, level, ie, this); } }
+		 */
 
 		throw new NotImplementedException(); // carrier.singleidentcontext
 
-/*
-		if (carrier.getParent() != null) {
-			final Context context = getParent();
-			if (!alreadySearched.contains(context) || !one)
-				context.lookup(name, level + 1, Result, alreadySearched, false); // TODO test this
-		}
-		return Result;
-*/
+		/*
+		 * if (carrier.getParent() != null) { final Context context = getParent(); if
+		 * (!alreadySearched.contains(context) || !one) context.lookup(name, level + 1,
+		 * Result, alreadySearched, false); // TODO test this } return Result;
+		 */
 
 	}
 

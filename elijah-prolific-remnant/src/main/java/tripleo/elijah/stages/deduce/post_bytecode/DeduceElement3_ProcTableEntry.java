@@ -13,14 +13,15 @@ import tripleo.elijah_prolific.deduce.DT_Element3;
 import tripleo.elijah_prolific.v.V;
 
 public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
-	private final ProcTableEntry        principal;
-	private final DeduceTypes2          deduceTypes2;
+	private final ProcTableEntry principal;
+	private final DeduceTypes2 deduceTypes2;
 	private final BaseGeneratedFunction generatedFunction;
-	private       Instruction           instruction;
+	private Instruction instruction;
 
-	public DeduceElement3_ProcTableEntry(final ProcTableEntry aProcTableEntry, final DeduceTypes2 aDeduceTypes2, final BaseGeneratedFunction aGeneratedFunction) {
-		principal         = aProcTableEntry;
-		deduceTypes2      = aDeduceTypes2;
+	public DeduceElement3_ProcTableEntry(final ProcTableEntry aProcTableEntry, final DeduceTypes2 aDeduceTypes2,
+			final BaseGeneratedFunction aGeneratedFunction) {
+		principal = aProcTableEntry;
+		deduceTypes2 = aDeduceTypes2;
 		generatedFunction = aGeneratedFunction;
 	}
 
@@ -36,9 +37,10 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 
 	@Override
 	public OS_Element getPrincipal() {
-		//return principal.getDeduceElement3(deduceTypes2, generatedFunction).getPrincipal(); // README infinite loop
+		// return principal.getDeduceElement3(deduceTypes2,
+		// generatedFunction).getPrincipal(); // README infinite loop
 
-		return principal.getResolvedElement();//getDeduceElement3(deduceTypes2, generatedFunction).getPrincipal();
+		return principal.getResolvedElement();// getDeduceElement3(deduceTypes2, generatedFunction).getPrincipal();
 	}
 
 	@Override
@@ -91,7 +93,8 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 
 				if (left instanceof final DotExpression dotleft) {
 
-					if (dotleft.getLeft() instanceof final IdentExpression rl && dotleft.getRight() instanceof final IdentExpression rr) {
+					if (dotleft.getLeft() instanceof final IdentExpression rl
+							&& dotleft.getRight() instanceof final IdentExpression rr) {
 
 						if (rl.getText().equals("a1")) {
 							final GeneratedClass[] gc = new GeneratedClass[1];
@@ -103,28 +106,33 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 							final VariableTableEntry vte = ((IntegerIA) vrl).getEntry();
 
 							vte.typePromise().then(left_type -> {
-								final ClassStatement cs = left_type.getResolved().getClassOf(); // TODO we want a DeduceClass here. GeneratedClass may suffice
+								final ClassStatement cs = left_type.getResolved().getClassOf(); // TODO we want a DeduceClass
+																							// here. GeneratedClass may
+																							// suffice
 
 								final ClassInvocation ci = deduceTypes2._phase().registerClassInvocation(cs);
 								ci.resolvePromise().then(gc2 -> {
 									gc[0] = gc2;
 								});
 
-								final LookupResultList     lrl  = cs.getContext().lookup(rr.getText());
-								@Nullable final OS_Element best = lrl.chooseBest(null);
+								final LookupResultList lrl = cs.getContext().lookup(rr.getText());
+								@Nullable
+								final OS_Element best = lrl.chooseBest(null);
 
 								if (best != null) {
 									final FunctionDef fun = (FunctionDef) best;
 
-									final FunctionInvocation fi2 = new FunctionInvocation(fun, null, ci, deduceTypes2._phase().generatePhase); // TODO pte??
+									final FunctionInvocation fi2 = new FunctionInvocation(fun, null, ci,
+											deduceTypes2._phase().generatePhase); // TODO pte??
 
 									principal.setFunctionInvocation(fi2); // TODO pte above
 
 									final WlGenerateFunction j = fi2.generateFunction(deduceTypes2, best);
 									j.run(null);
 
-									final @NotNull IdentTableEntry ite      = ((IdentIA) principal.expression_num).getEntry();
-									final OS_Type                  attached = ite.type.getAttached();
+									final @NotNull IdentTableEntry ite = ((IdentIA) principal.expression_num)
+											.getEntry();
+									final OS_Type attached = ite.type.getAttached();
 
 									fi2.generatePromise().then(gf -> {
 										final int y4 = 4;
@@ -154,11 +162,8 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 		}
 	}
 
-	private void action_002_1(final @NotNull ProcTableEntry pte,
-	                          final @NotNull IdentTableEntry ite,
-	                          final boolean setClassInvocation,
-	                          final DeducePhase phase,
-	                          final DeduceTypes2.DeduceClient3 dc) {
+	private void action_002_1(final @NotNull ProcTableEntry pte, final @NotNull IdentTableEntry ite,
+			final boolean setClassInvocation, final DeducePhase phase, final DeduceTypes2.DeduceClient3 dc) {
 		final OS_Element resolvedElement = ite.getResolvedElement();
 
 		assert resolvedElement != null;
@@ -166,7 +171,8 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 		ClassInvocation ci = null;
 
 		if (pte.getFunctionInvocation() == null) {
-			@NotNull final FunctionInvocation fi;
+			@NotNull
+			final FunctionInvocation fi;
 
 			if (resolvedElement instanceof ClassStatement) {
 				// assuming no constructor name or generic parameters based on function syntax
@@ -199,53 +205,52 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 //        ectx = el.getContext();
 	}
 
-
 	public void _action_002_no_resolved_element(final Resolve_Ident_IA._action_002_no_resolved_element action) {
-		final @NotNull ProcTableEntry  pte       = action.pte();
-		final @NotNull IdentTableEntry ite       = action.ite();
-		final InstructionArgument      _backlink = ite.getBacklink();
+		final @NotNull ProcTableEntry pte = action.pte();
+		final @NotNull IdentTableEntry ite = action.ite();
+		final InstructionArgument _backlink = ite.getBacklink();
 
 		if (_backlink instanceof ProcIA) {
-			final @NotNull ProcIA         backlink_ = (ProcIA) _backlink;
-			final @NotNull ProcTableEntry backlink  = generatedFunction.getProcTableEntry(backlink_.getIndex());
-			final Resolve_Ident_IA        ria       = action.ria();
-			final IdentTableEntry         ite1      = action.ite();
-			final ErrSink                 errSink1   = ria.getDc()._dt2()._errSink();
+			final @NotNull ProcIA backlink_ = (ProcIA) _backlink;
+			final @NotNull ProcTableEntry backlink = generatedFunction.getProcTableEntry(backlink_.getIndex());
+			final Resolve_Ident_IA ria = action.ria();
+			final IdentTableEntry ite1 = action.ite();
+			final ErrSink errSink1 = ria.getDc()._dt2()._errSink();
 
-			backlink.onResolvedElement(
-					(DT_Element3 dtel) -> {
-						final ErrSink                 errSink   = dtel.getErrSink();
-						assert errSink1 == errSink;
-						final DeducePhase             phase     = ria.getDc().getPhase();
+			backlink.onResolvedElement((DT_Element3 dtel) -> {
+				final ErrSink errSink = dtel.getErrSink();
+				assert errSink1 == errSink;
+				final DeducePhase phase = ria.getDc().getPhase();
 
-						//dtel.setDeduceTypes2(ria.getDc()._dt2()); //??
+				// dtel.setDeduceTypes2(ria.getDc()._dt2()); //??
 
-						final OS_Element resolvedElement = dtel.getResolvedElement();
+				final OS_Element resolvedElement = dtel.getResolvedElement();
 
-						if (resolvedElement == null) {
-							dtel.op_fail(DT_Element3.DTEL.d999_163);
-							return; //throw new AssertionError(); // TODO feb 20
-						}
+				if (resolvedElement == null) {
+					dtel.op_fail(DT_Element3.DTEL.d999_163);
+					return; // throw new AssertionError(); // TODO feb 20
+				}
 
-						try {
-							// TODO 24/01/25 do this next
-							final IdentExpression      ident = ite1.getIdent();
-							if (resolvedElement instanceof OS_Element2 named) {
-								assert ident.sameName(named);
-							}
-
-							final LookupResultList     lrl2 = ria.getDc().lookupExpression(ident, resolvedElement.getContext());
-							@Nullable final OS_Element best  = lrl2.chooseBest(null);
-							assert best != null;
-							ite1.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(best));
-						} catch (final ResolveError aResolveError) {
-							errSink.reportDiagnostic(aResolveError);
-							assert false;
-						}
-
-						action_002_1(principal, ite1, false, phase, ria.getDc());
+				try {
+					// TODO 24/01/25 do this next
+					final IdentExpression ident = ite1.getIdent();
+					if (resolvedElement instanceof OS_Element2 named) {
+						assert ident.sameName(named);
 					}
-			);
-		} else assert false;
+
+					final LookupResultList lrl2 = ria.getDc().lookupExpression(ident, resolvedElement.getContext());
+					@Nullable
+					final OS_Element best = lrl2.chooseBest(null);
+					assert best != null;
+					ite1.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(best));
+				} catch (final ResolveError aResolveError) {
+					errSink.reportDiagnostic(aResolveError);
+					assert false;
+				}
+
+				action_002_1(principal, ite1, false, phase, ria.getDc());
+			});
+		} else
+			assert false;
 	}
 }

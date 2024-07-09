@@ -9,8 +9,8 @@ import java.io.*;
  * Created 8/16/20 7:42 AM
  */
 public class TypeOfTypeName implements TypeName {
-	private Context       _ctx;
-	private Qualident     _typeOf;
+	private Context _ctx;
+	private Qualident _typeOf;
 	private TypeModifiers modifiers;
 
 	public TypeOfTypeName(final Context cur) {
@@ -51,8 +51,8 @@ public class TypeOfTypeName implements TypeName {
 
 	public TypeName resolve(final @NotNull Context ctx, final DeduceTypes2 deduceTypes2) throws ResolveError {
 //		tripleo.elijah.util.Stupidity.println2(_typeOf.toString());
-		final LookupResultList lrl  = DeduceLookupUtils.lookupExpression(_typeOf, ctx, deduceTypes2);
-		final OS_Element       best = lrl.chooseBest(null);
+		final LookupResultList lrl = DeduceLookupUtils.lookupExpression(_typeOf, ctx, deduceTypes2);
+		final OS_Element best = lrl.chooseBest(null);
 		if (best instanceof VariableStatement)
 			return ((VariableStatement) best).typeName();
 		return null;

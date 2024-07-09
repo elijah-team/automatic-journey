@@ -17,13 +17,13 @@ import java.util.*;
  */
 public class ClassBuilder {
 	private final List<AnnotationClause> annotations = new ArrayList<AnnotationClause>();
-	private final ClassScope             _scope      = new ClassScope();
-	private final ClassInheritance       _inh        = new ClassInheritance();
-	private       ClassTypes             _type;
-	private       OS_Element             _parent;
-	private       Context                _parent_context;
-	private       IdentExpression        _name;
-	private       TypeNameList           genericPart;
+	private final ClassScope _scope = new ClassScope();
+	private final ClassInheritance _inh = new ClassInheritance();
+	private ClassTypes _type;
+	private OS_Element _parent;
+	private Context _parent_context;
+	private IdentExpression _name;
+	private TypeNameList genericPart;
 
 	public void setType(final ClassTypes classTypes) {
 		_type = classTypes;
@@ -84,7 +84,8 @@ public class ClassBuilder {
 	}
 
 	public void annotation_clause(final AnnotationClause a) {
-		if (a == null) return;
+		if (a == null)
+			return;
 		annotations.add(a);
 	}
 

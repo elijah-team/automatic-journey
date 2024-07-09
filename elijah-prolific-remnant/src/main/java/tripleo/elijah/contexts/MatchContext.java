@@ -17,7 +17,7 @@ import java.util.*;
  */
 public class MatchContext extends Context {
 	private final MatchConditional carrier;
-	private final Context          _parent;
+	private final Context _parent;
 
 	public MatchContext(final Context aParent, final MatchConditional mc) {
 		this._parent = aParent;
@@ -25,20 +25,17 @@ public class MatchContext extends Context {
 	}
 
 	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
+			final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(carrier.getContext());
 
-/*
-		if (carrier.getIterName() != null) {
-			if (name.equals(carrier.getIterName())) { // reversed to prevent NPEs
-				IdentExpression ie = carrier.getIterNameToken();
-				Result.add(name, level, ie, this);
-			}
-		}
-*/
+		/*
+		 * if (carrier.getIterName() != null) { if (name.equals(carrier.getIterName()))
+		 * { // reversed to prevent NPEs IdentExpression ie =
+		 * carrier.getIterNameToken(); Result.add(name, level, ie, this); } }
+		 */
 
 //		throw new NotImplementedException(); // carrier.singleidentcontext
-
 
 		if (carrier.getParent() != null) {
 			final Context context = getParent();
@@ -46,7 +43,6 @@ public class MatchContext extends Context {
 				context.lookup(name, level + 1, Result, alreadySearched, false); // TODO test this
 		}
 		return Result;
-
 
 	}
 

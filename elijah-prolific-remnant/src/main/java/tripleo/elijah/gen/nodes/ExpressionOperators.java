@@ -31,10 +31,9 @@ public enum ExpressionOperators {
 			middle1 = "*";
 			break;
 		default:
-			throw new IllegalStateException("no such symbol");//NotImplementedException();
+			throw new IllegalStateException("no such symbol");// NotImplementedException();
 		}
 		return middle1;
 	}
-
 
 }

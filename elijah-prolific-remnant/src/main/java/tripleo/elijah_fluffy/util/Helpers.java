@@ -28,11 +28,10 @@ import static org.apache.commons.codec.digest.MessageDigestAlgorithms.*;
 public class Helpers {
 	public static void printXML(final Object obj, @NotNull final TabbedOutputStream tos) {
 		SimplePrintLoggerToRemoveSoon.println_err2("** XStream support has been disabled");
-/*
-		final XStream x = new XStream();
-		//x.setMode(XStream.ID_REFERENCES);
-		x.toXML(obj, tos.getStream());
-*/
+		/*
+		 * final XStream x = new XStream(); //x.setMode(XStream.ID_REFERENCES);
+		 * x.toXML(obj, tos.getStream());
+		 */
 	}
 
 	@NotNull
@@ -51,13 +50,16 @@ public class Helpers {
 	}
 
 	public static IExpression qualidentToDotExpression2(@NotNull final List<IdentExpression> ts, int i) {
-		if (ts.size() == 1) return ts.get(0);
-		if (ts.size() == 0) return null;
+		if (ts.size() == 1)
+			return ts.get(0);
+		if (ts.size() == 0)
+			return null;
 		IExpression r = ts.get(0);
 //		int i=1;
 		while (ts.size() > i) {
 			final IExpression dotExpression = qualidentToDotExpression2(ts.subList(i++, ts.size()), i + 1);
-			if (dotExpression == null) break;
+			if (dotExpression == null)
+				break;
 //			r.setRight(dotExpression);
 			r = new DotExpression(r, dotExpression);
 		}
@@ -84,7 +86,7 @@ public class Helpers {
 				sb.append(part);
 				sb.append(separator);
 			}
-			final String          ss        = sb.toString();
+			final String ss = sb.toString();
 			final @NotNull String substring = separator.substring(0, ss.length() - separator.length());
 			return substring;
 		}
@@ -112,11 +114,12 @@ public class Helpers {
 	}
 
 	@Nullable
-	public static String getHashForFilenameJava(final @NotNull String aFilename, final ErrSink aErrSink) throws IOException {
-		final File      file = new File(aFilename);
-		final long      size = file.length();
-		final byte[]    ba   = new byte[(int) size];  // README Counting on reasonable sizes here
-		FileInputStream bb   = null;
+	public static String getHashForFilenameJava(final @NotNull String aFilename, final ErrSink aErrSink)
+			throws IOException {
+		final File file = new File(aFilename);
+		final long size = file.length();
+		final byte[] ba = new byte[(int) size]; // README Counting on reasonable sizes here
+		FileInputStream bb = null;
 		try {
 			bb = new FileInputStream(file);
 			bb.read(ba);

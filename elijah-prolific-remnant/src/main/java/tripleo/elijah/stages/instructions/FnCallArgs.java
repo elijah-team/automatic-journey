@@ -21,36 +21,35 @@ import java.util.*;
  * Created 9/10/20 3:36 PM
  */
 public class FnCallArgs implements InstructionArgument {
-	public final           Instruction           expression_to_call;
+	public final Instruction expression_to_call;
 	private final @NotNull BaseGeneratedFunction gf;
-	private                TypeTableEntry        _type; // the return type of the function call
+	private TypeTableEntry _type; // the return type of the function call
 
 	public FnCallArgs(final Instruction expression_to_call, final @NotNull BaseGeneratedFunction generatedFunction) {
 		this.expression_to_call = expression_to_call;
-		this.gf                 = generatedFunction;
+		this.gf = generatedFunction;
 	}
 
 	@Override
 	public String toString() {
-		final int                       index                = DeduceTypes2.to_int(expression_to_call.args.get(0));
+		final int index = DeduceTypes2.to_int(expression_to_call.args.get(0));
 		final List<InstructionArgument> instructionArguments = getInstructionArguments();
-/*
-        final List<String> collect = instructionArguments
-                .stream()
-                .map((instructionArgument -> instructionArgument.toString()))
-                .collect(Collectors.toList());
-*/
-		final Collection<String> collect2 = Collections2.transform(instructionArguments, new Function<InstructionArgument, String>() {
-			@Nullable
-			@Override
-			public String apply(@Nullable final InstructionArgument input) {
-				return input.toString();
-			}
-		});
+		/*
+		 * final List<String> collect = instructionArguments .stream()
+		 * .map((instructionArgument -> instructionArgument.toString()))
+		 * .collect(Collectors.toList());
+		 */
+		final Collection<String> collect2 = Collections2.transform(instructionArguments,
+				new Function<InstructionArgument, String>() {
+					@Nullable
+					@Override
+					public String apply(@Nullable final InstructionArgument input) {
+						return input.toString();
+					}
+				});
 		final ProcTableEntry procTableEntry = gf.prte_list.get(index);
-		return String.format("(call %d [%s(%s)] %s)",
-		                     index, procTableEntry.expression, procTableEntry.args,
-		                     Helpers.String_join(" ", collect2));
+		return String.format("(call %d [%s(%s)] %s)", index, procTableEntry.expression, procTableEntry.args,
+				Helpers.String_join(" ", collect2));
 
 	}
 

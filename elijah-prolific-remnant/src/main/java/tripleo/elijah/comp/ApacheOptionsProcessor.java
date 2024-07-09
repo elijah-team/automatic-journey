@@ -7,8 +7,8 @@ import tripleo.elijah.comp.i.*;
 import java.util.*;
 
 public class ApacheOptionsProcessor implements OptionsProcessor {
-	final Options           options = new Options();
-	final CommandLineParser clp     = new DefaultParser();
+	final Options options = new Options();
+	final CommandLineParser clp = new DefaultParser();
 
 	@Contract(pure = true)
 	public ApacheOptionsProcessor() {
@@ -19,9 +19,8 @@ public class ApacheOptionsProcessor implements OptionsProcessor {
 	}
 
 	@Override
-	public String[] process(@NotNull final Compilation c,
-	                        @NotNull final List<String> args,
-	                        @NotNull final ICompilationBus cb) throws Exception {
+	public String[] process(@NotNull final Compilation c, @NotNull final List<String> args,
+			@NotNull final ICompilationBus cb) throws Exception {
 		final CommandLine cmd;
 
 		cmd = clp.parse(options, args.toArray(new String[args.size()]));

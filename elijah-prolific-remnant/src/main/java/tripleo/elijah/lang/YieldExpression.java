@@ -11,7 +11,7 @@ package tripleo.elijah.lang;
 import tripleo.elijah.lang2.*;
 import tripleo.elijah_fluffy.util.*;
 
-public class YieldExpression /*extends BasicBinaryExpression*/ implements OS_Element, StatementItem {
+public class YieldExpression /* extends BasicBinaryExpression */ implements OS_Element, StatementItem {
 
 	public YieldExpression(final IExpression aExpr) {
 		// TODO Auto-generated constructor stub

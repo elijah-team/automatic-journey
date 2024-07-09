@@ -17,32 +17,32 @@ class QuerySearchEzFiles {
 			return matches2;
 		}
 	};
-	private final Compilation       c;
-	private final ErrSink           errSink;
-	private final IO                io;
+	private final Compilation c;
+	private final ErrSink errSink;
+	private final IO io;
 	private final CompilationRunner cr;
 
 	public QuerySearchEzFiles(final Compilation aC, final ErrSink aErrSink, final IO aIo, final CompilationRunner aCr) {
-		c       = aC;
+		c = aC;
 		errSink = aErrSink;
-		io      = aIo;
-		cr      = aCr;
+		io = aIo;
+		cr = aCr;
 	}
 
 	// TODO list of operations, not operation of list
 	public Operation2<List<CompilerInstructions>> process(final File directory) {
-		final List<CompilerInstructions> R    = new ArrayList<>();
-		final String[]                   list = directory.list(ez_files_filter);
+		final List<CompilerInstructions> R = new ArrayList<>();
+		final String[] list = directory.list(ez_files_filter);
 
 		if (list != null) {
 			for (final String file_name : list) {
 				try {
-					final File                            file   = new File(directory, file_name);
-					final Operation<CompilerInstructions> oci    = parseEzFile(file, file.toString(), errSink, io, c);
-					final CompilerInstructions            ezFile = oci.success();
+					final File file = new File(directory, file_name);
+					final Operation<CompilerInstructions> oci = parseEzFile(file, file.toString(), errSink, io, c);
+					final CompilerInstructions ezFile = oci.success();
 					if (ezFile != null) {
 
-						c.reports().addInput(()->file_name, Finally.Out2.EZ);
+						c.reports().addInput(() -> file_name, Finally.Out2.EZ);
 
 						R.add(ezFile);
 					} else {
@@ -56,16 +56,18 @@ class QuerySearchEzFiles {
 		return Operation2.success(R);
 	}
 
-	@NotNull Operation<CompilerInstructions> parseEzFile(final @NotNull File f, final String file_name, final ErrSink errSink, final IO io, final Compilation c) throws Exception {
+	@NotNull
+	Operation<CompilerInstructions> parseEzFile(final @NotNull File f, final String file_name, final ErrSink errSink,
+			final IO io, final Compilation c) throws Exception {
 		System.out.printf("   %s%n", new File(file_name).getAbsolutePath());
 
-		/*final */
+		/* final */
 		Operation<CompilerInstructions> result;
-		final File                      file = new File(file_name);
-		final EzSpec                    spec;
+		final File file = new File(file_name);
+		final EzSpec spec;
 
 		try (final InputStream s = io.readFile(file)) {
-			spec   = new EzSpec(file_name, s, file);
+			spec = new EzSpec(file_name, s, file);
 			result = cr.realParseEzFile(spec, cr.ezCache());
 		} catch (final IOException aE) {
 			result = Operation.failure(aE);

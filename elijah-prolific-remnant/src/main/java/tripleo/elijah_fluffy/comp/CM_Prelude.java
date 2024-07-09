@@ -6,8 +6,11 @@ import tripleo.elijah.lang.*;
 
 public interface CM_Prelude {
 	OS_Module getModule();
+
 	CM_Preludes getTag();
+
 	LibraryStatementPart getLsp();
+
 	Compilation getCompilation();
 	// ??
 }

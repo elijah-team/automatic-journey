@@ -37,7 +37,7 @@ public enum Stages {
 		public RuntimeProcess getProcess(final ICompilationAccess aCa, final ProcessRecord aPr) {
 			throw new NotImplementedException();
 		}
-	},  // ??
+	}, // ??
 	O("O") {
 		@Override
 		public void writeLogs(final ICompilationAccess aCompilationAccess) {
@@ -48,7 +48,7 @@ public enum Stages {
 		public RuntimeProcess getProcess(final ICompilationAccess aCa, final ProcessRecord aPr) {
 			return new OStageProcess(aCa, aPr);
 		}
-	}  // Output
+	} // Output
 	;
 
 	private final String s;

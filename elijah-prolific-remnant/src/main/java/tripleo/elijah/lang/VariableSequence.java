@@ -15,15 +15,16 @@ import java.util.*;
 
 public class VariableSequence implements StatementItem, FunctionItem, ClassItem {
 
-	final     List<VariableStatement> stmts;
-	@Nullable List<AnnotationClause>  annotations = null;
-	private   Context                 _ctx;
+	final List<VariableStatement> stmts;
+	@Nullable
+	List<AnnotationClause> annotations = null;
+	private Context _ctx;
 
-	private OS_Element     parent;
+	private OS_Element parent;
 	private AccessNotation access_note;
 
 	private TypeModifiers def;
-	private El_Category   category;
+	private El_Category category;
 
 	@Deprecated
 	public VariableSequence() {
@@ -32,7 +33,7 @@ public class VariableSequence implements StatementItem, FunctionItem, ClassItem 
 
 	public VariableSequence(final Context aContext) {
 		stmts = new ArrayList<VariableStatement>();
-		_ctx  = aContext;
+		_ctx = aContext;
 	}
 
 	public VariableStatement next() {

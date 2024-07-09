@@ -19,9 +19,9 @@ import java.io.*;
 public class RegularTypeName extends AbstractTypeName2 implements NormalTypeName {
 
 	private TypeNameList genericPart;
-	private Context      _ctx;
-	//	private OS_Type _resolved;
-	private OS_Element   _resolvedElement;
+	private Context _ctx;
+	// private OS_Type _resolved;
+	private OS_Element _resolvedElement;
 
 	public RegularTypeName(final Context cur) {
 		super();
@@ -136,7 +136,8 @@ public class RegularTypeName extends AbstractTypeName2 implements NormalTypeName
 
 	@Override
 	public String getName() {
-		if (typeName == null) return null;
+		if (typeName == null)
+			return null;
 		return this.typeName.asSimpleString();
 	}
 

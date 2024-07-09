@@ -11,7 +11,7 @@ package tripleo.elijah.gen;
 public class CompilerContext {
 
 	private final String _module;
-	private       int    _tmp = 0;
+	private int _tmp = 0;
 
 	public CompilerContext(final String aModule) {
 		_module = aModule;

@@ -17,9 +17,9 @@ import tripleo.elijah.gen.*;
  *
  */
 public class Attached {
-	int     _code;
+	int _code;
 	Context _context;
-	Node    _node;
+	Node _node;
 
 	public Attached(final Context aContext) {
 		_context = aContext;

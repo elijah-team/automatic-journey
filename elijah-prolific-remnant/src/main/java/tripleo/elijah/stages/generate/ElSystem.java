@@ -21,9 +21,9 @@ import java.util.*;
  */
 public class ElSystem {
 	private final Map<GeneratedFunction, String> gfm_map = new HashMap<GeneratedFunction, String>();
-	public        boolean                        verbose = true;
-	private       OutputStrategy                 outputStrategy;
-	private       Compilation                    compilation;
+	public boolean verbose = true;
+	private OutputStrategy outputStrategy;
+	private Compilation compilation;
 
 	public void generateOutputs(@NotNull final GenerateResult gr) {
 		final @NotNull OutputStrategyC outputStrategyC = new OutputStrategyC(this.outputStrategy);
@@ -36,15 +36,17 @@ public class ElSystem {
 
 		if (verbose) {
 			for (final GenerateResultItem ab : gr.results()) {
-				if (ab.node instanceof GeneratedFunction) continue;
+				if (ab.node instanceof GeneratedFunction)
+					continue;
 				SimplePrintLoggerToRemoveSoon.println2("** " + ab.node + " " + ab.output);
 			}
 		}
 	}
 
-	String generateOutputs_Internal(final GeneratedNode node, final GenerateResult.TY ty, final OutputStrategyC outputStrategyC) {
+	String generateOutputs_Internal(final GeneratedNode node, final GenerateResult.TY ty,
+			final OutputStrategyC outputStrategyC) {
 		final String s;
-		String       ss;
+		String ss;
 		if (node instanceof final GeneratedNamespace generatedNamespace) {
 			s = outputStrategyC.nameForNamespace(generatedNamespace, ty);
 //			tripleo.elijah.util.Stupidity.println2("41 "+generatedNamespace+" "+s);

@@ -41,11 +41,11 @@ public class EIT_ModuleList {
 				continue;
 			}
 
-
 			final GenerateFunctions gfm = ggf.apply(mod);
 
 			final DeducePhase deducePhase = pipelineLogic.getDp();
-			//final DeducePhase.@NotNull GeneratedClasses lgc            = deducePhase.generatedClasses;
+			// final DeducePhase.@NotNull GeneratedClasses lgc =
+			// deducePhase.generatedClasses;
 
 			final _ProcessParams plp = new _ProcessParams(mod, pipelineLogic, gfm, epl, deducePhase);
 
@@ -56,7 +56,7 @@ public class EIT_ModuleList {
 	private void __process__PL__each(final @NotNull _ProcessParams plp) {
 		final List<GeneratedNode> resolved_nodes = new ArrayList<GeneratedNode>();
 
-		final OS_Module                    mod = plp.getMod();
+		final OS_Module mod = plp.getMod();
 		final DeducePhase.GeneratedClasses lgc = plp.getLgc();
 
 		// assert lgc.size() == 0;
@@ -70,7 +70,7 @@ public class EIT_ModuleList {
 
 		plp.generate();
 
-		//assert lgc.size() == epl.size(); //hmm
+		// assert lgc.size() == epl.size(); //hmm
 
 		final Coder coder = new Coder(plp.deducePhase.codeRegistrar);
 
@@ -109,25 +109,23 @@ public class EIT_ModuleList {
 	}
 
 	private static class _ProcessParams {
-		private final OS_Module         mod;
-		private final PipelineLogic     pipelineLogic;
+		private final OS_Module mod;
+		private final PipelineLogic pipelineLogic;
 		private final GenerateFunctions gfm;
 		@NotNull
-		private final EntryPointList    epl;
-		private final DeducePhase       deducePhase;
+		private final EntryPointList epl;
+		private final DeducePhase deducePhase;
 //		@NotNull
 //		private final ElLog.Verbosity                         verbosity;
 
-		private _ProcessParams(@NotNull final OS_Module aModule,
-		                       @NotNull final PipelineLogic aPipelineLogic,
-		                       @NotNull final GenerateFunctions aGenerateFunctions,
-		                       @NotNull final EntryPointList aEntryPointList,
-		                       @NotNull final DeducePhase aDeducePhase) {
-			mod           = aModule;
+		private _ProcessParams(@NotNull final OS_Module aModule, @NotNull final PipelineLogic aPipelineLogic,
+				@NotNull final GenerateFunctions aGenerateFunctions, @NotNull final EntryPointList aEntryPointList,
+				@NotNull final DeducePhase aDeducePhase) {
+			mod = aModule;
 			pipelineLogic = aPipelineLogic;
-			gfm           = aGenerateFunctions;
-			epl           = aEntryPointList;
-			deducePhase   = aDeducePhase;
+			gfm = aGenerateFunctions;
+			epl = aEntryPointList;
+			deducePhase = aDeducePhase;
 //			verbosity = mod.getCompilation().pipelineLogic.getVerbosity();
 		}
 

@@ -28,30 +28,31 @@ import java.util.function.*;
  * Created 9/12/20 10:07 PM
  */
 public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
-	public final  int                                             index;
-	public final  List<TypeTableEntry>                            args;
+	public final int index;
+	public final List<TypeTableEntry> args;
 	/**
-	 * Either a hint to the programmer-- The compiler should be able to work without this.
-	 * <br/>
+	 * Either a hint to the programmer-- The compiler should be able to work without
+	 * this. <br/>
 	 * Or for synthetic methods
 	 */
-	public final  IExpression                                     expression;
-	public final  InstructionArgument                             expression_num;
-	public final  DeduceProcCall                                  dpc                   = new DeduceProcCall(this);
-	private final DeferredObject<ProcTableEntry, Void, Void>      completeDeferred      = new DeferredObject<>();
+	public final IExpression expression;
+	public final InstructionArgument expression_num;
+	public final DeduceProcCall dpc = new DeduceProcCall(this);
+	private final DeferredObject<ProcTableEntry, Void, Void> completeDeferred = new DeferredObject<>();
 	private final DeferredObject2<FunctionInvocation, Void, Void> onFunctionInvocations = new DeferredObject2<>();
-	private final DeferredObject<GenType, Void, Void>             typeDeferred          = new DeferredObject<>();
-	private final Eventual<DT_Element3>                           _p_resolvedElement    = new Eventual<>();
-	private       ClassInvocation                                 classInvocation;
-	private       FunctionInvocation                              functionInvocation;
-	private       DeduceElement3_ProcTableEntry                   _de3;
-	private       PTE_Zero                                        _zero;
+	private final DeferredObject<GenType, Void, Void> typeDeferred = new DeferredObject<>();
+	private final Eventual<DT_Element3> _p_resolvedElement = new Eventual<>();
+	private ClassInvocation classInvocation;
+	private FunctionInvocation functionInvocation;
+	private DeduceElement3_ProcTableEntry _de3;
+	private PTE_Zero _zero;
 
-	public ProcTableEntry(final int aIndex, final IExpression aExpression, final InstructionArgument aExpressionNum, final List<TypeTableEntry> aArgs) {
-		index          = aIndex;
-		expression     = aExpression;
+	public ProcTableEntry(final int aIndex, final IExpression aExpression, final InstructionArgument aExpressionNum,
+			final List<TypeTableEntry> aArgs) {
+		index = aIndex;
+		expression = aExpression;
 		expression_num = aExpressionNum;
-		args           = aArgs;
+		args = aArgs;
 
 		addStatusListener(new StatusListener() {
 			@Override
@@ -71,9 +72,7 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 			});
 		}
 
-		elementPromise(
-				p -> _p_resolvedElement.resolve(new __DT_Element3(p)),
-				_p_resolvedElement::fail);
+		elementPromise(p -> _p_resolvedElement.resolve(new __DT_Element3(p)), _p_resolvedElement::fail);
 
 		setupResolve();
 	}
@@ -81,8 +80,8 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 	public void onSetAttached() {
 		int state = 0;
 		if (args != null) {
-			final int ac  = args.size();
-			int       acx = 0;
+			final int ac = args.size();
+			int acx = 0;
 			for (final TypeTableEntry tte : args) {
 				if (tte.getAttached() != null)
 					acx++;
@@ -98,20 +97,20 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 			state = 3;
 		}
 		switch (state) {
-			case 0:
-				throw new IllegalStateException();
-			case 1:
-				SimplePrintLoggerToRemoveSoon.println_err2("136 pte not finished resolving " + this);
-				break;
-			case 2:
-				SimplePrintLoggerToRemoveSoon.println_err2("138 Internal compiler error");
-				break;
-			case 3:
-				if (completeDeferred.isPending())
-					completeDeferred.resolve(this);
-				break;
-			default:
-				throw new NotImplementedException();
+		case 0:
+			throw new IllegalStateException();
+		case 1:
+			SimplePrintLoggerToRemoveSoon.println_err2("136 pte not finished resolving " + this);
+			break;
+		case 2:
+			SimplePrintLoggerToRemoveSoon.println_err2("138 Internal compiler error");
+			break;
+		case 3:
+			if (completeDeferred.isPending())
+				completeDeferred.resolve(this);
+			break;
+		default:
+			throw new NotImplementedException();
 		}
 	}
 
@@ -130,12 +129,8 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 	@Override
 	@NotNull
 	public String toString() {
-		return "ProcTableEntry{" +
-				"index=" + index +
-				", expression=" + expression +
-				", expression_num=" + expression_num +
-				", args=" + args +
-				'}';
+		return "ProcTableEntry{" + "index=" + index + ", expression=" + expression + ", expression_num="
+				+ expression_num + ", args=" + args + '}';
 	}
 
 	// have no idea what this is for
@@ -159,7 +154,7 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 	public void setFunctionInvocation(final FunctionInvocation aFunctionInvocation) {
 		if (functionInvocation != null && functionInvocation.sameAs(aFunctionInvocation))
 			return; // short circuit for better behavior
-		//ABOVE 2b
+		// ABOVE 2b
 		if (functionInvocation != aFunctionInvocation) {
 			functionInvocation = aFunctionInvocation;
 			onFunctionInvocations.reset();
@@ -173,10 +168,12 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 
 	@NotNull
 	public String getLoggingString(final @Nullable DeduceTypes2 aDeduceTypes2, final ElLog LOG) {
-		final String                pte_string;
-		@NotNull final List<String> l = new ArrayList<String>();
+		final String pte_string;
+		@NotNull
+		final List<String> l = new ArrayList<String>();
 
-		for (@NotNull final TypeTableEntry typeTableEntry : getArgs()) {
+		for (@NotNull
+		final TypeTableEntry typeTableEntry : getArgs()) {
 			final OS_Type attached = typeTableEntry.getAttached();
 
 			if (attached != null)
@@ -192,9 +189,7 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 			}
 		}
 
-		final String sb2 = "[" +
-				Helpers.String_join(", ", l) +
-				"]";
+		final String sb2 = "[" + Helpers.String_join(", ", l) + "]";
 		pte_string = sb2;
 		return pte_string;
 	}
@@ -203,7 +198,8 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 		return args;
 	}
 
-	public void setDeduceTypes2(final DeduceTypes2 aDeduceTypes2, final Context aContext, final BaseGeneratedFunction aGeneratedFunction, final ErrSink aErrSink) {
+	public void setDeduceTypes2(final DeduceTypes2 aDeduceTypes2, final Context aContext,
+			final BaseGeneratedFunction aGeneratedFunction, final ErrSink aErrSink) {
 		_p_resolvedElement.then(xx -> {
 			xx.setDeduceTypes2(aDeduceTypes2);
 			xx.setContext(aContext);
@@ -219,7 +215,8 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 		return getDeduceElement3(dpc._deduceTypes2(), dpc._generatedFunction());
 	}
 
-	public IDeduceElement3 getDeduceElement3(final DeduceTypes2 aDeduceTypes2, final BaseGeneratedFunction aGeneratedFunction) {
+	public IDeduceElement3 getDeduceElement3(final DeduceTypes2 aDeduceTypes2,
+			final BaseGeneratedFunction aGeneratedFunction) {
 		if (_de3 == null) {
 			_de3 = new DeduceElement3_ProcTableEntry(this, aDeduceTypes2, aGeneratedFunction);
 //			_de3.
@@ -239,9 +236,9 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 	}
 
 	private static class __DT_Element3 implements DT_Element3 {
-		private final OS_Element            p;
-		private       DeduceTypes2          deduceTypes2;
-		private       BaseGeneratedFunction generatedFunction;
+		private final OS_Element p;
+		private DeduceTypes2 deduceTypes2;
+		private BaseGeneratedFunction generatedFunction;
 		private ErrSink errSink;
 
 		public __DT_Element3(final OS_Element aP) {
@@ -255,7 +252,7 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 
 		@Override
 		public void setErrSink(final ErrSink aErrSink) {
-			errSink=aErrSink;
+			errSink = aErrSink;
 		}
 
 		@Override
@@ -277,7 +274,7 @@ public class ProcTableEntry extends BaseTableEntry implements TableEntryIV {
 
 		@Override
 		public void op_fail(final DTEL aDTEL) {
-			System.err.println("{{DTEL}} "+aDTEL.name());
+			System.err.println("{{DTEL}} " + aDTEL.name());
 		}
 
 		@Override

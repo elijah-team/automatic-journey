@@ -19,24 +19,22 @@ import java.util.*;
 public class WithContext extends Context {
 
 	private final WithStatement carrier;
-	private final Context       _parent;
+	private final Context _parent;
 
 	public WithContext(final WithStatement carrier, final Context _parent) {
 		this.carrier = carrier;
 		this._parent = _parent;
 	}
 
-
 	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
+			final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(carrier.getContext());
 
 		for (final FunctionItem item : carrier.getItems()) {
-			if (!(item instanceof ClassStatement) &&
-			  !(item instanceof NamespaceStatement) &&
-			  !(item instanceof FunctionDef) &&
-			  !(item instanceof VariableSequence)
-			) continue;
+			if (!(item instanceof ClassStatement) && !(item instanceof NamespaceStatement)
+					&& !(item instanceof FunctionDef) && !(item instanceof VariableSequence))
+				continue;
 			if (item instanceof OS_Element2) {
 				if (((OS_Element2) item).name().equals(name)) {
 					Result.add(name, level, item, this);

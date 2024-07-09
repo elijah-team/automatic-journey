@@ -14,8 +14,8 @@ import tripleo.elijah_fluffy.util.*;
 
 /**
  * @author Tripleo
- * <p>
- * Created 	Apr 16, 2020 at 7:34:07 AM
+ *         <p>
+ *         Created Apr 16, 2020 at 7:34:07 AM
  */
 public class ConstructorDef extends BaseFunctionDef {
 	public static final IdentExpression emptyConstructorName = Helpers.string_to_ident("<>");
@@ -62,7 +62,6 @@ public class ConstructorDef extends BaseFunctionDef {
 	public String toString() {
 		return String.format("<Constructor %s %s %s>", parent, name(), getArgs());
 	}
-
 
 }
 

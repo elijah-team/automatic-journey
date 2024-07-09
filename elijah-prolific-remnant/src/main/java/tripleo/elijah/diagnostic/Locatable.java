@@ -12,9 +12,11 @@ package tripleo.elijah.diagnostic;
 import java.io.*;
 
 /**
- * Locate a Token or Token range<br><br>
+ * Locate a Token or Token range<br>
+ * <br>
  * <p>
- * All methods return 0 or null for atrificial Tokens<br><br>
+ * All methods return 0 or null for atrificial Tokens<br>
+ * <br>
  * <p>
  * Created 12/26/20 5:32 AM
  */

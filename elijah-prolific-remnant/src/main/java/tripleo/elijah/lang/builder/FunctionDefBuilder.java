@@ -17,10 +17,10 @@ import java.util.*;
  */
 public class FunctionDefBuilder extends BaseFunctionDefBuilder {
 
-	private final FunctionDefScope        _scope = new FunctionDefScope();
-	private final List<FunctionModifiers> _mods  = new ArrayList<FunctionModifiers>();
-	private       TypeName                _returnType;
-	private       Context                 _context;
+	private final FunctionDefScope _scope = new FunctionDefScope();
+	private final List<FunctionModifiers> _mods = new ArrayList<FunctionModifiers>();
+	private TypeName _returnType;
+	private Context _context;
 
 	public FunctionDefScope scope() {
 		return _scope;

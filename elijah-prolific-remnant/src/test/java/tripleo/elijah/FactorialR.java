@@ -26,7 +26,7 @@ import static tripleo.elijah_fluffy.util.Helpers.*;
  */
 public class FactorialR /* extends TestCase */ {
 
-	public FactorialR(/*String name*/) {
+	public FactorialR(/* String name */) {
 //		super(name);
 	}
 
@@ -77,9 +77,9 @@ public class FactorialR /* extends TestCase */ {
 
 	void main2_el(final CompilerContext cctx, final GenBuffer gbn) {
 		final ModuleRef prelude = new ModuleRef(null, -1);
-		final TypeRef   sys_int = new TypeRef(prelude, prelude, "SystemInteger", BuiltInTypes.SystemInteger.getCode());
-		final ModuleRef main2   = new ModuleRef("main2/main2.elijjah", 10000);
-		final TypeRef   main    = new TypeRef(main2, main2, "Main", 100);
+		final TypeRef sys_int = new TypeRef(prelude, prelude, "SystemInteger", BuiltInTypes.SystemInteger.getCode());
+		final ModuleRef main2 = new ModuleRef("main2/main2.elijjah", 10000);
+		final TypeRef main = new TypeRef(main2, main2, "Main", 100);
 
 		gbn.InitMod(cctx, "main2/main2.elijjah");
 		final ImportNode impn = new ImportNode("wprust.demo.fact");
@@ -98,7 +98,7 @@ public class FactorialR /* extends TestCase */ {
 		gbn.GenLocalDeclAgn(cctx, ldan1);
 
 		final LocalDeclAgnNode ldan_a1 = new LocalDeclAgnNode("a1", sys_int, ExpressionNodeBuilder.fncall("argument",
-			convertToLocalAgnTmpNode(List_of(ExpressionNodeBuilder.integer(1)))));
+				convertToLocalAgnTmpNode(List_of(ExpressionNodeBuilder.integer(1)))));
 		gbn.GenLocalDeclAgn(cctx, ldan_a1);
 
 		final TmpSSACtxNode latn = new TmpSSACtxNode(cctx);
@@ -135,9 +135,9 @@ public class FactorialR /* extends TestCase */ {
 
 	void factorial_r(final CompilerContext cctx, final GenBuffer gbn) {
 		final ModuleRef prelude = new ModuleRef(null, -1);
-		final TypeRef   u64     = new TypeRef(prelude, prelude, "u64", 81);
-		final ModuleRef main_m  = new ModuleRef("fact.elijah", -2);
-		final TypeRef   main_k  = new TypeRef(main_m, main_m, "Main", 100);
+		final TypeRef u64 = new TypeRef(prelude, prelude, "u64", 81);
+		final ModuleRef main_m = new ModuleRef("fact.elijah", -2);
+		final TypeRef main_k = new TypeRef(main_m, main_m, "Main", 100);
 
 		final MethHdrNode mhn = new MethHdrNode(u64, main_k, "factorial_r", List_of(new ArgumentNode("i", u64)), 1000);
 		GenMethHdr(cctx, mhn, gbn);
@@ -163,7 +163,7 @@ public class FactorialR /* extends TestCase */ {
 		final TmpSSACtxNode tccssan = new TmpSSACtxNode(cctx);
 		final LocalAgnTmpNode lamn = new LocalAgnTmpNode(tccssan,
 				ExpressionNodeBuilder.binex(u64, ExpressionNodeBuilder.varref("n", shn, u64),
-		  ExpressionOperators.OP_MINUS, ExpressionNodeBuilder.integer(1)));
+						ExpressionOperators.OP_MINUS, ExpressionNodeBuilder.integer(1)));
 		BeginTmpSSACtx(cctx, tccssan, gbn);
 
 		final TmpSSACtxNode tccssan2 = new TmpSSACtxNode(cctx);
@@ -173,7 +173,7 @@ public class FactorialR /* extends TestCase */ {
 
 		final TmpSSACtxNode tccssan3 = new TmpSSACtxNode(cctx);
 		final LocalAgnTmpNode latn3 = new LocalAgnTmpNode(tccssan3, ExpressionNodeBuilder.binex(u64,
-		  ExpressionNodeBuilder.varref("n", mhn, u64), ExpressionOperators.OP_MULT, tccssan2));
+				ExpressionNodeBuilder.varref("n", mhn, u64), ExpressionOperators.OP_MULT, tccssan2));
 		GenLocalAgn(cctx, latn3, gbn);
 
 //		ReturnAgnSimpleIntNode rsin=new ReturnAgnSimpleIntNode(latn3); // TODO Not a simple int
@@ -181,10 +181,9 @@ public class FactorialR /* extends TestCase */ {
 		GenReturnAgn(cctx, rsin, gbn);
 
 		CloseTmpCtx(cctx, latn3, gbn);
-/*
-		CloseTmpCtx(cctx, latn2, gbn);
-		CloseTmpCtx(cctx, lamn, gbn);
-*/
+		/*
+		 * CloseTmpCtx(cctx, latn2, gbn); CloseTmpCtx(cctx, lamn, gbn);
+		 */
 
 		final CloseCaseNode cccn2 = new CloseCaseNode(csn2, ChoiceOptions.BREAK, true);
 		CloseCaseChoice(cctx, cccn2, gbn);
@@ -212,20 +211,17 @@ public class FactorialR /* extends TestCase */ {
 	private void BeginMeth(final CompilerContext cctx, final MethHdrNode node, final GenBuffer gbn) {
 		// TODO Auto-generated method stub
 		final TextBuffer buf = gbn.moduleBufImpl(cctx.module());
-/*
-		BufferSequenceBuilder sb = new BufferSequenceBuilder(4).
-				named("type").named("name").named("args").semieol();
-		sb.set("type", node.returnType.genType, XX.SPACE);
-		sb.set("name", node.methName.genName);
-		EnclosedBuffer sb2 = new EnclosedBuffer("(", XX.RPAREN);
-		Transform1 transform1 = new Transform1();
-		BufferSequenceBuilder sb3 = new BufferSequenceBuilder(node.argCount,
-				node.ArgumentsIterator(), transform1, XX.COMMA, gbn);
-		sb2.setPayload(sb3);
-		sb.set("args", sb2);
-		CodeGen gbm = gbn.getCodeGen(); // TODO should be CSimpleGen
-		gbm.appendHeader(cctx.module(), sb.build());
-*/
+		/*
+		 * BufferSequenceBuilder sb = new BufferSequenceBuilder(4).
+		 * named("type").named("name").named("args").semieol(); sb.set("type",
+		 * node.returnType.genType, XX.SPACE); sb.set("name", node.methName.genName);
+		 * EnclosedBuffer sb2 = new EnclosedBuffer("(", XX.RPAREN); Transform1
+		 * transform1 = new Transform1(); BufferSequenceBuilder sb3 = new
+		 * BufferSequenceBuilder(node.argCount, node.ArgumentsIterator(), transform1,
+		 * XX.COMMA, gbn); sb2.setPayload(sb3); sb.set("args", sb2); CodeGen gbm =
+		 * gbn.getCodeGen(); // TODO should be CSimpleGen
+		 * gbm.appendHeader(cctx.module(), sb.build());
+		 */
 		buf.append_s(node.returnType().genType());
 		buf.append(node.genName());
 		buf.append("(");
@@ -241,8 +237,8 @@ public class FactorialR /* extends TestCase */ {
 	}
 
 	private void BeginCaseStatement(final CompilerContext cctx, final CaseHdrNode node, final GenBuffer gbn) {
-		final TextBuffer buf       = gbn.moduleBufImpl(cctx.module());
-		final boolean    is_simple = node.getExpr().is_simple();
+		final TextBuffer buf = gbn.moduleBufImpl(cctx.module());
+		final boolean is_simple = node.getExpr().is_simple();
 		buf.append_s("switch (");
 		if (is_simple) {
 			buf.append(node.getExpr().genText(cctx));
@@ -255,9 +251,9 @@ public class FactorialR /* extends TestCase */ {
 
 	private void BeginCaseChoice(final CompilerContext cctx, final CaseChoiceNode node, final GenBuffer gbn) {
 		// TODO Auto-generated method stub
-		final TextBuffer buf        = gbn.moduleBufImpl(cctx.module());
-		final boolean    is_simple  = node.left.is_const_expr();
-		final boolean    is_default = node.is_simple();
+		final TextBuffer buf = gbn.moduleBufImpl(cctx.module());
+		final boolean is_simple = node.left.is_const_expr();
+		final boolean is_default = node.is_simple();
 		assert !is_default || node.left.is_underscore() || (node.left.is_var_ref() && node.left.ref_ == null);
 		if (is_simple) {
 			buf.append("case " + node.left.genText(cctx));
@@ -297,7 +293,7 @@ public class FactorialR /* extends TestCase */ {
 			throw new IllegalStateException("varref is null");
 
 		{
-			buf.append_s(node.header.getExpr().genType());//varref().getType().getText());
+			buf.append_s(node.header.getExpr().genType());// varref().getType().getText());
 			final String string;
 			//
 			string = varref.genText();
@@ -306,16 +302,12 @@ public class FactorialR /* extends TestCase */ {
 			buf.append(" = ");
 			buf.append(node.header.simpleGenText());
 			buf.append_ln(";");
-/*
-		} else {
-			final VariableReferenceNode3 vr3 = node.varref3();
-			buf.append_s(vr3.getType().genType());
-			buf.append(vr3.genText());
-			buf.append(" = ");
-			buf.append(node.header.simpleGenText());
-			buf.append_ln(";");
-		}
-*/
+			/*
+			 * } else { final VariableReferenceNode3 vr3 = node.varref3();
+			 * buf.append_s(vr3.getType().genType()); buf.append(vr3.genText());
+			 * buf.append(" = "); buf.append(node.header.simpleGenText());
+			 * buf.append_ln(";"); }
+			 */
 		}
 	}
 
@@ -339,7 +331,8 @@ public class FactorialR /* extends TestCase */ {
 	}
 
 	@Deprecated
-	private void GenReturnAgnSimpleInt(final CompilerContext cctx, final ReturnAgnSimpleIntNode rasin, final GenBuffer gbn) {
+	private void GenReturnAgnSimpleInt(final CompilerContext cctx, final ReturnAgnSimpleIntNode rasin,
+			final GenBuffer gbn) {
 		final TextBuffer buf = gbn.moduleBufImpl(cctx.module());
 		buf.append("vsr = ");
 		buf.append(((Integer) rasin.getValue()).toString());
@@ -347,8 +340,11 @@ public class FactorialR /* extends TestCase */ {
 	}
 
 	public class Transform1 implements Transform<ArgumentNode> {
-		/* (non-Javadoc)
-		 * @see tripleo.util.buffer.Transform#transform(tripleo.elijah.gen.nodes.ArgumentNode, tripleo.util.buffer.DefaultBuffer)
+		/*
+		 * (non-Javadoc)
+		 * 
+		 * @see tripleo.util.buffer.Transform#transform(tripleo.elijah.gen.nodes.
+		 * ArgumentNode, tripleo.util.buffer.DefaultBuffer)
 		 */
 //		@Override
 		public void transform(final ArgumentNode na, final DefaultBuffer bufbldr) {

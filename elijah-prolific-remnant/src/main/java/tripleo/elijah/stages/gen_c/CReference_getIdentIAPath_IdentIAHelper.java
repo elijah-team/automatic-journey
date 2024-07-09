@@ -9,32 +9,32 @@ import tripleo.elijah_fluffy.util.*;
 import java.util.*;
 
 class CReference_getIdentIAPath_IdentIAHelper {
-	private final InstructionArgument   ia_next;
-	private final List<String>          sl;
-	private final int                   i;
-	private final int                   sSize;
-	private final OS_Element            resolved_element;
+	private final InstructionArgument ia_next;
+	private final List<String> sl;
+	private final int i;
+	private final int sSize;
+	private final OS_Element resolved_element;
 	private final BaseGeneratedFunction generatedFunction;
-	private final GeneratedNode         resolved;
-	private final String                value;
-
+	private final GeneratedNode resolved;
+	private final String value;
 
 	public int code = -1;
 
-
-	CReference_getIdentIAPath_IdentIAHelper(final InstructionArgument ia_next, final List<String> sl, final int i, final int sSize, final OS_Element resolved_element, final BaseGeneratedFunction generatedFunction, final GeneratedNode aResolved, final String aValue) {
-		this.ia_next           = ia_next;
-		this.sl                = sl;
-		this.i                 = i;
-		this.sSize             = sSize;
-		this.resolved_element  = resolved_element;
+	CReference_getIdentIAPath_IdentIAHelper(final InstructionArgument ia_next, final List<String> sl, final int i,
+			final int sSize, final OS_Element resolved_element, final BaseGeneratedFunction generatedFunction,
+			final GeneratedNode aResolved, final String aValue) {
+		this.ia_next = ia_next;
+		this.sl = sl;
+		this.i = i;
+		this.sSize = sSize;
+		this.resolved_element = resolved_element;
 		this.generatedFunction = generatedFunction;
-		resolved               = aResolved;
-		value                  = aValue;
+		resolved = aResolved;
+		value = aValue;
 	}
 
 	boolean action(final CRI_Ident aCRI_ident, final CReference aCReference) {
-		boolean          b               = false;
+		boolean b = false;
 		final OS_Element resolvedElement = getResolved_element();
 
 		if (resolvedElement instanceof ClassStatement) {
@@ -78,8 +78,8 @@ class CReference_getIdentIAPath_IdentIAHelper {
 		// README might be calling reflect or Type or Name
 		// TODO what about named constructors -- should be called with construct keyword
 		if (getIa_next() instanceof IdentIA) {
-			final IdentTableEntry ite  = ((IdentIA) getIa_next()).getEntry();
-			final String          text = ite.getIdent().getText();
+			final IdentTableEntry ite = ((IdentIA) getIa_next()).getEntry();
+			final String text = ite.getIdent().getText();
 			if (text.equals("reflect")) {
 				b = true;
 				final String text2 = String.format("ZS%d_reflect", code);
@@ -116,7 +116,7 @@ class CReference_getIdentIAPath_IdentIAHelper {
 			SimplePrintLoggerToRemoveSoon.println_err("** 31161 not resolved " + getResolved_element());
 		}
 		// README Assuming this is for named constructors
-		final String text  = ((ConstructorDef) getResolved_element()).name();
+		final String text = ((ConstructorDef) getResolved_element()).name();
 		final String text2 = String.format("ZC%d%s", code, text);
 		aCReference.addRef(text2, CReference.Ref.CONSTRUCTOR);
 	}
@@ -125,17 +125,17 @@ class CReference_getIdentIAPath_IdentIAHelper {
 	private static void _act_AliasStatement() {
 		final int y = 2;
 		NotImplementedException.raise();
-		//			text = Emit.emit("/*167*/")+((AliasStatement)resolved_element).name();
-		//			return _getIdentIAPath_IdentIAHelper(text, sl, i, sSize, _res)
+		// text = Emit.emit("/*167*/")+((AliasStatement)resolved_element).name();
+		// return _getIdentIAPath_IdentIAHelper(text, sl, i, sSize, _res)
 	}
 
 	private void _act_DefFunctionDef(final CReference aCReference) {
 		final OS_Element parent = getResolved_element().getParent();
-		final int        code;
+		final int code;
 		if (getResolved() != null) {
 			assert getResolved() instanceof BaseGeneratedFunction;
 			final BaseGeneratedFunction rf = (BaseGeneratedFunction) getResolved();
-			final GeneratedNode         gc = rf.getGenClass();
+			final GeneratedNode gc = rf.getGenClass();
 			if (gc instanceof GeneratedContainerNC) // and not another function
 				code = ((GeneratedContainerNC) gc).getCode();
 			else
@@ -157,17 +157,17 @@ class CReference_getIdentIAPath_IdentIAHelper {
 //				text2 = String.format("ZT%d_%d", enclosing_function._a.getCode(), closure_index);
 		}
 		final DefFunctionDef defFunctionDef = (DefFunctionDef) getResolved_element();
-		final String         text2          = String.format("Z%d%s", code, defFunctionDef.name());
+		final String text2 = String.format("Z%d%s", code, defFunctionDef.name());
 		aCReference.addRef(text2, CReference.Ref.FUNCTION);
 	}
 
 	private void _act_VariableStatement(final CReference aCReference) {
 		final VariableStatement variableStatement = (VariableStatement) getResolved_element();
-		final String            text2             = variableStatement.getName();
+		final String text2 = variableStatement.getName();
 
 		// first getParent is VariableSequence
 		final VariableSequence variableSequence = (VariableSequence) getResolved_element().getParent();
-		final OS_Element       parent           = variableSequence.getParent();
+		final OS_Element parent = variableSequence.getParent();
 
 		if (parent == getGeneratedFunction().getFD().getParent()) {
 			// A direct member value. Doesn't handle when indirect
@@ -187,25 +187,33 @@ class CReference_getIdentIAPath_IdentIAHelper {
 
 	private void _act_PropertyStatement(final CReference aCReference) {
 		final OS_Element parent = getResolved_element().getParent();
-		final int        code;
+		final int code;
 		if (parent instanceof ClassStatement) {
 			code = ((ClassStatement) parent)._a.getCode();
 		} else if (parent instanceof NamespaceStatement) {
 			code = ((NamespaceStatement) parent)._a.getCode();
 		} else {
 //							code = -1;
-			throw new IllegalStateException("PropertyStatement cant have other parent than ns or cls. " + getResolved_element().getClass().getName());
+			throw new IllegalStateException("PropertyStatement cant have other parent than ns or cls. "
+					+ getResolved_element().getClass().getName());
 		}
-		getSl().clear();  // don't we want all the text including from sl?
-		//			if (text.equals("")) text = "vsc";
-		//			text = String.format("ZP%dget_%s(%s)", code, ((PropertyStatement) resolved_element).name(), text); // TODO Don't know if get or set!
-		final String text2 = String.format("ZP%dget_%s", code, ((PropertyStatement) getResolved_element()).name()); // TODO Don't know if get or set!
+		getSl().clear(); // don't we want all the text including from sl?
+		// if (text.equals("")) text = "vsc";
+		// text = String.format("ZP%dget_%s(%s)", code, ((PropertyStatement)
+		// resolved_element).name(), text); // TODO Don't know if get or set!
+		final String text2 = String.format("ZP%dget_%s", code, ((PropertyStatement) getResolved_element()).name()); // TODO
+																													// Don't
+																													// know
+																													// if
+																													// get
+																													// or
+																													// set!
 		aCReference.addRef(text2, CReference.Ref.PROPERTY_GET);
 	}
 
 	private void _act_FunctionDef(final CReference aCReference) {
-		final OS_Element    parent        = getResolved_element().getParent();
-		int                 our_code      = -1;
+		final OS_Element parent = getResolved_element().getParent();
+		int our_code = -1;
 		final GeneratedNode resolved_node = getResolved();
 
 		if (resolved_node != null) {
@@ -221,8 +229,8 @@ class CReference_getIdentIAPath_IdentIAHelper {
 
 				if (resolvedFunction.getGenClass() instanceof final GeneratedNamespace generatedNamespace) {
 					// FIXME sometimes genClass is not called so above wont work,
-					//  so check if a code was set and use it here
-					final int                cc                 = generatedNamespace.getCode();
+					// so check if a code was set and use it here
+					final int cc = generatedNamespace.getCode();
 					if (cc > 0) {
 						this.code = cc;
 					}
@@ -246,7 +254,7 @@ class CReference_getIdentIAPath_IdentIAHelper {
 	}
 
 	private void _act_FormalArgListItem(final @NotNull CReference aCReference, final @NotNull FormalArgListItem fali) {
-		final int    y     = 2;
+		final int y = 2;
 		final String text2 = "va" + fali.getNameToken().getText();
 		aCReference.addRef(text2, CReference.Ref.LOCAL); // TODO
 	}

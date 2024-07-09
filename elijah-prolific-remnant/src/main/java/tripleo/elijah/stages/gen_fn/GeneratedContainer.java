@@ -23,32 +23,31 @@ import java.util.*;
 public interface GeneratedContainer extends GeneratedNode {
 	OS_Element getElement();
 
-	@Nullable VarTableEntry getVariable(String aVarName);
+	@Nullable
+	VarTableEntry getVariable(String aVarName);
 
 	class VarTableEntry {
-		public final  VariableStatement                                  vs;
-		public final  IdentExpression                                    nameToken;
-		public final  IExpression                                        initialValue;
-		public final  DeferredObject<UpdatePotentialTypesCB, Void, Void> updatePotentialTypesCBPromise = new DeferredObject<>();
-		public final  List<ConnectionPair>                               connectionPairs               = new ArrayList<>();
-		final         TypeName                                           typeName;
-		final         List<TypeTableEntry>                               potentialTypes                = new ArrayList<TypeTableEntry>();
-		private final OS_Element                                         parent;
-		public        OS_Type                                            varType;
+		public final VariableStatement vs;
+		public final IdentExpression nameToken;
+		public final IExpression initialValue;
+		public final DeferredObject<UpdatePotentialTypesCB, Void, Void> updatePotentialTypesCBPromise = new DeferredObject<>();
+		public final List<ConnectionPair> connectionPairs = new ArrayList<>();
+		final TypeName typeName;
+		final List<TypeTableEntry> potentialTypes = new ArrayList<TypeTableEntry>();
+		private final OS_Element parent;
+		public OS_Type varType;
 		UpdatePotentialTypesCB updatePotentialTypesCB;
 		private GeneratedNode _resolvedType;
 
-		public VarTableEntry(final VariableStatement aVs,
-		                     final @NotNull IdentExpression aNameToken,
-		                     final IExpression aInitialValue,
-		                     final @NotNull TypeName aTypeName,
-		                     final @NotNull OS_Element aElement) {
-			vs           = aVs;
-			nameToken    = aNameToken;
+		public VarTableEntry(final VariableStatement aVs, final @NotNull IdentExpression aNameToken,
+				final IExpression aInitialValue, final @NotNull TypeName aTypeName,
+				final @NotNull OS_Element aElement) {
+			vs = aVs;
+			nameToken = aNameToken;
 			initialValue = aInitialValue;
-			typeName     = aTypeName;
-			varType      = new OS_UserType(typeName);
-			parent       = aElement;
+			typeName = aTypeName;
+			varType = new OS_UserType(typeName);
+			parent = aElement;
 		}
 
 		public void addPotentialTypes(@NotNull final Collection<TypeTableEntry> aPotentialTypes) {
@@ -56,7 +55,8 @@ public interface GeneratedContainer extends GeneratedNode {
 		}
 
 		public void resolve(@NotNull final GeneratedNode aResolvedType) {
-			System.out.printf("** [GeneratedContainer 56] resolving VarTableEntry %s to %s%n", nameToken, aResolvedType.identityString());
+			System.out.printf("** [GeneratedContainer 56] resolving VarTableEntry %s to %s%n", nameToken,
+					aResolvedType.identityString());
 			_resolvedType = aResolvedType;
 		}
 
@@ -87,11 +87,11 @@ public interface GeneratedContainer extends GeneratedNode {
 		}
 
 		public static class ConnectionPair {
-			public final VariableTableEntry   vte;
-			final        GeneratedConstructor constructor;
+			public final VariableTableEntry vte;
+			final GeneratedConstructor constructor;
 
 			public ConnectionPair(final VariableTableEntry aVte, final GeneratedConstructor aConstructor) {
-				vte         = aVte;
+				vte = aVte;
 				constructor = aConstructor;
 			}
 		}

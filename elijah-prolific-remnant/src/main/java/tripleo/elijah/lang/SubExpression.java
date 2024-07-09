@@ -14,7 +14,6 @@
  */
 package tripleo.elijah.lang;
 
-
 public class SubExpression extends AbstractExpression {
 
 	private final IExpression carrier;

@@ -8,7 +8,9 @@
  */
 package tripleo.elijah.comp;
 
-public enum FileOption {READ, WRITE}
+public enum FileOption {
+	READ, WRITE
+}
 
 //
 //

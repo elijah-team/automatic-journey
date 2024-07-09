@@ -19,7 +19,7 @@ public class ProcessRecord {
 	}
 
 	public void writeLogs(final @NotNull ICompilationAccess ca) {
-		//ab.writeLogs();
+		// ab.writeLogs();
 		ca.getStage().writeLogs(ca);
 	}
 

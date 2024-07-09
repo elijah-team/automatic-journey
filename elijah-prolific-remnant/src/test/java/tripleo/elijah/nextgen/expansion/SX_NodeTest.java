@@ -17,12 +17,12 @@ public class SX_NodeTest extends TestCase {
 
 	public void testFullText() {
 		final Compilation comp = CompilationFactory.mkCompilation();
-		final AccessBus       ab            = new AccessBus(comp);
-		final PipelineLogic   pipelineLogic = new PipelineLogic(ab);
+		final AccessBus ab = new AccessBus(comp);
+		final PipelineLogic pipelineLogic = new PipelineLogic(ab);
 		final OS_Module mod = comp.moduleBuilder().withFileName("filename.elijah").addToCompilation().build();
 		final OutputFileFactoryParams p = new OutputFileFactoryParams(mod, comp.getErrSink(), ElLog.Verbosity.SILENT,
 				pipelineLogic);
-		final GenerateFiles           fgen = OutputFileFactory.create(CompilationAlways.defaultPrelude(), p);
+		final GenerateFiles fgen = OutputFileFactory.create(CompilationAlways.defaultPrelude(), p);
 
 		final SM_ClassDeclaration node = new SM_ClassDeclaration() {
 			@Override

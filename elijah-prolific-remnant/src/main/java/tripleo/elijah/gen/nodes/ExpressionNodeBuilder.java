@@ -33,7 +33,8 @@ public class ExpressionNodeBuilder {
 
 	@NotNull
 	@Contract("_, _, _, _ -> new")
-	public static IExpression binex(final TypeRef rt, final VariableReference left, final ExpressionOperators middle, final IExpression right) {
+	public static IExpression binex(final TypeRef rt, final VariableReference left, final ExpressionOperators middle,
+			final IExpression right) {
 		// TODO Auto-generated method stub
 		final ExpressionKind middle1 = Helpers.ExpressionOperatorToExpressionType(middle);
 		return new BasicBinaryExpression(left, middle1, right);
@@ -41,22 +42,26 @@ public class ExpressionNodeBuilder {
 
 	@NotNull
 	@Contract("_, _, _, _ -> new")
-	public static IExpression binex(final TypeRef rt, final VariableReference left, final ExpressionOperators middle, final TmpSSACtxNode right) { // todo wrong again
+	public static IExpression binex(final TypeRef rt, final VariableReference left, final ExpressionOperators middle,
+			final TmpSSACtxNode right) { // todo wrong again
 		// TODO Auto-generated method stub
 		final ExpressionKind middle1 = Helpers.ExpressionOperatorToExpressionType(middle);
-		return new BasicBinaryExpression(left, middle1, new StringExpression(tripleo.elijah_fluffy.util.Helpers.makeToken(right.text()))); // TODO !!!
+		return new BasicBinaryExpression(left, middle1,
+				new StringExpression(tripleo.elijah_fluffy.util.Helpers.makeToken(right.text()))); // TODO !!!
 	}
 
 	@NotNull
-	public static IExpressionNode binex(final TypeRef rt, final VariableReferenceNode3 n, final ExpressionOperators opMinus, final NumericExpression integer) {
-		final TypeRef typeRef = new TypeRef(null, null, "int", 80);  // TODO smells
+	public static IExpressionNode binex(final TypeRef rt, final VariableReferenceNode3 n,
+			final ExpressionOperators opMinus, final NumericExpression integer) {
+		final TypeRef typeRef = new TypeRef(null, null, "int", 80); // TODO smells
 		//
 		return new MyIExpressionNode1(n, opMinus, new IntegerNode(integer, typeRef));
 	}
 
 	@NotNull
 	@Contract(value = "_, _, _, _ -> new", pure = true)
-	public static IExpressionNode binex(final TypeRef rt, final VariableReferenceNode3 varref, final ExpressionOperators operators, final TmpSSACtxNode node) {
+	public static IExpressionNode binex(final TypeRef rt, final VariableReferenceNode3 varref,
+			final ExpressionOperators operators, final TmpSSACtxNode node) {
 		return new IExpressionNode() {
 			@Override
 			public IExpression getExpr() {
@@ -90,7 +95,7 @@ public class ExpressionNodeBuilder {
 
 			@Override
 			public String genType() {
-				return null; //rt.getName(); // TODO
+				return null; // rt.getName(); // TODO
 			}
 
 			@Override
@@ -106,10 +111,11 @@ public class ExpressionNodeBuilder {
 	}
 
 	@NotNull
-	public static IExpressionNode fncall(final MethRef aMeth, final List<LocalAgnTmpNode> of) { // TODO no so wrong anymore
+	public static IExpressionNode fncall(final MethRef aMeth, final List<LocalAgnTmpNode> of) { // TODO no so wrong
+																								// anymore
 		final ProcedureCallExpression pce1 = new ProcedureCallExpression();
-		final Qualident               xyz  = new Qualident();
-		final Token                   t    = new CommonToken();
+		final Qualident xyz = new Qualident();
+		final Token t = new CommonToken();
 		xyz.append(tripleo.elijah_fluffy.util.Helpers.string_to_ident(aMeth.getTitle()));
 		pce1.identifier(xyz);
 		//
@@ -146,10 +152,10 @@ public class ExpressionNodeBuilder {
 
 			@Override
 			public String genText(final CompilerContext cctx) {
-				final TypeRef       p    = aMeth.getParent();
-				final int           code = p.getCode();
-				final String        s    = String.format("z%d%s", code, pce1.getLeft().toString());
-				final StringBuilder sb   = new StringBuilder();
+				final TypeRef p = aMeth.getParent();
+				final int code = p.getCode();
+				final String s = String.format("z%d%s", code, pce1.getLeft().toString());
+				final StringBuilder sb = new StringBuilder();
 
 				sb.append(s);
 				sb.append('(');
@@ -165,20 +171,22 @@ public class ExpressionNodeBuilder {
 //					sl.add(s2);
 ////					sb.append(',');
 //				}
-				sb.append(tripleo.elijah_fluffy.util.Helpers.String_join(",", Collections2.transform(pce1.getArgs().expressions(), new Function<IExpression, String>() {
-					@Nullable
-					@Override
-					public String apply(@Nullable final IExpression input) {
-						@NotNull final IExpression arg = input;
-						final String               s2;
-						if (arg instanceof VariableReference) {
-							s2 = ((VariableReference) arg).getName();
-						} else {
-							s2 = arg.toString();
-						}
-						return s2;
-					}
-				})));
+				sb.append(tripleo.elijah_fluffy.util.Helpers.String_join(",",
+						Collections2.transform(pce1.getArgs().expressions(), new Function<IExpression, String>() {
+							@Nullable
+							@Override
+							public String apply(@Nullable final IExpression input) {
+								@NotNull
+								final IExpression arg = input;
+								final String s2;
+								if (arg instanceof VariableReference) {
+									s2 = ((VariableReference) arg).getName();
+								} else {
+									s2 = arg.toString();
+								}
+								return s2;
+							}
+						})));
 				sb.append(')');
 				final String s3 = sb.toString();
 				return s3;
@@ -207,7 +215,7 @@ public class ExpressionNodeBuilder {
 	public static IExpressionNode fncall(final String string, final List<LocalAgnTmpNode> of) { // todo wrong
 		// TODO Auto-generated method stub
 		final ProcedureCallExpression pce1 = new ProcedureCallExpression();
-		final Qualident               xyz  = new Qualident();
+		final Qualident xyz = new Qualident();
 //		final Token t = tripleo.elijah.util.Helpers.makeToken(string);
 		xyz.append(tripleo.elijah_fluffy.util.Helpers.string_to_ident(string));
 		pce1.identifier(xyz);
@@ -307,13 +315,14 @@ public class ExpressionNodeBuilder {
 
 	private static class MyIExpressionNode1 implements IExpressionNode {
 		private final VariableReferenceNode3 _left;
-		private final ExpressionOperators    _middle;
+		private final ExpressionOperators _middle;
 		private final IExpressionNode _right;
 
-		public MyIExpressionNode1(final VariableReferenceNode3 left, final ExpressionOperators middle, final IExpressionNode right) {
-			_left   = left;
+		public MyIExpressionNode1(final VariableReferenceNode3 left, final ExpressionOperators middle,
+				final IExpressionNode right) {
+			_left = left;
 			_middle = middle;
-			_right  = right;
+			_right = right;
 		}
 
 		static String printableExpression(@NotNull final IExpression expression) {
@@ -353,9 +362,9 @@ public class ExpressionNodeBuilder {
 
 		@Override
 		public String genText(final CompilerContext cctx) {
-			final String left    = _left.genText();
+			final String left = _left.genText();
 			final String middle1 = _middle.getSymbol();
-			final String right   = printableExpression(_right.getExpr());
+			final String right = printableExpression(_right.getExpr());
 
 			return String.format("%s %s %s", left, middle1, right);
 		}
@@ -364,8 +373,7 @@ public class ExpressionNodeBuilder {
 		public String genType() {
 			// TODO need lookup somewhere, prolly not here tho...
 			if (_middle == ExpressionOperators.OP_MINUS) {
-				if (_left.getType().getCode() == CODE_U64 &&
-				  is_integer_code(_right.getType().getCode())) {
+				if (_left.getType().getCode() == CODE_U64 && is_integer_code(_right.getType().getCode())) {
 					return _left.getType().genName();
 				}
 			}

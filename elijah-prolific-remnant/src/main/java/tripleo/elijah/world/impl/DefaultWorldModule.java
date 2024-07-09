@@ -13,7 +13,7 @@ public class DefaultWorldModule implements WorldModule {
 
 //	@Getter
 //	private GN_PL_Run2.GenerateFunctionsRequest rq;
-	private final OS_Module   mod;
+	private final OS_Module mod;
 
 	public DefaultWorldModule(final OS_Module aMod, final CompilationEnclosure aCe) {
 		mod = aMod;

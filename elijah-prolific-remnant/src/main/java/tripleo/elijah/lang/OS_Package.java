@@ -20,11 +20,11 @@ import java.util.*;
  *
  */
 public class OS_Package {
-	public final static OS_Package       default_package = WorldGlobals.defaultPackage();
-	final               int              _code;
-	final               Qualident        _name;
-	private final       List<OS_Element> elements        = new ArrayList<OS_Element>();
-	private             PackageContext   _ctx;
+	public final static OS_Package default_package = WorldGlobals.defaultPackage();
+	final int _code;
+	final Qualident _name;
+	private final List<OS_Element> elements = new ArrayList<OS_Element>();
+	private PackageContext _ctx;
 
 	// TODO packages, elements
 

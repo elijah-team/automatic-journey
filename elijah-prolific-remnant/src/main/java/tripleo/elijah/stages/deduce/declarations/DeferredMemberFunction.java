@@ -22,29 +22,30 @@ import tripleo.elijah_fluffy.util.*;
  * Created 11/21/21 6:32 AM
  */
 public class DeferredMemberFunction {
-	private final OS_Element                                        parent;
-	private final BaseFunctionDef                                   functionDef;
-	private final DeferredObject<GenType, Diagnostic, Void>         typePromise = new DeferredObject<GenType, Diagnostic, Void>();
+	private final OS_Element parent;
+	private final BaseFunctionDef functionDef;
+	private final DeferredObject<GenType, Diagnostic, Void> typePromise = new DeferredObject<GenType, Diagnostic, Void>();
 	private final DeferredObject<BaseGeneratedFunction, Void, Void> externalRef = new DeferredObject<BaseGeneratedFunction, Void, Void>();
-	private final DeduceTypes2                                      deduceTypes2;
-	private final FunctionInvocation                                functionInvocation;
+	private final DeduceTypes2 deduceTypes2;
+	private final FunctionInvocation functionInvocation;
 	/**
-	 * A {@link tripleo.elijah.stages.deduce.ClassInvocation} or {@link tripleo.elijah.stages.deduce.NamespaceInvocation}.
-	 * useless if parent is a {@link tripleo.elijah.stages.deduce.DeduceTypes2.OS_SpecialVariable} and its
-	 * {@link tripleo.elijah.stages.deduce.DeduceTypes2.OS_SpecialVariable#memberInvocation} role value is
+	 * A {@link tripleo.elijah.stages.deduce.ClassInvocation} or
+	 * {@link tripleo.elijah.stages.deduce.NamespaceInvocation}. useless if parent
+	 * is a {@link tripleo.elijah.stages.deduce.DeduceTypes2.OS_SpecialVariable} and
+	 * its
+	 * {@link tripleo.elijah.stages.deduce.DeduceTypes2.OS_SpecialVariable#memberInvocation}
+	 * role value is
 	 * {@link tripleo.elijah.stages.deduce.DeduceTypes2.MemberInvocation.Role#INHERITED}
 	 */
-	private       IInvocation                                       invocation;
+	private IInvocation invocation;
 
-	public DeferredMemberFunction(final @NotNull OS_Element aParent,
-	                              final @Nullable IInvocation aInvocation,
-	                              final @NotNull BaseFunctionDef aBaseFunctionDef,
-	                              final @NotNull DeduceTypes2 aDeduceTypes2,
-	                              final @NotNull FunctionInvocation aFunctionInvocation) { // TODO can this be nullable?
-		parent             = aParent;
-		invocation         = aInvocation;
-		functionDef        = aBaseFunctionDef;
-		deduceTypes2       = aDeduceTypes2;
+	public DeferredMemberFunction(final @NotNull OS_Element aParent, final @Nullable IInvocation aInvocation,
+			final @NotNull BaseFunctionDef aBaseFunctionDef, final @NotNull DeduceTypes2 aDeduceTypes2,
+			final @NotNull FunctionInvocation aFunctionInvocation) { // TODO can this be nullable?
+		parent = aParent;
+		invocation = aInvocation;
+		functionDef = aBaseFunctionDef;
+		deduceTypes2 = aDeduceTypes2;
 		functionInvocation = aFunctionInvocation;
 		//
 
@@ -103,10 +104,7 @@ public class DeferredMemberFunction {
 
 	@Override
 	public @NotNull String toString() {
-		return "DeferredMemberFunction{" +
-		  "parent=" + parent +
-		  ", functionName=" + functionDef.name() +
-		  '}';
+		return "DeferredMemberFunction{" + "parent=" + parent + ", functionName=" + functionDef.name() + '}';
 	}
 
 	public FunctionInvocation functionInvocation() {

@@ -9,32 +9,33 @@
 
 package tripleo.elijah.lang;
 
-
 public class BasicBinaryExpression implements IBinaryExpression {
 
-	public IExpression    left;
-	public IExpression    right;
+	public IExpression left;
+	public IExpression right;
 	public ExpressionKind _kind;
 	OS_Type _type;
 
 	public BasicBinaryExpression() {
-		left  = null;
+		left = null;
 		right = null;
 		_kind = null;
 	}
 
 	public BasicBinaryExpression(final IExpression aLeft, final ExpressionKind aType, final IExpression aRight) {
-		left  = aLeft;
+		left = aLeft;
 		_kind = aType;
 		right = aRight;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	public String toString() {
-		final StringBuilder         sb  = new StringBuilder();
+		final StringBuilder sb = new StringBuilder();
 		final BasicBinaryExpression abe = this;
 		switch (abe.getKind()) {
 		case ASSIGNMENT:
@@ -268,9 +269,9 @@ public class BasicBinaryExpression implements IBinaryExpression {
 		case FLOAT:
 			throw new IllegalStateException();
 
-			//
-			// SINGLE EXPRESSIONS
-			//
+		//
+		// SINGLE EXPRESSIONS
+		//
 
 		case INCREMENT:
 			sb.append("++");
@@ -324,14 +325,14 @@ public class BasicBinaryExpression implements IBinaryExpression {
 
 	@Override
 	public void shift(final ExpressionKind aType) {
-		left  = new BasicBinaryExpression(left, _kind, right); //TODO
+		left = new BasicBinaryExpression(left, _kind, right); // TODO
 		_kind = aType;
 		right = null;
 	}
 
 	@Override
 	public void set(final IBinaryExpression aEx) {
-		left  = aEx.getLeft();
+		left = aEx.getLeft();
 		_kind = aEx.getKind();
 		right = aEx.getRight();
 	}

@@ -8,11 +8,10 @@
  */
 package tripleo.elijah.lang;
 
-
 /**
  * @author olu
- * <p>
- * Created 	Apr 16, 2020 at 8:42:54 AM
+ *         <p>
+ *         Created Apr 16, 2020 at 8:42:54 AM
  */
 public class TypeCastExpression extends AbstractExpression implements IExpression {
 

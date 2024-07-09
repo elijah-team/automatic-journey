@@ -18,7 +18,7 @@ import java.util.*;
  * Created 8/15/20 7:09 PM
  */
 public class ImportContext extends Context {
-	private final Context         _parent;
+	private final Context _parent;
 	private final ImportStatement carrier;
 
 	public ImportContext(final Context aParent, final ImportStatement imp) {
@@ -27,7 +27,8 @@ public class ImportContext extends Context {
 	}
 
 	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
+			final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(this);
 //		tripleo.elijah.util.Stupidity.println_err2("2002 " + this.carrier.importList());
 		final Compilation compilation = compilation();
@@ -38,7 +39,8 @@ public class ImportContext extends Context {
 //				LogEvent.logEvent(4003 , ""+aPackage.getElements());
 				for (final OS_Element element : aPackage.getElements()) {
 					SimplePrintLoggerToRemoveSoon.println_err2("4002 " + element);
-					if (element instanceof NamespaceStatement && ((NamespaceStatement) element).getKind() == NamespaceTypes.MODULE) {
+					if (element instanceof NamespaceStatement
+							&& ((NamespaceStatement) element).getKind() == NamespaceTypes.MODULE) {
 //		                LogEvent.logEvent(4103, "");
 						final NamespaceContext namespaceContext = (NamespaceContext) element.getContext();
 						alreadySearched.add(namespaceContext);
@@ -52,8 +54,8 @@ public class ImportContext extends Context {
 				}
 			} else {
 				// find directly imported elements
-				final List<IdentExpression> x    = importStatementItem.parts();
-				final IdentExpression       last = x.get(x.size() - 1);
+				final List<IdentExpression> x = importStatementItem.parts();
+				final IdentExpression last = x.get(x.size() - 1);
 				if (last.getText().equals(name)) {
 					final Qualident cl = new Qualident();
 					for (int i = 0; i < x.size() - 1; i++) {
@@ -65,19 +67,23 @@ public class ImportContext extends Context {
 //						LogEvent.logEvent(4003 , ""+aPackage.getElements());
 						for (final OS_Element element : aPackage.getElements()) {
 							SimplePrintLoggerToRemoveSoon.println_err2("4002 " + element);
-							if (element instanceof NamespaceStatement && ((NamespaceStatement) element).getKind() == NamespaceTypes.MODULE) {
+							if (element instanceof NamespaceStatement
+									&& ((NamespaceStatement) element).getKind() == NamespaceTypes.MODULE) {
 //		                		LogEvent.logEvent(4103, "");
 								final NamespaceContext namespaceContext = (NamespaceContext) element.getContext();
 								alreadySearched.add(namespaceContext);
-								final LookupResultList xxx = namespaceContext.lookup(name, level, Result, alreadySearched, true);
+								final LookupResultList xxx = namespaceContext.lookup(name, level, Result,
+										alreadySearched, true);
 								for (final LookupResult result : xxx.results()) {
-									Result.add(result.getName(), result.getLevel(), result.getElement(), result.getContext());
+									Result.add(result.getName(), result.getLevel(), result.getElement(),
+											result.getContext());
 								}
 							} else {
 								if (element instanceof OS_Element2) {
 									final String element_name = ((OS_Element2) element).name();
 									if (element_name.equals(name)) {
-										Result.add(name, level, element, aPackage.getContext()); // TODO which context do we set it to?
+										Result.add(name, level, element, aPackage.getContext()); // TODO which context
+																									// do we set it to?
 									}
 								}
 							}

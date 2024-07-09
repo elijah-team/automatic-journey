@@ -14,17 +14,18 @@ import java.util.List;
 
 class Implement_construct {
 
-	private final DeduceTypes2          deduceTypes2;
+	private final DeduceTypes2 deduceTypes2;
 	private final BaseGeneratedFunction generatedFunction;
-	private final Instruction           instruction;
-	private final InstructionArgument   expression;
+	private final Instruction instruction;
+	private final InstructionArgument expression;
 
 	private final @NotNull ProcTableEntry pte;
 
-	public Implement_construct(final DeduceTypes2 aDeduceTypes2, final BaseGeneratedFunction aGeneratedFunction, final Instruction aInstruction) {
-		deduceTypes2      = aDeduceTypes2;
+	public Implement_construct(final DeduceTypes2 aDeduceTypes2, final BaseGeneratedFunction aGeneratedFunction,
+			final Instruction aInstruction) {
+		deduceTypes2 = aDeduceTypes2;
 		generatedFunction = aGeneratedFunction;
-		instruction       = aInstruction;
+		instruction = aInstruction;
 
 		// README all these asserts are redundant, I know
 		assert instruction.getName() == InstructionName.CONSTRUCT;
@@ -49,39 +50,51 @@ class Implement_construct {
 	}
 
 	public void action_IdentIA() {
-		@NotNull final IdentTableEntry idte       = ((IdentIA) expression).getEntry();
-		final DeducePath               deducePath = idte.buildDeducePath(generatedFunction);
+		@NotNull
+		final IdentTableEntry idte = ((IdentIA) expression).getEntry();
+		final DeducePath deducePath = idte.buildDeducePath(generatedFunction);
 		{
-			@Nullable OS_Element el3;
-			@Nullable Context    ectx = generatedFunction.getFD().getContext();
+			@Nullable
+			OS_Element el3;
+			@Nullable
+			Context ectx = generatedFunction.getFD().getContext();
 			for (int i = 0; i < deducePath.size(); i++) {
 				final InstructionArgument ia2 = deducePath.getIA(i);
 
 				el3 = deducePath.getElement(i);
 
 				if (ia2 instanceof IntegerIA) {
-					@NotNull final VariableTableEntry vte = ((IntegerIA) ia2).getEntry();
+					@NotNull
+					final VariableTableEntry vte = ((IntegerIA) ia2).getEntry();
 					// TODO will fail if we try to construct a tmp var, but we never try to do that
 					assert vte.vtt != VariableTableType.TEMP;
 					assert el3 != null;
 					assert i == 0;
 					ectx = deducePath.getContext(i);
 				} else if (ia2 instanceof IdentIA) {
-					@NotNull final IdentTableEntry idte2 = ((IdentIA) ia2).getEntry();
-					final String                   s     = idte2.getIdent().toString();
-					final LookupResultList         lrl   = ectx.lookup(s);
-					@Nullable final OS_Element     el2   = lrl.chooseBest(null);
+					@NotNull
+					final IdentTableEntry idte2 = ((IdentIA) ia2).getEntry();
+					final String s = idte2.getIdent().toString();
+					final LookupResultList lrl = ectx.lookup(s);
+					@Nullable
+					final OS_Element el2 = lrl.chooseBest(null);
 					if (el2 == null) {
 						assert el3 instanceof VariableStatement;
-						@Nullable final VariableStatement vs = (VariableStatement) el3;
-						@NotNull final TypeName           tn = vs.typeName();
-						@NotNull final OS_Type            ty = new OS_UserType(tn);
+						@Nullable
+						final VariableStatement vs = (VariableStatement) el3;
+						@NotNull
+						final TypeName tn = vs.typeName();
+						@NotNull
+						final OS_Type ty = new OS_UserType(tn);
 
 						if (idte2.type == null) {
 							// README Don't remember enough about the constructors to select a different one
-							@NotNull final TypeTableEntry tte = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, ty);
+							@NotNull
+							final TypeTableEntry tte = generatedFunction
+									.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, ty);
 							try {
-								@NotNull final GenType resolved = deduceTypes2.resolve_type(ty, tn.getContext());
+								@NotNull
+								final GenType resolved = deduceTypes2.resolve_type(ty, tn.getContext());
 								deduceTypes2.LOG.err("892 resolved: " + resolved);
 								tte.setAttached(resolved);
 							} catch (final ResolveError aResolveError) {
@@ -97,11 +110,15 @@ class Implement_construct {
 						if (i + 1 == deducePath.size()) {
 							assert el3 == el2;
 							if (el2 instanceof ConstructorDef) {
-								@Nullable final GenType type = deducePath.getType(i);
+								@Nullable
+								final GenType type = deducePath.getType(i);
 								if (type.getNonGenericTypeName() == null) {
-									type.setNonGenericTypeName(deducePath.getType(i - 1).getNonGenericTypeName()); // HACK. not guararnteed to work!
+									type.setNonGenericTypeName(deducePath.getType(i - 1).getNonGenericTypeName()); // HACK. not
+																											// guararnteed
+																											// to work!
 								}
-								@NotNull final OS_Type ty = new OS_UserType(type.getNonGenericTypeName());
+								@NotNull
+								final OS_Type ty = new OS_UserType(type.getNonGenericTypeName());
 								implement_construct_type(idte2, ty, s);
 							}
 						} else {
@@ -117,13 +134,16 @@ class Implement_construct {
 	}
 
 	public void action_IntegerIA() {
-		@NotNull final VariableTableEntry vte = generatedFunction.getVarTableEntry(((IntegerIA) expression).getIndex());
+		@NotNull
+		final VariableTableEntry vte = generatedFunction.getVarTableEntry(((IntegerIA) expression).getIndex());
 		assert vte.type.getAttached() != null; // TODO will fail when empty variable expression
-		@Nullable final OS_Type ty = vte.type.getAttached();
+		@Nullable
+		final OS_Type ty = vte.type.getAttached();
 		implement_construct_type(vte, ty, null);
 	}
 
-	private void implement_construct_type(@Nullable final Constructable co, @Nullable final OS_Type aTy, final String constructorName) {
+	private void implement_construct_type(@Nullable final Constructable co, @Nullable final OS_Type aTy,
+			final String constructorName) {
 		assert aTy != null;
 		if (aTy.getType() == OS_Type.Type.USER) {
 			final TypeName tyn = aTy.getTypeName();
@@ -145,18 +165,23 @@ class Implement_construct {
 		}
 	}
 
-	private void _implement_construct_type(@Nullable final Constructable co, @Nullable final String constructorName, @NotNull final NormalTypeName aTyn1) {
-		final String               s    = aTyn1.getName();
-		final LookupResultList     lrl  = aTyn1.getContext().lookup(s);
-		@Nullable final OS_Element best = lrl.chooseBest(null);
+	private void _implement_construct_type(@Nullable final Constructable co, @Nullable final String constructorName,
+			@NotNull final NormalTypeName aTyn1) {
+		final String s = aTyn1.getName();
+		final LookupResultList lrl = aTyn1.getContext().lookup(s);
+		@Nullable
+		final OS_Element best = lrl.chooseBest(null);
 		assert best instanceof ClassStatement;
-		@NotNull final List<TypeName> gp     = ((ClassStatement) best).getGenericPart();
-		@Nullable ClassInvocation     clsinv = new ClassInvocation((ClassStatement) best, constructorName);
+		@NotNull
+		final List<TypeName> gp = ((ClassStatement) best).getGenericPart();
+		@Nullable
+		ClassInvocation clsinv = new ClassInvocation((ClassStatement) best, constructorName);
 		if (gp.size() > 0) {
 			final TypeNameList gp2 = aTyn1.getGenericPart();
 			for (int i = 0; i < gp.size(); i++) {
-				final TypeName         typeName = gp2.get(i);
-				@NotNull final GenType typeName2;
+				final TypeName typeName = gp2.get(i);
+				@NotNull
+				final GenType typeName2;
 				try {
 					// TODO transition to GenType
 					typeName2 = deduceTypes2.resolve_type(new OS_UserType(typeName), typeName.getContext());
@@ -190,10 +215,12 @@ class Implement_construct {
 		pte.setResolvedElement(best);
 		// set FunctionInvocation with pte args
 		{
-			@Nullable ConstructorDef cc = null;
+			@Nullable
+			ConstructorDef cc = null;
 			if (constructorName != null) {
 				final Collection<ConstructorDef> cs = ((ClassStatement) best).getConstructors();
-				for (@NotNull final ConstructorDef c : cs) {
+				for (@NotNull
+				final ConstructorDef c : cs) {
 					if (c.name().equals(constructorName)) {
 						cc = c;
 						break;
@@ -203,7 +230,8 @@ class Implement_construct {
 			// TODO also check arguments
 			{
 				assert cc != null || pte.getArgs().size() == 0;
-				@NotNull final FunctionInvocation fi = deduceTypes2.newFunctionInvocation(cc, pte, clsinv, deduceTypes2.phase);
+				@NotNull
+				final FunctionInvocation fi = deduceTypes2.newFunctionInvocation(cc, pte, clsinv, deduceTypes2.phase);
 				pte.setFunctionInvocation(fi);
 			}
 		}

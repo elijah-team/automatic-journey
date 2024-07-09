@@ -13,12 +13,12 @@ import tripleo.elijah.lang.*;
 import tripleo.elijah_fluffy.util.*;
 
 public class VariableReferenceNode {
-	private final CompilerContext   _cctx;
+	private final CompilerContext _cctx;
 	private final VariableReference _varref;
 
 	public VariableReferenceNode(final CompilerContext cctx, final VariableReference varref) {
 		NotImplementedException.raise();
-		this._cctx   = cctx;
+		this._cctx = cctx;
 		this._varref = varref;
 	}
 

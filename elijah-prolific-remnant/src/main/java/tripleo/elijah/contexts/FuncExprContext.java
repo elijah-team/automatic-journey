@@ -20,7 +20,7 @@ import java.util.*;
 public class FuncExprContext extends FunctionContext {
 
 	private final FuncExpr carrier;
-	private final Context  _parent;
+	private final Context _parent;
 
 	public FuncExprContext(final Context cur, final FuncExpr pc) {
 		super(cur, pc);
@@ -29,14 +29,13 @@ public class FuncExprContext extends FunctionContext {
 	}
 
 	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
+			final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(carrier.getContext());
 		for (final FunctionItem item : carrier.getItems()) {
-			if (!(item instanceof ClassStatement) &&
-			  !(item instanceof NamespaceStatement) &&
-			  !(item instanceof FunctionDef) &&
-			  !(item instanceof VariableSequence)
-			) continue;
+			if (!(item instanceof ClassStatement) && !(item instanceof NamespaceStatement)
+					&& !(item instanceof FunctionDef) && !(item instanceof VariableSequence))
+				continue;
 			if (item instanceof OS_Element2) {
 				if (((OS_Element2) item).name().equals(name)) {
 					Result.add(name, level, item, this);
@@ -55,7 +54,7 @@ public class FuncExprContext extends FunctionContext {
 			}
 		}
 		if (carrier.getParent() != null) {
-			final Context context = getParent()/*carrier.getParent().getContext()*/;
+			final Context context = getParent()/* carrier.getParent().getContext() */;
 			if (!alreadySearched.contains(context) || !one)
 				return context.lookup(name, level + 1, Result, alreadySearched, false);
 		}

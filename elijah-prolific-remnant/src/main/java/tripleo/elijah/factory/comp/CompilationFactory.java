@@ -16,7 +16,7 @@ public class CompilationFactory {
 
 	public static CompilationImpl mkCompilation2(final List<IFunctionMapHook> aMapHooks) {
 		final StdErrSink errSink = new StdErrSink();
-		final IO         io      = new IO();
+		final IO io = new IO();
 
 		final @NotNull CompilationImpl c = mkCompilation(errSink, io);
 

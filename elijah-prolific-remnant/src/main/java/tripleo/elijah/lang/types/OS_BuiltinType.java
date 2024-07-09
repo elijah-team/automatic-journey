@@ -36,5 +36,3 @@ public class OS_BuiltinType extends __Abstract_OS_Type {
 		return MessageFormat.format("<OS_BuiltinType {0}>", _bit);
 	}
 }
-
-

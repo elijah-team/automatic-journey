@@ -16,20 +16,19 @@ import java.util.*;
 
 /**
  * @author Tripleo
- * <p>
- * Created 	Mar 30, 2020 at 7:41:52 AM
+ *         <p>
+ *         Created Mar 30, 2020 at 7:41:52 AM
  */
 public class FuncExpr extends BaseFunctionDef implements IExpression, OS_Element {
 
-	//	private FormalArgList argList = new FormalArgList();
-	private TypeName        _returnType;
-	private OS_Type         _type;
+	// private FormalArgList argList = new FormalArgList();
+	private TypeName _returnType;
+	private OS_Type _type;
 	private FuncExprContext _ctx;
 //	private Scope3 scope3;
 
 	public void type(final TypeModifiers modifier) {
-		assert modifier == TypeModifiers.FUNCTION ||
-		  modifier == TypeModifiers.PROCEDURE;
+		assert modifier == TypeModifiers.FUNCTION || modifier == TypeModifiers.PROCEDURE;
 	}
 
 	public TypeName returnType() {
@@ -58,7 +57,8 @@ public class FuncExpr extends BaseFunctionDef implements IExpression, OS_Element
 	@Override
 	public OS_Element getParent() {
 //		throw new NotImplementedException();
-		return null; // getContext().getParent().carrier() except if it is an Expression; but Expression is not an Element
+		return null; // getContext().getParent().carrier() except if it is an Expression; but
+						// Expression is not an Element
 	}
 
 	// region arglist
@@ -108,7 +108,8 @@ public class FuncExpr extends BaseFunctionDef implements IExpression, OS_Element
 	public String repr_() {
 		return null;
 	}
-@Override
+
+	@Override
 	public boolean is_simple() {
 		return false;
 	}
@@ -117,7 +118,8 @@ public class FuncExpr extends BaseFunctionDef implements IExpression, OS_Element
 	public OS_Type getType() {
 		return _type;
 	}
-/************* FOR THE OTHER ONE ******************/
+
+	/************* FOR THE OTHER ONE ******************/
 	@Override
 	public void setType(final OS_Type deducedExpression) {
 		_type = deducedExpression;
@@ -132,13 +134,10 @@ public class FuncExpr extends BaseFunctionDef implements IExpression, OS_Element
 		return scope3;
 	}
 
-
-
 //	@Override
 //	public void scope(Scope3 sco) {
 //		scope3 = sco;
 //	}
-
 
 }
 

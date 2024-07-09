@@ -15,13 +15,14 @@ import tripleo.elijah_fluffy.util.*;
 
 /**
  * @author Tripleo(sb)
- * <p>
- * Created Apr 2, 2019 at 11:08:12 AM
+ *         <p>
+ *         Created Apr 2, 2019 at 11:08:12 AM
  */
-public class NamespaceStatement extends _CommonNC implements Documentable, ModuleItem, ClassItem, StatementItem, FunctionItem, OS_Container, OS_Element2 {
+public class NamespaceStatement extends _CommonNC
+		implements Documentable, ModuleItem, ClassItem, StatementItem, FunctionItem, OS_Container, OS_Element2 {
 
-	private final OS_Element     parent;
-	private       NamespaceTypes _kind;
+	private final OS_Element parent;
+	private NamespaceTypes _kind;
 
 	public NamespaceStatement(final OS_Element aElement, final Context context) {
 		parent = aElement; // setParent

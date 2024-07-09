@@ -9,7 +9,8 @@ import java.util.*;
 
 public interface GenerateFiles extends CodeGenerator {
 
-	GenerateResult generateCode(final @NotNull Collection<GeneratedNode> aNodeCollection, final @NotNull WorkManager aWorkManager);
+	GenerateResult generateCode(final @NotNull Collection<GeneratedNode> aNodeCollection,
+			final @NotNull WorkManager aWorkManager);
 
 	void forNode(final SM_Node aNode);
 

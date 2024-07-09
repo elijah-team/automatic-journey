@@ -14,14 +14,13 @@ import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 
-
 //
 
 /**
  * Created 12/22/20 11:26 PM
  */
-public class ConstructorDefScope extends BaseFunctionDefScope implements Documentable /*extends FunctionDefScope*/ {
-	//	private List<ElBuilder> _items = new ArrayList<ElBuilder>();
+public class ConstructorDefScope extends BaseFunctionDefScope implements Documentable /* extends FunctionDefScope */ {
+	// private List<ElBuilder> _items = new ArrayList<ElBuilder>();
 	private final List<Token> docstrings = new ArrayList<Token>();
 
 //	@Override

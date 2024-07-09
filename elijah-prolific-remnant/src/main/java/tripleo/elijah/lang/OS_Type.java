@@ -19,16 +19,18 @@ public interface OS_Type {
 
 	Type getType();
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Object#toString()
 	 */
 	@Override
 	String toString();
 
-	/*@ requires type_of_type = Type.BUILT_IN; */
+	/* @ requires type_of_type = Type.BUILT_IN; */
 	BuiltInTypes getBType();
 
-	/*@ requires type_of_type = Type.USER; */
+	/* @ requires type_of_type = Type.USER; */
 	TypeName getTypeName();
 
 	boolean isEqual(OS_Type aType);

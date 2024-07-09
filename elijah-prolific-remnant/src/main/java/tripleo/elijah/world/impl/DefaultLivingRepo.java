@@ -9,10 +9,10 @@ import tripleo.elijah_fluffy.util.*;
 import java.util.*;
 
 public class DefaultLivingRepo implements LivingRepo {
-	private final Map<String, OS_Package> _packages     = new HashMap<String, OS_Package>();
-	private       int                     _packageCode  = 1;
-	private       int                     _classCode    = 101;
-	private       int                     _functionCode = 1001;
+	private final Map<String, OS_Package> _packages = new HashMap<String, OS_Package>();
+	private int _packageCode = 1;
+	private int _classCode = 101;
+	private int _functionCode = 1001;
 
 	public OS_Package makePackage(final Qualident pkg_name) {
 		final String pkg_name_s = pkg_name.toString();
@@ -59,10 +59,10 @@ public class DefaultLivingRepo implements LivingRepo {
 			aFunction.setCode(nextFunctionCode());
 		}
 		case MAIN_FUNCTION -> {
-			if (aFunction.getFD() instanceof FunctionDef &&
-			  MainClassEntryPoint.is_main_function_with_no_args((FunctionDef) aFunction.getFD())) {
+			if (aFunction.getFD() instanceof FunctionDef
+					&& MainClassEntryPoint.is_main_function_with_no_args((FunctionDef) aFunction.getFD())) {
 				aFunction.setCode(1000);
-				//compilation.notifyFunction(code, aFunction);
+				// compilation.notifyFunction(code, aFunction);
 			} else {
 				throw new IllegalArgumentException("not a main function");
 			}

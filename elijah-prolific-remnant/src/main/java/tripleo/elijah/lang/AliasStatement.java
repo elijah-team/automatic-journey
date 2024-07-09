@@ -13,13 +13,13 @@ import tripleo.elijah.lang2.*;
 import tripleo.elijah_fluffy.util.*;
 
 public class AliasStatement implements ModuleItem, ClassItem, FunctionItem, OS_Element2, Resolvable {
-	private final OS_Element      parent;
-	private       IExpression     expr;
-	//	private String name;
-	private       OS_Element      _resolvedElement;
-	private       IdentExpression nameToken;
+	private final OS_Element parent;
+	private IExpression expr;
+	// private String name;
+	private OS_Element _resolvedElement;
+	private IdentExpression nameToken;
 	private AccessNotation access_note;
-	private El_Category    category;
+	private El_Category category;
 
 	public AliasStatement(final OS_Element aParent) {
 		this.parent = aParent;
@@ -35,9 +35,8 @@ public class AliasStatement implements ModuleItem, ClassItem, FunctionItem, OS_E
 	}
 
 	public void setExpression(final IExpression expr) {
-		if (expr.getKind() != ExpressionKind.IDENT &&
-		  expr.getKind() != ExpressionKind.QIDENT &&
-		  expr.getKind() != ExpressionKind.DOT_EXP) // TODO need DOT_EXP to QIDENT
+		if (expr.getKind() != ExpressionKind.IDENT && expr.getKind() != ExpressionKind.QIDENT
+				&& expr.getKind() != ExpressionKind.DOT_EXP) // TODO need DOT_EXP to QIDENT
 		{
 			throw new NotImplementedException();
 //			tripleo.elijah.util.Stupidity.println2(String.format("[AliasStatement#setExpression] %s %s", expr, expr.getKind()));

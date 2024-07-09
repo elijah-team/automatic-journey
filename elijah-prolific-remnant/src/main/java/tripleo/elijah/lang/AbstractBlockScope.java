@@ -12,21 +12,21 @@ public abstract class AbstractBlockScope implements Scope {
 
 	public AbstractBlockScope(final OS_Container _element) {
 		this._element = _element;
-		this.asc      = new AbstractStatementClosure(this, getParent());
+		this.asc = new AbstractStatementClosure(this, getParent());
 	}
 
 	@Override
 	public void addDocString(final Token aS) {
 		_element.addDocString(aS);
-	}	@Override
+	}
+
+	@Override
 	public void add(final StatementItem aItem) {
 		if (aItem instanceof FunctionItem)
 			_element.add((OS_Element) aItem);
 		else
 			System.err.printf("adding false FunctionItem %s%n", aItem.getClass().getName());
 	}
-
-
 
 	@Override
 	public BlockStatement blockStatement() {
@@ -55,7 +55,9 @@ public abstract class AbstractBlockScope implements Scope {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see tripleo.elijah.lang.Scope#getParent()
 	 */
 	@Override

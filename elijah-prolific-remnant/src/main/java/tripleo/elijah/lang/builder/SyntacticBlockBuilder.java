@@ -15,7 +15,7 @@ import tripleo.elijah.lang.*;
  */
 public class SyntacticBlockBuilder extends ElBuilder {
 	private final SyntacticBlockScope _scope = new SyntacticBlockScope();
-	private       Context             _context;
+	private Context _context;
 
 	@Override
 	protected SyntacticBlock build() {

@@ -18,23 +18,21 @@ import tripleo.elijah.lang2.*;
  *
  */
 public class ConstructStatement implements FunctionItem, StatementItem, OS_Element {
-	private final OS_Element     parent;
-	private final Context        context;
-	private final IExpression    _expr;
+	private final OS_Element parent;
+	private final Context context;
+	private final IExpression _expr;
 	private final ExpressionList _args;
-	private final String         constructorName;
+	private final String constructorName;
 //	private OS_Type _type;
 
-	public ConstructStatement(@NotNull final OS_Element aParent,
-	                          @NotNull final Context aContext,
-	                          @NotNull final IExpression aExpr,
-	                          @Nullable final String aConstructorName,
-	                          @Nullable final ExpressionList aExpressionList) {
-		parent          = aParent;
-		context         = aContext;
-		_expr           = aExpr;
+	public ConstructStatement(@NotNull final OS_Element aParent, @NotNull final Context aContext,
+			@NotNull final IExpression aExpr, @Nullable final String aConstructorName,
+			@Nullable final ExpressionList aExpressionList) {
+		parent = aParent;
+		context = aContext;
+		_expr = aExpr;
 		constructorName = aConstructorName;
-		_args           = aExpressionList;
+		_args = aExpressionList;
 	}
 
 //	@Override

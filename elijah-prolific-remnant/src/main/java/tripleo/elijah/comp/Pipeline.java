@@ -15,7 +15,7 @@ import java.util.*;
  */
 public class Pipeline {
 	private final List<PipelineMember> pls = new ArrayList<>();
-	private final ErrSink              errSink;
+	private final ErrSink errSink;
 
 	public Pipeline(final ErrSink aErrSink) {
 		errSink = aErrSink;

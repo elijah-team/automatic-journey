@@ -23,16 +23,15 @@ import java.util.*;
  * Created 3/5/22 4:55 PM
  */
 public class CouldntGenerateClass implements Diagnostic {
-	private final ClassDefinition   classDefinition;
+	private final ClassDefinition classDefinition;
 	private final GenerateFunctions generateFunctions;
-	private final ClassInvocation   classInvocation;
+	private final ClassInvocation classInvocation;
 
-	public CouldntGenerateClass(final ClassDefinition aClassDefinition,
-	                            final GenerateFunctions aGenerateFunctions,
-	                            final ClassInvocation aClassInvocation) {
-		classDefinition   = aClassDefinition;
+	public CouldntGenerateClass(final ClassDefinition aClassDefinition, final GenerateFunctions aGenerateFunctions,
+			final ClassInvocation aClassInvocation) {
+		classDefinition = aClassDefinition;
 		generateFunctions = aGenerateFunctions;
-		classInvocation   = aClassInvocation;
+		classInvocation = aClassInvocation;
 	}
 
 	@Override

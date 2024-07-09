@@ -13,29 +13,30 @@ import static rife.bld.operations.TemplateType.*;
 
 public class RifersBuild extends WebProject {
 	public RifersBuild() {
-		pkg              = "rifers";
-		name             = "Rifers";
-		mainClass        = "rifers.RifersSite";
+		pkg = "rifers";
+		name = "Rifers";
+		mainClass = "rifers.RifersSite";
 		uberJarMainClass = "rifers.RifersSiteUber";
-		version          = version(1, 0, 0);
+		version = version(1, 0, 0);
 
-		downloadSources   = true;
+		downloadSources = true;
 		autoDownloadPurge = true;
 
-		final String V_activej_version   = "6.0-SNAPSHOT";
+		final String V_activej_version = "6.0-SNAPSHOT";
 		final String V_jdeferred_version = "2.0.0";
-		final String V_guava_version   = "33.1.0-jre";
+		final String V_guava_version = "33.1.0-jre";
 		final String V_buffers_version = "0.0.3";
-		final String V_range_version   = "0.0.3b";
+		final String V_range_version = "0.0.3b";
 
-		final Repository GITLAB_MAVEN_BUFFERS = new Repository("https://gitlab.com/api/v4/projects/20346374/packages/maven");
-		final Repository GITLAB_MAVEN_RANGE = new Repository("https://gitlab.com/api/v4/projects/21223510/packages/maven");
+		final Repository GITLAB_MAVEN_BUFFERS = new Repository(
+				"https://gitlab.com/api/v4/projects/20346374/packages/maven");
+		final Repository GITLAB_MAVEN_RANGE = new Repository(
+				"https://gitlab.com/api/v4/projects/21223510/packages/maven");
 		final Repository JITPACK = new Repository("https://jitpack,io");
 
 		repositories = List.of(MAVEN_CENTRAL, RIFE2_RELEASES, GITLAB_MAVEN_RANGE, GITLAB_MAVEN_BUFFERS, JITPACK);
 
-		scope(compile)
-				.include(dependency("com.uwyn.rife2", "bld", "1.9.1")) // ??
+		scope(compile).include(dependency("com.uwyn.rife2", "bld", "1.9.1")) // ??
 				.include(dependency("com.uwyn.rife2", "rife2", version(1, 7, 3)))
 				.include(dependency("com.uwyn.rife2", "rife2-core", "1.8.1"))
 				.include(dependency("com.uwyn.rife2", "rife2-renderers", "1.1.5"))
@@ -70,8 +71,7 @@ public class RifersBuild extends WebProject {
 				.include(dependency("com.google.guava", "guava", V_guava_version))
 				.include(dependency("tripleo.buffers", "buffers-v1", V_buffers_version))
 				.include(dependency("tripleo.util.range", "range-v1", V_range_version));
-		scope(test)
-				.include(dependency("org.jsoup", "jsoup", version(1, 17, 2)))
+		scope(test).include(dependency("org.jsoup", "jsoup", version(1, 17, 2)))
 
 				.include(dependency("org.junit.jupiter", "junit-jupiter", version(5, 10, 2)))
 				.include(dependency("org.junit.platform", "junit-platform-console-standalone", version(1, 10, 2)))
@@ -80,21 +80,18 @@ public class RifersBuild extends WebProject {
 				.include(dependency("org.easymock", "easymock", "5.2.0"))
 				.include(dependency("junit", "junit", "4.13.2"));
 
-		scope(standalone)
-				.include(dependency("org.eclipse.jetty.ee10", "jetty-ee10", version(12, 0, 6)))
+		scope(standalone).include(dependency("org.eclipse.jetty.ee10", "jetty-ee10", version(12, 0, 6)))
 				.include(dependency("org.eclipse.jetty.ee10", "jetty-ee10-servlet", version(12, 0, 6)))
 				.include(dependency("org.slf4j", "slf4j-simple", version(2, 0, 12)));
 
-		precompileOperation()
-				.templateTypes(HTML);
+		precompileOperation().templateTypes(HTML);
 
 		var core_directory = new File(workDirectory(), "src");
 		var mal_directory = new File(workDirectory(), "src");
 		var undertow_directory = new File(workDirectory(), "src");
 		var cef_directory = new File(workDirectory(), "src");
 
-		compileOperation()
-				.buildMainDirectory(Path.of(core_directory.toString(), "main", "java").toFile())
+		compileOperation().buildMainDirectory(Path.of(core_directory.toString(), "main", "java").toFile())
 				.buildMainDirectory(Path.of(mal_directory.toString(), "java").toFile())
 				.buildMainDirectory(Path.of(undertow_directory.toString(), "java").toFile())
 				.buildMainDirectory(Path.of(cef_directory.toString(), "java").toFile())

@@ -20,10 +20,10 @@ import tripleo.elijah.gen.*;
 public class CloseTmpCtxNode {
 
 	CompilerContext cctx;
-	TmpSSACtxNode   tmpNode;
+	TmpSSACtxNode tmpNode;
 
 	public CloseTmpCtxNode(final CompilerContext cctx, final TmpSSACtxNode tmpNode) {
-		this.cctx    = cctx;
+		this.cctx = cctx;
 		this.tmpNode = tmpNode;
 	}
 }

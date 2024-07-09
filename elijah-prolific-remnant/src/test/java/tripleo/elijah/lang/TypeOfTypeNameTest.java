@@ -26,8 +26,8 @@ public class TypeOfTypeNameTest {
 		//
 		// CREATE MOCKS
 		//
-		final Context     ctx = mock(Context.class);
-		final OS_Module   mod = mock(OS_Module.class);
+		final Context ctx = mock(Context.class);
+		final OS_Module mod = mock(OS_Module.class);
 		final Compilation c = CompilationFactory.mkCompilation();
 
 		//
@@ -63,10 +63,10 @@ public class TypeOfTypeNameTest {
 		//
 		// VERIFY EXPECTATIONS
 		//
-		final AccessBus     ab           = new AccessBus(c);
-		final PipelineLogic pl           = new PipelineLogic(ab);
+		final AccessBus ab = new AccessBus(c);
+		final PipelineLogic pl = new PipelineLogic(ab);
 		final DeduceTypes2 deduceTypes2 = new DeduceTypes2(mod, pl.getDp());
-		final TypeName      tn           = t.resolve(ctx, deduceTypes2);
+		final TypeName tn = t.resolve(ctx, deduceTypes2);
 //		System.out.println(tn);
 		verify(ctx, mod);
 		Assert.assertEquals(typeNameString, tn.toString());
@@ -78,8 +78,8 @@ public class TypeOfTypeNameTest {
 		//
 		// CREATE MOCKS
 		//
-		final Context     ctx = mock(Context.class);
-		final OS_Module   mod = mock(OS_Module.class);
+		final Context ctx = mock(Context.class);
+		final OS_Module mod = mock(OS_Module.class);
 		final Compilation c = CompilationFactory.mkCompilation();
 
 		//
@@ -116,10 +116,10 @@ public class TypeOfTypeNameTest {
 		//
 		// VERIFY EXPECTATIONS
 		//
-		final AccessBus     ab           = new AccessBus(c);
-		final PipelineLogic pl           = new PipelineLogic(ab);
+		final AccessBus ab = new AccessBus(c);
+		final PipelineLogic pl = new PipelineLogic(ab);
 		final DeduceTypes2 deduceTypes2 = new DeduceTypes2(mod, pl.getDp());
-		final TypeName      tn           = t.resolve(ctx, deduceTypes2);
+		final TypeName tn = t.resolve(ctx, deduceTypes2);
 //		System.out.println(tn);
 		verify(ctx, mod);
 		Assert.assertEquals(typeNameString, tn.toString());
@@ -194,14 +194,14 @@ public class TypeOfTypeNameTest {
 		//
 		// CREATE MOCK
 		//
-		final Context ctx  = mock(Context.class);
+		final Context ctx = mock(Context.class);
 		final Context ctx4 = mock(Context.class);
 
 		//
 		// CREATE VARIABLES
 		//
 		final String typeNameString1 = "AbstractFactory";
-		final String typeNameString  = "SystemInteger";
+		final String typeNameString = "SystemInteger";
 
 		final OS_Module mod = new OS_Module();
 		mod.parent = CompilationFactory.mkCompilation();
@@ -212,7 +212,7 @@ public class TypeOfTypeNameTest {
 		final ClassStatement sysint = new ClassStatement(mod, mod_ctx);
 		sysint.setName(IdentExpression.forString("SystemInteger"));
 
-		final VariableSequence  vs    = new VariableSequence(st_af.getContext());
+		final VariableSequence vs = new VariableSequence(st_af.getContext());
 		final VariableStatement var_y = vs.next();
 		var_y.setName(IdentExpression.forString("y"));
 		final RegularTypeName rtn_y = new RegularTypeName(ctx);
@@ -267,7 +267,7 @@ public class TypeOfTypeNameTest {
 		//
 		final TypeName tn = t.resolve(ctx, deduceTypes2);
 //		System.out.println(tn);
-		verify(ctx/*, mod.parent*/);
+		verify(ctx/* , mod.parent */);
 		Assert.assertEquals(typeNameString, tn.toString());
 	}
 

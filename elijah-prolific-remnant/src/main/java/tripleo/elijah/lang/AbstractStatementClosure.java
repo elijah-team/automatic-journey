@@ -15,25 +15,24 @@ import tripleo.elijah.contexts.*;
 
 import java.util.*;
 
-
 public final class AbstractStatementClosure implements StatementClosure, StatementItem {
 
 	final List<StatementItem> items = new ArrayList<StatementItem>();
 	final Scope parent_scope;
 	private OS_Element _parent;
-	private BlockStatement     bs;
+	private BlockStatement bs;
 	private ConstructStatement ctex;
 //	public IExpression constructExpression() {
 //		ctex=new ConstructStatement(this.parent_scope);
 //		add(ctex);
 //		return ctex;
 //	}
-	private IfConditional      ifex;
-	private Loop                     loop;
-	private ProcedureCallExpression  pce;
+	private IfConditional ifex;
+	private Loop loop;
+	private ProcedureCallExpression pce;
 	private AbstractStatementClosure pcex;
-	private VariableSequence         vsq;
-	private YieldExpression          yiex;
+	private VariableSequence vsq;
+	private YieldExpression yiex;
 
 	public AbstractStatementClosure(final Scope aParent) {
 		// TODO doesn't set _parent
@@ -42,7 +41,7 @@ public final class AbstractStatementClosure implements StatementClosure, Stateme
 
 	public AbstractStatementClosure(final ClassStatement classStatement) {
 		// TODO check final member
-		_parent      = classStatement;
+		_parent = classStatement;
 		parent_scope = new AbstractScope2(_parent) {
 
 			@Override
@@ -65,13 +64,13 @@ public final class AbstractStatementClosure implements StatementClosure, Stateme
 
 	public AbstractStatementClosure(final Scope scope, final OS_Element parent1) {
 		parent_scope = scope;
-		_parent      = parent1;
+		_parent = parent1;
 	}
 
 	@Override
 	public VariableSequence varSeq(final Context ctx) {
 		vsq = new VariableSequence(ctx);
-		vsq.setParent(parent_scope.getParent()/*this.getParent()*/); // TODO look at this
+		vsq.setParent(parent_scope.getParent()/* this.getParent() */); // TODO look at this
 //		vsq.setContext(ctx); //redundant
 		return (VariableSequence) add(vsq);
 	}

@@ -38,8 +38,8 @@ public class CReference {
 	//
 	//
 	GeneratedClass _cheat = null;
-	private String          rtext = null;
-	private List<String>    args;
+	private String rtext = null;
+	private List<String> args;
 	private List<Reference> refs;
 	//
 	//
@@ -65,16 +65,17 @@ public class CReference {
 		return s;
 	}
 
-	public String getIdentIAPath(final @NotNull IdentIA ia2, final Generate_Code_For_Method.AOG aog, final String aValue) {
-		final BaseGeneratedFunction     generatedFunction = ia2.gf;
-		final List<InstructionArgument> s                 = _getIdentIAPathList(ia2);
+	public String getIdentIAPath(final @NotNull IdentIA ia2, final Generate_Code_For_Method.AOG aog,
+			final String aValue) {
+		final BaseGeneratedFunction generatedFunction = ia2.gf;
+		final List<InstructionArgument> s = _getIdentIAPathList(ia2);
 		refs = new ArrayList<Reference>(s.size());
 
 		//
 		// TODO NOT LOOKING UP THINGS, IE PROPERTIES, MEMBERS
 		//
-		String             text = "";
-		final List<String> sl   = new ArrayList<String>();
+		String text = "";
+		final List<String> sl = new ArrayList<String>();
 		for (int i = 0, sSize = s.size(); i < sSize; i++) {
 			final InstructionArgument ia = s.get(i);
 			if (ia instanceof IntegerIA) {
@@ -83,8 +84,8 @@ public class CReference {
 				final VariableTableEntry vte = generatedFunction.getVarTableEntry(to_int(ia));
 
 				if (vte.getName().equals("a1")) {
-					final GenType        gt1 = vte.genType;
-					final GenType        gt2 = vte.type.genType;
+					final GenType gt1 = vte.genType;
+					final GenType gt2 = vte.type.genType;
 					final GeneratedClass gc1 = (GeneratedClass) vte.genType.getNode();
 
 					_cheat = gc1;
@@ -116,7 +117,8 @@ public class CReference {
 				addRef(vte.getName(), Ref.LOCAL);
 			} else if (ia instanceof IdentIA) {
 				final IdentTableEntry idte = ((IdentIA) ia).getEntry();
-				text = CRI_Ident.of(idte, ((IdentIA) ia).gf).getIdentIAPath(i, sSize, aog, sl, aValue, refs::add, s, ia2, this);
+				text = CRI_Ident.of(idte, ((IdentIA) ia).gf).getIdentIAPath(i, sSize, aog, sl, aValue, refs::add, s,
+						ia2, this);
 			} else if (ia instanceof ProcIA) {
 				final ProcTableEntry prte = generatedFunction.getProcTableEntry(to_int(ia));
 				text = getIdentIAPath_Proc(prte);
@@ -135,9 +137,9 @@ public class CReference {
 	}
 
 	public String getIdentIAPath_Proc(final @NotNull ProcTableEntry aPrte) {
-		final String[]              text      = new String[1];
+		final String[] text = new String[1];
 		final BaseGeneratedFunction generated = aPrte.getFunctionInvocation().getGenerated();
-		final IDeduceElement3       de_pte    = aPrte.getDeduceElement3();
+		final IDeduceElement3 de_pte = aPrte.getDeduceElement3();
 
 		if (generated == null)
 			throw new IllegalStateException();
@@ -146,7 +148,7 @@ public class CReference {
 			NotImplementedException.raise();
 			generated.onGenClass(genClass -> {
 				final IdentExpression constructorName = generated.getFD().getNameNode();
-				final String          constructorNameText;
+				final String constructorNameText;
 				if (constructorName == ConstructorDef.emptyConstructorName) {
 					constructorNameText = "";
 				} else {
@@ -158,7 +160,7 @@ public class CReference {
 			final GeneratedContainerNC genClass = (GeneratedContainerNC) generated.getGenClass();
 			if (genClass == null) {
 				final int y = 2;
-				//generated.setClass(genClass);
+				// generated.setClass(genClass);
 			}
 		} else {
 			generated.onGenClass(genClass -> {
@@ -223,11 +225,11 @@ public class CReference {
 	}
 
 	enum Ref {
-		//  was:
-		//	enum Ref {
-		//		LOCAL, MEMBER, PROPERTY_GET, PROPERTY_SET, INLINE_MEMBER, CONSTRUCTOR, DIRECT_MEMBER, LITERAL, PROPERTY (removed), FUNCTION
-		//	}
-
+		// was:
+		// enum Ref {
+		// LOCAL, MEMBER, PROPERTY_GET, PROPERTY_SET, INLINE_MEMBER, CONSTRUCTOR,
+		// DIRECT_MEMBER, LITERAL, PROPERTY (removed), FUNCTION
+		// }
 
 		// https://www.baeldung.com/a-guide-to-java-enums
 		LOCAL {
@@ -259,7 +261,7 @@ public class CReference {
 			public void buildHelper(final Reference ref, final BuildState sb) {
 				final String text;
 				final String s = sb.toString();
-				text    = String.format("%s%s)", ref.text, s);
+				text = String.format("%s%s)", ref.text, s);
 				sb.open = false;
 //				if (!s.equals(""))
 				sb.needs_comma = false;
@@ -271,7 +273,7 @@ public class CReference {
 			public void buildHelper(final Reference ref, final BuildState sb) {
 				final String text;
 				final String s = sb.toString();
-				text    = String.format("%s%s, %s);", ref.text, s, ref.value);
+				text = String.format("%s%s, %s);", ref.text, s, ref.value);
 				sb.open = false;
 //				if (!s.equals(""))
 				sb.needs_comma = false;
@@ -288,11 +290,12 @@ public class CReference {
 		CONSTRUCTOR {
 			@Override
 			public void buildHelper(final Reference ref, final BuildState sb) {
-				final String          text;
+				final String text;
 				final @NotNull String s = sb.toString();
-				text    = String.format("%s(%s", ref.text, s);
+				text = String.format("%s(%s", ref.text, s);
 				sb.open = false;
-				if (!s.equals("")) sb.needs_comma = true;
+				if (!s.equals(""))
+					sb.needs_comma = true;
 				sb.appendText(text + ")", true);
 			}
 		},
@@ -326,9 +329,10 @@ public class CReference {
 			public void buildHelper(final Reference ref, final BuildState sb) {
 				final String text;
 				final String s = sb.toString();
-				text    = String.format("%s(%s", ref.text, s);
+				text = String.format("%s(%s", ref.text, s);
 				sb.open = true;
-				if (!s.equals("")) sb.needs_comma = true;
+				if (!s.equals(""))
+					sb.needs_comma = true;
 				sb.appendText(text, true);
 			}
 		};
@@ -352,18 +356,18 @@ public class CReference {
 
 	static class Reference {
 		final String text;
-		final Ref    type;
+		final Ref type;
 		final String value;
 
 		public Reference(final String aText, final Ref aType, final String aValue) {
-			text  = aText;
-			type  = aType;
+			text = aText;
+			type = aType;
 			value = aValue;
 		}
 
 		public Reference(final String aText, final Ref aType) {
-			text  = aText;
-			type  = aType;
+			text = aText;
+			type = aType;
 			value = null;
 		}
 
@@ -373,8 +377,8 @@ public class CReference {
 	}
 
 	private final static class BuildState {
-		StringBuilder sb   = new StringBuilder();
-		boolean       open = false, needs_comma = false;
+		StringBuilder sb = new StringBuilder();
+		boolean open = false, needs_comma = false;
 
 		public void appendText(final String text, final boolean erase) {
 			if (erase)
@@ -387,7 +391,7 @@ public class CReference {
 		public String toString() {
 			return sb.toString();
 		}
-		//ABOVE 3a
+		// ABOVE 3a
 	}
 
 	class GI_ProcIA implements GenerateC_Item {

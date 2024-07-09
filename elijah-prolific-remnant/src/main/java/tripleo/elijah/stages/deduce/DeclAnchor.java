@@ -15,13 +15,13 @@ import tripleo.elijah.lang.*;
  * Created 1/3/22 10:31 PM
  */
 public class DeclAnchor {
-	final   AnchorType  anchorType;
-	final   OS_Element  element;
+	final AnchorType anchorType;
+	final OS_Element element;
 	private IInvocation invocation;
 
 	public DeclAnchor(final OS_Element aElement, final AnchorType aAnchorType) {
 		anchorType = aAnchorType;
-		element    = aElement;
+		element = aElement;
 	}
 
 	public IInvocation getInvocation() {
@@ -34,7 +34,7 @@ public class DeclAnchor {
 	}
 
 	public enum AnchorType {
-		MEMBER, INHERITED, FOREIGN /*(esp NS, DT/enum)*/, VAR, CLOSURE, PARAMS
+		MEMBER, INHERITED, FOREIGN /* (esp NS, DT/enum) */, VAR, CLOSURE, PARAMS
 	}
 }
 

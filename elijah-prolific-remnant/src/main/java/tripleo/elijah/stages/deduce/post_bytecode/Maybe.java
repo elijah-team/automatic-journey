@@ -4,7 +4,7 @@ import org.jetbrains.annotations.*;
 import tripleo.elijah.diagnostic.*;
 
 public class Maybe<T> {
-	public final           T          o;
+	public final T o;
 	public final @Nullable Diagnostic exc;
 
 	public Maybe(final T o, final Diagnostic exc) {
@@ -18,7 +18,7 @@ public class Maybe<T> {
 			}
 		}
 
-		this.o   = o;
+		this.o = o;
 		this.exc = exc;
 	}
 

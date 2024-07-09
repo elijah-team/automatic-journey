@@ -16,7 +16,7 @@ import tripleo.elijah.stages.gen_fn.*;
 public class Label implements InstructionArgument {
 	private final BaseGeneratedFunction gf;
 	String name;
-	long   index;
+	long index;
 	private int number;
 
 //	public Label(String name) {

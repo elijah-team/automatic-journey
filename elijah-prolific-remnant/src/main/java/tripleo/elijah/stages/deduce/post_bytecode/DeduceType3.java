@@ -11,21 +11,21 @@ import tripleo.elijah.stages.gen_fn.IdentTableEntry;
 import tripleo.elijah.stages.gen_fn.VariableTableEntry;
 
 class DeduceType3 implements DED {
-	private final OS_Type         osType;
-	private final Diagnostic      diagnostic;
+	private final OS_Type osType;
+	private final Diagnostic diagnostic;
 	private final IDeduceElement3 deduceElement3;
-	private       GenType         _genType;
+	private GenType _genType;
 
 	public DeduceType3(final OS_Type aOSType, final Diagnostic aDiagnostic) {
 		deduceElement3 = null;
-		osType         = aOSType;
-		diagnostic     = aDiagnostic;
+		osType = aOSType;
+		diagnostic = aDiagnostic;
 	}
 
 	public DeduceType3(final IDeduceElement3 aDeduceElement3, final OS_Type aOSType, final Diagnostic aDiagnostic1) {
 		deduceElement3 = aDeduceElement3;
-		osType         = aOSType;
-		diagnostic     = aDiagnostic1;
+		osType = aOSType;
+		diagnostic = aDiagnostic1;
 	}
 
 	public static IDeduceElement3 dispatch(final @NotNull VariableTableEntry aVariableTableEntry) {
@@ -40,7 +40,8 @@ class DeduceType3 implements DED {
 //		return aConstantTableEntry.getDeduceElement3();
 //	}
 
-	public static IDeduceElement3 dispatch(final IdentTableEntry aIdentTableEntry, final DeduceTypes2 aDeduceTypes2, final BaseGeneratedFunction aGeneratedFunction) {
+	public static IDeduceElement3 dispatch(final IdentTableEntry aIdentTableEntry, final DeduceTypes2 aDeduceTypes2,
+			final BaseGeneratedFunction aGeneratedFunction) {
 		return aIdentTableEntry.getDeduceElement3(aDeduceTypes2, aGeneratedFunction);
 	}
 
@@ -61,7 +62,7 @@ class DeduceType3 implements DED {
 
 	public GenType getGenType() {
 		if (_genType == null) {
-			_genType          = new GenType();
+			_genType = new GenType();
 			_genType.setResolved(osType);
 		}
 

@@ -26,7 +26,7 @@ public class FindClassesInDemoElNormal {
 	@Test
 	public final void testParseFile() throws Exception {
 		final List<String> args = Helpers.List_of("test/demo-el-normal", "test/demo-el-normal/main2", "-sE");
-		final ErrSink      eee  = new StdErrSink();
+		final ErrSink eee = new StdErrSink();
 		final Compilation c = CompilationFactory.mkCompilation(eee, new IO());
 
 		c.feedCmdLine(args);
@@ -35,14 +35,13 @@ public class FindClassesInDemoElNormal {
 		for (final ClassStatement classStatement : aClassList) {
 			System.out.println(classStatement.getPackageName().getName());
 		}
-		Assert.assertEquals(3, aClassList.size());  // NOTE this may change. be aware
+		Assert.assertEquals(3, aClassList.size()); // NOTE this may change. be aware
 	}
-
 
 	@Test
 	public final void testListFolders() throws Exception {
 		final List<String> args = Helpers.List_of("test/demo-el-normal/listfolders/", "-sE");
-		final ErrSink      eee  = new StdErrSink();
+		final ErrSink eee = new StdErrSink();
 		final Compilation c = CompilationFactory.mkCompilation(eee, new IO());
 
 		c.feedCmdLine(args);

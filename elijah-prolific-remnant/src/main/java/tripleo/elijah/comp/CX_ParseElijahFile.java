@@ -12,10 +12,8 @@ import java.io.*;
 
 public class CX_ParseElijahFile {
 
-	public static Operation<OS_Module> parseAndCache(final ElijahSpec aSpec,
-													 final ElijahCache aElijahCache,
-													 final String absolutePath,
-													 final Compilation compilation) {
+	public static Operation<OS_Module> parseAndCache(final ElijahSpec aSpec, final ElijahCache aElijahCache,
+			final String absolutePath, final Compilation compilation) {
 		final Operation<OS_Module> calm;
 		try {
 			calm = parseElijahFile_(aSpec, compilation, new File(absolutePath), compilation);
@@ -30,16 +28,14 @@ public class CX_ParseElijahFile {
 		return calm;
 	}
 
-	private static Operation<OS_Module> parseElijahFile_(final ElijahSpec spec,
-	                                                     final Compilation aCompilation,
-														 final File      file   ,
-	                                                     final Compilation c) throws IOException {
+	private static Operation<OS_Module> parseElijahFile_(final ElijahSpec spec, final Compilation aCompilation,
+			final File file, final Compilation c) throws IOException {
 		final IO io = aCompilation.getIO();
 
 		// tree add something
 
-		final String    f      = spec.f();
-		final boolean   do_out = spec.do_out();
+		final String f = spec.f();
+		final boolean do_out = spec.do_out();
 		final OS_Module R;
 
 		try (final InputStream s = io.readFile(file)) {
@@ -60,7 +56,8 @@ public class CX_ParseElijahFile {
 		return Operation.success(R);
 	}
 
-	public static Operation<OS_Module> parseElijahFile(final String f, final InputStream s, final boolean do_out, final Compilation compilation, final String absolutePath) {
+	public static Operation<OS_Module> parseElijahFile(final String f, final InputStream s, final boolean do_out,
+			final Compilation compilation, final String absolutePath) {
 		final ElijjahLexer lexer = new ElijjahLexer(s);
 		lexer.setFilename(f);
 		final ElijjahParser parser = new ElijjahParser(lexer);
@@ -79,13 +76,13 @@ public class CX_ParseElijahFile {
 	}
 
 	private static Operation<OS_Module> parseElijahFile(final ElijahSpec spec, final Compilation compilation) {
-        final String absolutePath;
-        try {
-            absolutePath = spec.file().getCanonicalPath();
-        } catch (IOException e) {
-            return Operation.failure(e);
-        }
-        //final var absolutePath = new File(spec.f()).getAbsolutePath(); // !!
+		final String absolutePath;
+		try {
+			absolutePath = spec.file().getCanonicalPath();
+		} catch (IOException e) {
+			return Operation.failure(e);
+		}
+		// final var absolutePath = new File(spec.f()).getAbsolutePath(); // !!
 		return parseElijahFile(spec.f(), spec.s(), spec.do_out(), compilation, absolutePath);
 	}
 }

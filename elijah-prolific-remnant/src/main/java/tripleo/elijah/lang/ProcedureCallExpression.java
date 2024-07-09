@@ -8,7 +8,6 @@
  */
 package tripleo.elijah.lang;
 
-
 // TODO is ExpressionList an IExpression?
 public class ProcedureCallExpression implements IExpression {
 
@@ -23,8 +22,8 @@ public class ProcedureCallExpression implements IExpression {
 	private IExpression _left;
 
 	/**
-	 * Make sure you call {@link #identifier} or {@link #setLeft(IExpression)}
-	 * and {@link #setArgs(ExpressionList)}
+	 * Make sure you call {@link #identifier} or {@link #setLeft(IExpression)} and
+	 * {@link #setArgs(ExpressionList)}
 	 */
 	public ProcedureCallExpression() {
 	}
@@ -105,11 +104,9 @@ public class ProcedureCallExpression implements IExpression {
 		return _type;
 	}
 
-/*
-	public OS_Element getParent() {
-		return null;
-	}
-*/
+	/*
+	 * public OS_Element getParent() { return null; }
+	 */
 
 	// region representation
 
@@ -124,9 +121,10 @@ public class ProcedureCallExpression implements IExpression {
 	}
 
 	/**
-	 * Set  the left hand side of the procedure call expression, ie the method name
+	 * Set the left hand side of the procedure call expression, ie the method name
 	 *
-	 * @param xyz a method name in Qualident form (might come as DotExpression in future)
+	 * @param xyz a method name in Qualident form (might come as DotExpression in
+	 *            future)
 	 */
 	public void identifier(final Qualident xyz) {
 		setLeft(xyz);
@@ -137,7 +135,7 @@ public class ProcedureCallExpression implements IExpression {
 	// region type (to remove)
 
 	/**
-	 * Set  the left hand side of the procedure call expression, ie the method name
+	 * Set the left hand side of the procedure call expression, ie the method name
 	 *
 	 * @param xyz a method name might come as DotExpression or IdentExpression
 	 */
