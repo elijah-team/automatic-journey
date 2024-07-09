@@ -605,7 +605,7 @@ public class DoAssignCall {
 								}
 								if (rtype.getResolved() != null && rtype.getResolved().getType() == OS_Type.Type.USER_CLASS) {
 									final LookupResultList lrl2 = rtype.getResolved().getClassOf().getContext()
-											.lookup("__getitem__");
+									                                   .lookup("__getitem__");
 									@Nullable
 									final OS_Element best2 = lrl2.chooseBest(null);
 									if (best2 != null) {

@@ -3,7 +3,7 @@ package tripleo.elijah.comp;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.ci.*;
 import tripleo.elijah.comp.specs.*;
-import tripleo.elijah.nextgen.query.*;
+import tripleo.elijah.util.*;
 
 import java.io.*;
 import java.util.*;

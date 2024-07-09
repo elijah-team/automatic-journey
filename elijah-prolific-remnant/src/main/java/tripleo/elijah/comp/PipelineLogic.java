@@ -27,12 +27,12 @@ import java.util.List;
 public class PipelineLogic implements AccessBus.AB_ModuleListListener {
 	private final GeneratePhase generatePhase;
 	private final DeducePhase   dp;
-	final         AccessBus     __ab;
+	private final         AccessBus     __ab;
 
 	private final ElLog.Verbosity verbosity;
 
 	private final List<OS_Module> __mods_BACKING = new ArrayList<OS_Module>();
-	final EIT_ModuleList mods = new EIT_ModuleList(__mods_BACKING);
+	private final EIT_ModuleList  mods           = new EIT_ModuleList(__mods_BACKING);
 
 	public PipelineLogic(final AccessBus iab) {
 		__ab = iab; // we're watching you
@@ -159,6 +159,22 @@ public class PipelineLogic implements AccessBus.AB_ModuleListListener {
 
 	public AccessBus getAccessBus() {
 		return this.__ab;
+	}
+
+	public GeneratePhase getGeneratePhase() {
+		return generatePhase;
+	}
+
+	public DeducePhase getDp() {
+		return dp;
+	}
+
+	public AccessBus get__ab() {
+		return __ab;
+	}
+
+	public EIT_ModuleList getMods() {
+		return mods;
 	}
 }
 

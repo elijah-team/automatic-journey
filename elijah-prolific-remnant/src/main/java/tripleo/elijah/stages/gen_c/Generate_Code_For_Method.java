@@ -29,10 +29,17 @@ import tripleo.elijah.stages.deduce.ClassInvocation;
 import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_VariableTableEntry;
 import tripleo.elijah.stages.deduce.post_bytecode.GCFM_Diagnostic;
 import tripleo.elijah.stages.gen_c.c_ast1.C_HeaderString;
+import tripleo.elijah.lang.types.*;
+import tripleo.elijah.nextgen.outputstatement.*;
+
+import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.stages.deduce.post_bytecode.*;
+import tripleo.elijah.stages.gen_c.c_ast1.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.gen_generic.GenerateResult;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.util.*;
 import tripleo.elijah.work.WorkList;
 import tripleo.elijah_fluffy.util.BufferTabbedOutputStream;
 import tripleo.elijah_fluffy.util.Helpers;

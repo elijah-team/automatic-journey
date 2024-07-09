@@ -7,7 +7,8 @@ import tripleo.elijah.comp.diagnostic.*;
 import tripleo.elijah.comp.specs.*;
 import tripleo.elijah.diagnostic.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.nextgen.query.*;
+
+import tripleo.elijah.util.*;
 import tripleo.elijah_fluffy.util.*;
 
 import java.io.*;

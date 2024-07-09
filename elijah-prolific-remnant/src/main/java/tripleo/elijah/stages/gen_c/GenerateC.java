@@ -55,8 +55,8 @@ public class GenerateC implements CodeGenerator, GenerateFiles {
 		p.addLog(LOG);
 	}
 
-	static @NotNull String getRealTargetName(final BaseGeneratedFunction gf,
-			final @NotNull VariableTableEntry varTableEntry) {
+	public static @NotNull String getRealTargetName(final BaseGeneratedFunction gf,
+	                                                final @NotNull VariableTableEntry varTableEntry) {
 		final String vte_name = varTableEntry.getName();
 		if (varTableEntry.vtt == VariableTableType.TEMP) {
 			if (varTableEntry.getName() == null) {

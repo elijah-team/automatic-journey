@@ -2,7 +2,8 @@ package tripleo.elijah.comp;
 
 import tripleo.elijah.contexts.*;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.nextgen.query.*;
+import tripleo.elijah.util.*;
+
 
 public class ModuleBuilder {
 	// private final Compilation compilation;

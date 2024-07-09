@@ -52,9 +52,9 @@ public class DeducePipeline implements PipelineMember, AccessBus.AB_ModuleListLi
 
 		resolveMods();
 
-		final List<PL_Run2> run2_work = pipelineLogic.mods.stream().map(
+		final List<PL_Run2> run2_work = pipelineLogic.getMods().stream().map(
 				mod -> new PL_Run2(mod, mod.entryPoints._getMods(), pipelineLogic::getGenerateFunctions, pipelineLogic))
-				.collect(Collectors.toList());
+		                                             .collect(Collectors.toList());
 
 		final List<DeducePhase.GeneratedClasses> lgc2 = run2_work.stream().map(PL_Run2::run2)
 				.collect(Collectors.toList());
