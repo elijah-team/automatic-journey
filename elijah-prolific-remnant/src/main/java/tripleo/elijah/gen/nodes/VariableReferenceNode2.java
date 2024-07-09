@@ -13,15 +13,15 @@ import tripleo.elijah.lang.*;
 import tripleo.elijah_fluffy.util.*;
 
 public class VariableReferenceNode2 extends ExpressionNode {
-	private final String  _type;
-	private       String  _declared;
-	private       boolean _perm;
+	private final String _type;
+	private String _declared;
+	private boolean _perm;
 
 	public VariableReferenceNode2(final String declared, final String t, final boolean b) {
 		super();
 		this._declared = declared;
-		this._perm     = b;
-		this._type     = t;
+		this._perm = b;
+		this._type = t;
 //		final Token ct = new CommonToken();
 //		ct.setText(declared);
 //		setText(new IdentExpression(ct)); // TODO why call this?
@@ -29,7 +29,7 @@ public class VariableReferenceNode2 extends ExpressionNode {
 
 	@Override
 	public String genText(final CompilerContext cctx) {
-		if (getExpr()/*iex*/ == null) {
+		if (getExpr()/* iex */ == null) {
 			return _declared;
 		} else {
 			NotImplementedException.raise();
@@ -40,7 +40,8 @@ public class VariableReferenceNode2 extends ExpressionNode {
 
 	@Override
 	public String genText() {
-		if (_perm) return _declared;
+		if (_perm)
+			return _declared;
 		NotImplementedException.raise();
 		return "vtn"; // TODO hardcoded
 	}
@@ -51,9 +52,9 @@ public class VariableReferenceNode2 extends ExpressionNode {
 //	}
 
 	private void setText(final IdentExpression identExpression) {
-		//NotImplementedException.raise();
+		// NotImplementedException.raise();
 		_declared = identExpression.getText();
-		_perm     = true;
+		_perm = true;
 	}
 }
 

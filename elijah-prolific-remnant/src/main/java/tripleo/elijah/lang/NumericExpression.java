@@ -23,7 +23,7 @@ import java.io.*;
 
 public class NumericExpression implements IExpression, Locatable {
 
-	final   int   carrier;
+	final int carrier;
 	OS_Type _type;
 	private Token n;
 
@@ -32,21 +32,22 @@ public class NumericExpression implements IExpression, Locatable {
 	}
 
 	public NumericExpression(final @NotNull Token n) {
-		this.n  = n;
+		this.n = n;
 		carrier = Integer.parseInt(n.getText());
 	}
 
-	@Override  // IExpression
+	@Override // IExpression
 	public ExpressionKind getKind() {
 		return ExpressionKind.NUMERIC; // TODO
 	}
 
 	// region kind
 
-	@Override  // IExpression
+	@Override // IExpression
 	public void setKind(final ExpressionKind aType) {
 		// log and ignore
-		SimplePrintLoggerToRemoveSoon.println_err2("Trying to set ExpressionType of NumericExpression to " + aType.toString());
+		SimplePrintLoggerToRemoveSoon
+				.println_err2("Trying to set ExpressionType of NumericExpression to " + aType.toString());
 	}
 
 	@Override
@@ -68,7 +69,7 @@ public class NumericExpression implements IExpression, Locatable {
 		return toString();
 	}
 
-	//endregion
+	// endregion
 
 	@Override
 	public String toString() {
@@ -82,12 +83,12 @@ public class NumericExpression implements IExpression, Locatable {
 		return true;
 	}
 
-	@Override  // IExpression
+	@Override // IExpression
 	public OS_Type getType() {
 		return _type;
 	}
 
-	@Override  // IExpression
+	@Override // IExpression
 	public void setType(final OS_Type deducedExpression) {
 		_type = deducedExpression;
 	}

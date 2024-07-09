@@ -17,7 +17,6 @@ package tripleo.elijah.lang;
 
 import org.jetbrains.annotations.*;
 
-
 public interface IExpression {
 
 	IExpression UNASSIGNED = new BasicBinaryExpression() {
@@ -28,10 +27,8 @@ public interface IExpression {
 	};
 
 	static boolean isConstant(final IExpression expression) {
-		return expression instanceof StringExpression ||
-		  expression instanceof CharLitExpression ||
-		  expression instanceof FloatExpression ||
-		  expression instanceof NumericExpression;
+		return expression instanceof StringExpression || expression instanceof CharLitExpression
+				|| expression instanceof FloatExpression || expression instanceof NumericExpression;
 	}
 
 	@Contract(pure = true)

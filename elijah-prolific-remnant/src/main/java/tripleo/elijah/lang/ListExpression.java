@@ -53,7 +53,6 @@ public class ListExpression extends AbstractExpression implements Locatable {
 
 	// region Syntax
 
-
 	// endregion
 
 	// region Locatable
@@ -96,7 +95,7 @@ public class ListExpression extends AbstractExpression implements Locatable {
 
 		public void start_and_end(final Token startToken, final Token endToken) {
 			this.startToken = startToken;
-			this.endToken   = endToken;
+			this.endToken = endToken;
 		}
 
 		public void comma(final Token t) {

@@ -25,8 +25,8 @@ public class CompilationTest {
 
 	@Test
 	public final void testEz() throws Exception {
-		final List<String> args = List_of("test/comp_test/main3", "-sE"/*, "-out"*/);
-		final ErrSink      eee  = new StdErrSink();
+		final List<String> args = List_of("test/comp_test/main3", "-sE"/* , "-out" */);
+		final ErrSink eee = new StdErrSink();
 		final Compilation c = CompilationFactory.mkCompilation(eee, new IO());
 
 		c.feedCmdLine(args);

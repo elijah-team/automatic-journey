@@ -21,23 +21,21 @@ import tripleo.elijah_fluffy.util.*;
  * Created 5/16/21 12:41 AM
  */
 public class WlGenerateClass implements WorkJob {
-	private final ClassStatement               classStatement;
-	private final GenerateFunctions            generateFunctions;
-	private final ClassInvocation              classInvocation;
+	private final ClassStatement classStatement;
+	private final GenerateFunctions generateFunctions;
+	private final ClassInvocation classInvocation;
 	private final DeducePhase.GeneratedClasses coll;
-	private final ICodeRegistrar               codeRegistrar;
-	private       boolean                      _isDone = false;
-	private       GeneratedClass               Result;
+	private final ICodeRegistrar codeRegistrar;
+	private boolean _isDone = false;
+	private GeneratedClass Result;
 
-	public WlGenerateClass(final GenerateFunctions aGenerateFunctions,
-	                       final ClassInvocation aClassInvocation,
-	                       final DeducePhase.GeneratedClasses coll,
-	                       final ICodeRegistrar aCodeRegistrar) {
-		classStatement    = aClassInvocation.getKlass();
+	public WlGenerateClass(final GenerateFunctions aGenerateFunctions, final ClassInvocation aClassInvocation,
+			final DeducePhase.GeneratedClasses coll, final ICodeRegistrar aCodeRegistrar) {
+		classStatement = aClassInvocation.getKlass();
 		generateFunctions = aGenerateFunctions;
-		classInvocation   = aClassInvocation;
-		this.coll         = coll;
-		codeRegistrar     = aCodeRegistrar;
+		classInvocation = aClassInvocation;
+		this.coll = coll;
+		codeRegistrar = aCodeRegistrar;
 	}
 
 	@Override
@@ -45,7 +43,8 @@ public class WlGenerateClass implements WorkJob {
 		final DeferredObject<GeneratedClass, Void, Void> resolvePromise = classInvocation.resolveDeferred();
 		switch (resolvePromise.state()) {
 		case PENDING:
-			@NotNull final GeneratedClass kl = generateFunctions.generateClass(classStatement, classInvocation);
+			@NotNull
+			final GeneratedClass kl = generateFunctions.generateClass(classStatement, classInvocation);
 			codeRegistrar.registerClass(kl);
 			if (coll != null)
 				coll.add(kl);

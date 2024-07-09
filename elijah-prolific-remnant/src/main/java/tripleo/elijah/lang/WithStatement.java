@@ -18,12 +18,12 @@ import java.util.*;
  * Created 8/30/20 1:51 PM
  */
 public class WithStatement implements OS_Element, OS_Container, FunctionItem, StatementItem {
-	private final OS_Element         _parent;
+	private final OS_Element _parent;
 	private final List<FunctionItem> _items = new ArrayList<FunctionItem>();
 	VariableSequence hidden_seq = new VariableSequence();
-	private       WithContext        ctx;
-	//	private final List<String> mDocs = new ArrayList<String>();
-	private       Scope3             scope3;
+	private WithContext ctx;
+	// private final List<String> mDocs = new ArrayList<String>();
+	private Scope3 scope3;
 
 	public WithStatement(final OS_Element aParent) {
 		_parent = aParent;

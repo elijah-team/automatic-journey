@@ -14,21 +14,21 @@ import tripleo.elijah.lang.*;
 
 public class CaseChoiceNode {
 
-	public final  CaseHdrNode            header;
-	private final VariableReferenceNode  _varref;
+	public final CaseHdrNode header;
+	private final VariableReferenceNode _varref;
 	private final VariableReferenceNode3 varref3;
-	public        ExpressionNode         left;
-	public        ScopeNode              right;
-	private       String                 _defaultName;
+	public ExpressionNode left;
+	public ScopeNode right;
+	private String _defaultName;
 
 	public CaseChoiceNode(final NumericExpression expr1, final CaseHdrNode header) {
 		// TODO Auto-generated constructor stub
-		left         = new ExpressionNode(expr1);
-		this.header  = header;
-		right        = null;
+		left = new ExpressionNode(expr1);
+		this.header = header;
+		right = null;
 		_defaultName = null;
-		_varref      = null;
-		varref3      = null;
+		_varref = null;
+		varref3 = null;
 	}
 
 //	/**
@@ -49,21 +49,21 @@ public class CaseChoiceNode {
 
 	public CaseChoiceNode(final CompilerContext cctx, final VariableReferenceNode3 varref, final CaseHdrNode header) {
 		this.header = header;
-		left        = null;
-		right       = null;
-		setDefaultName("----------FOO------------" /*varref.getName()*/);
-		_varref = null/*varref*/; //new VariableReferenceNode3(cctx, varref);
+		left = null;
+		right = null;
+		setDefaultName("----------FOO------------" /* varref.getName() */);
+		_varref = null/* varref */; // new VariableReferenceNode3(cctx, varref);
 		varref3 = varref;
 	}
 
 	public CaseChoiceNode(final ExpressionNode left, final ScopeNode right, final CaseHdrNode header) {
 		super();
-		this.right   = right;
-		this.left    = left;
-		this.header  = header;
+		this.right = right;
+		this.left = left;
+		this.header = header;
 		_defaultName = null;
-		_varref      = null;
-		varref3      = null;
+		_varref = null;
+		varref3 = null;
 	}
 
 	public String getDefaultName() {

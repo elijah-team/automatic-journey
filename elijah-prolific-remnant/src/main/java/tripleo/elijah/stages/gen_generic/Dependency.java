@@ -26,10 +26,10 @@ import java.util.Set;
  */
 public class Dependency {
 	public final IDependencyReferent referent;
-	public final Set<Dependency>     deps = new HashSet<>();
+	public final Set<Dependency> deps = new HashSet<>();
 
 	public DependencyRef dref;
-	public OS_Element    resolved;
+	public OS_Element resolved;
 
 	public Dependency(final IDependencyReferent aReferent) {
 		referent = aReferent;
@@ -44,8 +44,7 @@ public class Dependency {
 	}
 
 	public void noteDependencies(final AbstractDependencyTracker aDependencyTracker,
-	                             final List<FunctionInvocation> aDependentFunctions,
-	                             final List<GenType> aDependentTypes) {
+			final List<FunctionInvocation> aDependentFunctions, final List<GenType> aDependentTypes) {
 		for (final FunctionInvocation dependentFunction : aDependentFunctions) {
 			final BaseGeneratedFunction generatedFunction = dependentFunction.getGenerated();
 			if (generatedFunction != null)
@@ -58,9 +57,11 @@ public class Dependency {
 			if (node != null)
 				deps.add(node.getDependency());
 			else {
-				SimplePrintLoggerToRemoveSoon.println_err2("46 node is null " + (dependentType.getResolved() != null ? dependentType.getResolved() : dependentType.getResolvedn()));
+				SimplePrintLoggerToRemoveSoon.println_err2("46 node is null "
+						+ (dependentType.getResolved() != null ? dependentType.getResolved() : dependentType.getResolvedn()));
 				final Dependency d = new Dependency(null);
-				d.resolved = dependentType.getResolved() != null ? dependentType.getResolved().getClassOf() : dependentType.getResolvedn();
+				d.resolved = dependentType.getResolved() != null ? dependentType.getResolved().getClassOf()
+						: dependentType.getResolvedn();
 				deps.add(d);
 			}
 		}

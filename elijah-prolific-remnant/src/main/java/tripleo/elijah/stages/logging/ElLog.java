@@ -16,15 +16,15 @@ import java.util.*;
  * Created 8/3/21 3:46 AM
  */
 public class ElLog {
-	private final String         fileName;
-	private final Verbosity      verbose;
-	private final String         phase;
+	private final String fileName;
+	private final Verbosity verbose;
+	private final String phase;
 	private final List<LogEntry> entries = new ArrayList<>();
 
 	public ElLog(final String aFileName, final Verbosity aVerbose, final String aPhase) {
 		fileName = aFileName;
-		verbose  = aVerbose;
-		phase    = aPhase;
+		verbose = aVerbose;
+		phase = aPhase;
 	}
 
 	public void err(final String aMessage) {

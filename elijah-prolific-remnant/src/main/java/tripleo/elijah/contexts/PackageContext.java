@@ -16,7 +16,7 @@ import java.util.*;
  * Created 8/15/20 6:32 PM
  */
 public class PackageContext extends Context {
-	private final Context    _parent;
+	private final Context _parent;
 	private final OS_Package carrier;
 
 	public PackageContext(final Context aParent, final OS_Package os_package) {
@@ -25,7 +25,8 @@ public class PackageContext extends Context {
 	}
 
 	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
+			final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(this);
 		for (final OS_Element element : carrier.getElements()) {
 			if (element instanceof final OS_Element2 element2) {

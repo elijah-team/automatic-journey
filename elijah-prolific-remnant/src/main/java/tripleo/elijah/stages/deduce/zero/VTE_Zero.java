@@ -10,7 +10,7 @@ import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
 public class VTE_Zero {
-	private final VariableTableEntry  vte;
+	private final VariableTableEntry vte;
 	private final Zero_PotentialTypes _pt = new Zero_PotentialTypes();
 
 	public VTE_Zero(final VariableTableEntry aVariableTableEntry) {
@@ -21,7 +21,9 @@ public class VTE_Zero {
 		return _pt;
 	}
 
-	public void fp_onChange__002(@NotNull final VariableTableEntry vte, @Nullable final OS_Type ty, @NotNull final DeduceTypes2 deduceTypes2, final IdentTableEntry ite, final ErrSink errSink, final DeducePhase phase) {
+	public void fp_onChange__002(@NotNull final VariableTableEntry vte, @Nullable final OS_Type ty,
+			@NotNull final DeduceTypes2 deduceTypes2, final IdentTableEntry ite, final ErrSink errSink,
+			final DeducePhase phase) {
 		if (ty != null) {
 			switch (ty.getType()) {
 			case USER:
@@ -32,21 +34,22 @@ public class VTE_Zero {
 				break;
 			}
 		} else {
-			final int y = 2;//LOG.err("1696");
+			final int y = 2;// LOG.err("1696");
 		}
 	}
 
-	private void vte_pot_size_is_1_USER_TYPE(final @NotNull VariableTableEntry vte,
-	                                         final @Nullable OS_Type aTy,
-	                                         final @NotNull DeduceTypes2 deduceTypes2,
-	                                         final @NotNull IdentTableEntry ite,
-	                                         final @NotNull ErrSink errSink) {
+	private void vte_pot_size_is_1_USER_TYPE(final @NotNull VariableTableEntry vte, final @Nullable OS_Type aTy,
+			final @NotNull DeduceTypes2 deduceTypes2, final @NotNull IdentTableEntry ite,
+			final @NotNull ErrSink errSink) {
 		try {
-			@NotNull final GenType ty2 = deduceTypes2.resolve_type(aTy, aTy.getTypeName().getContext());
+			@NotNull
+			final GenType ty2 = deduceTypes2.resolve_type(aTy, aTy.getTypeName().getContext());
 			// TODO ite.setAttached(ty2) ??
-			final OS_Element           ele  = ty2.getResolved().getElement();
-			final LookupResultList     lrl  = DeduceLookupUtils.lookupExpression(ite.getIdent(), ele.getContext(), deduceTypes2);
-			@Nullable final OS_Element best = lrl.chooseBest(null);
+			final OS_Element ele = ty2.getResolved().getElement();
+			final LookupResultList lrl = DeduceLookupUtils.lookupExpression(ite.getIdent(), ele.getContext(),
+					deduceTypes2);
+			@Nullable
+			final OS_Element best = lrl.chooseBest(null);
 			ite.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(best));
 //									ite.setResolvedElement(best);
 
@@ -58,19 +61,23 @@ public class VTE_Zero {
 		}
 	}
 
-	private void vte_pot_size_is_1_USER_CLASS_TYPE(@NotNull final VariableTableEntry vte, @Nullable final OS_Type aTy, final @NotNull DeduceTypes2 deduceTypes2, final IdentTableEntry ite, final ErrSink errSink, final DeducePhase phase) {
-		final ClassStatement       klass = aTy.getClassOf();
-		@Nullable LookupResultList lrl   = null;
+	private void vte_pot_size_is_1_USER_CLASS_TYPE(@NotNull final VariableTableEntry vte, @Nullable final OS_Type aTy,
+			final @NotNull DeduceTypes2 deduceTypes2, final IdentTableEntry ite, final ErrSink errSink,
+			final DeducePhase phase) {
+		final ClassStatement klass = aTy.getClassOf();
+		@Nullable
+		LookupResultList lrl = null;
 		try {
 			lrl = DeduceLookupUtils.lookupExpression(ite.getIdent(), klass.getContext(), deduceTypes2);
-			@Nullable final OS_Element best = lrl.chooseBest(null);
+			@Nullable
+			final OS_Element best = lrl.chooseBest(null);
 //							ite.setStatus(BaseTableEntry.Status.KNOWN, best);
 			assert best != null;
 			ite.setResolvedElement(best);
 
-			final @NotNull GenType          genType  = new GenType(klass);
-			final TypeName                  typeName = vte.type.genType.getNonGenericTypeName();
-			final @Nullable ClassInvocation ci       = genType.genCI(typeName, deduceTypes2, errSink, phase);
+			final @NotNull GenType genType = new GenType(klass);
+			final TypeName typeName = vte.type.genType.getNonGenericTypeName();
+			final @Nullable ClassInvocation ci = genType.genCI(typeName, deduceTypes2, errSink, phase);
 //							resolve_vte_for_class(vte, klass);
 			ci.resolvePromise().done(new DoneCallback<GeneratedClass>() {
 				@Override
@@ -83,10 +90,12 @@ public class VTE_Zero {
 		}
 	}
 
-	public void fp_onChange__001(@NotNull final TypeTableEntry tte, final IdentTableEntry ite, @NotNull final DeduceTypes2 deduceTypes2, final @NotNull ErrSink errSink) {
+	public void fp_onChange__001(@NotNull final TypeTableEntry tte, final IdentTableEntry ite,
+			@NotNull final DeduceTypes2 deduceTypes2, final @NotNull ErrSink errSink) {
 		final OS_Type ty = tte.getAttached();
 
-		@Nullable OS_Element ele2 = null;
+		@Nullable
+		OS_Element ele2 = null;
 
 		try {
 			final IdentExpression iteIdent = ite.getIdent();
@@ -104,7 +113,8 @@ public class VTE_Zero {
 				}
 
 				final OS_Element ele = ty2.getResolved().getElement();
-				final LookupResultList lrl = DeduceLookupUtils.lookupExpression(iteIdent, ele.getContext(), deduceTypes2);
+				final LookupResultList lrl = DeduceLookupUtils.lookupExpression(iteIdent, ele.getContext(),
+						deduceTypes2);
 
 				ele2 = lrl.chooseBest(null);
 				break;
@@ -124,11 +134,14 @@ public class VTE_Zero {
 			//
 			//
 
-			@Nullable LookupResultList lrl = null;
+			@Nullable
+			LookupResultList lrl = null;
 
 			lrl = DeduceLookupUtils.lookupExpression(iteIdent, ele2.getContext(), deduceTypes2);
-			@Nullable final OS_Element best = lrl.chooseBest(null);
-			// README commented out because only firing for dir.listFiles, and we always use `best'
+			@Nullable
+			final OS_Element best = lrl.chooseBest(null);
+			// README commented out because only firing for dir.listFiles, and we always use
+			// `best'
 //					if (best != ele2) LOG.err(String.format("2824 Divergent for %s, %s and %s", ite, best, ele2));;
 			ite.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(best));
 		} catch (final ResolveError aResolveError) {
@@ -140,7 +153,6 @@ public class VTE_Zero {
 
 			//
 			//
-
 
 //			aResolveError.printStackTrace();
 			errSink.reportDiagnostic(aResolveError);

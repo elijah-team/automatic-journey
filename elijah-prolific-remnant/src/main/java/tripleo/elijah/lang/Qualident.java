@@ -28,10 +28,8 @@ public class Qualident implements IExpression {
 	OS_Type _type;
 
 	private static boolean equivalentTokens(final Token token1, final Token token2) {
-		return token2.getText().equals(token1.getText()) &&
-		  token2.getLine() == token1.getLine() &&
-		  token2.getColumn() == token1.getColumn() &&
-		  token2.getType() == token1.getType();
+		return token2.getText().equals(token1.getText()) && token2.getLine() == token1.getLine()
+				&& token2.getColumn() == token1.getColumn() && token2.getType() == token1.getType();
 	}
 
 	/**
@@ -77,7 +75,7 @@ public class Qualident implements IExpression {
 
 	@Override
 	public boolean is_simple() {
-		return true;  // TODO is this true?
+		return true; // TODO is this true?
 	}
 
 	public List<IdentExpression> parts() {
@@ -86,12 +84,15 @@ public class Qualident implements IExpression {
 
 	@Override
 	public boolean equals(final Object o) {
-		if (this == o) return true;
-		if (!(o instanceof final Qualident qualident)) return false;
-		if (qualident.parts.size() != parts.size()) return false;
+		if (this == o)
+			return true;
+		if (!(o instanceof final Qualident qualident))
+			return false;
+		if (qualident.parts.size() != parts.size())
+			return false;
 		for (int i = 0; i < parts.size(); i++) {
 			final IdentExpression ppart = qualident.parts.get(i);
-			final IdentExpression part  = parts.get(i);
+			final IdentExpression part = parts.get(i);
 //			if (!equivalentTokens(ppart.token(), part.token()))
 			if (!part.getText().equals(ppart.getText()))
 				return false;
@@ -99,9 +100,10 @@ public class Qualident implements IExpression {
 //				return false;
 		}
 //		if (Objects.equals(parts, qualident.parts))
-		return true;//Objects.equals(_type, qualident._type);
+		return true;// Objects.equals(_type, qualident._type);
 	}
-@Override
+
+	@Override
 	public int hashCode() {
 		return Objects.hash(parts, _type);
 	}
@@ -110,7 +112,8 @@ public class Qualident implements IExpression {
 	public OS_Type getType() {
 		return _type;
 	}
-@Override
+
+	@Override
 	public void setType(final OS_Type deducedExpression) {
 		_type = deducedExpression;
 	}
@@ -139,9 +142,6 @@ public class Qualident implements IExpression {
 //		final String substring = s.substring(0, s.length() - 1);
 //		return substring;
 	}
-
-
-
 
 }
 

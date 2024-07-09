@@ -24,17 +24,20 @@ public class ITE_Zero {
 		ite = aIdentTableEntry;
 	}
 
-	public void fp_onChange__001(@NotNull final TypeTableEntry vte, final IdentTableEntry ite, @NotNull final DeduceTypes2 deduceTypes2, final ErrSink errSink) {
+	public void fp_onChange__001(@NotNull final TypeTableEntry vte, final IdentTableEntry ite,
+			@NotNull final DeduceTypes2 deduceTypes2, final ErrSink errSink) {
 		final OS_Type ty = vte.getAttached();
 
-		@Nullable OS_Element ele2 = null;
+		@Nullable
+		OS_Element ele2 = null;
 
 		try {
 			if (ty.getType() == OS_Type.Type.USER) {
 
 				final Zero_Type zero_type = resolver.resolve_type(ty);
 
-				@NotNull final GenType ty2;
+				@NotNull
+				final GenType ty2;
 				if (zero_type == null) {
 					throw new IllegalArgumentException("** 57 no type found");
 				} else {
@@ -49,17 +52,21 @@ public class ITE_Zero {
 					}
 				}
 				ele = ty2.getResolved().getElement();
-				final LookupResultList lrl = DeduceLookupUtils.lookupExpression(ite.getIdent(), ele.getContext(), deduceTypes2);
+				final LookupResultList lrl = DeduceLookupUtils.lookupExpression(ite.getIdent(), ele.getContext(),
+						deduceTypes2);
 				ele2 = lrl.chooseBest(null);
 			} else {
 				ele2 = ty.getClassOf(); // TODO might fail later (use getElement?)
 			}
 
-			@Nullable LookupResultList lrl = null;
+			@Nullable
+			LookupResultList lrl = null;
 
 			lrl = DeduceLookupUtils.lookupExpression(ite.getIdent(), ele2.getContext(), deduceTypes2);
-			@Nullable final OS_Element best = lrl.chooseBest(null);
-			// README commented out because only firing for dir.listFiles, and we always use `best'
+			@Nullable
+			final OS_Element best = lrl.chooseBest(null);
+			// README commented out because only firing for dir.listFiles, and we always use
+			// `best'
 //					if (best != ele2) LOG.err(String.format("2824 Divergent for %s, %s and %s", ite, best, ele2));;
 			ite.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(best));
 		} catch (final ResolveError aResolveError) {
@@ -72,8 +79,10 @@ public class ITE_Zero {
 		// TODO fill this in later with a Promise, perhaps
 	}
 
-	public void preUpdateStatus_Change(final IElementHolder eh, final BaseTableEntry.Status newStatus, final FoundElement foundElement, final String normal_path) {
-		if (_preUpdateStatus_Change_called) return;
+	public void preUpdateStatus_Change(final IElementHolder eh, final BaseTableEntry.Status newStatus,
+			final FoundElement foundElement, final String normal_path) {
+		if (_preUpdateStatus_Change_called)
+			return;
 
 		if (newStatus == BaseTableEntry.Status.KNOWN) {
 			_preUpdateStatus_Change_called = true;

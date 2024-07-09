@@ -18,8 +18,8 @@ import java.util.List;
 public class Main {
 
 	public static void main(final String[] args) throws Exception {
-		final Compilation  cc      = CompilationFactory.mkCompilation();
-		final List<String> ls      = new ArrayList<>();
+		final Compilation cc = CompilationFactory.mkCompilation();
+		final List<String> ls = new ArrayList<>();
 		ls.addAll(Arrays.asList(args));
 		cc.feedCmdLine(ls);
 	}

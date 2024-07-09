@@ -37,12 +37,12 @@ public class V {
 
 		try {
 			final FileOutputStream out1 = new FileOutputStream("out");
-			final PrintStream      out  = new PrintStream(out1);
+			final PrintStream out = new PrintStream(out1);
 			for (String log : logs) {
 				out.println(log);
 			}
 		} catch (IOException aE) {
-			//throw new RuntimeException(aE);
+			// throw new RuntimeException(aE);
 			assert false;
 		}
 	}
@@ -52,5 +52,7 @@ public class V {
 //		System.err.println(x);
 	}
 
-	public enum e {f202_writing_logs, _putSeq, DT2_1785, d399_147, DT2_2304, DT2_2163}
+	public enum e {
+		f202_writing_logs, _putSeq, DT2_1785, d399_147, DT2_2304, DT2_2163
+	}
 }

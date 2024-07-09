@@ -8,10 +8,10 @@ import java.io.*;
  * Created 8/16/20 2:16 AM
  */
 public class FuncTypeName implements TypeName {
-	private final Context       _ctx;
-	private       TypeModifiers _modifiers;
-	private       TypeNameList  _arglist     = null/*new TypeNameList()*/;
-	private       TypeName      _returnValue = null /*new RegularTypeName()*/; // TODO warning
+	private final Context _ctx;
+	private TypeModifiers _modifiers;
+	private TypeNameList _arglist = null/* new TypeNameList() */;
+	private TypeName _returnValue = null /* new RegularTypeName() */; // TODO warning
 
 	public FuncTypeName(final Context cur) {
 		_ctx = cur;
@@ -34,7 +34,7 @@ public class FuncTypeName implements TypeName {
 		_arglist = tnl;
 	}
 
-	//	@Override
+	// @Override
 	public void type(final TypeModifiers typeModifiers) {
 		_modifiers = typeModifiers;
 	}

@@ -20,23 +20,24 @@ import tripleo.elijah_fluffy.util.*;
  * Created 5/31/21 2:26 AM
  */
 public class WlGenerateDefaultCtor implements WorkJob {
-	private final GenerateFunctions     generateFunctions;
-	private final FunctionInvocation    functionInvocation;
-	private final ICodeRegistrar        codeRegistrar;
-	private       boolean               _isDone = false;
-	private       BaseGeneratedFunction Result;
+	private final GenerateFunctions generateFunctions;
+	private final FunctionInvocation functionInvocation;
+	private final ICodeRegistrar codeRegistrar;
+	private boolean _isDone = false;
+	private BaseGeneratedFunction Result;
 
 	@Contract(pure = true)
-	public WlGenerateDefaultCtor(@NotNull final GenerateFunctions aGenerateFunctions, final FunctionInvocation aFunctionInvocation, final ICodeRegistrar aCodeRegistrar) {
-		generateFunctions  = aGenerateFunctions;
+	public WlGenerateDefaultCtor(@NotNull final GenerateFunctions aGenerateFunctions,
+			final FunctionInvocation aFunctionInvocation, final ICodeRegistrar aCodeRegistrar) {
+		generateFunctions = aGenerateFunctions;
 		functionInvocation = aFunctionInvocation;
-		codeRegistrar      = aCodeRegistrar;
+		codeRegistrar = aCodeRegistrar;
 	}
 
 	@Override
 	public void run(final WorkManager aWorkManager) {
 		if (functionInvocation.generateDeferred().isPending()) {
-			final ClassStatement         klass     = functionInvocation.getClassInvocation().getKlass();
+			final ClassStatement klass = functionInvocation.getClassInvocation().getKlass();
 			final Holder<GeneratedClass> hGenClass = new Holder<>();
 			functionInvocation.getClassInvocation().resolvePromise().then(new DoneCallback<GeneratedClass>() {
 				@Override
@@ -54,7 +55,7 @@ public class WlGenerateDefaultCtor implements WorkJob {
 			cd.scope(scope3);
 			for (final GeneratedContainer.VarTableEntry varTableEntry : genClass.varTable) {
 				if (varTableEntry.initialValue != IExpression.UNASSIGNED) {
-					final IExpression left  = varTableEntry.nameToken;
+					final IExpression left = varTableEntry.nameToken;
 					final IExpression right = varTableEntry.initialValue;
 
 					final IExpression e = ExpressionBuilder.build(left, ExpressionKind.ASSIGNMENT, right);
@@ -68,7 +69,9 @@ public class WlGenerateDefaultCtor implements WorkJob {
 
 			final OS_Element classStatement = cd.getParent();
 			assert classStatement instanceof ClassStatement;
-			@NotNull final GeneratedConstructor gf = generateFunctions.generateConstructor(cd, (ClassStatement) classStatement, functionInvocation);
+			@NotNull
+			final GeneratedConstructor gf = generateFunctions.generateConstructor(cd, (ClassStatement) classStatement,
+					functionInvocation);
 //		lgf.add(gf);
 
 			final ClassInvocation ci = functionInvocation.getClassInvocation();

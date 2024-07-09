@@ -20,15 +20,16 @@ import tripleo.elijah.stages.gen_fn.*;
  * Created 6/27/21 1:41 AM
  */
 public class DeferredMember {
-	private final OS_Element                                parent;
-	private final IInvocation                               invocation;
-	private final VariableStatement                         variableStatement;
+	private final OS_Element parent;
+	private final IInvocation invocation;
+	private final VariableStatement variableStatement;
 	private final DeferredObject<GenType, Diagnostic, Void> typePromise = new DeferredObject<GenType, Diagnostic, Void>();
 	private final DeferredObject<GeneratedNode, Void, Void> externalRef = new DeferredObject<GeneratedNode, Void, Void>();
 
-	public DeferredMember(final OS_Element aParent, final IInvocation aInvocation, final VariableStatement aVariableStatement) {
-		parent            = aParent;
-		invocation        = aInvocation;
+	public DeferredMember(final OS_Element aParent, final IInvocation aInvocation,
+			final VariableStatement aVariableStatement) {
+		parent = aParent;
+		invocation = aInvocation;
 		variableStatement = aVariableStatement;
 	}
 
@@ -63,10 +64,7 @@ public class DeferredMember {
 
 	@Override
 	public @NotNull String toString() {
-		return "DeferredMember{" +
-		  "parent=" + parent +
-		  ", variableName=" + variableStatement.getName() +
-		  '}';
+		return "DeferredMember{" + "parent=" + parent + ", variableName=" + variableStatement.getName() + '}';
 	}
 }
 

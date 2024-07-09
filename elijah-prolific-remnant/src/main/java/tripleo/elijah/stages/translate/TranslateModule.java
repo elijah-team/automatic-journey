@@ -16,21 +16,22 @@ public class TranslateModule {
 		module = module_;
 	}
 
-	private static TabbedOutputStream stream_for(final String packageName, final String name) throws FileNotFoundException {
+	private static TabbedOutputStream stream_for(final String packageName, final String name)
+			throws FileNotFoundException {
 		String packageDirName = packageName.replace('.', '/');
 		if (packageDirName.equals(""))
 			packageDirName = ".";
 		final File dir = new File("output", packageDirName);
 		dir.mkdirs();
-		final File               file = new File(dir, name + ".java");
-		final FileOutputStream   os   = new FileOutputStream(file);
-		final TabbedOutputStream R    = new TabbedOutputStream(os);
+		final File file = new File(dir, name + ".java");
+		final FileOutputStream os = new FileOutputStream(file);
+		final TabbedOutputStream R = new TabbedOutputStream(os);
 		return R;
 	}
 
 	public void translate() {
 //		TabbedOutputStream w = null;
-		//			w = getFile();
+		// w = getFile();
 
 		for (final ModuleItem item : module.getItems()) {
 			try {
@@ -47,8 +48,8 @@ public class TranslateModule {
 	}
 
 	private void put_class_statement(final ClassStatement item) throws IOException {
-		final String             cls_name = "C" + item.name();
-		final TabbedOutputStream w        = stream_for(item.getPackageName().getName(), cls_name);
+		final String cls_name = "C" + item.name();
+		final TabbedOutputStream w = stream_for(item.getPackageName().getName(), cls_name);
 		try {
 			{
 				final String packageName = item.getPackageName().getName();
@@ -85,8 +86,8 @@ public class TranslateModule {
 			ns_name_sb.append("__package__");
 			break;
 		}
-		final String             ns_name = ns_name_sb.toString();
-		final TabbedOutputStream w       = stream_for(item.getPackageName().getName(), ns_name);
+		final String ns_name = ns_name_sb.toString();
+		final TabbedOutputStream w = stream_for(item.getPackageName().getName(), ns_name);
 		try {
 			{
 				final String packageName = item.getPackageName().getName();
@@ -106,7 +107,8 @@ public class TranslateModule {
 		}
 	}
 
-	private void put_class_statement_internal(final ClassStatement classStatement, final TabbedOutputStream w) throws IOException {
+	private void put_class_statement_internal(final ClassStatement classStatement, final TabbedOutputStream w)
+			throws IOException {
 		for (final ClassItem item : classStatement.getItems()) {
 			if (item instanceof FunctionDef) {
 				w.put_string("public void " + ((FunctionDef) item).name() + "(");
@@ -121,7 +123,8 @@ public class TranslateModule {
 		}
 	}
 
-	private void put_namespace_statement_internal(final NamespaceStatement namespaceStatement, final TabbedOutputStream w) {
+	private void put_namespace_statement_internal(final NamespaceStatement namespaceStatement,
+			final TabbedOutputStream w) {
 		for (final ClassItem item : namespaceStatement.getItems()) {
 			SimplePrintLoggerToRemoveSoon.println2("8002 " + item);
 		}
@@ -158,8 +161,8 @@ public class TranslateModule {
 			} else if (item instanceof VariableSequence) {
 				for (final VariableStatement vs : ((VariableSequence) item).items()) {
 					SimplePrintLoggerToRemoveSoon.println2("8004 " + vs);
-					final OS_Type type  = vs.initialValue().getType();
-					final String  stype = type == null ? "Unknown" : getTypeString(type);
+					final OS_Type type = vs.initialValue().getType();
+					final String stype = type == null ? "Unknown" : getTypeString(type);
 					SimplePrintLoggerToRemoveSoon.println2("8004-1 " + type);
 					w.put_string_ln(String.format("%s %s;", stype, vs.getName()));
 				}
@@ -195,20 +198,14 @@ public class TranslateModule {
 //		return type.toString();
 	}
 
-	/*private TabbedOutputStream getFile() {
-		final String fn = module.getFileName();
-		final String fn2 = fn.substring(0, fn.lastIndexOf('.'));
-		final String fn3 = fn2 + ".java";
-		final Path p = Path.of("output", fn3);
-		p.getParent().toFile().mkdirs();
-		tripleo.elijah.util.Stupidity.println_err2("PATH "+p.toString());
-		TabbedOutputStream w = null;
-		try {
-			w = new TabbedOutputStream(Files.newOutputStream(p));
-			return w;
-		} catch (final IOException e) {
-			module.parent.eee.exception(e);
-		}
-		return null;
-	}*/
+	/*
+	 * private TabbedOutputStream getFile() { final String fn =
+	 * module.getFileName(); final String fn2 = fn.substring(0,
+	 * fn.lastIndexOf('.')); final String fn3 = fn2 + ".java"; final Path p =
+	 * Path.of("output", fn3); p.getParent().toFile().mkdirs();
+	 * tripleo.elijah.util.Stupidity.println_err2("PATH "+p.toString());
+	 * TabbedOutputStream w = null; try { w = new
+	 * TabbedOutputStream(Files.newOutputStream(p)); return w; } catch (final
+	 * IOException e) { module.parent.eee.exception(e); } return null; }
+	 */
 }

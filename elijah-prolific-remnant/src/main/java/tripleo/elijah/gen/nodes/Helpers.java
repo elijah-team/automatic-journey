@@ -48,18 +48,11 @@ public class Helpers {
 		sb.append(code);
 		sb.append(aStr);
 		sb.append("(");
-/*
-		boolean x=false;
-		for (IExpression e : expr.exprList()) {
-			sb.append(e.toString());
-			sb.append(", ");
-			x=true;
-		}
-		if (x==true) {
-			sb.deleteCharAt(sb.length());
-			sb.deleteCharAt(sb.length());
-		}
-*/
+		/*
+		 * boolean x=false; for (IExpression e : expr.exprList()) {
+		 * sb.append(e.toString()); sb.append(", "); x=true; } if (x==true) {
+		 * sb.deleteCharAt(sb.length()); sb.deleteCharAt(sb.length()); }
+		 */
 		final List<String> ls = new ArrayList<String>();
 		for (final IExpression e : expressionList) {
 			ls.add(e.toString());
@@ -69,7 +62,8 @@ public class Helpers {
 		return sb.toString();
 	}
 
-	//	public static List<String> List_of(String string, String string2, String string3) {
+	// public static List<String> List_of(String string, String string2, String
+	// string3) {
 //		List<String> r = new ArrayList<String>();
 //		r.add(string);
 //		r.add(string2);

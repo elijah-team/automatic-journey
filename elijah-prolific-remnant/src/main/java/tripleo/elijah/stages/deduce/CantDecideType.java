@@ -22,11 +22,11 @@ import java.util.*;
  * Created 4/13/21 5:46 AM
  */
 public class CantDecideType implements Diagnostic {
-	private final          VariableTableEntry         vte;
+	private final VariableTableEntry vte;
 	private final @NotNull Collection<TypeTableEntry> types;
 
 	public CantDecideType(final VariableTableEntry aVte, @NotNull final Collection<TypeTableEntry> aTypes) {
-		vte   = aVte;
+		vte = aVte;
 		types = aTypes;
 	}
 
@@ -42,13 +42,15 @@ public class CantDecideType implements Diagnostic {
 
 	@Override
 	public @NotNull Locatable primary() {
-		@NotNull final VariableStatement vs = (VariableStatement) vte.getResolvedElement();
+		@NotNull
+		final VariableStatement vs = (VariableStatement) vte.getResolvedElement();
 		return vs;
 	}
 
 	@Override
 	public @NotNull List<Locatable> secondary() {
-		@NotNull final Collection<Locatable> c = Collections2.transform(types, new Function<TypeTableEntry, Locatable>() {
+		@NotNull
+		final Collection<Locatable> c = Collections2.transform(types, new Function<TypeTableEntry, Locatable>() {
 
 			@Nullable
 			@Override
@@ -67,7 +69,7 @@ public class CantDecideType implements Diagnostic {
 		stream.printf("---[%s]---: %s%n", code(), message());
 		// linecache.print(primary);
 		for (final Locatable sec : secondary()) {
-			//linecache.print(sec)
+			// linecache.print(sec)
 		}
 		stream.flush();
 	}

@@ -18,13 +18,13 @@ import java.util.*;
  */
 public class NamespaceStatementBuilder extends ElBuilder implements Documentable {
 	private final List<AnnotationClause> annotations = new ArrayList<AnnotationClause>();
-	private final NamespaceScope         _scope      = new NamespaceScope();
+	private final NamespaceScope _scope = new NamespaceScope();
 	private final List<Token> _docstrings = new ArrayList<Token>();
-	private       NamespaceTypes         _type;
-	private       OS_Element             _parent;
-	private       Context                _parent_context;
-	private       IdentExpression        _name;
-	private       Context                _context;
+	private NamespaceTypes _type;
+	private OS_Element _parent;
+	private Context _parent_context;
+	private IdentExpression _name;
+	private Context _context;
 
 	public void setType(final NamespaceTypes namespaceTypes) {
 		_type = namespaceTypes;
@@ -84,7 +84,6 @@ public class NamespaceStatementBuilder extends ElBuilder implements Documentable
 	public void addDocString(final Token s1) {
 		_docstrings.add(s1);
 	}
-
 
 	public NamespaceScope scope() {
 		return _scope;

@@ -21,18 +21,18 @@ import java.util.*;
  * Created 3/4/22 7:14 AM
  */
 public class ClassDefinition {
-	final ClassStatement      primary;
+	final ClassStatement primary;
 	final Set<ClassStatement> extended = new HashSet<ClassStatement>();
 	ClassInvocation invocation;
-	GeneratedClass  node;
-	IComposable     composable;
+	GeneratedClass node;
+	IComposable composable;
 
 	public ClassDefinition(final ClassStatement aPrimary) {
 		primary = aPrimary;
 	}
 
 	public ClassDefinition(final @NotNull ClassInvocation aClassInvocation) {
-		primary    = aClassInvocation.getKlass();
+		primary = aClassInvocation.getKlass();
 		invocation = aClassInvocation;
 	}
 

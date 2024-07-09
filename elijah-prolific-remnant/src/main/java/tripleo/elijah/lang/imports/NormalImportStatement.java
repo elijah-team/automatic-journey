@@ -10,9 +10,9 @@ import java.util.*;
  * Created 8/7/20 2:10 AM
  */
 public class NormalImportStatement extends _BaseImportStatement {
-	final         OS_Element    parent;
+	final OS_Element parent;
 	private final QualidentList importList = new QualidentList();
-	private       Context       _ctx;
+	private Context _ctx;
 
 	public NormalImportStatement(final OS_Element aParent) {
 		parent = aParent;

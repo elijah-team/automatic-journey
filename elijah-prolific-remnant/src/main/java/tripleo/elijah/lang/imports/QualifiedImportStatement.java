@@ -9,9 +9,9 @@ import java.util.*;
  * Created 8/7/20 2:09 AM
  */
 public class QualifiedImportStatement extends _BaseImportStatement {
-	final         OS_Element parent;
+	final OS_Element parent;
 	private final List<Part> _parts = new ArrayList<Part>();
-	private       Context    _ctx;
+	private Context _ctx;
 
 	public QualifiedImportStatement(final OS_Element aParent) {
 		parent = aParent;
@@ -61,7 +61,7 @@ public class QualifiedImportStatement extends _BaseImportStatement {
 		public final IdentList idents;
 
 		public Part(final Qualident q3, final IdentList il) {
-			base   = q3;
+			base = q3;
 			idents = il;
 		}
 	}

@@ -5,15 +5,15 @@ import tripleo.elijah.stages.deduce.post_bytecode.*;
 import java.io.*;
 
 public class CompilerInput {
-	private final String                           inp;
-	private       Maybe<ILazyCompilerInstructions> accept_ci;
-	private       File                             dir_carrier;
-	private       Ty                               ty;
-	private       String                           hash;
+	private final String inp;
+	private Maybe<ILazyCompilerInstructions> accept_ci;
+	private File dir_carrier;
+	private Ty ty;
+	private String hash;
 
 	public CompilerInput(final String aS) {
 		inp = aS;
-		ty  = Ty.NULL;
+		ty = Ty.NULL;
 	}
 
 	public String getInp() {
@@ -41,7 +41,7 @@ public class CompilerInput {
 	}
 
 	public void setDirectory(File f) {
-		ty          = Ty.SOURCE_ROOT;
+		ty = Ty.SOURCE_ROOT;
 		dir_carrier = f;
 	}
 
@@ -57,5 +57,7 @@ public class CompilerInput {
 		return ty;
 	}
 
-	public enum Ty {NULL, SOURCE_ROOT, ARG}
+	public enum Ty {
+		NULL, SOURCE_ROOT, ARG
+	}
 }

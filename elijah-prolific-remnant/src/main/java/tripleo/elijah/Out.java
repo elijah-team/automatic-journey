@@ -20,13 +20,13 @@ public class Out {
 
 	private final ParserClosure pc;
 
-/*
-	private static TabbedOutputStream getTOSLog() throws FileNotFoundException {
-		final @NotNull SimpleDateFormat sdf      = new SimpleDateFormat("yyyy-MM-dd_HH-mm-ss");
-		final String                    filename = String.format("eljc-%s.out", sdf.format(new Date()));
-		return new TabbedOutputStream(new FileOutputStream(filename));
-	}
-*/
+	/*
+	 * private static TabbedOutputStream getTOSLog() throws FileNotFoundException {
+	 * final @NotNull SimpleDateFormat sdf = new
+	 * SimpleDateFormat("yyyy-MM-dd_HH-mm-ss"); final String filename =
+	 * String.format("eljc-%s.out", sdf.format(new Date())); return new
+	 * TabbedOutputStream(new FileOutputStream(filename)); }
+	 */
 
 	public Out(final String fn, final Compilation compilation, final boolean do_out) {
 		pc = new ParserClosure(fn, compilation);
@@ -38,33 +38,25 @@ public class Out {
 		SimplePrintLoggerToRemoveSoon.println2(s);
 	}
 
-	//@edu.umd.cs.findbugs.annotations.SuppressFBWarnings("NM_METHOD_NAMING_CONVENTION")
+	// @edu.umd.cs.findbugs.annotations.SuppressFBWarnings("NM_METHOD_NAMING_CONVENTION")
 	public void FinishModule() {
-/*
-		final TabbedOutputStream tos;
-		println("** FinishModule");
-		try {
-*/
+		/*
+		 * final TabbedOutputStream tos; println("** FinishModule"); try {
+		 */
 //			pc.module.print_osi(tos);
 		pc.module.finish();
 		//
-/*
-			if (do_out) {
-				tos = getTOSLog();
-	    		tos.put_string_ln(pc.module.getFileName());
-				Helpers.printXML(pc.module, tos);
-				tos.close();
-			}
-*/
+		/*
+		 * if (do_out) { tos = getTOSLog(); tos.put_string_ln(pc.module.getFileName());
+		 * Helpers.printXML(pc.module, tos); tos.close(); }
+		 */
 		//
 		//
-/*
-		} catch (final FileNotFoundException fnfe) {
-			println("&& FileNotFoundException");
-		} catch (final IOException ioe) {
-			println("&& IOException");
-		}
-*/
+		/*
+		 * } catch (final FileNotFoundException fnfe) {
+		 * println("&& FileNotFoundException"); } catch (final IOException ioe) {
+		 * println("&& IOException"); }
+		 */
 	}
 
 	public ParserClosure closure() {

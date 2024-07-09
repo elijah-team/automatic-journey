@@ -17,10 +17,10 @@ import java.util.*;
  * Created 9/10/20 3:16 PM
  */
 public class Instruction {
-	public  DeduceElement   deduceElement;
+	public DeduceElement deduceElement;
 	List<InstructionArgument> args;
 	private InstructionName name;
-	private int             index = -1;
+	private int index = -1;
 	private Context context;
 
 	public void setArgs(final List<InstructionArgument> args_) {
@@ -45,11 +45,7 @@ public class Instruction {
 
 	@Override
 	public String toString() {
-		return "Instruction{" +
-		  "name=" + name +
-		  ", index=" + index +
-		  ", args=" + args +
-		  '}';
+		return "Instruction{" + "name=" + name + ", index=" + index + ", args=" + args + '}';
 	}
 
 	public InstructionArgument getArg(final int i) {

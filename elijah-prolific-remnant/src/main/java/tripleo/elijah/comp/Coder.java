@@ -15,20 +15,20 @@ public class Coder {
 		codeRegistrar = aCodeRegistrar;
 	}
 
-	private static void extractNodes_toResolvedNodes(@NotNull final Map<FunctionDef, GeneratedFunction> aFunctionMap, @NotNull final List<GeneratedNode> resolved_nodes) {
-		aFunctionMap.values().stream().map(generatedFunction -> (generatedFunction.idte_list)
-		              .stream()
-		              .filter(IdentTableEntry::isResolved)
-		              .map(IdentTableEntry::resolvedType)
-		              .collect(Collectors.toList()))
-		            .forEach(resolved_nodes::addAll);
+	private static void extractNodes_toResolvedNodes(@NotNull final Map<FunctionDef, GeneratedFunction> aFunctionMap,
+			@NotNull final List<GeneratedNode> resolved_nodes) {
+		aFunctionMap.values().stream()
+				.map(generatedFunction -> (generatedFunction.idte_list).stream().filter(IdentTableEntry::isResolved)
+						.map(IdentTableEntry::resolvedType).collect(Collectors.toList()))
+				.forEach(resolved_nodes::addAll);
 	}
 
-	public void codeNodes(final OS_Module mod, final List<GeneratedNode> resolved_nodes, final GeneratedNode generatedNode) {
+	public void codeNodes(final OS_Module mod, final List<GeneratedNode> resolved_nodes,
+			final GeneratedNode generatedNode) {
 		if (generatedNode instanceof final GeneratedFunction generatedFunction) {
 			codeNodeFunction(generatedFunction, mod);
 		} else if (generatedNode instanceof final GeneratedClass generatedClass) {
-			//			assert generatedClass.getCode() == 0;
+			// assert generatedClass.getCode() == 0;
 			if (generatedClass.getCode() == 0)
 				codeNodeClass(generatedClass, mod);
 
@@ -52,7 +52,8 @@ public class Coder {
 		codeRegistrar.registerFunction(generatedFunction);
 	}
 
-	private void setClassmapNodeCodes(@NotNull final Map<ClassStatement, GeneratedClass> aClassMap, final OS_Module mod) {
+	private void setClassmapNodeCodes(@NotNull final Map<ClassStatement, GeneratedClass> aClassMap,
+			final OS_Module mod) {
 		aClassMap.values().forEach(generatedClass -> codeNodeClass(generatedClass, mod));
 	}
 

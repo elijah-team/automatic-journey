@@ -20,13 +20,13 @@ import java.util.*;
 public abstract class BaseFunctionDef implements Documentable, ClassItem, OS_Container, OS_Element2 {
 
 	public final Attached _a = new Attached();
-	protected    Species  _species;
-	protected Scope3          scope3;
-	protected FormalArgList   mFal = new FormalArgList(); // remove final for FunctionDefBuilder
+	protected Species _species;
+	protected Scope3 scope3;
+	protected FormalArgList mFal = new FormalArgList(); // remove final for FunctionDefBuilder
 	List<AnnotationClause> annotations = null;
-	private   IdentExpression funName;
-	private   AccessNotation  access_note;
-	private   El_Category     category;
+	private IdentExpression funName;
+	private AccessNotation access_note;
+	private El_Category category;
 
 	// region arglist
 
@@ -61,7 +61,7 @@ public abstract class BaseFunctionDef implements Documentable, ClassItem, OS_Con
 				collection.add((FunctionItem) element);
 		}
 		return collection;
-		//return mScope2.items;
+		// return mScope2.items;
 	}
 
 	@Override // OS_Container
@@ -132,7 +132,8 @@ public abstract class BaseFunctionDef implements Documentable, ClassItem, OS_Con
 	}
 
 	public void walkAnnotations(final AnnotationWalker annotationWalker) {
-		if (annotations == null) return;
+		if (annotations == null)
+			return;
 		for (final AnnotationClause annotationClause : annotations) {
 			for (final AnnotationPart annotationPart : annotationClause.aps) {
 				annotationWalker.annotation(annotationPart);
@@ -142,7 +143,8 @@ public abstract class BaseFunctionDef implements Documentable, ClassItem, OS_Con
 
 	public @NotNull Iterable<AnnotationPart> annotationIterable() {
 		final List<AnnotationPart> aps = new ArrayList<AnnotationPart>();
-		if (annotations == null) return aps;
+		if (annotations == null)
+			return aps;
 		for (final AnnotationClause annotationClause : annotations) {
 			for (final AnnotationPart annotationPart : annotationClause.aps) {
 				aps.add(annotationPart);
@@ -155,7 +157,7 @@ public abstract class BaseFunctionDef implements Documentable, ClassItem, OS_Con
 
 	// region Documentable
 
-	@Override  // Documentable
+	@Override // Documentable
 	public void addDocString(final Token aText) {
 		scope3.addDocString(aText);
 	}
@@ -193,11 +195,7 @@ public abstract class BaseFunctionDef implements Documentable, ClassItem, OS_Con
 	}
 
 	public enum Species {
-		REG_FUN,
-		DEF_FUN,
-		CTOR, DTOR,
-		PROP_SET, PROP_GET,
-		FUNC_EXPR
+		REG_FUN, DEF_FUN, CTOR, DTOR, PROP_SET, PROP_GET, FUNC_EXPR
 	}
 
 	// endregion

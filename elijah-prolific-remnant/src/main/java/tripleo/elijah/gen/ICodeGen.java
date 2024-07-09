@@ -5,7 +5,6 @@ import tripleo.elijah.lang.*;
 
 public interface ICodeGen {
 
-
 	void addClass(ClassStatement klass);
 
 	void addModule(OS_Module module);

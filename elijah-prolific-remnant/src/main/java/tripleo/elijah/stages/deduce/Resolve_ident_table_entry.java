@@ -13,37 +13,44 @@ class Resolve_ident_table_entry {
 		deduceTypes2 = aDeduceTypes2;
 	}
 
-	public void act(@NotNull final IdentTableEntry ite, final BaseGeneratedFunction generatedFunction, final Context ctx) {
+	public void act(@NotNull final IdentTableEntry ite, final BaseGeneratedFunction generatedFunction,
+			final Context ctx) {
 
-		@Nullable InstructionArgument itex = new IdentIA(ite.getIndex(), generatedFunction);
+		@Nullable
+		InstructionArgument itex = new IdentIA(ite.getIndex(), generatedFunction);
 		{
 			while (itex != null && itex instanceof IdentIA) {
-				@NotNull final IdentTableEntry itee = ((IdentIA) itex).getEntry();
+				@NotNull
+				final IdentTableEntry itee = ((IdentIA) itex).getEntry();
 
-				@Nullable BaseTableEntry x = null;
+				@Nullable
+				BaseTableEntry x = null;
 				if (itee.getBacklink() instanceof IntegerIA) {
-					@NotNull final VariableTableEntry vte = ((IntegerIA) itee.getBacklink()).getEntry();
+					@NotNull
+					final VariableTableEntry vte = ((IntegerIA) itee.getBacklink()).getEntry();
 					x = vte;
 //					if (vte.constructable_pte != null)
 					itex = null;
 				} else if (itee.getBacklink() instanceof IdentIA) {
-					x    = ((IdentIA) itee.getBacklink()).getEntry();
+					x = ((IdentIA) itee.getBacklink()).getEntry();
 					itex = ((IdentTableEntry) x).getBacklink();
 				} else if (itee.getBacklink() instanceof ProcIA) {
 					x = ((ProcIA) itee.getBacklink()).getEntry();
 //					if (itee.getCallablePTE() == null)
 //						// turned out to be wrong (by double calling), so let's wrap it
 //						itee.setCallablePTE((ProcTableEntry) x);
-					itex = null; //((ProcTableEntry) x).backlink;
+					itex = null; // ((ProcTableEntry) x).backlink;
 				} else if (itee.getBacklink() == null) {
 					itex = null;
-					x    = null;
+					x = null;
 				}
 
 				if (x != null) {
 //					LOG.err("162 Adding FoundParent for "+itee);
 //					LOG.err(String.format("1656 %s \n\t %s \n\t%s", x, itee, itex));
-					x.addStatusListener(new FoundParent(deduceTypes2, x, itee, itee.getIdent().getContext(), generatedFunction)); // TODO context??
+					x.addStatusListener(
+							new FoundParent(deduceTypes2, x, itee, itee.getIdent().getContext(), generatedFunction)); // TODO
+																														// context??
 				}
 			}
 		}
@@ -64,7 +71,8 @@ class Resolve_ident_table_entry {
 				@Override
 				public void noFoundElement() {
 					ite.setStatus(BaseTableEntry.Status.UNKNOWN, null);
-					//errSink.reportError("1004 Can't find element for "+ x); // Already reported by 1179
+					// errSink.reportError("1004 Can't find element for "+ x); // Already reported
+					// by 1179
 				}
 			});
 		}

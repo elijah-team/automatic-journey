@@ -2,7 +2,6 @@ package tripleo.elijah.lang.types;
 
 import tripleo.elijah.lang.*;
 
-
 public class OS_UnitType extends __Abstract_OS_Type {
 
 	@Override
@@ -34,5 +33,3 @@ public class OS_UnitType extends __Abstract_OS_Type {
 		return "<UnitType>";
 	}
 }
-
-

@@ -33,7 +33,7 @@ public interface StatementClosure {
 	void statementWrapper(IExpression expr);
 
 	// TODO new
-	//IdentList identList();
+	// IdentList identList();
 }
 
 //

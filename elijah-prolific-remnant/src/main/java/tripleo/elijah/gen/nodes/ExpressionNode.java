@@ -18,11 +18,11 @@ import tripleo.elijah_fluffy.util.*;
  */
 public class ExpressionNode implements IExpressionNode {
 
-	public String genName;  // TODO since when does expression have a name?
+	public String genName; // TODO since when does expression have a name?
 	public String genText;
 	public String genType;
 
-	public boolean    _is_const_expr;
+	public boolean _is_const_expr;
 	public OS_Element ref_;
 
 	private IExpression iex;
@@ -31,31 +31,28 @@ public class ExpressionNode implements IExpressionNode {
 	 * For {@link VariableReferenceNode2}
 	 */
 	public ExpressionNode() {
-		genName        = null;
-		genText        = null;
-		genType        = null;
+		genName = null;
+		genText = null;
+		genType = null;
 		_is_const_expr = false;
-		ref_           = null;
-		iex            = null;
+		ref_ = null;
+		iex = null;
 	}
 	/*
-	public ExpressionNode(@NonNull  OS_Integer expr1) {
-		// TODO should  be interface
-		genName=((Integer)expr1.getValue()).toString(); // TODO likely wrong
-		genText=expr1.toString(); // TODO likely wrong
-		_is_const_expr = true;
-		iex = expr1;
-	}
-	*/
+	 * public ExpressionNode(@NonNull OS_Integer expr1) { // TODO should be
+	 * interface genName=((Integer)expr1.getValue()).toString(); // TODO likely
+	 * wrong genText=expr1.toString(); // TODO likely wrong _is_const_expr = true;
+	 * iex = expr1; }
+	 */
 
 	public ExpressionNode(@NonNull final IExpression expr1) {
 		// TODO Auto-generated constructor stub
 		if (expr1 != null) {
-			genName        = expr1.toString(); // TODO likely wrong
-			genText        = expr1.toString(); // TODO likely wrong
+			genName = expr1.toString(); // TODO likely wrong
+			genText = expr1.toString(); // TODO likely wrong
 			_is_const_expr = expr1.getLeft() instanceof StringExpression
-			  || expr1.getLeft() instanceof NumericExpression; // TODO more
-			iex            = expr1;
+					|| expr1.getLeft() instanceof NumericExpression; // TODO more
+			iex = expr1;
 		}
 	}
 
@@ -109,8 +106,8 @@ public class ExpressionNode implements IExpressionNode {
 		if (iex instanceof BasicBinaryExpression) {
 			if (iex.getLeft() instanceof VariableReference) {
 
-				final String left_side  = ((VariableReference) this.iex.getLeft()).getName();
-				String       right_side = null;
+				final String left_side = ((VariableReference) this.iex.getLeft()).getName();
+				String right_side = null;
 
 				final BasicBinaryExpression abe = (BasicBinaryExpression) this.iex;
 //				if (abe.getRight() instanceof OS_Integer) {
@@ -149,7 +146,7 @@ public class ExpressionNode implements IExpressionNode {
 
 	@Override
 	public String genType() {
-		return "u64";  // TODO harcoded
+		return "u64"; // TODO harcoded
 	}
 
 	@Override

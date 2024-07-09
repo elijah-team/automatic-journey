@@ -20,7 +20,7 @@ import tripleo.elijah.lang.*;
  */
 public class ReturnAgnNode {
 
-	public  ExpressionNode  expr;
+	public ExpressionNode expr;
 	private LocalAgnTmpNode _latn;
 
 	public ReturnAgnNode(final IExpression expression) {
@@ -37,7 +37,7 @@ public class ReturnAgnNode {
 	public IExpressionNode getExpr() {
 		if (expr != null)
 			return expr;
-		return _latn.getRight();//.getExpr();
+		return _latn.getRight();// .getExpr();
 	}
 }
 

@@ -12,7 +12,6 @@ import org.jetbrains.annotations.*;
 
 import java.util.*;
 
-
 /**
  * Curiously, not an expression
  */
@@ -22,9 +21,10 @@ public class ExpressionList implements Iterable<IExpression> {
 
 	public IExpression next(final IExpression aExpr) {
 //		assert aExpr != null;
-		if (aExpr == null) throw new IllegalArgumentException("expression cannot be null");
+		if (aExpr == null)
+			throw new IllegalArgumentException("expression cannot be null");
 		//
-		/*exprs.*/
+		/* exprs. */
 		add(aExpr);
 		return aExpr;
 	}

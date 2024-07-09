@@ -11,7 +11,6 @@ package tripleo.elijah.lang;
 import antlr.*;
 import tripleo.elijah_fluffy.util.*;
 
-
 public class VariableReference extends AbstractExpression implements OS_Expression {
 
 	String main;
@@ -19,10 +18,10 @@ public class VariableReference extends AbstractExpression implements OS_Expressi
 	OS_Type _type;
 
 	/**
-	 * Called from ElijahParser.variableReference.  Will `setMain' later
+	 * Called from ElijahParser.variableReference. Will `setMain' later
 	 */
 	public VariableReference() {
-		//NotImplementedException.raise();
+		// NotImplementedException.raise();
 		setLeft(this); // TODO is this better left null?
 		// no contract specifies NotNull...
 		setKind(ExpressionKind.VARREF);
@@ -45,15 +44,14 @@ public class VariableReference extends AbstractExpression implements OS_Expressi
 	}
 
 	/**
-	 * * no parts, just an ident '
-	 * * qualident not implemented
-	 * * all parts is dotpart array can be simple too, depending and so can proccall
+	 * * no parts, just an ident ' * qualident not implemented * all parts is
+	 * dotpart array can be simple too, depending and so can proccall
 	 *
 	 * @return if no parts specified
 	 */
 	@Override
 	public boolean is_simple() {
-		return false;   //parts.size() == 0; // TODO ; || type==VARREF_SIMPLE??
+		return false; // parts.size() == 0; // TODO ; || type==VARREF_SIMPLE??
 	}
 
 	@Override
@@ -81,7 +79,6 @@ public class VariableReference extends AbstractExpression implements OS_Expressi
 //	}
 
 }
-
 
 //
 //

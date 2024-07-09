@@ -5,33 +5,28 @@ import tripleo.vendor.mal.env.*;
 import java.util.*;
 
 public class types {
-	public static MalConstant Nil   = new MalConstant("nil");
-	public static MalConstant True  = new MalConstant("true");
+	public static MalConstant Nil = new MalConstant("nil");
+	public static MalConstant True = new MalConstant("true");
 	public static MalConstant False = new MalConstant("false");
 
 	public static Boolean _equal_Q(final MalVal a, final MalVal b) {
 		final Class ota = a.getClass();
 		final Class otb = b.getClass();
-		if (!((ota == otb) ||
-		  (a instanceof MalList && b instanceof MalList))) {
+		if (!((ota == otb) || (a instanceof MalList && b instanceof MalList))) {
 			return false;
 		} else {
 			if (a instanceof MalInteger) {
-				return ((MalInteger) a).getValue() ==
-				  ((MalInteger) b).getValue();
+				return ((MalInteger) a).getValue() == ((MalInteger) b).getValue();
 			} else if (a instanceof MalSymbol) {
-				return ((MalSymbol) a).getName().equals(
-				  ((MalSymbol) b).getName());
+				return ((MalSymbol) a).getName().equals(((MalSymbol) b).getName());
 			} else if (a instanceof MalString) {
-				return ((MalString) a).getValue().equals(
-				  ((MalString) b).getValue());
+				return ((MalString) a).getValue().equals(((MalString) b).getValue());
 			} else if (a instanceof MalList) {
 				if (((MalList) a).size() != ((MalList) b).size()) {
 					return false;
 				}
 				for (Integer i = 0; i < ((MalList) a).size(); i++) {
-					if (!_equal_Q(((MalList) a).nth(i),
-					  ((MalList) b).nth(i))) {
+					if (!_equal_Q(((MalList) a).nth(i), ((MalList) b).nth(i))) {
 						return false;
 					}
 				}
@@ -40,11 +35,10 @@ public class types {
 				if (((MalHashMap) a).value.size() != ((MalHashMap) b).value.size()) {
 					return false;
 				}
-				//HashMap<String,MalVal> hm = (HashMap<String,MalVal>)a.value;
+				// HashMap<String,MalVal> hm = (HashMap<String,MalVal>)a.value;
 				final HashMap<String, MalVal> hm = (HashMap<String, MalVal>) mhm.value;
 				for (final String k : hm.keySet()) {
-					if (!_equal_Q(((MalVal) ((MalHashMap) a).value.get(k)),
-					  ((MalVal) ((MalHashMap) b).value.get(k)))) {
+					if (!_equal_Q(((MalVal) ((MalHashMap) a).value.get(k)), ((MalVal) ((MalHashMap) b).value.get(k)))) {
 						return false;
 					}
 				}
@@ -324,13 +318,13 @@ public class types {
 		public MalVector(final List val) {
 			value = val;
 			start = "[";
-			end   = "]";
+			end = "]";
 		}
 
 		public MalVector(final MalVal... mvs) {
 			super(mvs);
 			start = "[";
-			end   = "]";
+			end = "]";
 		}
 
 		public MalVector copy() throws MalThrowable {
@@ -368,16 +362,14 @@ public class types {
 
 		public MalHashMap assoc_BANG(final MalList lst) {
 			for (Integer i = 0; i < lst.value.size(); i += 2) {
-				value.put(((MalString) lst.nth(i)).getValue(),
-				  lst.nth(i + 1));
+				value.put(((MalString) lst.nth(i)).getValue(), lst.nth(i + 1));
 			}
 			return this;
 		}
 
 		public MalHashMap assoc_BANG(final MalVal... mvs) {
 			for (Integer i = 0; i < mvs.length; i += 2) {
-				value.put(((MalSymbol) mvs[i]).getName(),
-				  mvs[i + 1]);
+				value.put(((MalSymbol) mvs[i]).getName(), mvs[i + 1]);
 			}
 			return this;
 		}
@@ -436,34 +428,33 @@ public class types {
 		}
 	}
 
-	public static abstract class MalFunction extends MalVal
-	  implements ILambda, java.lang.Cloneable {
-		public MalVal  ast    = null;
-		public Env     env    = null;
+	public static abstract class MalFunction extends MalVal implements ILambda, java.lang.Cloneable {
+		public MalVal ast = null;
+		public Env env = null;
 		public MalList params = null;
-		public Boolean macro  = false;
+		public Boolean macro = false;
 
 		public MalFunction() {
 		}
 
 		public MalFunction(final MalVal ast, final Env env, final MalList params) {
-			this.ast    = ast;
-			this.env    = env;
+			this.ast = ast;
+			this.env = env;
 			this.params = params;
 		}
 
 		public MalFunction copy() throws MalThrowable {
 			try {
 				// WARNING: clone() is broken:
-				//   http://www.artima.com/intv/bloch13.html
+				// http://www.artima.com/intv/bloch13.html
 				// However, this doesn't work:
-				//   MalFunction new_mf = this.getClass().newInstance();
+				// MalFunction new_mf = this.getClass().newInstance();
 				// So for now it's clone.
 				final MalFunction new_mf = (MalFunction) this.clone();
-				new_mf.ast    = ast;
-				new_mf.env    = env;
+				new_mf.ast = ast;
+				new_mf.env = env;
 				new_mf.params = params;
-				new_mf.macro  = macro;
+				new_mf.macro = macro;
 				return new_mf;
 			} catch (final Throwable t) {
 				// not much we can do

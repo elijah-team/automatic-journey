@@ -17,20 +17,21 @@ public class EntryPointList {
 		eps = new ArrayList<>();
 	}
 
-	public void generate(@NotNull final GenerateFunctions aGenerateFunctions, final DeducePhase aDeducePhase, @NotNull final Supplier<WorkManager> wm) {
+	public void generate(@NotNull final GenerateFunctions aGenerateFunctions, final DeducePhase aDeducePhase,
+			@NotNull final Supplier<WorkManager> wm) {
 		generateFromEntryPoints(aDeducePhase, aGenerateFunctions, wm.get());
 	}
 
-	private void generateFromEntryPoints(final DeducePhase deducePhase,
-	                                     final GenerateFunctions aGenerateFunctions,
-	                                     final WorkManager wm) {
-		if (eps.size() == 0) return; // short circuit
-
+	private void generateFromEntryPoints(final DeducePhase deducePhase, final GenerateFunctions aGenerateFunctions,
+			final WorkManager wm) {
+		if (eps.size() == 0)
+			return; // short circuit
 
 		final WorkList wl = new WorkList();
 
 		for (final EntryPoint entryPoint : eps) {
-			final EntryPointProcessor epp = EntryPointProcessor.dispatch(entryPoint, deducePhase, wl, aGenerateFunctions);
+			final EntryPointProcessor epp = EntryPointProcessor.dispatch(entryPoint, deducePhase, wl,
+					aGenerateFunctions);
 			epp.process();
 		}
 

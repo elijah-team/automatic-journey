@@ -36,23 +36,25 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 
 	private final VariableTableEntry principal;
 
-	private final State                 st;
-	private       DeduceTypes2          deduceTypes2;
-	private       BaseGeneratedFunction generatedFunction;
-	private       GenType               genType;
+	private final State st;
+	private DeduceTypes2 deduceTypes2;
+	private BaseGeneratedFunction generatedFunction;
+	private GenType genType;
 
 	@Contract(pure = true)
 	public DeduceElement3_VariableTableEntry(final VariableTableEntry aVariableTableEntry) {
 		principal = aVariableTableEntry;
-		st        = ST.INITIAL;
+		st = ST.INITIAL;
 	}
 
 	DeduceElement3_VariableTableEntry(final OS_Type vte_type_attached) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from
+																		// nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 	@NotNull
-	private static ArrayList<TypeTableEntry> getPotentialTypesVte(@NotNull final GeneratedFunction generatedFunction, @NotNull final InstructionArgument vte_index) {
+	private static ArrayList<TypeTableEntry> getPotentialTypesVte(@NotNull final GeneratedFunction generatedFunction,
+			@NotNull final InstructionArgument vte_index) {
 		return getPotentialTypesVte(generatedFunction.getVarTableEntry(to_int(vte_index)));
 	}
 
@@ -153,26 +155,32 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 	}
 
 	public void setDeduceTypes2(final DeduceTypes2 aDeduceTypes2, final BaseGeneratedFunction aGeneratedFunction) {
-		deduceTypes2      = aDeduceTypes2;
+		deduceTypes2 = aDeduceTypes2;
 		generatedFunction = aGeneratedFunction;
 	}
 
-	public void potentialTypesRunnableDo(final @Nullable InstructionArgument vte_ia, final @NotNull ElLog aLOG, final @NotNull VariableTableEntry aVte1, final ErrSink errSink, final Context ctx, final String aE_text, final @NotNull VariableTableEntry aVte) {
+	public void potentialTypesRunnableDo(final @Nullable InstructionArgument vte_ia, final @NotNull ElLog aLOG,
+			final @NotNull VariableTableEntry aVte1, final ErrSink errSink, final Context ctx, final String aE_text,
+			final @NotNull VariableTableEntry aVte) {
 		final @NotNull List<TypeTableEntry> ll = getPotentialTypesVte((GeneratedFunction) generatedFunction, vte_ia);
 		doLogic(ll, aVte1.typePromise(), aLOG, aVte1, errSink, ctx, aE_text, aVte);
 	}
 
-	public void doLogic(@NotNull final List<TypeTableEntry> potentialTypes, final Promise<GenType, Void, Void> p, final @NotNull ElLog LOG, final @NotNull VariableTableEntry vte1, final ErrSink errSink, final Context ctx, final String e_text, final @NotNull VariableTableEntry vte) {
+	public void doLogic(@NotNull final List<TypeTableEntry> potentialTypes, final Promise<GenType, Void, Void> p,
+			final @NotNull ElLog LOG, final @NotNull VariableTableEntry vte1, final ErrSink errSink, final Context ctx,
+			final String e_text, final @NotNull VariableTableEntry vte) {
 		assert potentialTypes.size() >= 0;
 		switch (potentialTypes.size()) {
 		case 1:
 //							tte.attached = ll.get(0).attached;
 //							vte.addPotentialType(instructionIndex, ll.get(0));
 			if (p.isResolved()) {
-				LOG.info(String.format("1047 (vte already resolved) %s vte1.type = %s, gf = %s, tte1 = %s %n", vte1.getName(), vte1.type, generatedFunction, potentialTypes.get(0)));
+				LOG.info(String.format("1047 (vte already resolved) %s vte1.type = %s, gf = %s, tte1 = %s %n",
+						vte1.getName(), vte1.type, generatedFunction, potentialTypes.get(0)));
 			} else {
 				final OS_Type attached = potentialTypes.get(0).getAttached();
-				if (attached == null) return;
+				if (attached == null)
+					return;
 				switch (attached.getType()) {
 				case USER:
 					vte1.type.setAttached(attached); // !!
@@ -191,19 +199,24 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 		case 0:
 			// README moved up here to elimiate work
 			if (p.isResolved()) {
-				System.out.printf("890-1 Already resolved type: vte1.type = %s, gf = %s %n", vte1.type, generatedFunction);
+				System.out.printf("890-1 Already resolved type: vte1.type = %s, gf = %s %n", vte1.type,
+						generatedFunction);
 				break;
 			}
 			final LookupResultList lrl = ctx.lookup(e_text);
-			@Nullable final OS_Element best = lrl.chooseBest(null);
+			@Nullable
+			final OS_Element best = lrl.chooseBest(null);
 			if (best instanceof @NotNull final FormalArgListItem fali) {
 				final @NotNull OS_Type osType = new OS_UserType(fali.typeName());
 				if (!osType.equals(vte.type.getAttached())) {
-					@NotNull final TypeTableEntry tte1 = generatedFunction.newTypeTableEntry(
-					  TypeTableEntry.Type.SPECIFIED, osType, fali.getNameToken(), vte1);
-									/*if (p.isResolved())
-										System.out.printf("890 Already resolved type: vte1.type = %s, gf = %s, tte1 = %s %n", vte1.type, generatedFunction, tte1);
-									else*/
+					@NotNull
+					final TypeTableEntry tte1 = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED,
+							osType, fali.getNameToken(), vte1);
+					/*
+					 * if (p.isResolved()) System.out.
+					 * printf("890 Already resolved type: vte1.type = %s, gf = %s, tte1 = %s %n",
+					 * vte1.type, generatedFunction, tte1); else
+					 */
 					{
 						final OS_Type attached = tte1.getAttached();
 						switch (attached.getType()) {
@@ -228,12 +241,15 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 				//
 				assert vs.getName().equals(e_text);
 				//
-				@Nullable final InstructionArgument vte2_ia = generatedFunction.vte_lookup(vs.getName());
-				@NotNull final VariableTableEntry   vte2    = generatedFunction.getVarTableEntry(to_int(vte2_ia));
+				@Nullable
+				final InstructionArgument vte2_ia = generatedFunction.vte_lookup(vs.getName());
+				@NotNull
+				final VariableTableEntry vte2 = generatedFunction.getVarTableEntry(to_int(vte2_ia));
 				if (p.isResolved())
-					System.out.printf("915 Already resolved type: vte2.type = %s, gf = %s %n", vte1.type, generatedFunction);
+					System.out.printf("915 Already resolved type: vte2.type = %s, gf = %s %n", vte1.type,
+							generatedFunction);
 				else {
-					final GenType gt       = vte1.genType;
+					final GenType gt = vte1.genType;
 					final OS_Type attached = vte2.type.getAttached();
 					gt.setResolved(attached);
 					vte1.resolveType(gt);
@@ -251,13 +267,13 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 		default:
 			// TODO hopefully this works
 			final @NotNull ArrayList<TypeTableEntry> potentialTypes1 = new ArrayList<TypeTableEntry>(
-			  Collections2.filter(potentialTypes, new Predicate<TypeTableEntry>() {
-				  @Override
-				  public boolean apply(@org.jetbrains.annotations.Nullable final TypeTableEntry input) {
-					  assert input != null;
-					  return input.getAttached() != null;
-				  }
-			  }));
+					Collections2.filter(potentialTypes, new Predicate<TypeTableEntry>() {
+						@Override
+						public boolean apply(@org.jetbrains.annotations.Nullable final TypeTableEntry input) {
+							assert input != null;
+							return input.getAttached() != null;
+						}
+					}));
 			// prevent infinite recursion
 			if (potentialTypes1.size() < potentialTypes.size())
 				doLogic(potentialTypes1, p, LOG, vte1, errSink, ctx, e_text, vte);
@@ -267,13 +283,15 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 		}
 	}
 
-	public void _action_002_no_resolved_element(final ErrSink errSink, final ProcTableEntry pte, final IdentTableEntry ite, final DeduceTypes2.@NotNull DeduceClient3 dc, final @NotNull DeducePhase phase) {
+	public void _action_002_no_resolved_element(final ErrSink errSink, final ProcTableEntry pte,
+			final IdentTableEntry ite, final DeduceTypes2.@NotNull DeduceClient3 dc, final @NotNull DeducePhase phase) {
 		final DeferredObject<Context, Void, Void> d = new DeferredObject<Context, Void, Void>();
 		d.then(context -> {
 			try {
 //				final Context context = resolvedElement.getContext();
-				final LookupResultList     lrl2 = dc.lookupExpression(ite.getIdent(), context);
-				@Nullable final OS_Element best = lrl2.chooseBest(null);
+				final LookupResultList lrl2 = dc.lookupExpression(ite.getIdent(), context);
+				@Nullable
+				final OS_Element best = lrl2.chooseBest(null);
 				assert best != null;
 				ite.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(best));
 				action_002_1(pte, ite, false, dc, phase);
@@ -300,7 +318,8 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 
 	}
 
-	private void action_002_1(@NotNull final ProcTableEntry pte, @NotNull final IdentTableEntry ite, final boolean setClassInvocation, final DeduceTypes2.DeduceClient3 dc, final DeducePhase phase) {
+	private void action_002_1(@NotNull final ProcTableEntry pte, @NotNull final IdentTableEntry ite,
+			final boolean setClassInvocation, final DeduceTypes2.DeduceClient3 dc, final DeducePhase phase) {
 		final OS_Element resolvedElement = ite.getResolvedElement();
 
 		assert resolvedElement != null;
@@ -308,17 +327,15 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 		action_002_1_001(pte, setClassInvocation, dc, phase, resolvedElement);
 	}
 
-	private void action_002_1_001(final @NotNull ProcTableEntry pte,
-	                              final boolean setClassInvocation,
-	                              final DeduceTypes2.DeduceClient3 dc,
-	                              final DeducePhase phase,
-	                              final OS_Element resolvedElement) {
-		if (pte.getFunctionInvocation() != null) return;
+	private void action_002_1_001(final @NotNull ProcTableEntry pte, final boolean setClassInvocation,
+			final DeduceTypes2.DeduceClient3 dc, final DeducePhase phase, final OS_Element resolvedElement) {
+		if (pte.getFunctionInvocation() != null)
+			return;
 
 		final Pair<ClassInvocation, FunctionInvocation> p = action_002_1_002_1(pte, dc, phase, resolvedElement);
 		if (p == null)
 			throw new IllegalStateException();
-		final ClassInvocation    ci = p.getLeft();
+		final ClassInvocation ci = p.getLeft();
 		final FunctionInvocation fi = p.getRight();
 
 		if (setClassInvocation) {
@@ -331,17 +348,18 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 		pte.setFunctionInvocation(fi);
 	}
 
-	private @Nullable Pair<ClassInvocation, FunctionInvocation> action_002_1_002_1(final @NotNull ProcTableEntry pte, final DeduceTypes2.DeduceClient3 dc, final DeducePhase phase, final @NotNull OS_Element resolvedElement) {
+	private @Nullable Pair<ClassInvocation, FunctionInvocation> action_002_1_002_1(final @NotNull ProcTableEntry pte,
+			final DeduceTypes2.DeduceClient3 dc, final DeducePhase phase, final @NotNull OS_Element resolvedElement) {
 		final Pair<ClassInvocation, FunctionInvocation> p;
-		final FunctionInvocation                        fi;
-		ClassInvocation                                 ci;
+		final FunctionInvocation fi;
+		ClassInvocation ci;
 
 		if (resolvedElement instanceof ClassStatement) {
 			// assuming no constructor name or generic parameters based on function syntax
 			ci = new ClassInvocation((ClassStatement) resolvedElement, null);
 			ci = phase.registerClassInvocation(ci);
 			fi = new FunctionInvocation(null, pte, ci, phase.generatePhase);
-			p  = new ImmutablePair<ClassInvocation, FunctionInvocation>(ci, fi);
+			p = new ImmutablePair<ClassInvocation, FunctionInvocation>(ci, fi);
 		} else if (resolvedElement instanceof final FunctionDef functionDef) {
 			final IInvocation invocation = dc.getInvocation((GeneratedFunction) generatedFunction);
 			fi = new FunctionInvocation(functionDef, pte, invocation, phase.generatePhase);
@@ -363,27 +381,23 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 	public static class ST {
 		public static State EXIT_RESOLVE;
 		public static State EXIT_CONVERT_USER_TYPES;
-		static        State INITIAL;
+		static State INITIAL;
 
 		public static void register(final @NotNull DeducePhase aDeducePhase) {
-			EXIT_RESOLVE            = aDeducePhase.register(new ExitResolveState());
-			INITIAL                 = aDeducePhase.register(new InitialState());
+			EXIT_RESOLVE = aDeducePhase.register(new ExitResolveState());
+			INITIAL = aDeducePhase.register(new InitialState());
 			EXIT_CONVERT_USER_TYPES = aDeducePhase.register(new ExitConvertUserTypes());
 		}
 
 		static class ExitConvertUserTypes implements State {
 			private int identity;
 
-			private static void apply_normal(final VariableTableEntry vte,
-			                                 final DeduceTypes2 dt2,
-			                                 final ErrSink errSink,
-			                                 final DeducePhase phase,
-			                                 final @NotNull ElLog LOG,
-			                                 final @NotNull OS_Type attached,
-			                                 final TypeName x,
-			                                 final String tn) {
-				final LookupResultList lrl  = x.getContext().lookup(tn);
-				@Nullable OS_Element   best = lrl.chooseBest(null);
+			private static void apply_normal(final VariableTableEntry vte, final DeduceTypes2 dt2,
+					final ErrSink errSink, final DeducePhase phase, final @NotNull ElLog LOG,
+					final @NotNull OS_Type attached, final TypeName x, final String tn) {
+				final LookupResultList lrl = x.getContext().lookup(tn);
+				@Nullable
+				OS_Element best = lrl.chooseBest(null);
 
 				while (best instanceof AliasStatement) {
 					best = DeduceLookupUtils._resolveAlias((AliasStatement) best, dt2);
@@ -396,14 +410,16 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 						LOG.info("705 " + best);
 						// NOTE that when we set USER_CLASS from USER generic information is
 						// still contained in constructable_pte
-						@NotNull final GenType genType = new GenType(attached, ((ClassStatement) best).getOS_Type(), true, x, dt2, errSink, phase);
+						@NotNull
+						final GenType genType = new GenType(attached, ((ClassStatement) best).getOS_Type(), true, x,
+								dt2, errSink, phase);
 						vte.setLikelyType(genType);
 					}
-					//vte.el = best;
+					// vte.el = best;
 					// NOTE we called resolve_var_table_entry above
 					LOG.info("200 " + best);
 					assert vte.getResolvedElement() == null || vte.getStatus() == BaseTableEntry.Status.KNOWN;
-					//									vte.setStatus(BaseTableEntry.Status.KNOWN, best/*vte.el*/);
+					// vte.setStatus(BaseTableEntry.Status.KNOWN, best/*vte.el*/);
 				} else {
 					errSink.reportDiagnostic(new ResolveError(x, lrl));
 				}
@@ -413,16 +429,18 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 			public void apply(final DefaultStateful element) {
 				final VariableTableEntry vte = ((DeduceElement3_VariableTableEntry) element).principal;
 
-				final DeduceTypes2         dt2     = ((DeduceElement3_VariableTableEntry) element).deduceTypes2();
-				final ErrSink              errSink = dt2._errSink();
-				final @NotNull DeducePhase phase   = dt2._phase();
-				final @NotNull ElLog       LOG     = dt2._LOG();
+				final DeduceTypes2 dt2 = ((DeduceElement3_VariableTableEntry) element).deduceTypes2();
+				final ErrSink errSink = dt2._errSink();
+				final @NotNull DeducePhase phase = dt2._phase();
+				final @NotNull ElLog LOG = dt2._LOG();
 
-				if (vte.type == null) return; // TODO only for tests
+				if (vte.type == null)
+					return; // TODO only for tests
 
 				final @Nullable OS_Type attached = vte.type.getAttached();
 
-				if (attached == null) return;
+				if (attached == null)
+					return;
 				if (Objects.requireNonNull(attached.getType()) == OS_Type.Type.USER) {
 					final TypeName x = attached.getTypeName();
 					if (x instanceof NormalTypeName) {
@@ -484,13 +502,13 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 	}
 
 	private static class Diagnostic_8884 implements GCFM_Diagnostic {
-		private final VariableTableEntry    vte;
+		private final VariableTableEntry vte;
 		private final BaseGeneratedFunction gf;
-		private final int                   _code = 8884;
+		private final int _code = 8884;
 
 		public Diagnostic_8884(final VariableTableEntry aVte, final BaseGeneratedFunction aGf) {
 			vte = aVte;
-			gf  = aGf;
+			gf = aGf;
 		}
 
 		@Override
@@ -526,7 +544,7 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 
 	private static class Diagnostic_8885 implements GCFM_Diagnostic {
 		private final VariableTableEntry vte;
-		private final int                _code = 8885;
+		private final int _code = 8885;
 
 		public Diagnostic_8885(final VariableTableEntry aVte) {
 			vte = aVte;

@@ -6,19 +6,17 @@ import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.logging.*;
 
 public class OutputFileFactoryParams {
-	private final OS_Module       mod;
-	private final ErrSink         errSink;
+	private final OS_Module mod;
+	private final ErrSink errSink;
 	private final ElLog.Verbosity verbosity;
-	private final PipelineLogic   pipelineLogic;
+	private final PipelineLogic pipelineLogic;
 
 	@Contract(pure = true)
-	public OutputFileFactoryParams(final OS_Module aMod,
-	                               final ErrSink aErrSink,
-	                               final ElLog.Verbosity aVerbosity,
-	                               final PipelineLogic aPipelineLogic) {
-		mod           = aMod;
-		errSink       = aErrSink;
-		verbosity     = aVerbosity;
+	public OutputFileFactoryParams(final OS_Module aMod, final ErrSink aErrSink, final ElLog.Verbosity aVerbosity,
+			final PipelineLogic aPipelineLogic) {
+		mod = aMod;
+		errSink = aErrSink;
+		verbosity = aVerbosity;
 		pipelineLogic = aPipelineLogic;
 	}
 

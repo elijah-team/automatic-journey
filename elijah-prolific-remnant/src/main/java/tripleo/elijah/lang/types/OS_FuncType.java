@@ -51,30 +51,34 @@ public class OS_FuncType extends __Abstract_OS_Type {
 	}
 
 	@NotNull
-	public ClassInvocation resolvedFunction(final @NotNull GenType genType, final TypeName aGenericTypeName, final DeduceTypes2 deduceTypes2, final ErrSink errSink, final DeducePhase phase) {
+	public ClassInvocation resolvedFunction(final @NotNull GenType genType, final TypeName aGenericTypeName,
+			final DeduceTypes2 deduceTypes2, final ErrSink errSink, final DeducePhase phase) {
 		// TODO what to do here?
-		final OS_Element               ele             = function_def;
-		final @Nullable ClassStatement best            = (ClassStatement) ele.getParent();//genType.resolved.getClassOf();
-		@Nullable final String         constructorName = null; // TODO what to do about this, nothing I guess
+		final OS_Element ele = function_def;
+		final @Nullable ClassStatement best = (ClassStatement) ele.getParent();// genType.resolved.getClassOf();
+		@Nullable
+		final String constructorName = null; // TODO what to do about this, nothing I guess
 
-		@NotNull final List<TypeName> gp = best.getGenericPart();
-		@Nullable ClassInvocation     clsinv;
+		@NotNull
+		final List<TypeName> gp = best.getGenericPart();
+		@Nullable
+		ClassInvocation clsinv;
 		if (genType.getCi() == null) {
-			clsinv = ClassInvocationMake.withGenericPart(best, constructorName, (NormalTypeName) aGenericTypeName, deduceTypes2, errSink);
-			if (clsinv == null) return null;
-			clsinv     = phase.registerClassInvocation(clsinv);
+			clsinv = ClassInvocationMake.withGenericPart(best, constructorName, (NormalTypeName) aGenericTypeName,
+					deduceTypes2, errSink);
+			if (clsinv == null)
+				return null;
+			clsinv = phase.registerClassInvocation(clsinv);
 			genType.setCi(clsinv);
 		} else
 			clsinv = (ClassInvocation) genType.getCi();
 		return clsinv;
 	}
 
-
 	protected boolean _isEqual(final OS_Type aType) {
 		return aType.getType() == Type.FUNCTION && function_def.equals(aType.getElement());
 	}
 }
-
 
 //
 //

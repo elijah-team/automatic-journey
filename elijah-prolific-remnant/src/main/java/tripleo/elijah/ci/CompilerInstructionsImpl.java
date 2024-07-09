@@ -21,11 +21,11 @@ import java.util.stream.*;
  */
 public class CompilerInstructionsImpl implements CompilerInstructions {
 
-	public  List<LibraryStatementPart> lsps = new ArrayList<LibraryStatementPart>();
-	private IndexingStatement          _idx;
-	private GenerateStatement          gen;
-	private String                     filename;
-	private String                     name;
+	public List<LibraryStatementPart> lsps = new ArrayList<LibraryStatementPart>();
+	private IndexingStatement _idx;
+	private GenerateStatement gen;
+	private String filename;
+	private String name;
 
 	@Override
 	public IndexingStatement indexingStatement() {
@@ -61,9 +61,10 @@ public class CompilerInstructionsImpl implements CompilerInstructions {
 	@Nullable
 	public String genLang() {
 		final List<GenerateStatement.Directive> gens = gen.dirs.stream()
-		                                                       .filter((final GenerateStatement.Directive input) -> input.getName().equals("gen"))
-		                                                       .collect(Collectors.toList());
-		if (gens.size() == 0) return null;
+				.filter((final GenerateStatement.Directive input) -> input.getName().equals("gen"))
+				.collect(Collectors.toList());
+		if (gens.size() == 0)
+			return null;
 		final IExpression lang_raw = gens.get(0).getExpression();
 		assert lang_raw instanceof StringExpression;
 		final String text = ((StringExpression) lang_raw).getText();

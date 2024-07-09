@@ -20,20 +20,20 @@ import java.util.regex.*;
 import static tripleo.elijah_fluffy.util.Helpers.*;
 
 public class CompilationRunner {
-	private final Compilation         compilation;
-	private final ProlificStartup2    _startup;
-	private final ICompilationBus     cb;
-	private final EzCache             ezCache;
+	private final Compilation compilation;
+	private final ProlificStartup2 _startup;
+	private final ICompilationBus cb;
+	private final EzCache ezCache;
 	private final CSS2_AlmostComplete almostComplete;
-	private final CSS2_CCI_Accept     cciAcceptSignal;
+	private final CSS2_CCI_Accept cciAcceptSignal;
 
 	@Contract(pure = true)
 	public CompilationRunner(final Compilation aCompilation, final ICompilationBus aCb) {
-		compilation     = aCompilation;
-		cb              = aCb;
-		_startup        = compilation.getStartup();
-		ezCache         = new DefaultEzCache();
-		almostComplete  = new CSS2_AlmostComplete();
+		compilation = aCompilation;
+		cb = aCb;
+		_startup = compilation.getStartup();
+		ezCache = new DefaultEzCache();
+		almostComplete = new CSS2_AlmostComplete();
 		cciAcceptSignal = new CSS2_CCI_Accept();
 	}
 
@@ -44,8 +44,8 @@ public class CompilationRunner {
 			@Override
 			public List<ICompilationBus.CB_Action> steps() {
 				// 1. find stdlib
-				//   -- question placement
-				//   -- ...
+				// -- question placement
+				// -- ...
 				final ICompilationBus.CB_Action a = new ICompilationBus.CB_Action() {
 					private final CR_FindStdlibAction aa = new CR_FindStdlibAction();
 
@@ -112,27 +112,23 @@ public class CompilationRunner {
 
 	private void logProgress(final int number, final String text) {
 		switch (number) {
-			case 130:
-				break;
-			default: {
+		case 130:
+			break;
+		default: {
 
-				//noinspection RedundantStringFormatCall
-				System.err.println(String.format("%d %s", number, text));
-			}
+			// noinspection RedundantStringFormatCall
+			System.err.println(String.format("%d %s", number, text));
+		}
 		}
 	}
 
 	/**
-	 * - I don't remember what absolutePath is for
-	 * - Cache doesn't add to QueryDB
+	 * - I don't remember what absolutePath is for - Cache doesn't add to QueryDB
 	 * <p>
-	 * STEPS
-	 * ------
+	 * STEPS ------
 	 * <p>
-	 * 1. Get absolutePath
-	 * 2. Check cache, return early
-	 * 3. Parse (Query is incorrect I think)
-	 * 4. Cache new result
+	 * 1. Get absolutePath 2. Check cache, return early 3. Parse (Query is incorrect
+	 * I think) 4. Cache new result
 	 *
 	 * @param spec
 	 * @param cache
@@ -162,9 +158,10 @@ public class CompilationRunner {
 		return ezCache;
 	}
 
-	private @NotNull Operation<CompilerInstructions> findStdLib(final String prelude_name, final @NotNull Compilation c) {
+	private @NotNull Operation<CompilerInstructions> findStdLib(final String prelude_name,
+			final @NotNull Compilation c) {
 		final ErrSink errSink = c.getErrSink();
-		final IO      io      = c.getIO();
+		final IO io = c.getIO();
 
 		// TODO CP_Paths.stdlib(...)
 		final File local_stdlib = new File("lib_elijjah/lib-" + prelude_name + "/stdlib.ez");
@@ -190,8 +187,9 @@ public class CompilationRunner {
 		compilation.signal(cciAcceptSignal, mcci);
 	}
 
-	private @NotNull List<CompilerInstructions> searchEzFiles(final @NotNull File directory, final ErrSink errSink, final IO io, final Compilation c) {
-		final QuerySearchEzFiles                     q    = new QuerySearchEzFiles(c, errSink, io, this);
+	private @NotNull List<CompilerInstructions> searchEzFiles(final @NotNull File directory, final ErrSink errSink,
+			final IO io, final Compilation c) {
+		final QuerySearchEzFiles q = new QuerySearchEzFiles(c, errSink, io, this);
 		final Operation2<List<CompilerInstructions>> olci = q.process(directory);
 
 		if (olci.mode() == Mode.SUCCESS) {
@@ -216,18 +214,18 @@ public class CompilationRunner {
 
 	public static class CR_State {
 		@SuppressWarnings("FieldCanBeLocal")
-		private final ProlificStartup2          _startup;
-		public        ICompilationBus.CB_Action cur;
+		private final ProlificStartup2 _startup;
+		public ICompilationBus.CB_Action cur;
 		ICompilationAccess ca;
-		ProcessRecord      pr;
-		RuntimeProcesses   rt;
+		ProcessRecord pr;
+		RuntimeProcesses rt;
 
 		public CR_State(final ProlificStartup2 aStartup) {
 			_startup = aStartup;
 			var cap = _startup.getCompilationAccess();
-			cap.then(ca1->ca=ca1);
+			cap.then(ca1 -> ca = ca1);
 			var prp = _startup.getProcessRecord();
-			prp.then(pr1->pr=pr1);
+			prp.then(pr1 -> pr = pr1);
 		}
 
 		public ICompilationAccess ca() {
@@ -276,7 +274,8 @@ public class CompilationRunner {
 
 			final IProgressSink ps = new IProgressSink() {
 				@Override
-				public void note(final int aCode, final ProgressSinkComponent aCci, final int aType, final Object[] aParams) {
+				public void note(final int aCode, final ProgressSinkComponent aCci, final int aType,
+						final Object[] aParams) {
 
 				}
 			};
@@ -289,15 +288,12 @@ public class CompilationRunner {
 			return "find cis";
 		}
 
-		protected void find_cis(final @NotNull String @NotNull [] args2,
-		                        final @NotNull Compilation c,
-		                        final @NotNull ErrSink errSink,
-		                        final @NotNull IO io,
-		                        final ICompilationBus cb,
-		                        final IProgressSink ps) {
+		protected void find_cis(final @NotNull String @NotNull [] args2, final @NotNull Compilation c,
+				final @NotNull ErrSink errSink, final @NotNull IO io, final ICompilationBus cb,
+				final IProgressSink ps) {
 			CompilerInstructions ez_file;
 			for (final String file_name : args2) {
-				final File    f        = new File(file_name);
+				final File f = new File(file_name);
 				final boolean matches2 = Pattern.matches(".+\\.ez$", file_name);
 				if (matches2) {
 					final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(f, c);
@@ -305,31 +301,31 @@ public class CompilationRunner {
 
 					cb.inst(ilci);
 				} else {
-					//errSink.reportError("9996 Not an .ez file "+file_name);
+					// errSink.reportError("9996 Not an .ez file "+file_name);
 					if (f.isDirectory()) {
 						final List<CompilerInstructions> ezs = searchEzFiles(f, errSink, io, c);
 
 						switch (ezs.size()) {
-							case 0:
-								final Diagnostic d_toomany = new TooManyEz_ActuallyNone();
-								final Maybe<ILazyCompilerInstructions> m = new Maybe<>(null, d_toomany);
-								cci_accept(m);
-								break;
-							case 1:
-								ez_file = ezs.get(0);
-								final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(ez_file);
-								cci_accept(new Maybe<>(ilci, null));
-								cb.inst(ilci);
-								break;
-							default:
-								//final Diagnostic d_toomany = new TooManyEz_UseFirst();
-								//add_ci(ezs.get(0));
+						case 0:
+							final Diagnostic d_toomany = new TooManyEz_ActuallyNone();
+							final Maybe<ILazyCompilerInstructions> m = new Maybe<>(null, d_toomany);
+							cci_accept(m);
+							break;
+						case 1:
+							ez_file = ezs.get(0);
+							final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(ez_file);
+							cci_accept(new Maybe<>(ilci, null));
+							cb.inst(ilci);
+							break;
+						default:
+							// final Diagnostic d_toomany = new TooManyEz_UseFirst();
+							// add_ci(ezs.get(0));
 
-								// more than 1 (negative is not possible)
-								final Diagnostic d_toomany2 = new TooManyEz_BeSpecific();
-								final Maybe<ILazyCompilerInstructions> m2 = new Maybe<>(null, d_toomany2);
-								cci_accept(m2);
-								break;
+							// more than 1 (negative is not possible)
+							final Diagnostic d_toomany2 = new TooManyEz_BeSpecific();
+							final Maybe<ILazyCompilerInstructions> m2 = new Maybe<>(null, d_toomany2);
+							cci_accept(m2);
+							break;
 						}
 					} else
 						errSink.reportError("9995 Not a directory " + f.getAbsolutePath());
@@ -365,14 +361,15 @@ public class CompilationRunner {
 
 		@Override
 		public void execute(final CR_State st) {
-			final Operation<CompilerInstructions> oci = findStdLib(Compilation.CompilationAlways.defaultPrelude(), compilation);
+			final Operation<CompilerInstructions> oci = findStdLib(Compilation.CompilationAlways.defaultPrelude(),
+					compilation);
 			switch (oci.mode()) {
-				case SUCCESS -> compilation.pushItem(oci.success()); // caught twice!!
-				case FAILURE -> {
-					compilation.getErrSink().exception(oci.failure());
-					return;
-				}
-				default -> throw new IllegalStateException("Unexpected value: " + oci.mode());
+			case SUCCESS -> compilation.pushItem(oci.success()); // caught twice!!
+			case FAILURE -> {
+				compilation.getErrSink().exception(oci.failure());
+				return;
+			}
+			default -> throw new IllegalStateException("Unexpected value: " + oci.mode());
 			}
 		}
 
@@ -389,10 +386,10 @@ public class CompilationRunner {
 
 	private class CR_ProcessInitialAction implements CR_Action {
 		private final CompilerInstructions ci;
-		private final boolean              do_out;
+		private final boolean do_out;
 
 		public CR_ProcessInitialAction(final CompilerInstructions aCi, final boolean aDo_out) {
-			ci     = aCi;
+			ci = aCi;
 			do_out = aDo_out;
 		}
 

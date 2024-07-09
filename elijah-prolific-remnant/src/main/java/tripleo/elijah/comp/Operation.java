@@ -8,13 +8,13 @@ import tripleo.elijah.util.*;
  * @param <T> the success type
  */
 public class Operation<T> {
-	private final T         succ;
-	private final Exception                exc;
+	private final T succ;
+	private final Exception exc;
 	private final tripleo.elijah.util.Mode mode;
 
 	public Operation(final T aSuccess, final Exception aException, final tripleo.elijah.util.Mode aMode) {
 		succ = aSuccess;
-		exc  = aException;
+		exc = aException;
 		mode = aMode;
 
 		assert succ != exc;

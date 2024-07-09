@@ -6,7 +6,7 @@ import tripleo.elijah.stages.gen_fn.*;
 
 public class DeduceTypeWatcher {
 	private DoneCallback<GenType> typeCallback;
-	private OS_Element            _element;
+	private OS_Element _element;
 
 	public void onType(final DoneCallback<GenType> aTypeCallback) {
 		typeCallback = aTypeCallback;

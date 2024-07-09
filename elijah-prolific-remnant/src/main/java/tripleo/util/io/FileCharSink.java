@@ -8,7 +8,7 @@ import java.io.*;
 /**
  * @author Tripleo(sb)
  *
- * Created 	Dec 9, 2019 at 3:23:57 PM
+ *         Created Dec 9, 2019 at 3:23:57 PM
  */
 public class FileCharSink implements CharSink {
 
@@ -19,7 +19,9 @@ public class FileCharSink implements CharSink {
 		this.fos = fos;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see tripleo.util.io.CharSink#accept(char)
 	 */
 	@Override
@@ -32,7 +34,9 @@ public class FileCharSink implements CharSink {
 		}
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see tripleo.util.io.CharSink#accept(java.lang.String)
 	 */
 	@Override

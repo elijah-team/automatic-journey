@@ -16,25 +16,25 @@ import java.util.*;
 
 public class IfConditional implements StatementItem, FunctionItem, OS_Element {
 
-	//	private final IfConditional sibling;
+	// private final IfConditional sibling;
 	private final List<IfConditional> parts = new ArrayList<IfConditional>();
-	//	private final List<OS_Element> _items = new ArrayList<OS_Element>();
+	// private final List<OS_Element> _items = new ArrayList<OS_Element>();
 //	final IfConditionalScope _scope = new IfConditionalScope(this);
-	private final OS_Element          _parent;
-	private       IExpression         expr;
-	private       Context             _ctx;
-	private       Scope3              scope3;
+	private final OS_Element _parent;
+	private IExpression expr;
+	private Context _ctx;
+	private Scope3 scope3;
 
 	public IfConditional(final OS_Element _parent) {
 		this._parent = _parent;
-		this._ctx    = null;
+		this._ctx = null;
 //		this.sibling = null;
 	}
 
 	public IfConditional(final IfConditional ifExpression) {
 //		this.sibling = ifExpression;
 		//
-		this._ctx    = new IfConditionalContext(ifExpression._ctx, this, true);
+		this._ctx = new IfConditionalContext(ifExpression._ctx, this, true);
 		this._parent = ifExpression._parent;
 	}
 
@@ -95,42 +95,31 @@ public class IfConditional implements StatementItem, FunctionItem, OS_Element {
 		scope3 = sco;
 	}
 
-	/*private class IfConditionalScope extends AbstractScope2 {
-		private List<Token> mDocs;
-
-		protected IfConditionalScope(OS_Element aParent) {
-			super(aParent);
-			assert aParent == IfConditional.this;
-		}
-
-		@Override
-		public void addDocString(final Token s) {
-			if (mDocs == null)
-				mDocs = new ArrayList<Token>();
-			mDocs.add(s);
-		}
-
-//		/*@ requires parent != null; * /
-//		@Override
-//		public void statementWrapper(final IExpression aExpr) {
-//			//if (parent_scope == null) throw new IllegalStateException("parent is null");
-//			add(new StatementWrapper(aExpr, getContext(), getParent()));
-//		}
-
-	    @Override
-		public StatementClosure statementClosure() {
-			return new AbstractStatementClosure(this); // TODO
-		}
-
-		@Override
-		public void add(final StatementItem aItem) {
-			IfConditional.this.add(aItem);
-		}
-	}*/
+	/*
+	 * private class IfConditionalScope extends AbstractScope2 { private List<Token>
+	 * mDocs;
+	 * 
+	 * protected IfConditionalScope(OS_Element aParent) { super(aParent); assert
+	 * aParent == IfConditional.this; }
+	 * 
+	 * @Override public void addDocString(final Token s) { if (mDocs == null) mDocs
+	 * = new ArrayList<Token>(); mDocs.add(s); }
+	 * 
+	 * // /*@ requires parent != null; * / // @Override // public void
+	 * statementWrapper(final IExpression aExpr) { // //if (parent_scope == null)
+	 * throw new IllegalStateException("parent is null"); // add(new
+	 * StatementWrapper(aExpr, getContext(), getParent())); // }
+	 * 
+	 * @Override public StatementClosure statementClosure() { return new
+	 * AbstractStatementClosure(this); // TODO }
+	 * 
+	 * @Override public void add(final StatementItem aItem) {
+	 * IfConditional.this.add(aItem); } }
+	 */
 
 	private void add(final StatementItem aItem) {
 		scope3.add((OS_Element) aItem);
-		//_items.add((OS_Element) aItem);
+		// _items.add((OS_Element) aItem);
 	}
 
 }

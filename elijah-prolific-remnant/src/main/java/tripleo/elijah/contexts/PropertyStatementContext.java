@@ -17,8 +17,8 @@ import java.util.*;
  */
 public class PropertyStatementContext extends Context {
 
-	public final  PropertyStatement carrier;
-	private final Context           _parent;
+	public final PropertyStatement carrier;
+	private final Context _parent;
 
 	public PropertyStatementContext(final Context aParent, final OS_Element element) {
 		this._parent = aParent;
@@ -26,7 +26,8 @@ public class PropertyStatementContext extends Context {
 	}
 
 	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
+			final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(carrier.getContext());
 
 		if (name.equals("get")) {

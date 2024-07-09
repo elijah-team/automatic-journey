@@ -9,8 +9,8 @@ import java.util.*;
 
 /**
  * @author Tripleo
- * <p>
- * Created 	Mar 29, 2020 at 7:00:10 PM
+ *         <p>
+ *         Created Mar 29, 2020 at 7:00:10 PM
  */
 public class NameTable {
 
@@ -24,19 +24,16 @@ public class NameTable {
 
 	class TypedElement {
 		final OS_Element element;
-		final OS_Type    type;
+		final OS_Type type;
 
 		public TypedElement(final OS_Element element2, final OS_Type dtype) {
 			this.element = element2;
-			this.type    = dtype;
+			this.type = dtype;
 		}
 
 		@Override
 		public String toString() {
-			return "TypedElement{" +
-			  "element=" + element +
-			  ", type=" + type +
-			  '}';
+			return "TypedElement{" + "element=" + element + ", type=" + type + '}';
 		}
 	}
 

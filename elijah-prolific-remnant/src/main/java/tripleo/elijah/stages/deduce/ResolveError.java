@@ -21,19 +21,19 @@ import java.util.*;
  * Created 12/26/20 5:08 AM
  */
 public class ResolveError extends Exception implements Diagnostic {
-	final @org.jetbrains.annotations.Nullable         IdentExpression  ident;
-	private final @org.jetbrains.annotations.Nullable TypeName         typeName;
-	private final                                     LookupResultList lrl;
+	final @org.jetbrains.annotations.Nullable IdentExpression ident;
+	private final @org.jetbrains.annotations.Nullable TypeName typeName;
+	private final LookupResultList lrl;
 
 	public ResolveError(final TypeName typeName, final LookupResultList lrl) {
 		this.typeName = typeName;
-		this.lrl      = lrl;
-		this.ident    = null;
+		this.lrl = lrl;
+		this.ident = null;
 	}
 
 	public ResolveError(final IdentExpression aIdent, final LookupResultList aLrl) {
-		ident    = aIdent;
-		lrl      = aLrl;
+		ident = aIdent;
+		lrl = aLrl;
 		typeName = null;
 	}
 
@@ -57,7 +57,8 @@ public class ResolveError extends Exception implements Diagnostic {
 
 	@Override
 	public @NotNull List<Locatable> secondary() {
-		@NotNull final Collection<Locatable> x = Collections2.transform(resultsList(), new Function<LookupResult, Locatable>() {
+		@NotNull
+		final Collection<Locatable> x = Collections2.transform(resultsList(), new Function<LookupResult, Locatable>() {
 			@Nullable
 			@Override
 			public Locatable apply(@Nullable final LookupResult input) {
@@ -75,7 +76,7 @@ public class ResolveError extends Exception implements Diagnostic {
 		stream.printf("---[%s]---: %s%n", code(), message());
 		// linecache.print(primary);
 		for (final Locatable sec : secondary()) {
-			//linecache.print(sec)
+			// linecache.print(sec)
 		}
 		stream.flush();
 	}

@@ -19,10 +19,10 @@ import java.io.*;
  * Created 8/16/20 7:42 AM
  */
 public class GenericTypeName implements TypeName {
-	private final Context       _ctx;
-	private       Qualident     _typeName;
-	private       TypeModifiers modifiers;
-	private       TypeName      constraint;
+	private final Context _ctx;
+	private Qualident _typeName;
+	private TypeModifiers modifiers;
+	private TypeName constraint;
 
 	public GenericTypeName(final Context cur) {
 		_ctx = cur;

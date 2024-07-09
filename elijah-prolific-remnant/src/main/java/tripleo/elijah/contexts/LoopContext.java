@@ -19,11 +19,11 @@ import java.util.*;
 /**
  * @author Tripleo
  *
- * Created 	Mar 26, 2020 at 9:40:43 PM
+ *         Created Mar 26, 2020 at 9:40:43 PM
  */
 public class LoopContext extends Context {
 
-	private final Loop    carrier;
+	private final Loop carrier;
 	private final Context _parent;
 
 	public LoopContext(final Context cur, final Loop loop) {
@@ -32,7 +32,8 @@ public class LoopContext extends Context {
 	}
 
 	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
+			final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(carrier.getContext());
 
 		if (carrier.getIterNameToken() != null) {
@@ -45,12 +46,10 @@ public class LoopContext extends Context {
 		}
 
 		for (final StatementItem item : carrier.getItems()) {
-			if (!(item instanceof ClassStatement) &&
-			  !(item instanceof NamespaceStatement) &&
-			  !(item instanceof FunctionDef) &&
-			  !(item instanceof VariableSequence) &&
-			  !(item instanceof AliasStatement)
-			) continue;
+			if (!(item instanceof ClassStatement) && !(item instanceof NamespaceStatement)
+					&& !(item instanceof FunctionDef) && !(item instanceof VariableSequence)
+					&& !(item instanceof AliasStatement))
+				continue;
 			if (item instanceof OS_Element2) {
 				if (((OS_Element2) item).name().equals(name)) {
 					Result.add(name, level, (OS_Element) item, this);

@@ -20,9 +20,9 @@ import tripleo.elijah_fluffy.util.*;
  */
 public class TypeAliasStatement implements OS_Element {
 
-	private final OS_Element      parent;
-	private       IdentExpression x;
-	private       Qualident       y;
+	private final OS_Element parent;
+	private IdentExpression x;
+	private Qualident y;
 
 	public TypeAliasStatement(final OS_Element aParent) {
 		this.parent = aParent;

@@ -6,18 +6,18 @@ package tripleo.elijah.lang;
 /**
  * @author Tripleo(envy)
  *
- * Created 	Mar 27, 2020 at 12:59:41 AM
+ *         Created Mar 27, 2020 at 12:59:41 AM
  */
 public class DotExpression extends BasicBinaryExpression {
 
 	public DotExpression(final IExpression ee, final IdentExpression identExpression) {
-		left  = ee;
+		left = ee;
 		right = identExpression;
 		_kind = ExpressionKind.DOT_EXP;
 	}
 
 	public DotExpression(final IExpression ee, final IExpression aExpression) {
-		left  = ee;
+		left = ee;
 		right = aExpression;
 		_kind = ExpressionKind.DOT_EXP;
 	}

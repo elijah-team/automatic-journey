@@ -28,29 +28,24 @@ import java.util.Objects;
  */
 public class GenType {
 	private NamespaceStatement resolvedn;
-	private OS_Type            typeName; // TODO or just TypeName ??
-	private TypeName           nonGenericTypeName;
-	private OS_Type            resolved;
-	private IInvocation        ci;
-	private GeneratedNode      node;
+	private OS_Type typeName; // TODO or just TypeName ??
+	private TypeName nonGenericTypeName;
+	private OS_Type resolved;
+	private IInvocation ci;
+	private GeneratedNode node;
 	private FunctionInvocation functionInvocation;
 
 	@Contract(pure = true)
 	public GenType(final NamespaceStatement aNamespaceStatement) {
-		resolvedn = /*new OS_Type*/(aNamespaceStatement);
+		resolvedn = /* new OS_Type */(aNamespaceStatement);
 	}
 
 	public GenType(final @NotNull ClassStatement aClassStatement) {
 		resolved = aClassStatement.getOS_Type();
 	}
 
-	public GenType(final OS_Type aAttached,
-	               final OS_Type aOS_type,
-	               final boolean aB,
-	               final TypeName aTypeName,
-	               final DeduceTypes2 deduceTypes2,
-	               final ErrSink errSink,
-	               final DeducePhase phase) {
+	public GenType(final OS_Type aAttached, final OS_Type aOS_type, final boolean aB, final TypeName aTypeName,
+			final DeduceTypes2 deduceTypes2, final ErrSink errSink, final DeducePhase phase) {
 		typeName = aAttached;
 		resolved = aOS_type;
 		if (aB) {
@@ -58,12 +53,10 @@ public class GenType {
 		}
 	}
 
-	public ClassInvocation genCI(final TypeName aGenericTypeName,
-	                             final DeduceTypes2 deduceTypes2,
-	                             final ErrSink errSink,
-	                             final DeducePhase phase) {
-		final SetGenCI        sgci = new SetGenCI();
-		final ClassInvocation ci   = sgci.call(this, aGenericTypeName, deduceTypes2, errSink, phase);
+	public ClassInvocation genCI(final TypeName aGenericTypeName, final DeduceTypes2 deduceTypes2,
+			final ErrSink errSink, final DeducePhase phase) {
+		final SetGenCI sgci = new SetGenCI();
+		final ClassInvocation ci = sgci.call(this, aGenericTypeName, deduceTypes2, errSink, phase);
 		return ci;
 	}
 
@@ -72,18 +65,25 @@ public class GenType {
 
 	@Override
 	public boolean equals(final Object aO) {
-		if (this == aO) return true;
-		if (aO == null || getClass() != aO.getClass()) return false;
+		if (this == aO)
+			return true;
+		if (aO == null || getClass() != aO.getClass())
+			return false;
 
 		final GenType genType = (GenType) aO;
 
-		if (!Objects.equals(resolvedn, genType.resolvedn)) return false;
-		if (!Objects.equals(typeName, genType.typeName)) return false;
+		if (!Objects.equals(resolvedn, genType.resolvedn))
+			return false;
+		if (!Objects.equals(typeName, genType.typeName))
+			return false;
 		if (!Objects.equals(nonGenericTypeName, genType.nonGenericTypeName))
 			return false;
-		if (!Objects.equals(resolved, genType.resolved)) return false;
-		if (!Objects.equals(ci, genType.ci)) return false;
-		if (!Objects.equals(node, genType.node)) return false;
+		if (!Objects.equals(resolved, genType.resolved))
+			return false;
+		if (!Objects.equals(ci, genType.ci))
+			return false;
+		if (!Objects.equals(node, genType.node))
+			return false;
 		return Objects.equals(functionInvocation, genType.functionInvocation);
 	}
 
@@ -100,14 +100,9 @@ public class GenType {
 	}
 
 	public String asString() {
-		final String sb = "GenType{" + "resolvedn=" + resolvedn +
-		  ", typeName=" + typeName +
-		  ", nonGenericTypeName=" + nonGenericTypeName +
-		  ", resolved=" + resolved +
-		  ", ci=" + ci +
-		  ", node=" + node +
-		  ", functionInvocation=" + functionInvocation +
-		  '}';
+		final String sb = "GenType{" + "resolvedn=" + resolvedn + ", typeName=" + typeName + ", nonGenericTypeName="
+				+ nonGenericTypeName + ", resolved=" + resolved + ", ci=" + ci + ", node=" + node
+				+ ", functionInvocation=" + functionInvocation + '}';
 		return sb;
 	}
 
@@ -125,21 +120,32 @@ public class GenType {
 	}
 
 	public boolean isNull() {
-		if (resolvedn != null) return false;
-		if (typeName != null) return false;
-		if (nonGenericTypeName != null) return false;
-		if (resolved != null) return false;
-		if (ci != null) return false;
+		if (resolvedn != null)
+			return false;
+		if (typeName != null)
+			return false;
+		if (nonGenericTypeName != null)
+			return false;
+		if (resolved != null)
+			return false;
+		if (ci != null)
+			return false;
 		return node == null;
 	}
 
 	public void copy(final GenType aGenType) {
-		if (resolvedn == null) resolvedn = aGenType.resolvedn;
-		if (typeName == null) typeName = aGenType.typeName;
-		if (nonGenericTypeName == null) nonGenericTypeName = aGenType.nonGenericTypeName;
-		if (resolved == null) resolved = aGenType.resolved;
-		if (ci == null) ci = aGenType.ci;
-		if (node == null) node = aGenType.node;
+		if (resolvedn == null)
+			resolvedn = aGenType.resolvedn;
+		if (typeName == null)
+			typeName = aGenType.typeName;
+		if (nonGenericTypeName == null)
+			nonGenericTypeName = aGenType.nonGenericTypeName;
+		if (resolved == null)
+			resolved = aGenType.resolved;
+		if (ci == null)
+			ci = aGenType.ci;
+		if (node == null)
+			node = aGenType.node;
 	}
 
 	public void genCIForGenType2(final DeduceTypes2 aDeduceTypes2) {
@@ -166,7 +172,7 @@ public class GenType {
 
 				node = zfet.genCIForGenType2(aDeduceTypes2);
 			} else if (resolved instanceof final OS_FuncType funcType) {
-				final int         y        = 2;
+				final int y = 2;
 			} else
 				throw new IllegalStateException("invalid invocation");
 		}
@@ -256,7 +262,8 @@ public class GenType {
 
 	static class SetGenCI {
 
-		public ClassInvocation call(@NotNull final GenType genType, final TypeName aGenericTypeName, final @NotNull DeduceTypes2 deduceTypes2, final ErrSink errSink, final DeducePhase phase) {
+		public ClassInvocation call(@NotNull final GenType genType, final TypeName aGenericTypeName,
+				final @NotNull DeduceTypes2 deduceTypes2, final ErrSink errSink, final DeducePhase phase) {
 			if (genType.nonGenericTypeName != null) {
 				return nonGenericTypeName(genType, deduceTypes2, errSink, phase);
 			}
@@ -264,9 +271,11 @@ public class GenType {
 				final OS_Type.Type type = genType.resolved.getType();
 				switch (type) {
 				case USER_CLASS:
-					return ((OS_UserClassType) genType.resolved).resolvedUserClass(genType, aGenericTypeName, phase, deduceTypes2, errSink);
+					return ((OS_UserClassType) genType.resolved).resolvedUserClass(genType, aGenericTypeName, phase,
+							deduceTypes2, errSink);
 				case FUNCTION:
-					return ((OS_FuncType) genType.resolved).resolvedFunction(genType, aGenericTypeName, deduceTypes2, errSink, phase);
+					return ((OS_FuncType) genType.resolved).resolvedFunction(genType, aGenericTypeName, deduceTypes2,
+							errSink, phase);
 				case FUNC_EXPR:
 					// TODO what to do here?
 					final int y = 2;
@@ -276,9 +285,12 @@ public class GenType {
 			return null;
 		}
 
-		private @NotNull ClassInvocation nonGenericTypeName(final @NotNull GenType genType, final DeduceTypes2 deduceTypes2, final ErrSink errSink, final DeducePhase phase) {
-			@NotNull final NormalTypeName aTyn1           = (NormalTypeName) genType.nonGenericTypeName;
-			@Nullable final String        constructorName = null; // TODO this comes from nowhere
+		private @NotNull ClassInvocation nonGenericTypeName(final @NotNull GenType genType,
+				final DeduceTypes2 deduceTypes2, final ErrSink errSink, final DeducePhase phase) {
+			@NotNull
+			final NormalTypeName aTyn1 = (NormalTypeName) genType.nonGenericTypeName;
+			@Nullable
+			final String constructorName = null; // TODO this comes from nowhere
 
 			switch (genType.resolved.getType()) {
 			case GENERIC_TYPENAME:
@@ -288,7 +300,8 @@ public class GenType {
 			case USER_CLASS:
 				final @NotNull ClassStatement best = genType.resolved.getClassOf();
 				//
-				ClassInvocation clsinv2 = DeduceTypes2.ClassInvocationMake.withGenericPart(best, constructorName, aTyn1, deduceTypes2, errSink);
+				ClassInvocation clsinv2 = DeduceTypes2.ClassInvocationMake.withGenericPart(best, constructorName, aTyn1,
+						deduceTypes2, errSink);
 				clsinv2 = phase.registerClassInvocation(clsinv2);
 				genType.ci = clsinv2;
 				return clsinv2;

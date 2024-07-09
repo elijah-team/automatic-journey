@@ -12,7 +12,7 @@ package tripleo.elijah.lang;
  * Created 8/15/20 6:45 PM
  */
 public class AnnotationPart {
-	private Qualident      _class;
+	private Qualident _class;
 	private ExpressionList _exprs;
 
 	public void setClass(final Qualident q) {

@@ -25,9 +25,9 @@ public class ImportStatementBuilder extends ElBuilder {
 	// NORMAL
 	List<Qualident> nparts = new ArrayList<Qualident>();
 	private Context _context;
-	private State   state;
+	private State state;
 	// ROOTED
-	private Qualident     xy;
+	private Qualident xy;
 	private QualidentList qil;
 
 	//
@@ -56,7 +56,8 @@ public class ImportStatementBuilder extends ElBuilder {
 			final RootedImportStatement rootedImportStatement = new RootedImportStatement(_parent);
 			rootedImportStatement.setRoot(xy);
 			rootedImportStatement.setImportList(qil);
-			rootedImportStatement.setContext(new ImportContext(_context, rootedImportStatement)); // TODO is this correct?
+			rootedImportStatement.setContext(new ImportContext(_context, rootedImportStatement)); // TODO is this
+																									// correct?
 			return rootedImportStatement;
 		case ASSIGNING:
 			final AssigningImportStatement assigningImportStatement = new AssigningImportStatement(_parent);
@@ -86,8 +87,8 @@ public class ImportStatementBuilder extends ElBuilder {
 	}
 
 	public void rooted(final Qualident xy, final QualidentList qil) {
-		this.xy    = xy;
-		this.qil   = qil;
+		this.xy = xy;
+		this.qil = qil;
 		this.state = State.ROOTED;
 	}
 

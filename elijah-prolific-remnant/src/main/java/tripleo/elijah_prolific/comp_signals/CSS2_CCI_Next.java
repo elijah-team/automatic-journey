@@ -4,10 +4,10 @@ import tripleo.elijah.ci.*;
 import tripleo.elijah.comp.*;
 
 class CSS2_CCI_Next implements CSS2_Signal {
-    @Override
-    public void trigger(Compilation compilation, Object payload) {
-        assert payload instanceof CompilerInstructions;
+	@Override
+	public void trigger(Compilation compilation, Object payload) {
+		assert payload instanceof CompilerInstructions;
 
-        compilation._cis.onNext((CompilerInstructions) payload);
-    }
+		compilation._cis.onNext((CompilerInstructions) payload);
+	}
 }

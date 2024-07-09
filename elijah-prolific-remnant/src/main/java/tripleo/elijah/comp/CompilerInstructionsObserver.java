@@ -10,12 +10,11 @@ import java.util.*;
 
 public class CompilerInstructionsObserver implements Observer<CompilerInstructions> {
 	private final List<CompilerInstructions> l = new ArrayList<>();
-	private final Compilation                compilation;
+	private final Compilation compilation;
 
-	public CompilerInstructionsObserver(final Compilation aCompilation,
-	                                    final EDR_CIS cis) {
+	public CompilerInstructionsObserver(final Compilation aCompilation, final EDR_CIS cis) {
 		compilation = aCompilation;
-		compilation._cio    = this;
+		compilation._cio = this;
 
 		cis.subscribe(this);
 	}

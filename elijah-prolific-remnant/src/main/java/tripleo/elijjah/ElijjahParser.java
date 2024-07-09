@@ -16,133 +16,21 @@ import java.util.*;
 
 public class ElijjahParser extends antlr.LLkParser implements ElijjahTokenTypes {
 
-	public static final String[] _tokenNames = {
-	  "<0>",
-	  "EOF",
-	  "<2>",
-	  "NULL_TREE_LOOKAHEAD",
-	  "\"as\"",
-	  "\"cast_to\"",
-	  "\"package\"",
-	  "\"indexing\"",
-	  "IDENT",
-	  "TOK_COLON",
-	  "STRING_LITERAL",
-	  "CHAR_LITERAL",
-	  "NUM_INT",
-	  "NUM_FLOAT",
-	  "DOT",
-	  "\"class\"",
-	  "\"struct\"",
-	  "\"signature\"",
-	  "\"abstract\"",
-	  "LBRACK",
-	  "RBRACK",
-	  "LPAREN",
-	  "RPAREN",
-	  "LCURLY",
-	  "RCURLY",
-	  "\"interface\"",
-	  "\"type\"",
-	  "BECOMES",
-	  "BOR",
-	  "ANNOT",
-	  "\"namespace\"",
-	  "\"from\"",
-	  "\"import\"",
-	  "COMMA",
-	  "LT_",
-	  "\"constructor\"",
-	  "\"ctor\"",
-	  "\"destructor\"",
-	  "\"dtor\"",
-	  "\"continue\"",
-	  "\"break\"",
-	  "\"return\"",
-	  "\"with\"",
-	  "\"pre\"",
-	  "\"post\"",
-	  "\"const\"",
-	  "\"immutable\"",
-	  "TOK_ARROW",
-	  "\"var\"",
-	  "\"val\"",
-	  "\"alias\"",
-	  "\"yield\"",
-	  "\"construct\"",
-	  "SEMI",
-	  "\"invariant\"",
-	  "\"access\"",
-	  "EQUAL",
-	  "PLUS_ASSIGN",
-	  "MINUS_ASSIGN",
-	  "STAR_ASSIGN",
-	  "DIV_ASSIGN",
-	  "MOD_ASSIGN",
-	  "SR_ASSIGN",
-	  "BSR_ASSIGN",
-	  "SL_ASSIGN",
-	  "BAND_ASSIGN",
-	  "BXOR_ASSIGN",
-	  "BOR_ASSIGN",
-	  "LOR",
-	  "LAND",
-	  "BXOR",
-	  "BAND",
-	  "NOT_EQUAL",
-	  "GT",
-	  "LE",
-	  "GE",
-	  "\"is_a\"",
-	  "SL",
-	  "SR",
-	  "BSR",
-	  "PLUS",
-	  "MINUS",
-	  "STAR",
-	  "DIV",
-	  "MOD",
-	  "INC",
-	  "DEC",
-	  "BNOT",
-	  "LNOT",
-	  "\"true\"",
-	  "\"false\"",
-	  "\"this\"",
-	  "\"null\"",
-	  "\"function\"",
-	  "\"procedure\"",
-	  "\"if\"",
-	  "\"else\"",
-	  "\"elseif\"",
-	  "\"match\"",
-	  "\"case\"",
-	  "\"while\"",
-	  "\"do\"",
-	  "\"iterate\"",
-	  "\"to\"",
-	  "\"generic\"",
-	  "QUESTION",
-	  "\"typeof\"",
-	  "\"func\"",
-	  "\"proc\"",
-	  "\"in\"",
-	  "\"out\"",
-	  "\"ref\"",
-	  "\"def\"",
-	  "\"prop\"",
-	  "\"property\"",
-	  "\"get\"",
-	  "\"set\"",
-	  "WS",
-	  "SL_COMMENT",
-	  "ML_COMMENT",
-	  "ESC",
-	  "HEX_DIGIT",
-	  "VOCAB",
-	  "EXPONENT",
-	  "FLOAT_SUFFIX"
-	};
+	public static final String[] _tokenNames = { "<0>", "EOF", "<2>", "NULL_TREE_LOOKAHEAD", "\"as\"", "\"cast_to\"",
+			"\"package\"", "\"indexing\"", "IDENT", "TOK_COLON", "STRING_LITERAL", "CHAR_LITERAL", "NUM_INT",
+			"NUM_FLOAT", "DOT", "\"class\"", "\"struct\"", "\"signature\"", "\"abstract\"", "LBRACK", "RBRACK",
+			"LPAREN", "RPAREN", "LCURLY", "RCURLY", "\"interface\"", "\"type\"", "BECOMES", "BOR", "ANNOT",
+			"\"namespace\"", "\"from\"", "\"import\"", "COMMA", "LT_", "\"constructor\"", "\"ctor\"", "\"destructor\"",
+			"\"dtor\"", "\"continue\"", "\"break\"", "\"return\"", "\"with\"", "\"pre\"", "\"post\"", "\"const\"",
+			"\"immutable\"", "TOK_ARROW", "\"var\"", "\"val\"", "\"alias\"", "\"yield\"", "\"construct\"", "SEMI",
+			"\"invariant\"", "\"access\"", "EQUAL", "PLUS_ASSIGN", "MINUS_ASSIGN", "STAR_ASSIGN", "DIV_ASSIGN",
+			"MOD_ASSIGN", "SR_ASSIGN", "BSR_ASSIGN", "SL_ASSIGN", "BAND_ASSIGN", "BXOR_ASSIGN", "BOR_ASSIGN", "LOR",
+			"LAND", "BXOR", "BAND", "NOT_EQUAL", "GT", "LE", "GE", "\"is_a\"", "SL", "SR", "BSR", "PLUS", "MINUS",
+			"STAR", "DIV", "MOD", "INC", "DEC", "BNOT", "LNOT", "\"true\"", "\"false\"", "\"this\"", "\"null\"",
+			"\"function\"", "\"procedure\"", "\"if\"", "\"else\"", "\"elseif\"", "\"match\"", "\"case\"", "\"while\"",
+			"\"do\"", "\"iterate\"", "\"to\"", "\"generic\"", "QUESTION", "\"typeof\"", "\"func\"", "\"proc\"",
+			"\"in\"", "\"out\"", "\"ref\"", "\"def\"", "\"prop\"", "\"property\"", "\"get\"", "\"set\"", "WS",
+			"SL_COMMENT", "ML_COMMENT", "ESC", "HEX_DIGIT", "VOCAB", "EXPONENT", "FLOAT_SUFFIX" };
 	public static final BitSet _tokenSet_0 = new BitSet(mk_tokenSet_0());
 	public static final BitSet _tokenSet_1 = new BitSet(mk_tokenSet_1());
 	public static final BitSet _tokenSet_2 = new BitSet(mk_tokenSet_2());
@@ -247,8 +135,8 @@ public class ElijjahParser extends antlr.LLkParser implements ElijjahTokenTypes 
 	public Out out;
 	Qualident xy;
 	IExpression expr;
-	Context     cur;
-	Scope3      sco;
+	Context cur;
+	Scope3 sco;
 
 	public ElijjahParser(final TokenBuffer tokenBuf) {
 		this(tokenBuf, 2);
@@ -274,520 +162,520 @@ public class ElijjahParser extends antlr.LLkParser implements ElijjahTokenTypes 
 	}
 
 	private static final long[] mk_tokenSet_0() {
-		final long[] data = {2L, 0L};
+		final long[] data = { 2L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_1() {
-		final long[] data = {1125907959939138L, 0L};
+		final long[] data = { 1125907959939138L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_2() {
-		final long[] data = {-219902359568526L, 1973610486956031L, 0L, 0L};
+		final long[] data = { -219902359568526L, 1973610486956031L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_3() {
-		final long[] data = {71837665500642626L, 1970861705986048L, 0L, 0L};
+		final long[] data = { 71837665500642626L, 1970861705986048L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_4() {
-		final long[] data = {-8796093022350L, 8726823789658111L, 0L, 0L};
+		final long[] data = { -8796093022350L, 8726823789658111L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_5() {
-		final long[] data = {65056427525308738L, 1970324836974592L, 0L, 0L};
+		final long[] data = { 65056427525308738L, 1970324836974592L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_6() {
-		final long[] data = {1125907965182274L, 0L};
+		final long[] data = { 1125907965182274L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_7() {
-		final long[] data = {-219902359568526L, 1971411463700479L, 0L, 0L};
+		final long[] data = { -219902359568526L, 1971411463700479L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_8() {
-		final long[] data = {-8796127035534L, 1973610486956031L, 0L, 0L};
+		final long[] data = { -8796127035534L, 1973610486956031L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_9() {
-		final long[] data = {459008L, 0L};
+		final long[] data = { 459008L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_10() {
-		final long[] data = {17190879232L, 0L};
+		final long[] data = { 17190879232L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_11() {
-		final long[] data = {71820073314598210L, 1970861705986048L, 0L, 0L};
+		final long[] data = { 71820073314598210L, 1970861705986048L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_12() {
-		final long[] data = {22020096L, 0L};
+		final long[] data = { 22020096L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_13() {
-		final long[] data = {12582912L, 0L};
+		final long[] data = { 12582912L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_14() {
-		final long[] data = {8388608L, 0L};
+		final long[] data = { 8388608L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_15() {
-		final long[] data = {105553118363904L, 0L};
+		final long[] data = { 105553118363904L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_16() {
-		final long[] data = {1125907959939072L, 0L};
+		final long[] data = { 1125907959939072L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_17() {
-		final long[] data = {42402048L, 0L};
+		final long[] data = { 42402048L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_18() {
-		final long[] data = {16777216L, 0L};
+		final long[] data = { 16777216L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_19() {
-		final long[] data = {11025664L, 2145583104L, 0L, 0L};
+		final long[] data = { 11025664L, 2145583104L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_20() {
-		final long[] data = {-72057576427586256L, 2147483647L, 0L, 0L};
+		final long[] data = { -72057576427586256L, 2147483647L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_21() {
-		final long[] data = {71837665500642560L, 1689386729275392L, 0L, 0L};
+		final long[] data = { 71837665500642560L, 1689386729275392L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_22() {
-		final long[] data = {1610645760L, 0L};
+		final long[] data = { 1610645760L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_23() {
-		final long[] data = {65056427567710464L, 0L};
+		final long[] data = { 65056427567710464L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_24() {
-		final long[] data = {56048712874492160L, 0L};
+		final long[] data = { 56048712874492160L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_25() {
-		final long[] data = {71908034278833408L, 1689386729275392L, 0L, 0L};
+		final long[] data = { 71908034278833408L, 1689386729275392L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_26() {
-		final long[] data = {65055912171634944L, 0L};
+		final long[] data = { 65055912171634944L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_27() {
-		final long[] data = {65055912171634944L, 1688849860263936L, 0L, 0L};
+		final long[] data = { 65055912171634944L, 1688849860263936L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_28() {
-		final long[] data = {62839262339185920L, 1970861705986048L, 0L, 0L};
+		final long[] data = { 62839262339185920L, 1970861705986048L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_29() {
-		final long[] data = {56049228270567680L, 1970324836974592L, 0L, 0L};
+		final long[] data = { 56049228270567680L, 1970324836974592L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_30() {
-		final long[] data = {65056427525308672L, 1970324836974592L, 0L, 0L};
+		final long[] data = { 65056427525308672L, 1970324836974592L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_31() {
-		final long[] data = {71820073314598144L, 1970861705986048L, 0L, 0L};
+		final long[] data = { 71820073314598144L, 1970861705986048L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_32() {
-		final long[] data = {56049228270567680L, 0L};
+		final long[] data = { 56049228270567680L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_33() {
-		final long[] data = {65056427525308672L, 0L};
+		final long[] data = { 65056427525308672L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_34() {
-		final long[] data = {34013440L, 0L};
+		final long[] data = { 34013440L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_35() {
-		final long[] data = {65056427525308672L, 1688849860263936L, 0L, 0L};
+		final long[] data = { 65056427525308672L, 1688849860263936L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_36() {
-		final long[] data = {56048712874492160L, 1688849860263936L, 0L, 0L};
+		final long[] data = { 56048712874492160L, 1688849860263936L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_37() {
-		final long[] data = {56048712874493184L, 0L};
+		final long[] data = { 56048712874493184L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_38() {
-		final long[] data = {38034314348232960L, 0L};
+		final long[] data = { 38034314348232960L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_39() {
-		final long[] data = {65056436115259714L, 1970324836974592L, 0L, 0L};
+		final long[] data = { 65056436115259714L, 1970324836974592L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_40() {
-		final long[] data = {65056436115243330L, 1970324836974592L, 0L, 0L};
+		final long[] data = { 65056436115243330L, 1970324836974592L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_41() {
-		final long[] data = {71908034278833474L, 1970861705986048L, 0L, 0L};
+		final long[] data = { 71908034278833474L, 1970861705986048L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_42() {
-		final long[] data = {65056436115259648L, 1688849860263936L, 0L, 0L};
+		final long[] data = { 65056436115259648L, 1688849860263936L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_43() {
-		final long[] data = {65056436115243264L, 1688849860263936L, 0L, 0L};
+		final long[] data = { 65056436115243264L, 1688849860263936L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_44() {
-		final long[] data = {8602517504L, 0L};
+		final long[] data = { 8602517504L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_45() {
-		final long[] data = {56189450773889792L, 1688849860263936L, 0L, 0L};
+		final long[] data = { 56189450773889792L, 1688849860263936L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_46() {
-		final long[] data = {7643255091543296L, 536869011456L, 0L, 0L};
+		final long[] data = { 7643255091543296L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_47() {
-		final long[] data = {-55407122092327632L, 536870911999L, 0L, 0L};
+		final long[] data = { -55407122092327632L, 536870911999L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_48() {
-		final long[] data = {16650454363061504L, 536869011456L, 0L, 0L};
+		final long[] data = { 16650454363061504L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_49() {
-		final long[] data = {-79164837200014L, 8726823789658111L, 0L, 0L};
+		final long[] data = { -79164837200014L, 8726823789658111L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_50() {
-		final long[] data = {7635008754302208L, 536869011456L, 0L, 0L};
+		final long[] data = { 7635008754302208L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_51() {
-		final long[] data = {-55407119944843984L, 1086626725887L, 0L, 0L};
+		final long[] data = { -55407119944843984L, 1086626725887L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_52() {
-		final long[] data = {7643255108320512L, 536869011456L, 0L, 0L};
+		final long[] data = { 7643255108320512L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_53() {
-		final long[] data = {-79164871213198L, 8726823789658111L, 0L, 0L};
+		final long[] data = { -79164871213198L, 8726823789658111L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_54() {
-		final long[] data = {7643255628414208L, 536869011456L, 0L, 0L};
+		final long[] data = { 7643255628414208L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_55() {
-		final long[] data = {-55407121555456720L, 536870911999L, 0L, 0L};
+		final long[] data = { -55407121555456720L, 536870911999L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_56() {
-		final long[] data = {16650454899932416L, 536869011456L, 0L, 0L};
+		final long[] data = { 16650454899932416L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_57() {
-		final long[] data = {-237503106777808L, 1086626725887L, 0L, 0L};
+		final long[] data = { -237503106777808L, 1086626725887L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_58() {
-		final long[] data = {-55407119407973072L, 1086626725887L, 0L, 0L};
+		final long[] data = { -55407119407973072L, 1086626725887L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_59() {
-		final long[] data = {7643255645191424L, 536869011456L, 0L, 0L};
+		final long[] data = { 7643255645191424L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_60() {
-		final long[] data = {-219910920733392L, 6756498952683519L, 0L, 0L};
+		final long[] data = { -219910920733392L, 6756498952683519L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_61() {
-		final long[] data = {71837665500642560L, 6755949194969088L, 0L, 0L};
+		final long[] data = { 71837665500642560L, 6755949194969088L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_62() {
-		final long[] data = {16668047085976832L, 536869011456L, 0L, 0L};
+		final long[] data = { 16668047085976832L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_63() {
-		final long[] data = {8598323200L, 0L};
+		final long[] data = { 8598323200L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_64() {
-		final long[] data = {71837674090577664L, 1689386729275392L, 0L, 0L};
+		final long[] data = { 71837674090577664L, 1689386729275392L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_65() {
-		final long[] data = {7638857045032192L, 536869011456L, 0L, 0L};
+		final long[] data = { 7638857045032192L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_66() {
-		final long[] data = {-55411520138838736L, 536870911999L, 0L, 0L};
+		final long[] data = { -55411520138838736L, 536870911999L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_67() {
-		final long[] data = {16646056316550400L, 536869011456L, 0L, 0L};
+		final long[] data = { 16646056316550400L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_68() {
-		final long[] data = {-241901153288912L, 1971411463700479L, 0L, 0L};
+		final long[] data = { -241901153288912L, 1971411463700479L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_69() {
-		final long[] data = {-55411517991355088L, 1086626725887L, 0L, 0L};
+		final long[] data = { -55411517991355088L, 1086626725887L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_70() {
-		final long[] data = {7637208314461440L, 536869011456L, 0L, 0L};
+		final long[] data = { 7637208314461440L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_71() {
-		final long[] data = {-55395574535881424L, 1086626725887L, 0L, 0L};
+		final long[] data = { -55395574535881424L, 1086626725887L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_72() {
-		final long[] data = {-55395576683365072L, 536870911999L, 0L, 0L};
+		final long[] data = { -55395576683365072L, 536870911999L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_73() {
-		final long[] data = {7654800517545216L, 536869011456L, 0L, 0L};
+		final long[] data = { 7654800517545216L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_74() {
-		final long[] data = {16661999772024064L, 536869011456L, 0L, 0L};
+		final long[] data = { 16661999772024064L, 536869011456L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_75() {
-		final long[] data = {-225958234686160L, 1689936486989823L, 0L, 0L};
+		final long[] data = { -225958234686160L, 1689936486989823L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_76() {
-		final long[] data = {27802880L, 2145583104L, 0L, 0L};
+		final long[] data = { 27802880L, 2145583104L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_77() {
-		final long[] data = {-7001148919054544L, 1688852007747583L, 0L, 0L};
+		final long[] data = { -7001148919054544L, 1688852007747583L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_78() {
-		final long[] data = {71820081904533248L, 1970861705986048L, 0L, 0L};
+		final long[] data = { 71820081904533248L, 1970861705986048L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_79() {
-		final long[] data = {4194304L, 0L};
+		final long[] data = { 4194304L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_80() {
-		final long[] data = {-144115187941638144L, 15L, 0L, 0L};
+		final long[] data = { -144115187941638144L, 15L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_81() {
-		final long[] data = {-8796093022350L, 9007199254740991L, 0L, 0L};
+		final long[] data = { -8796093022350L, 9007199254740991L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_82() {
-		final long[] data = {11025664L, 4293066752L, 0L, 0L};
+		final long[] data = { 11025664L, 4293066752L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_83() {
-		final long[] data = {-72057576444363472L, 2147483647L, 0L, 0L};
+		final long[] data = { -72057576444363472L, 2147483647L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_84() {
-		final long[] data = {15219968L, 2145583104L, 0L, 0L};
+		final long[] data = { 15219968L, 2145583104L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_85() {
-		final long[] data = {-219910920733392L, 8445348812947455L, 0L, 0L};
+		final long[] data = { -219910920733392L, 8445348812947455L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_86() {
-		final long[] data = {17179869184L, 3584L, 0L, 0L};
+		final long[] data = { 17179869184L, 3584L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_87() {
-		final long[] data = {35184372089088L, 280377075695616L, 0L, 0L};
+		final long[] data = { 35184372089088L, 280377075695616L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_88() {
-		final long[] data = {-55415366282052304L, 1086626725887L, 0L, 0L};
+		final long[] data = { -55415366282052304L, 1086626725887L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_89() {
-		final long[] data = {-64422567684276944L, 536870911999L, 0L, 0L};
+		final long[] data = { -64422567684276944L, 536870911999L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_90() {
-		final long[] data = {16650454363061504L, 549753913344L, 0L, 0L};
+		final long[] data = { 16650454363061504L, 549753913344L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_91() {
-		final long[] data = {16668047085976832L, 549753913344L, 0L, 0L};
+		final long[] data = { 16668047085976832L, 549753913344L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_92() {
-		final long[] data = {-142L, 9007199254740991L, 0L, 0L};
+		final long[] data = { -142L, 9007199254740991L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_93() {
-		final long[] data = {256L, 0L};
+		final long[] data = { 256L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_94() {
-		final long[] data = {35192968855808L, 142936511610880L, 0L, 0L};
+		final long[] data = { 35192968855808L, 142936511610880L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_95() {
-		final long[] data = {35184376283392L, 246290604621824L, 0L, 0L};
+		final long[] data = { 35184376283392L, 246290604621824L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_96() {
-		final long[] data = {-79164871213198L, 2112148952055807L, 0L, 0L};
+		final long[] data = { -79164871213198L, 2112148952055807L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_97() {
-		final long[] data = {-219902359568526L, 2112148952055807L, 0L, 0L};
+		final long[] data = { -219902359568526L, 2112148952055807L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_98() {
-		final long[] data = {35184372089088L, 246290604621824L, 0L, 0L};
+		final long[] data = { 35184372089088L, 246290604621824L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_99() {
-		final long[] data = {35192966218496L, 140737488355328L, 0L, 0L};
+		final long[] data = { 35192966218496L, 140737488355328L, 0L, 0L };
 		return data;
 	}
 
 	private static final long[] mk_tokenSet_100() {
-		final long[] data = {8594128896L, 0L};
+		final long[] data = { 8594128896L, 0L };
 		return data;
 	}
 
 	public final void program() throws RecognitionException, TokenStreamException {
 
-		final ParserClosure pc   = out.closure();
+		final ParserClosure pc = out.closure();
 		final ModuleContext mctx = new ModuleContext(out.module());
 		out.module().setContext(mctx);
 		cur = mctx;
 		IndexingStatement idx = null;
-		OS_Package        pkg;
+		OS_Package pkg;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_indexing: {
@@ -816,8 +704,7 @@ public class ElijjahParser extends antlr.LLkParser implements ElijjahTokenTypes 
 				}
 			}
 			{
-_loop4:
-				do {
+				_loop4: do {
 					switch (LA(1)) {
 					case LITERAL_package: {
 						match(LITERAL_package);
@@ -861,14 +748,12 @@ _loop4:
 		}
 	}
 
-	public final void indexingStatement(
-	  final IndexingStatement idx
-	) throws RecognitionException, TokenStreamException {
+	public final void indexingStatement(final IndexingStatement idx) throws RecognitionException, TokenStreamException {
 
-		Token          i1 = null;
+		Token i1 = null;
 		ExpressionList el = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_indexing);
 			{
 				do {
@@ -906,7 +791,7 @@ _loop4:
 		q = new Qualident();
 		IdentExpression r1 = null, r2 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			r1 = ident();
 			if (inputState.guessing == 0) {
 				q.append(r1);
@@ -940,8 +825,7 @@ _loop4:
 
 	public final void opt_semi() throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			{
 				if ((LA(1) == SEMI) && (_tokenSet_3.member(LA(2)))) {
 					match(SEMI);
@@ -961,16 +845,15 @@ _loop4:
 		}
 	}
 
-	public final void programStatement(
-	  final ProgramClosure pc, final OS_Element cont
-	) throws RecognitionException, TokenStreamException {
+	public final void programStatement(final ProgramClosure pc, final OS_Element cont)
+			throws RecognitionException, TokenStreamException {
 
-		ImportStatement              imp = null;
-		AnnotationClause             a   = null;
-		final List<AnnotationClause> as  = new ArrayList<AnnotationClause>();
-		AliasStatement               als = null;
+		ImportStatement imp = null;
+		AnnotationClause a = null;
+		final List<AnnotationClause> as = new ArrayList<AnnotationClause>();
+		AliasStatement als = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case LITERAL_from:
 			case LITERAL_import: {
@@ -1033,7 +916,7 @@ _loop4:
 
 		el = new ExpressionList();
 
-		try {      // for error handling
+		try { // for error handling
 			expr = expression();
 			if (inputState.guessing == 0) {
 				el.next(expr);
@@ -1072,7 +955,7 @@ _loop4:
 		Token f = null;
 		e = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case STRING_LITERAL: {
 				s = LT(1);
@@ -1127,7 +1010,7 @@ _loop4:
 		Token r1 = null;
 		id = null;
 
-		try {      // for error handling
+		try { // for error handling
 			r1 = LT(1);
 			match(IDENT);
 			if (inputState.guessing == 0) {
@@ -1144,18 +1027,17 @@ _loop4:
 		return id;
 	}
 
-	public final ClassStatement classStatement(
-	  final OS_Element parent, final Context cctx, final List<AnnotationClause> as
-	) throws RecognitionException, TokenStreamException {
+	public final ClassStatement classStatement(final OS_Element parent, final Context cctx,
+			final List<AnnotationClause> as) throws RecognitionException, TokenStreamException {
 		ClassStatement cls;
 
 		cls = null;
-		ClassContext    ctx = null;
-		IdentExpression i1  = null;
-		ClassBuilder    cb  = null;
-		TypeNameList    tnl = null;
+		ClassContext ctx = null;
+		IdentExpression i1 = null;
+		ClassBuilder cb = null;
+		TypeNameList tnl = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				if ((LA(1) == LITERAL_class) && (_tokenSet_9.member(LA(2)))) {
 					match(LITERAL_class);
@@ -1340,7 +1222,7 @@ _loop4:
 		TypeName tn = null;
 		cr = new TypeNameList();
 
-		try {      // for error handling
+		try { // for error handling
 			tn = typeName2();
 			if (inputState.guessing == 0) {
 				cr.add(tn);
@@ -1370,13 +1252,11 @@ _loop4:
 		return cr;
 	}
 
-	public final void classInheritance_(
-	  final ClassInheritance ci
-	) throws RecognitionException, TokenStreamException {
+	public final void classInheritance_(final ClassInheritance ci) throws RecognitionException, TokenStreamException {
 
 		TypeName tn = null;
 
-		try {      // for error handling
+		try { // for error handling
 			tn = inhTypeName();
 			if (inputState.guessing == 0) {
 				ci.add(tn);
@@ -1405,12 +1285,10 @@ _loop4:
 		}
 	}
 
-	public final void classInheritanceRuby(
-	  final ClassInheritance ci
-	) throws RecognitionException, TokenStreamException {
+	public final void classInheritanceRuby(final ClassInheritance ci)
+			throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			match(LT_);
 			classInheritance_(ci);
 		} catch (final RecognitionException ex) {
@@ -1423,18 +1301,15 @@ _loop4:
 		}
 	}
 
-	public final void classScope(
-	  final ClassStatement cr
-	) throws RecognitionException, TokenStreamException {
+	public final void classScope(final ClassStatement cr) throws RecognitionException, TokenStreamException {
 
-		AccessNotation     acs = null;
+		AccessNotation acs = null;
 		TypeAliasStatement tal = null;
 
-		try {      // for error handling
+		try { // for error handling
 			docstrings(cr);
 			{
-_loop45:
-				do {
+				_loop45: do {
 					switch (LA(1)) {
 					case LITERAL_constructor:
 					case LITERAL_ctor: {
@@ -1524,14 +1399,13 @@ _loop45:
 		}
 	}
 
-	public final void invariantStatement(
-	  final InvariantStatement cr
-	) throws RecognitionException, TokenStreamException {
+	public final void invariantStatement(final InvariantStatement cr)
+			throws RecognitionException, TokenStreamException {
 
-		Token                  i1  = null;
+		Token i1 = null;
 		InvariantStatementPart isp = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_invariant);
 			{
 				do {
@@ -1570,15 +1444,14 @@ _loop45:
 		}
 	}
 
-	public final void classDefinition_interface(
-	  final ClassBuilder cb
-	) throws RecognitionException, TokenStreamException {
+	public final void classDefinition_interface(final ClassBuilder cb)
+			throws RecognitionException, TokenStreamException {
 
-		IdentExpression    i1  = null;
+		IdentExpression i1 = null;
 		final ClassContext ctx = null;
-		TypeNameList       tnl = null;
+		TypeNameList tnl = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_class);
 			match(LITERAL_interface);
 			if (inputState.guessing == 0) {
@@ -1637,14 +1510,12 @@ _loop45:
 		}
 	}
 
-	public final void classStatement2(
-	  final BaseScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void classStatement2(final BaseScope sc) throws RecognitionException, TokenStreamException {
 
-		AnnotationClause a  = null;
-		ClassBuilder     cb = null;
+		AnnotationClause a = null;
+		ClassBuilder cb = null;
 
-		try {      // for error handling
+		try { // for error handling
 			if (inputState.guessing == 0) {
 				cb = new ClassBuilder();
 			}
@@ -1690,12 +1561,12 @@ _loop45:
 	public final AnnotationClause annotation_clause() throws RecognitionException, TokenStreamException {
 		final AnnotationClause a;
 
-		Qualident      q  = null;
+		Qualident q = null;
 		ExpressionList el = null;
 		a = new AnnotationClause();
 		AnnotationPart ap = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(ANNOT);
 			{
 				int _cnt68 = 0;
@@ -1754,15 +1625,13 @@ _loop45:
 		return a;
 	}
 
-	public final void classDefinition_normal(
-	  final ClassBuilder cb
-	) throws RecognitionException, TokenStreamException {
+	public final void classDefinition_normal(final ClassBuilder cb) throws RecognitionException, TokenStreamException {
 
-		IdentExpression    i1  = null;
+		IdentExpression i1 = null;
 		final ClassContext ctx = null;
-		TypeNameList       tnl = null;
+		TypeNameList tnl = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_class);
 			if (inputState.guessing == 0) {
 				cb.setType(ClassTypes.NORMAL);
@@ -1822,14 +1691,12 @@ _loop45:
 		}
 	}
 
-	public final void classDefinition_struct(
-	  final ClassBuilder cb
-	) throws RecognitionException, TokenStreamException {
+	public final void classDefinition_struct(final ClassBuilder cb) throws RecognitionException, TokenStreamException {
 
-		IdentExpression    i1  = null;
+		IdentExpression i1 = null;
 		final ClassContext ctx = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_class);
 			match(LITERAL_struct);
 			if (inputState.guessing == 0) {
@@ -1867,14 +1734,13 @@ _loop45:
 		}
 	}
 
-	public final void classDefinition_signature(
-	  final ClassBuilder cb
-	) throws RecognitionException, TokenStreamException {
+	public final void classDefinition_signature(final ClassBuilder cb)
+			throws RecognitionException, TokenStreamException {
 
-		IdentExpression    i1  = null;
+		IdentExpression i1 = null;
 		final ClassContext ctx = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_class);
 			match(LITERAL_signature);
 			if (inputState.guessing == 0) {
@@ -1912,14 +1778,13 @@ _loop45:
 		}
 	}
 
-	public final void classDefinition_abstract(
-	  final ClassBuilder cb
-	) throws RecognitionException, TokenStreamException {
+	public final void classDefinition_abstract(final ClassBuilder cb)
+			throws RecognitionException, TokenStreamException {
 
 		final ClassStatement cls = null;
-		IdentExpression      i1  = null;
+		IdentExpression i1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_class);
 			match(LITERAL_abstract);
 			if (inputState.guessing == 0) {
@@ -2006,12 +1871,10 @@ _loop45:
 		}
 	}
 
-	public final void classDefinition_inheritance(
-	  final ClassBuilder cb
-	) throws RecognitionException, TokenStreamException {
+	public final void classDefinition_inheritance(final ClassBuilder cb)
+			throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case LPAREN: {
 				{
@@ -2039,17 +1902,14 @@ _loop45:
 		}
 	}
 
-	public final void classScope2(
-	  final ClassScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void classScope2(final ClassScope cr) throws RecognitionException, TokenStreamException {
 
 		AccessNotation acs = null;
 
-		try {      // for error handling
+		try { // for error handling
 			docstrings(cr);
 			{
-_loop51:
-				do {
+				_loop51: do {
 					switch (LA(1)) {
 					case LITERAL_constructor:
 					case LITERAL_ctor: {
@@ -2127,20 +1987,19 @@ _loop51:
 		}
 	}
 
-	public final void classScope2_signature(
-	  final ClassScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void classScope2_signature(final ClassScope cr) throws RecognitionException, TokenStreamException {
 
 		AccessNotation acs = null;
 
-		try {      // for error handling
+		try { // for error handling
 			docstrings(cr);
 			{
 				do {
 					if ((_tokenSet_24.member(LA(1))) && (_tokenSet_25.member(LA(2)))) {
 					} else if ((LA(1) == IDENT || LA(1) == ANNOT) && (_tokenSet_15.member(LA(2)))) {
 						functionDef2(cr.funcDef());
-					} else if ((LA(1) == LITERAL_const || LA(1) == LITERAL_var || LA(1) == LITERAL_val) && (LA(2) == IDENT)) {
+					} else if ((LA(1) == LITERAL_const || LA(1) == LITERAL_var || LA(1) == LITERAL_val)
+							&& (LA(2) == IDENT)) {
 						varStmt2(cr);
 					} else if ((LA(1) == LITERAL_type) && (LA(2) == IDENT)) {
 						match(LITERAL_type);
@@ -2162,7 +2021,8 @@ _loop51:
 						typeAlias2(cr.typeAlias());
 					} else if ((_tokenSet_16.member(LA(1))) && (_tokenSet_26.member(LA(2)))) {
 						programStatement2(cr);
-					} else if ((LA(1) == LITERAL_access) && (LA(2) == IDENT || LA(2) == STRING_LITERAL || LA(2) == LCURLY)) {
+					} else if ((LA(1) == LITERAL_access)
+							&& (LA(2) == IDENT || LA(2) == STRING_LITERAL || LA(2) == LCURLY)) {
 						acs = accessNotation();
 						if (inputState.guessing == 0) {
 							cr.addAccess(acs);
@@ -2197,14 +2057,12 @@ _loop51:
 		}
 	}
 
-	public final void invariantStatement2(
-	  final ClassScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void invariantStatement2(final ClassScope sc) throws RecognitionException, TokenStreamException {
 
 		final InvariantStatementPart isp = null;
-		IdentExpression              i1  = null;
+		IdentExpression i1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_invariant);
 			{
 				do {
@@ -2243,17 +2101,14 @@ _loop51:
 		}
 	}
 
-	public final void classScope2_interface(
-	  final ClassScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void classScope2_interface(final ClassScope cr) throws RecognitionException, TokenStreamException {
 
 		AccessNotation acs = null;
 
-		try {      // for error handling
+		try { // for error handling
 			docstrings(cr);
 			{
-_loop63:
-				do {
+				_loop63: do {
 					switch (LA(1)) {
 					case LITERAL_const:
 					case LITERAL_var:
@@ -2325,13 +2180,11 @@ _loop63:
 		}
 	}
 
-	public final void docstrings(
-	  final Documentable sc
-	) throws RecognitionException, TokenStreamException {
+	public final void docstrings(final Documentable sc) throws RecognitionException, TokenStreamException {
 
 		Token s1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				boolean synPredMatched112 = false;
 				if (((LA(1) == STRING_LITERAL) && (_tokenSet_28.member(LA(2))))) {
@@ -2356,7 +2209,8 @@ _loop63:
 								s1 = LT(1);
 								match(STRING_LITERAL);
 								if (inputState.guessing == 0) {
-									if (sc != null) sc.addDocString(s1);
+									if (sc != null)
+										sc.addDocString(s1);
 								}
 							} else {
 								if (_cnt114 >= 1) {
@@ -2385,15 +2239,13 @@ _loop63:
 		}
 	}
 
-	public final void constructorDef(
-	  final ClassStatement cr
-	) throws RecognitionException, TokenStreamException {
+	public final void constructorDef(final ClassStatement cr) throws RecognitionException, TokenStreamException {
 
-		ConstructorDef  cd  = null;
-		IdentExpression x1  = null;
-		FormalArgList   fal = null;
+		ConstructorDef cd = null;
+		IdentExpression x1 = null;
+		FormalArgList fal = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_constructor: {
@@ -2450,14 +2302,12 @@ _loop63:
 		}
 	}
 
-	public final void destructorDef(
-	  final ClassStatement cr
-	) throws RecognitionException, TokenStreamException {
+	public final void destructorDef(final ClassStatement cr) throws RecognitionException, TokenStreamException {
 
-		DestructorDef dd  = null;
+		DestructorDef dd = null;
 		FormalArgList fal = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_destructor: {
@@ -2497,17 +2347,15 @@ _loop63:
 		}
 	}
 
-	public final void functionDef(
-	  final FunctionDef fd
-	) throws RecognitionException, TokenStreamException {
+	public final void functionDef(final FunctionDef fd) throws RecognitionException, TokenStreamException {
 
-		AnnotationClause a   = null;
-		FunctionContext  ctx = null;
-		IdentExpression  i1  = null;
-		TypeName         tn  = null;
-		FormalArgList    fal = null;
+		AnnotationClause a = null;
+		FunctionContext ctx = null;
+		IdentExpression i1 = null;
+		TypeName tn = null;
+		FormalArgList fal = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				do {
 					if ((LA(1) == ANNOT)) {
@@ -2594,15 +2442,13 @@ _loop63:
 		}
 	}
 
-	public final void defFunctionDef(
-	  final DefFunctionDef fd
-	) throws RecognitionException, TokenStreamException {
+	public final void defFunctionDef(final DefFunctionDef fd) throws RecognitionException, TokenStreamException {
 
-		FormalArgList   op = null;
-		TypeName        tn = null;
+		FormalArgList op = null;
+		TypeName tn = null;
 		IdentExpression i1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_def);
 			i1 = ident();
 			op = opfal();
@@ -2657,14 +2503,13 @@ _loop63:
 		}
 	}
 
-	public final void varStmt(
-	  final StatementClosure cr, final OS_Element aParent
-	) throws RecognitionException, TokenStreamException {
+	public final void varStmt(final StatementClosure cr, final OS_Element aParent)
+			throws RecognitionException, TokenStreamException {
 
 		VariableSequence vsq = null;
-		TypeName         tn  = null;
+		TypeName tn = null;
 
-		try {      // for error handling
+		try { // for error handling
 			if (inputState.guessing == 0) {
 				vsq = cr.varSeq(cur);
 			}
@@ -2787,15 +2632,13 @@ _loop63:
 		}
 	}
 
-	public final TypeAliasStatement typeAlias(
-	  final OS_Element cont
-	) throws RecognitionException, TokenStreamException {
+	public final TypeAliasStatement typeAlias(final OS_Element cont) throws RecognitionException, TokenStreamException {
 		TypeAliasStatement cr;
 
 		final TypeAliasBuilder tab = new TypeAliasBuilder();
 		cr = null;
 
-		try {      // for error handling
+		try { // for error handling
 			typeAlias2(tab);
 			if (inputState.guessing == 0) {
 				tab.setParent(cont);
@@ -2813,14 +2656,12 @@ _loop63:
 		return cr;
 	}
 
-	public final void propertyStatement(
-	  final PropertyStatement ps
-	) throws RecognitionException, TokenStreamException {
+	public final void propertyStatement(final PropertyStatement ps) throws RecognitionException, TokenStreamException {
 
 		IdentExpression prop_name = null;
-		TypeName        tn        = null;
+		TypeName tn = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_prop: {
@@ -2861,8 +2702,7 @@ _loop63:
 			}
 			match(LCURLY);
 			{
-_loop440:
-				do {
+				_loop440: do {
 					switch (LA(1)) {
 					case LITERAL_get: {
 						match(LITERAL_get);
@@ -2934,14 +2774,14 @@ _loop440:
 	public final AccessNotation accessNotation() throws RecognitionException, TokenStreamException {
 		final AccessNotation acs;
 
-		Token        category   = null;
-		Token        shorthand  = null;
-		Token        category1  = null;
-		Token        shorthand1 = null;
-		TypeNameList tnl        = null;
+		Token category = null;
+		Token shorthand = null;
+		Token category1 = null;
+		Token shorthand1 = null;
+		TypeNameList tnl = null;
 		acs = new AccessNotation();
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_access);
 			{
 				if ((LA(1) == STRING_LITERAL) && (LA(2) == IDENT || LA(2) == LCURLY)) {
@@ -3018,15 +2858,13 @@ _loop440:
 		return acs;
 	}
 
-	public final void constructorDef2(
-	  final ClassScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void constructorDef2(final ClassScope cr) throws RecognitionException, TokenStreamException {
 
-		final ConstructorDefBuilder cd  = new ConstructorDefBuilder();
-		IdentExpression             x1  = null;
-		FormalArgList               fal = null;
+		final ConstructorDefBuilder cd = new ConstructorDefBuilder();
+		IdentExpression x1 = null;
+		FormalArgList fal = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_constructor: {
@@ -3077,14 +2915,12 @@ _loop440:
 		}
 	}
 
-	public final void destructorDef2(
-	  final ClassScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void destructorDef2(final ClassScope cr) throws RecognitionException, TokenStreamException {
 
-		final DestructorDefBuilder dd  = new DestructorDefBuilder();
-		FormalArgList              fal = null;
+		final DestructorDefBuilder dd = new DestructorDefBuilder();
+		FormalArgList fal = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_destructor: {
@@ -3115,16 +2951,14 @@ _loop440:
 		}
 	}
 
-	public final void functionDef2(
-	  final FunctionDefBuilder fb
-	) throws RecognitionException, TokenStreamException {
+	public final void functionDef2(final FunctionDefBuilder fb) throws RecognitionException, TokenStreamException {
 
-		AnnotationClause a   = null;
-		IdentExpression  i1  = null;
-		TypeName         tn  = null;
-		FormalArgList    fal = null;
+		AnnotationClause a = null;
+		IdentExpression i1 = null;
+		TypeName tn = null;
+		FormalArgList fal = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				do {
 					if ((LA(1) == ANNOT)) {
@@ -3202,14 +3036,12 @@ _loop440:
 		}
 	}
 
-	public final void varStmt2(
-	  final BaseScope cs
-	) throws RecognitionException, TokenStreamException {
+	public final void varStmt2(final BaseScope cs) throws RecognitionException, TokenStreamException {
 
 		final VariableSequenceBuilder vsqb = new VariableSequenceBuilder();
-		TypeName                      tn   = null;
+		TypeName tn = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_var: {
@@ -3335,14 +3167,12 @@ _loop440:
 		}
 	}
 
-	public final void typeAlias2(
-	  final TypeAliasBuilder tab
-	) throws RecognitionException, TokenStreamException {
+	public final void typeAlias2(final TypeAliasBuilder tab) throws RecognitionException, TokenStreamException {
 
-		Qualident       q = null;
+		Qualident q = null;
 		IdentExpression i = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_type);
 			match(LITERAL_alias);
 			i = ident();
@@ -3364,12 +3194,10 @@ _loop440:
 		}
 	}
 
-	public final void programStatement2(
-	  final ClassOrNamespaceScope cont
-	) throws RecognitionException, TokenStreamException {
+	public final void programStatement2(final ClassOrNamespaceScope cont)
+			throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case LITERAL_from:
 			case LITERAL_import: {
@@ -3399,16 +3227,15 @@ _loop440:
 		}
 	}
 
-	public final void functionDef2_interface(
-	  final FunctionDefBuilder fb
-	) throws RecognitionException, TokenStreamException {
+	public final void functionDef2_interface(final FunctionDefBuilder fb)
+			throws RecognitionException, TokenStreamException {
 
-		AnnotationClause a   = null;
-		IdentExpression  i1  = null;
-		TypeName         tn  = null;
-		FormalArgList    fal = null;
+		AnnotationClause a = null;
+		IdentExpression i1 = null;
+		TypeName tn = null;
+		FormalArgList fal = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				do {
 					if ((LA(1) == ANNOT)) {
@@ -3530,15 +3357,14 @@ _loop440:
 		}
 	}
 
-	public final void propertyStatement2_abstract(
-	  final ClassScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void propertyStatement2_abstract(final ClassScope cr)
+			throws RecognitionException, TokenStreamException {
 
-		final PropertyStatementBuilder ps        = new PropertyStatementBuilder();
-		IdentExpression                prop_name = null;
-		TypeName                       tn        = null;
+		final PropertyStatementBuilder ps = new PropertyStatementBuilder();
+		IdentExpression prop_name = null;
+		TypeName tn = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_prop: {
@@ -3579,8 +3405,7 @@ _loop440:
 			}
 			match(LCURLY);
 			{
-_loop445:
-				do {
+				_loop445: do {
 					switch (LA(1)) {
 					case LITERAL_get: {
 						match(LITERAL_get);
@@ -3618,15 +3443,13 @@ _loop445:
 		}
 	}
 
-	public final void propertyStatement2(
-	  final ClassScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void propertyStatement2(final ClassScope cr) throws RecognitionException, TokenStreamException {
 
-		final PropertyStatementBuilder ps        = new PropertyStatementBuilder();
-		IdentExpression                prop_name = null;
-		TypeName                       tn        = null;
+		final PropertyStatementBuilder ps = new PropertyStatementBuilder();
+		IdentExpression prop_name = null;
+		TypeName tn = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_prop: {
@@ -3667,8 +3490,7 @@ _loop445:
 			}
 			match(LCURLY);
 			{
-_loop452:
-				do {
+				_loop452: do {
 					switch (LA(1)) {
 					case LITERAL_get: {
 						match(LITERAL_get);
@@ -3734,15 +3556,14 @@ _loop452:
 		}
 	}
 
-	public final void namespaceStatement__(
-	  final NamespaceStatement cls, final List<AnnotationClause> as
-	) throws RecognitionException, TokenStreamException {
+	public final void namespaceStatement__(final NamespaceStatement cls, final List<AnnotationClause> as)
+			throws RecognitionException, TokenStreamException {
 
-		final AnnotationClause a   = null;
-		NamespaceContext       ctx = null;
-		IdentExpression        i1  = null;
+		final AnnotationClause a = null;
+		NamespaceContext ctx = null;
+		IdentExpression i1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			if (inputState.guessing == 0) {
 				cls.addAnnotations(as);
 			}
@@ -3785,14 +3606,12 @@ _loop452:
 		}
 	}
 
-	public final void namespaceScope(
-	  final NamespaceStatement cr
-	) throws RecognitionException, TokenStreamException {
+	public final void namespaceScope(final NamespaceStatement cr) throws RecognitionException, TokenStreamException {
 
-		AccessNotation     acs = null;
+		AccessNotation acs = null;
 		TypeAliasStatement tal = null;
 
-		try {      // for error handling
+		try { // for error handling
 			docstrings(cr);
 			{
 				do {
@@ -3860,16 +3679,14 @@ _loop452:
 		}
 	}
 
-	public final void namespaceStatement2(
-	  final BaseScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void namespaceStatement2(final BaseScope sc) throws RecognitionException, TokenStreamException {
 
 		final NamespaceStatementBuilder cls = new NamespaceStatementBuilder();
-		AnnotationClause                a   = null;
-		final NamespaceContext          ctx = null;
-		IdentExpression                 i1  = null;
+		AnnotationClause a = null;
+		final NamespaceContext ctx = null;
+		IdentExpression i1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				do {
 					if ((LA(1) == ANNOT)) {
@@ -3916,13 +3733,11 @@ _loop452:
 		}
 	}
 
-	public final void namespaceScope2(
-	  final NamespaceScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void namespaceScope2(final NamespaceScope cr) throws RecognitionException, TokenStreamException {
 
 		AccessNotation acs = null;
 
-		try {      // for error handling
+		try { // for error handling
 			docstrings(cr);
 			{
 				do {
@@ -3987,20 +3802,19 @@ _loop452:
 		}
 	}
 
-	public final ImportStatement importStatement(
-	  final OS_Element el
-	) throws RecognitionException, TokenStreamException {
+	public final ImportStatement importStatement(final OS_Element el)
+			throws RecognitionException, TokenStreamException {
 		ImportStatement pc;
 
 		pc = null;
 		ImportContext ctx = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case LITERAL_from: {
 				match(LITERAL_from);
 				if (inputState.guessing == 0) {
-					pc  = new RootedImportStatement(el);
+					pc = new RootedImportStatement(el);
 					ctx = new ImportContext(cur, pc);
 					pc.setContext(ctx);
 					cur = ctx;
@@ -4035,7 +3849,7 @@ _loop452:
 					}
 					if (synPredMatched78) {
 						if (inputState.guessing == 0) {
-							pc  = new AssigningImportStatement(el);
+							pc = new AssigningImportStatement(el);
 							ctx = new ImportContext(cur, pc);
 							pc.setContext(ctx);
 							cur = ctx;
@@ -4071,7 +3885,7 @@ _loop452:
 						}
 						if (synPredMatched82) {
 							if (inputState.guessing == 0) {
-								pc  = new QualifiedImportStatement(el);
+								pc = new QualifiedImportStatement(el);
 								ctx = new ImportContext(cur, pc);
 								pc.setContext(ctx);
 								cur = ctx;
@@ -4090,7 +3904,7 @@ _loop452:
 							}
 						} else if ((LA(1) == IDENT) && (_tokenSet_39.member(LA(2)))) {
 							if (inputState.guessing == 0) {
-								pc  = new NormalImportStatement(el);
+								pc = new NormalImportStatement(el);
 								ctx = new ImportContext(cur, pc);
 								pc.setContext(ctx);
 								cur = ctx;
@@ -4130,13 +3944,11 @@ _loop452:
 		return pc;
 	}
 
-	public final void qualidentList(
-	  final QualidentList qal
-	) throws RecognitionException, TokenStreamException {
+	public final void qualidentList(final QualidentList qal) throws RecognitionException, TokenStreamException {
 
 		Qualident qid;
 
-		try {      // for error handling
+		try { // for error handling
 			qid = qualident();
 			if (inputState.guessing == 0) {
 				qal.add(qid);
@@ -4165,14 +3977,12 @@ _loop452:
 		}
 	}
 
-	public final void importPart1(
-	  final AssigningImportStatement cr
-	) throws RecognitionException, TokenStreamException {
+	public final void importPart1(final AssigningImportStatement cr) throws RecognitionException, TokenStreamException {
 
 		IdentExpression i1 = null;
-		Qualident       q1 = null;
+		Qualident q1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			i1 = ident();
 			match(BECOMES);
 			q1 = qualident();
@@ -4189,14 +3999,12 @@ _loop452:
 		}
 	}
 
-	public final void importPart2(
-	  final QualifiedImportStatement cr
-	) throws RecognitionException, TokenStreamException {
+	public final void importPart2(final QualifiedImportStatement cr) throws RecognitionException, TokenStreamException {
 
 		final Qualident q3;
-		IdentList       il = new IdentList();
+		IdentList il = new IdentList();
 
-		try {      // for error handling
+		try { // for error handling
 			q3 = qualident();
 			match(LCURLY);
 			il = identList2();
@@ -4214,13 +4022,11 @@ _loop452:
 		}
 	}
 
-	public final void importPart3(
-	  final NormalImportStatement cr
-	) throws RecognitionException, TokenStreamException {
+	public final void importPart3(final NormalImportStatement cr) throws RecognitionException, TokenStreamException {
 
 		final Qualident q2;
 
-		try {      // for error handling
+		try { // for error handling
 			q2 = qualident();
 			if (inputState.guessing == 0) {
 				cr.addNormalPart(q2);
@@ -4235,15 +4041,13 @@ _loop452:
 		}
 	}
 
-	public final void importStatement2(
-	  final BaseScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void importStatement2(final BaseScope sc) throws RecognitionException, TokenStreamException {
 
-		final ImportStatementBuilder ib  = new ImportStatementBuilder();
-		final ImportStatement        pc  = null;
-		QualidentList                qil = null;
+		final ImportStatementBuilder ib = new ImportStatementBuilder();
+		final ImportStatement pc = null;
+		QualidentList qil = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case LITERAL_from: {
 				match(LITERAL_from);
@@ -4360,7 +4164,7 @@ _loop452:
 		Qualident qid;
 		qal = new QualidentList();
 
-		try {      // for error handling
+		try { // for error handling
 			qid = qualident();
 			if (inputState.guessing == 0) {
 				qal.add(qid);
@@ -4390,14 +4194,12 @@ _loop452:
 		return qal;
 	}
 
-	public final void importPart1_(
-	  final ImportStatementBuilder cr
-	) throws RecognitionException, TokenStreamException {
+	public final void importPart1_(final ImportStatementBuilder cr) throws RecognitionException, TokenStreamException {
 
 		IdentExpression i1 = null;
-		Qualident       q1 = null;
+		Qualident q1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			i1 = ident();
 			match(BECOMES);
 			q1 = qualident();
@@ -4414,14 +4216,12 @@ _loop452:
 		}
 	}
 
-	public final void importPart2_(
-	  final ImportStatementBuilder cr
-	) throws RecognitionException, TokenStreamException {
+	public final void importPart2_(final ImportStatementBuilder cr) throws RecognitionException, TokenStreamException {
 
 		final Qualident q3;
-		IdentList       il = new IdentList();
+		IdentList il = new IdentList();
 
-		try {      // for error handling
+		try { // for error handling
 			q3 = qualident();
 			match(LCURLY);
 			il = identList2();
@@ -4439,13 +4239,11 @@ _loop452:
 		}
 	}
 
-	public final void importPart3_(
-	  final ImportStatementBuilder cr
-	) throws RecognitionException, TokenStreamException {
+	public final void importPart3_(final ImportStatementBuilder cr) throws RecognitionException, TokenStreamException {
 
 		final Qualident q2;
 
-		try {      // for error handling
+		try { // for error handling
 			q2 = qualident();
 			if (inputState.guessing == 0) {
 				cr.addNormalPart(q2);
@@ -4466,7 +4264,7 @@ _loop452:
 		IdentExpression s = null;
 		ail = new IdentList();
 
-		try {      // for error handling
+		try { // for error handling
 			s = ident();
 			if (inputState.guessing == 0) {
 				ail.push(s);
@@ -4501,7 +4299,7 @@ _loop452:
 
 		tn = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_typeof: {
@@ -4540,7 +4338,7 @@ _loop452:
 
 		fal = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LPAREN);
 			fal = formalArgList();
 			match(RPAREN);
@@ -4555,15 +4353,13 @@ _loop452:
 		return fal;
 	}
 
-	public final Scope3 scope3(
-	  final OS_Element parent
-	) throws RecognitionException, TokenStreamException {
+	public final Scope3 scope3(final OS_Element parent) throws RecognitionException, TokenStreamException {
 		final Scope3 sc;
 
 		sc = new Scope3(parent);
 		ClassStatement cls = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LCURLY);
 			docstrings(sc);
 			{
@@ -4572,7 +4368,7 @@ _loop452:
 						{
 							switch (LA(1)) {
 							case LITERAL_class: {
-								cls = classStatement(sc.getParent(), cur, null/*annotations*/);
+								cls = classStatement(sc.getParent(), cur, null/* annotations */);
 								if (inputState.guessing == 0) {
 									sc.add(cls);
 								}
@@ -4654,12 +4450,10 @@ _loop452:
 		return sc;
 	}
 
-	public final void constructor_scope2(
-	  final ConstructorDefScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void constructor_scope2(final ConstructorDefScope sc)
+			throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			match(LCURLY);
 			docstrings(sc);
 			{
@@ -4759,12 +4553,9 @@ _loop452:
 		}
 	}
 
-	public final void scope2(
-	  final BaseScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void scope2(final BaseScope sc) throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			match(LCURLY);
 			docstrings(sc);
 			{
@@ -4864,14 +4655,13 @@ _loop452:
 		}
 	}
 
-	public final void statement(
-	  final StatementClosure cr, final OS_Element aParent
-	) throws RecognitionException, TokenStreamException {
+	public final void statement(final StatementClosure cr, final OS_Element aParent)
+			throws RecognitionException, TokenStreamException {
 
-		final Qualident      q = null;
+		final Qualident q = null;
 		final ExpressionList o = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case IDENT:
@@ -4960,7 +4750,7 @@ _loop452:
 
 		ee = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = assignmentExpression();
 		} catch (final RecognitionException ex) {
 			if (inputState.guessing == 0) {
@@ -4973,14 +4763,12 @@ _loop452:
 		return ee;
 	}
 
-	public final void withStatement(
-	  final OS_Element aParent
-	) throws RecognitionException, TokenStreamException {
+	public final void withStatement(final OS_Element aParent) throws RecognitionException, TokenStreamException {
 
-		final WithStatement ws  = new WithStatement(aParent);
-		WithContext         ctx = null;
+		final WithStatement ws = new WithStatement(aParent);
+		WithContext ctx = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_with);
 			varStmt_i(ws.nextVarStmt());
 			{
@@ -5010,14 +4798,12 @@ _loop452:
 		}
 	}
 
-	public final void syntacticBlockScope(
-	  final OS_Element aParent
-	) throws RecognitionException, TokenStreamException {
+	public final void syntacticBlockScope(final OS_Element aParent) throws RecognitionException, TokenStreamException {
 
-		final SyntacticBlock  sb  = new SyntacticBlock(aParent);
+		final SyntacticBlock sb = new SyntacticBlock(aParent);
 		SyntacticBlockContext ctx = null;
 
-		try {      // for error handling
+		try { // for error handling
 			if (inputState.guessing == 0) {
 				ctx = new SyntacticBlockContext(sb, cur);
 				sb.setContext(ctx);
@@ -5041,12 +4827,9 @@ _loop452:
 		}
 	}
 
-	public final void statement2(
-	  final BaseScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void statement2(final BaseScope cr) throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case IDENT:
@@ -5126,14 +4909,12 @@ _loop452:
 		}
 	}
 
-	public final void withStatement2(
-	  final BaseScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void withStatement2(final BaseScope sc) throws RecognitionException, TokenStreamException {
 
-		final WithStatementBuilder    ws   = new WithStatementBuilder();
+		final WithStatementBuilder ws = new WithStatementBuilder();
 		final VariableSequenceBuilder vsqb = ws.sb();
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_with);
 			varStmt_i2(vsqb);
 			{
@@ -5157,13 +4938,11 @@ _loop452:
 		}
 	}
 
-	public final void syntacticBlockScope2(
-	  final BaseScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void syntacticBlockScope2(final BaseScope sc) throws RecognitionException, TokenStreamException {
 
 		final SyntacticBlockBuilder sbb = new SyntacticBlockBuilder();
 
-		try {      // for error handling
+		try { // for error handling
 			scope2(sbb.scope());
 			if (inputState.guessing == 0) {
 				sc.add(sbb);
@@ -5178,14 +4957,12 @@ _loop452:
 		}
 	}
 
-	public final void varStmt_i(
-	  final VariableStatement vs
-	) throws RecognitionException, TokenStreamException {
+	public final void varStmt_i(final VariableStatement vs) throws RecognitionException, TokenStreamException {
 
-		TypeName        tn = null;
-		IdentExpression i  = null;
+		TypeName tn = null;
+		IdentExpression i = null;
 
-		try {      // for error handling
+		try { // for error handling
 			i = ident();
 			if (inputState.guessing == 0) {
 				vs.setName(i);
@@ -5239,14 +5016,12 @@ _loop452:
 		}
 	}
 
-	public final void varStmt_i2(
-	  final VariableSequenceBuilder vsb
-	) throws RecognitionException, TokenStreamException {
+	public final void varStmt_i2(final VariableSequenceBuilder vsb) throws RecognitionException, TokenStreamException {
 
-		final TypeName  tn = null;
-		IdentExpression i  = null;
+		final TypeName tn = null;
+		IdentExpression i = null;
 
-		try {      // for error handling
+		try { // for error handling
 			i = ident();
 			if (inputState.guessing == 0) {
 				vsb.setName(i);
@@ -5333,15 +5108,13 @@ _loop452:
 		}
 	}
 
-	public final Scope3 functionScope(
-	  final FunctionDef parent
-	) throws RecognitionException, TokenStreamException {
+	public final Scope3 functionScope(final FunctionDef parent) throws RecognitionException, TokenStreamException {
 		final Scope3 sc;
 
 		sc = new Scope3(parent);
 		ClassStatement cls = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LCURLY);
 			docstrings(sc);
 			{
@@ -5388,7 +5161,7 @@ _loop452:
 								{
 									switch (LA(1)) {
 									case LITERAL_class: {
-										cls = classStatement(sc.getParent(), cur, null/*annotations*/);
+										cls = classStatement(sc.getParent(), cur, null/* annotations */);
 										if (inputState.guessing == 0) {
 											sc.add(cls);
 										}
@@ -5479,12 +5252,9 @@ _loop452:
 		return sc;
 	}
 
-	public final void functionScope2(
-	  final FunctionDefScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void functionScope2(final FunctionDefScope sc) throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			match(LCURLY);
 			docstrings(sc);
 			{
@@ -5649,13 +5419,11 @@ _loop452:
 		}
 	}
 
-	public final void preConditionSegment(
-	  final FunctionDefScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void preConditionSegment(final FunctionDefScope sc) throws RecognitionException, TokenStreamException {
 
 		Precondition p = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_pre);
 			match(LCURLY);
 			{
@@ -5682,12 +5450,10 @@ _loop452:
 		}
 	}
 
-	public final void returnExpressionFunctionDefScope(
-	  final FunctionDefScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void returnExpressionFunctionDefScope(final FunctionDefScope sc)
+			throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_return);
 			{
 				boolean synPredMatched184 = false;
@@ -5731,13 +5497,12 @@ _loop452:
 		}
 	}
 
-	public final void postConditionSegment(
-	  final FunctionDefScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void postConditionSegment(final FunctionDefScope sc)
+			throws RecognitionException, TokenStreamException {
 
 		Postcondition po = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_post);
 			{
 				if ((LA(1) == LCURLY) && (_tokenSet_76.member(LA(2)))) {
@@ -5791,7 +5556,7 @@ _loop452:
 		prec = new Precondition();
 		IdentExpression id = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				if ((LA(1) == IDENT) && (LA(2) == TOK_COLON)) {
 					id = ident();
@@ -5826,7 +5591,7 @@ _loop452:
 		postc = new Postcondition();
 		IdentExpression id = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				if ((LA(1) == IDENT) && (LA(2) == TOK_COLON)) {
 					id = ident();
@@ -5860,7 +5625,7 @@ _loop452:
 
 		cr = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case LITERAL_generic:
 			case QUESTION: {
@@ -5901,15 +5666,14 @@ _loop452:
 		return cr;
 	}
 
-	public final AliasStatement aliasStatement(
-	  final OS_Element cont
-	) throws RecognitionException, TokenStreamException {
+	public final AliasStatement aliasStatement(final OS_Element cont)
+			throws RecognitionException, TokenStreamException {
 		final AliasStatement pc;
 
 		IdentExpression i1 = null;
 		pc = new AliasStatement(cont);
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_alias);
 			i1 = ident();
 			if (inputState.guessing == 0) {
@@ -5931,14 +5695,12 @@ _loop452:
 		return pc;
 	}
 
-	public final void aliasStatement2(
-	  final BaseScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void aliasStatement2(final BaseScope sc) throws RecognitionException, TokenStreamException {
 
 		final AliasStatementBuilder pc = new AliasStatementBuilder();
-		IdentExpression             i1 = null;
+		IdentExpression i1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_alias);
 			i1 = ident();
 			if (inputState.guessing == 0) {
@@ -5962,13 +5724,11 @@ _loop452:
 		}
 	}
 
-	public final void varStmt_i3(
-	  final VariableStatement vs
-	) throws RecognitionException, TokenStreamException {
+	public final void varStmt_i3(final VariableStatement vs) throws RecognitionException, TokenStreamException {
 
 		IdentExpression i = null;
 
-		try {      // for error handling
+		try { // for error handling
 			i = ident();
 			if (inputState.guessing == 0) {
 				vs.setName(i);
@@ -6060,7 +5820,7 @@ _loop452:
 
 		fal = new FormalArgList();
 
-		try {      // for error handling
+		try { // for error handling
 			formalArgList_(fal);
 		} catch (final RecognitionException ex) {
 			if (inputState.guessing == 0) {
@@ -6073,12 +5833,9 @@ _loop452:
 		return fal;
 	}
 
-	public final void formalArgList_(
-	  final FormalArgList fal
-	) throws RecognitionException, TokenStreamException {
+	public final void formalArgList_(final FormalArgList fal) throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case IDENT:
@@ -6122,11 +5879,11 @@ _loop452:
 		IExpression ee;
 
 		ee = null;
-		final IExpression e  = null;
+		final IExpression e = null;
 		final IExpression e2;
-		ExpressionKind    ek = null;
+		ExpressionKind ek = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = conditionalExpression();
 			{
 				if ((_tokenSet_80.member(LA(1))) && (_tokenSet_19.member(LA(2)))) {
@@ -6242,15 +5999,13 @@ _loop452:
 		return ee;
 	}
 
-	public final void ifConditional(
-	  final IfConditional ifex
-	) throws RecognitionException, TokenStreamException {
+	public final void ifConditional(final IfConditional ifex) throws RecognitionException, TokenStreamException {
 
 		final IfConditionalContext ifc_top = null;
-		final IfConditionalContext ifc     = null;
-		IfConditional              else_   = null;
+		final IfConditionalContext ifc = null;
+		IfConditional else_ = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_if);
 			expr = expression();
 			if (inputState.guessing == 0) {
@@ -6296,11 +6051,12 @@ _loop452:
 					match(LITERAL_else);
 					if (inputState.guessing == 0) {
 						else_ = ifex.else_();
-						cur   = else_.getContext();
+						cur = else_.getContext();
 					}
 					sco = scope3(else_);
 					if (inputState.guessing == 0) {
-						if (else_ != null) else_.scope(sco);
+						if (else_ != null)
+							else_.scope(sco);
 					}
 					if (inputState.guessing == 0) {
 						cur = cur.getParent();
@@ -6362,22 +6118,21 @@ _loop452:
 		}
 	}
 
-	public final void matchConditional(
-	  final MatchConditional mc, final OS_Element aParent
-	) throws RecognitionException, TokenStreamException {
+	public final void matchConditional(final MatchConditional mc, final OS_Element aParent)
+			throws RecognitionException, TokenStreamException {
 
-		MatchConditional.MatchArm_TypeMatch    mcp1 = null;
+		MatchConditional.MatchArm_TypeMatch mcp1 = null;
 		MatchConditional.MatchConditionalPart2 mcp2 = null;
 		MatchConditional.MatchConditionalPart3 mcp3 = null;
-		TypeName                               tn   = null;
-		IdentExpression                        i1   = null;
-		final MatchContext                     ctx  = null;
+		TypeName tn = null;
+		IdentExpression i1 = null;
+		final MatchContext ctx = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_match);
 			expr = expression();
 			if (inputState.guessing == 0) {
-				/*mc.setParent(aParent);*/
+				/* mc.setParent(aParent); */
 				mc.expr(expr);
 			}
 			match(LCURLY);
@@ -6451,14 +6206,12 @@ _loop452:
 		}
 	}
 
-	public final void caseConditional(
-	  final CaseConditional mc
-	) throws RecognitionException, TokenStreamException {
+	public final void caseConditional(final CaseConditional mc) throws RecognitionException, TokenStreamException {
 
-		final CaseContext ctx   = null;
-		IExpression       expr1 = null;
+		final CaseContext ctx = null;
+		IExpression expr1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_case);
 			expr = expression();
 			if (inputState.guessing == 0) {
@@ -6469,7 +6222,7 @@ _loop452:
 				do {
 					if ((_tokenSet_19.member(LA(1)))) {
 						expr1 = expression();
-						sco   = scope3(mc);
+						sco = scope3(mc);
 						if (inputState.guessing == 0) {
 							mc.scope(sco, expr1);
 						}
@@ -6493,14 +6246,12 @@ _loop452:
 		}
 	}
 
-	public final void whileLoop(
-	  final StatementClosure cr
-	) throws RecognitionException, TokenStreamException {
+	public final void whileLoop(final StatementClosure cr) throws RecognitionException, TokenStreamException {
 
-		final Loop        loop = cr.loop();
+		final Loop loop = cr.loop();
 		final LoopContext ctx;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_while: {
@@ -6559,15 +6310,13 @@ _loop452:
 		}
 	}
 
-	public final void frobeIteration(
-	  final StatementClosure cr
-	) throws RecognitionException, TokenStreamException {
+	public final void frobeIteration(final StatementClosure cr) throws RecognitionException, TokenStreamException {
 
-		final Loop      loop = cr.loop();
-		LoopContext     ctx  = null;
-		IdentExpression i1   = null, i2 = null, i3 = null;
+		final Loop loop = cr.loop();
+		LoopContext ctx = null;
+		IdentExpression i1 = null, i2 = null, i3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_iterate);
 			if (inputState.guessing == 0) {
 				ctx = new LoopContext(cur, loop);
@@ -6705,14 +6454,12 @@ _loop452:
 		}
 	}
 
-	public final void constructExpression(
-	  final StatementClosure cr
-	) throws RecognitionException, TokenStreamException {
+	public final void constructExpression(final StatementClosure cr) throws RecognitionException, TokenStreamException {
 
-		Qualident      q = null;
+		Qualident q = null;
 		ExpressionList o = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_construct);
 			q = qualident();
 			{
@@ -6771,13 +6518,11 @@ _loop452:
 		}
 	}
 
-	public final void ifConditional2(
-	  final BaseScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void ifConditional2(final BaseScope sc) throws RecognitionException, TokenStreamException {
 
 		final IfConditionalBuilder ifb = new IfConditionalBuilder();
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_if);
 			expr = expression();
 			if (inputState.guessing == 0) {
@@ -6877,15 +6622,13 @@ _loop452:
 		}
 	}
 
-	public final void matchConditional2(
-	  final BaseScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void matchConditional2(final BaseScope sc) throws RecognitionException, TokenStreamException {
 
 		final MatchConditionalBuilder mc = new MatchConditionalBuilder();
-		TypeName                      tn = null;
-		IdentExpression               i1 = null;
+		TypeName tn = null;
+		IdentExpression i1 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_match);
 			expr = expression();
 			if (inputState.guessing == 0) {
@@ -6932,13 +6675,11 @@ _loop452:
 		}
 	}
 
-	public final void caseConditional2(
-	  final BaseScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void caseConditional2(final BaseScope sc) throws RecognitionException, TokenStreamException {
 
 		final CaseConditionalBuilder mc = new CaseConditionalBuilder();
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_case);
 			expr = expression();
 			if (inputState.guessing == 0) {
@@ -6970,14 +6711,12 @@ _loop452:
 		}
 	}
 
-	public final void whileLoop2(
-	  final BaseScope sc
-	) throws RecognitionException, TokenStreamException {
+	public final void whileLoop2(final BaseScope sc) throws RecognitionException, TokenStreamException {
 
 		final LoopBuilder loop = new LoopBuilder();
-		LoopContext       ctx;
+		LoopContext ctx;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_while: {
@@ -7023,14 +6762,12 @@ _loop452:
 		}
 	}
 
-	public final void frobeIteration2(
-	  final BaseScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void frobeIteration2(final BaseScope cr) throws RecognitionException, TokenStreamException {
 
-		final LoopBuilder loop = new LoopBuilder();/*LoopContext ctx=null;*/
-		IdentExpression   i1   = null, i2 = null, i3 = null;
+		final LoopBuilder loop = new LoopBuilder();/* LoopContext ctx=null; */
+		IdentExpression i1 = null, i2 = null, i3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_iterate);
 			{
 				switch (LA(1)) {
@@ -7163,14 +6900,12 @@ _loop452:
 		}
 	}
 
-	public final void constructExpression2(
-	  final BaseScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void constructExpression2(final BaseScope cr) throws RecognitionException, TokenStreamException {
 
-		Qualident      q = null;
+		Qualident q = null;
 		ExpressionList o = null;
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_construct);
 			q = qualident();
 			{
@@ -7229,12 +6964,9 @@ _loop452:
 		}
 	}
 
-	public final void yieldExpression(
-	  final BaseScope cr
-	) throws RecognitionException, TokenStreamException {
+	public final void yieldExpression(final BaseScope cr) throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_yield);
 			expr = expression();
 			if (inputState.guessing == 0) {
@@ -7255,7 +6987,7 @@ _loop452:
 
 		ee = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = logicalOrExpression();
 		} catch (final RecognitionException ex) {
 			if (inputState.guessing == 0) {
@@ -7274,7 +7006,7 @@ _loop452:
 		ee = null;
 		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = logicalAndExpression();
 			{
 				do {
@@ -7307,7 +7039,7 @@ _loop452:
 		ee = null;
 		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = inclusiveOrExpression();
 			{
 				do {
@@ -7340,7 +7072,7 @@ _loop452:
 		ee = null;
 		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = exclusiveOrExpression();
 			{
 				do {
@@ -7373,7 +7105,7 @@ _loop452:
 		ee = null;
 		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = andExpression();
 			{
 				do {
@@ -7406,7 +7138,7 @@ _loop452:
 		ee = null;
 		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = equalityExpression();
 			{
 				do {
@@ -7438,9 +7170,9 @@ _loop452:
 
 		ee = null;
 		ExpressionKind e2 = null;
-		IExpression    e3 = null;
+		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = relationalExpression();
 			{
 				do {
@@ -7492,10 +7224,10 @@ _loop452:
 
 		ee = null;
 		ExpressionKind e2 = null; // should never be null (below)
-		IExpression    e3 = null;
-		TypeName       tn = null;
+		IExpression e3 = null;
+		TypeName tn = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = shiftExpression();
 			{
 				if ((_tokenSet_7.member(LA(1))) && (_tokenSet_81.member(LA(2)))) {
@@ -7575,9 +7307,9 @@ _loop452:
 
 		ee = null;
 		ExpressionKind e2 = null;
-		IExpression    e3 = null;
+		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = additiveExpression();
 			{
 				do {
@@ -7636,9 +7368,9 @@ _loop452:
 
 		ee = null;
 		ExpressionKind e2 = null;
-		IExpression    e3 = null;
+		IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = multiplicativeExpression();
 			{
 				do {
@@ -7689,10 +7421,10 @@ _loop452:
 		IExpression ee;
 
 		ee = null;
-		IExpression    e3 = null;
+		IExpression e3 = null;
 		ExpressionKind e2 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = unaryExpression();
 			{
 				do {
@@ -7752,7 +7484,7 @@ _loop452:
 		ee = null;
 		final IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case INC: {
 				match(INC);
@@ -7826,7 +7558,7 @@ _loop452:
 		ee = null;
 		final IExpression e3 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case BNOT: {
 				match(BNOT);
@@ -7886,11 +7618,11 @@ _loop452:
 		Token de = null;
 		ee = null;
 		TypeCastExpression tc = null;
-		TypeName           tn = null;
-		final IExpression  e3 = null;
-		ExpressionList     el = null;
+		TypeName tn = null;
+		final IExpression e3 = null;
+		ExpressionList el = null;
 
-		try {      // for error handling
+		try { // for error handling
 			ee = primaryExpression();
 			{
 				do {
@@ -7903,7 +7635,7 @@ _loop452:
 						lb = LT(1);
 						match(LBRACK);
 						expr = expression();
-						rb   = LT(1);
+						rb = LT(1);
 						match(RBRACK);
 						if (inputState.guessing == 0) {
 							ee = new GetItemExpression(ee, expr);
@@ -8042,11 +7774,11 @@ _loop452:
 		IExpression ee;
 
 		ee = null;
-		FuncExpr              ppc = null;
-		final IdentExpression e   = null;
-		ExpressionList        el  = null;
+		FuncExpr ppc = null;
+		final IdentExpression e = null;
+		ExpressionList el = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case IDENT: {
 				ee = ident();
@@ -8124,17 +7856,16 @@ _loop452:
 		return ee;
 	}
 
-	public final IExpression dot_expression_or_procedure_call(
-	  final IExpression e1
-	) throws RecognitionException, TokenStreamException {
+	public final IExpression dot_expression_or_procedure_call(final IExpression e1)
+			throws RecognitionException, TokenStreamException {
 		IExpression ee;
 
 		Token lp2 = null;
 		ee = null;
-		ExpressionList  el = null;
-		IdentExpression e  = null;
+		ExpressionList el = null;
+		IdentExpression e = null;
 
-		try {      // for error handling
+		try { // for error handling
 			e = ident();
 			if (inputState.guessing == 0) {
 				ee = new DotExpression(e1, e);
@@ -8200,16 +7931,14 @@ _loop452:
 		return ee;
 	}
 
-	public final void funcExpr(
-	  final FuncExpr pc
-	) throws RecognitionException, TokenStreamException {
+	public final void funcExpr(final FuncExpr pc) throws RecognitionException, TokenStreamException {
 
-		Scope3          sc  = null;
-		TypeName        tn  = null;
+		Scope3 sc = null;
+		TypeName tn = null;
 		FuncExprContext ctx = null;
-		FormalArgList   fal = null;
+		FormalArgList fal = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_function: {
@@ -8322,7 +8051,7 @@ _loop452:
 									sc.statementWrapper(expr);
 								}
 							} else if ((LA(1) == LITERAL_class)) {
-								classStatement(sc.getParent(), cur, null/*annotations*/);
+								classStatement(sc.getParent(), cur, null/* annotations */);
 							} else {
 								break;
 							}
@@ -8354,12 +8083,9 @@ _loop452:
 		}
 	}
 
-	public final void elseif_part(
-	  final IfConditional ifex
-	) throws RecognitionException, TokenStreamException {
+	public final void elseif_part(final IfConditional ifex) throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_elseif: {
@@ -8398,12 +8124,10 @@ _loop452:
 		}
 	}
 
-	public final void elseif_part2(
-	  final IfConditionalBuilder.Doublet ifex
-	) throws RecognitionException, TokenStreamException {
+	public final void elseif_part2(final IfConditionalBuilder.Doublet ifex)
+			throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_elseif: {
@@ -8440,7 +8164,7 @@ _loop452:
 
 		tn = new TypeOfTypeName(cur);
 
-		try {      // for error handling
+		try { // for error handling
 			match(LITERAL_typeof);
 			xy = qualident();
 			if (inputState.guessing == 0) {
@@ -8464,7 +8188,7 @@ _loop452:
 		tn = new RegularTypeName(cur);
 		TypeNameList rtn = null;
 
-		try {      // for error handling
+		try { // for error handling
 			regularQualifiers2(tn);
 			xy = qualident();
 			if (inputState.guessing == 0) {
@@ -8611,7 +8335,7 @@ _loop452:
 		tn = new GenericTypeName(cur);
 		TypeName tn2 = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_generic: {
@@ -8661,7 +8385,7 @@ _loop452:
 
 		tn = null;
 
-		try {      // for error handling
+		try { // for error handling
 			switch (LA(1)) {
 			case LITERAL_function:
 			case LITERAL_func: {
@@ -8688,12 +8412,9 @@ _loop452:
 		return tn;
 	}
 
-	public final void regularQualifiers2(
-	  final NormalTypeName fp
-	) throws RecognitionException, TokenStreamException {
+	public final void regularQualifiers2(final NormalTypeName fp) throws RecognitionException, TokenStreamException {
 
-
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_in: {
@@ -8777,11 +8498,11 @@ _loop452:
 		final FuncTypeName tn;
 
 		tn = new FuncTypeName(cur);
-		TypeName      rtn = null;
-		TypeNameList  tnl = null;
-		FormalArgList op  = null;
+		TypeName rtn = null;
+		TypeNameList tnl = null;
+		FormalArgList op = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_function: {
@@ -8830,8 +8551,10 @@ _loop452:
 				match(RPAREN);
 			}
 			if (inputState.guessing == 0) {
-				if (tnl != null) tn.argList(tnl);
-				else tn.argList(op);
+				if (tnl != null)
+					tn.argList(tnl);
+				else
+					tn.argList(op);
 			}
 			{
 				if ((LA(1) == TOK_COLON || LA(1) == TOK_ARROW) && (_tokenSet_87.member(LA(2)))) {
@@ -8875,10 +8598,10 @@ _loop452:
 		final FuncTypeName tn;
 
 		tn = new FuncTypeName(cur);
-		TypeNameList  tnl = null;
-		FormalArgList op  = null;
+		TypeNameList tnl = null;
+		FormalArgList op = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				switch (LA(1)) {
 				case LITERAL_procedure: {
@@ -8927,8 +8650,10 @@ _loop452:
 				match(RPAREN);
 			}
 			if (inputState.guessing == 0) {
-				if (tnl != null) tn.argList(tnl);
-				else tn.argList(op);
+				if (tnl != null)
+					tn.argList(tnl);
+				else
+					tn.argList(op);
 			}
 		} catch (final RecognitionException ex) {
 			if (inputState.guessing == 0) {
@@ -8941,14 +8666,13 @@ _loop452:
 		return tn;
 	}
 
-	public final void formalArgListItem_priv(
-	  final FormalArgListItem fali
-	) throws RecognitionException, TokenStreamException {
+	public final void formalArgListItem_priv(final FormalArgListItem fali)
+			throws RecognitionException, TokenStreamException {
 
-		TypeName        tn = null;
-		IdentExpression i  = null;
+		TypeName tn = null;
+		IdentExpression i = null;
 
-		try {      // for error handling
+		try { // for error handling
 			{
 				{
 					if ((_tokenSet_98.member(LA(1))) && (_tokenSet_99.member(LA(2)))) {

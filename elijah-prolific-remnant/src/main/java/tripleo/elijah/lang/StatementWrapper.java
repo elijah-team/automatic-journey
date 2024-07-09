@@ -5,12 +5,12 @@ import tripleo.elijah.lang2.*;
 public class StatementWrapper implements StatementItem, FunctionItem, OS_Element {
 
 	private final IExpression expr;
-	private final Context     _ctx;
-	private final OS_Element  _parent;
+	private final Context _ctx;
+	private final OS_Element _parent;
 
 	public StatementWrapper(final IExpression aExpression, final Context aContext, final OS_Element aParent) {
-		expr    = aExpression;
-		_ctx    = aContext;
+		expr = aExpression;
+		_ctx = aContext;
 		_parent = aParent;
 	}
 

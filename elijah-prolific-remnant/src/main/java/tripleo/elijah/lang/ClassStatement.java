@@ -21,23 +21,23 @@ import java.util.*;
 /**
  * Represents a "class"
  * <p>
- * items -> ClassItems
- * docstrings
- * variables
+ * items -> ClassItems docstrings variables
  */
-public class ClassStatement extends _CommonNC/*ProgramClosure*/ implements ClassItem, ModuleItem, StatementItem, FunctionItem, OS_Element, OS_Element2, Documentable, OS_Container {
+public class ClassStatement extends _CommonNC/* ProgramClosure */ implements ClassItem, ModuleItem, StatementItem,
+		FunctionItem, OS_Element, OS_Element2, Documentable, OS_Container {
 
-	static final List<TypeName>   emptyTypeNameList = ImmutableList.of();
+	static final List<TypeName> emptyTypeNameList = ImmutableList.of();
 	private final OS_Element parent;
 	ClassInheritance _inh = new ClassInheritance(); // remove final for ClassBuilder
-	private      ClassTypes       _type;
-	private      TypeNameList     genericPart;
-	private      OS_UserClassType osType;
+	private ClassTypes _type;
+	private TypeNameList genericPart;
+	private OS_UserClassType osType;
 
 	public ClassStatement(final OS_Element parentElement, final Context parentContext) {
 		parent = parentElement; // setParent
 
-		@NotNull final ElObjectType x = DecideElObjectType.getElObjectType(parentElement);
+		@NotNull
+		final ElObjectType x = DecideElObjectType.getElObjectType(parentElement);
 		switch (x) {
 		case MODULE:
 			final OS_Module module = (OS_Module) parentElement;
@@ -50,7 +50,8 @@ public class ClassStatement extends _CommonNC/*ProgramClosure*/ implements Class
 			// do nothing
 			break;
 		default:
-			// we kind of fail the switch test here because OS_Container is not an OS_Element,
+			// we kind of fail the switch test here because OS_Container is not an
+			// OS_Element,
 			// so we have to test explicitly, messing up the pretty flow we had.
 			// hey sh*t happens.
 			if (parentElement instanceof OS_Container) {
@@ -146,7 +147,8 @@ public class ClassStatement extends _CommonNC/*ProgramClosure*/ implements Class
 
 	public @NotNull Iterable<AnnotationPart> annotationIterable() {
 		final List<AnnotationPart> aps = new ArrayList<AnnotationPart>();
-		if (annotations == null) return aps;
+		if (annotations == null)
+			return aps;
 		for (final AnnotationClause annotationClause : annotations) {
 			aps.addAll(annotationClause.aps);
 		}

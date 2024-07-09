@@ -38,14 +38,14 @@ public enum CM_Preludes {
 	public static _Creator dispatch(final String lang) {
 		for (CM_Preludes cmPreludes : CM_Preludes.values()) {
 			if (Objects.equals(lang, cmPreludes.getName()))
-				return new _Creator(){
+				return new _Creator() {
 					@Override
 					public GenerateFiles create(final OutputFileFactoryParams aParams) {
 						return cmPreludes.create(aParams);
 					}
 				};
 		}
-		//throw new NotImplementedException();
+		// throw new NotImplementedException();
 		return null;
 	}
 

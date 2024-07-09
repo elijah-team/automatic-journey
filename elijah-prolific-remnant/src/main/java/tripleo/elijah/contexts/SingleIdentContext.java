@@ -8,9 +8,9 @@ import java.util.*;
  * Created 8/30/20 6:51 PM
  */
 public class SingleIdentContext extends Context {
-	private final Context         _parent;
-	private final OS_Element      element;
-	public        IdentExpression carrier;
+	private final Context _parent;
+	private final OS_Element element;
+	public IdentExpression carrier;
 
 	public SingleIdentContext(final Context _parent, final OS_Element element) {
 		this._parent = _parent;
@@ -22,7 +22,8 @@ public class SingleIdentContext extends Context {
 	}
 
 	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
+	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
+			final List<Context> alreadySearched, final boolean one) {
 		alreadySearched.add(element.getContext());
 
 		if (carrier != null && carrier.getText().equals(name))

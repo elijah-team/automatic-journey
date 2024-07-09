@@ -9,8 +9,8 @@ import java.util.*;
 
 public class BoilerplateFunctionBuilder {
 	final private List<BFB_Child> children = new ArrayList<>();
-	private       OS_Element      parent;
-	private       String          functionNameString;
+	private OS_Element parent;
+	private String functionNameString;
 
 	public void parent(final OS_Element aParent) {
 		parent = aParent;
@@ -62,10 +62,10 @@ public class BoilerplateFunctionBuilder {
 	class BFB_State implements IBFB_State {
 
 		private final FunctionDef fd;
-		private final Scope3      scope3;
+		private final Scope3 scope3;
 
 		public BFB_State(final FunctionDef aFd, final Scope3 aScope3) {
-			fd     = aFd;
+			fd = aFd;
 			scope3 = aScope3;
 		}
 
@@ -86,25 +86,27 @@ public class BoilerplateFunctionBuilder {
 	}
 
 	class BFCH_Vars implements BFB_Child {
-		private final String            variableNameString;
-		private final String            variableTypeString;
+		private final String variableNameString;
+		private final String variableTypeString;
 		private final DeduceTypeWatcher dtw;
 
-		public BFCH_Vars(final String aVariableNameString, final String aVariableTypeString, final DeduceTypeWatcher aDtw) {
+		public BFCH_Vars(final String aVariableNameString, final String aVariableTypeString,
+				final DeduceTypeWatcher aDtw) {
 			variableNameString = aVariableNameString;
 			variableTypeString = aVariableTypeString;
-			dtw                = aDtw;
+			dtw = aDtw;
 		}
 
 		/**
-		 * Add a single element varSeq conforming to `var $name : $type` to current "scope"
+		 * Add a single element varSeq conforming to `var $name : $type` to current
+		 * "scope"
 		 */
 		@Override
 		public void process(final IBFB_State s) {
-			final FunctionContext   context = s.getContext();
-			final VariableSequence  vss     = s.getScope().statementClosure().varSeq(context);
-			final VariableStatement vs      = vss.next();
-			final IdentExpression   x       = Helpers.string_to_ident(variableNameString);
+			final FunctionContext context = s.getContext();
+			final VariableSequence vss = s.getScope().statementClosure().varSeq(context);
+			final VariableStatement vs = vss.next();
+			final IdentExpression x = Helpers.string_to_ident(variableNameString);
 			x.setContext(context);
 			vs.setName(x);
 			final Qualident qu = new Qualident();

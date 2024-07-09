@@ -17,9 +17,9 @@ import java.util.*;
  */
 public class FunctionDefScope extends BaseFunctionDefScope implements Documentable {
 
-	private final List<Precondition>  prec_list   = new ArrayList<Precondition>();
-	private final List<Postcondition> postc_list  = new ArrayList<Postcondition>();
-	private       boolean             _isAbstract = false;
+	private final List<Precondition> prec_list = new ArrayList<Precondition>();
+	private final List<Postcondition> postc_list = new ArrayList<Postcondition>();
+	private boolean _isAbstract = false;
 
 	public void addPreCondition(final Precondition p) {
 		prec_list.add(p);
@@ -40,7 +40,8 @@ public class FunctionDefScope extends BaseFunctionDefScope implements Documentab
 	public void yield(final IExpression expr) {
 		// TODO add Context and porent
 //		add(new StatementWrapper(new YieldExpression(expr), null,null));
-		add(new StatementWrapperBuilder(expr)); // TODO this says nothing about a YieldExpression, which is actually a Statement
+		add(new StatementWrapperBuilder(expr)); // TODO this says nothing about a YieldExpression, which is actually a
+												// Statement
 	}
 
 	public boolean isAbstract() {

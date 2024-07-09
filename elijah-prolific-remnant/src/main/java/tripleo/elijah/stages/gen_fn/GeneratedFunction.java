@@ -36,15 +36,14 @@ public class GeneratedFunction extends BaseGeneratedFunction implements GNCoded 
 
 		String pte_string = null; //// = fd.getArgs().toString(); // TODO wanted PTE.getLoggingString
 
-
-		ClassInvocation     classInvocation     = null; //// = fi.getClassInvocation();
+		ClassInvocation classInvocation = null; //// = fi.getClassInvocation();
 		NamespaceInvocation namespaceInvocation = null; //// = fi.getNamespaceInvocation();
 
-		Promise<GeneratedClass, Void, Void>     crp;
+		Promise<GeneratedClass, Void, Void> crp;
 		Promise<GeneratedNamespace, Void, Void> nsrp;
 
-
-		// README if classInvocation or namespaceInvocation is resolved then use that to return string...
+		// README if classInvocation or namespaceInvocation is resolved then use that to
+		// return string...
 
 		short state = 0;
 		while (state != 5) {
@@ -72,7 +71,7 @@ public class GeneratedFunction extends BaseGeneratedFunction implements GNCoded 
 				if (crp.isResolved()) {
 					final GeneratedClass[] parent = new GeneratedClass[1];
 					crp.then(gc -> parent[0] = gc);
-					R     = String.format("<GeneratedFunction %d %s %s %s>", getCode(), parent[0], fd.name(), pte_string);
+					R = String.format("<GeneratedFunction %d %s %s %s>", getCode(), parent[0], fd.name(), pte_string);
 					state = 5;
 				} else {
 					state = 4;
@@ -83,7 +82,7 @@ public class GeneratedFunction extends BaseGeneratedFunction implements GNCoded 
 				if (nsrp.isResolved()) {
 					final GeneratedNamespace[] parent = new GeneratedNamespace[1];
 					nsrp.then(gc -> parent[0] = gc);
-					R     = String.format("<GeneratedFunction %d %s %s %s>", getCode(), parent[0], fd.name(), pte_string);
+					R = String.format("<GeneratedFunction %d %s %s %s>", getCode(), parent[0], fd.name(), pte_string);
 					state = 5;
 				} else {
 					state = 4;
@@ -119,7 +118,8 @@ public class GeneratedFunction extends BaseGeneratedFunction implements GNCoded 
 
 	@Override
 	public @NotNull BaseFunctionDef getFD() {
-		if (fd != null) return fd;
+		if (fd != null)
+			return fd;
 		throw new IllegalStateException("No function");
 	}
 

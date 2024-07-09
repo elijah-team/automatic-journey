@@ -22,10 +22,7 @@ public class ParserClosure extends ProgramClosure {
 	public final OS_Module module;
 
 	public ParserClosure(final String fn, @NotNull final Compilation compilation) {
-		module = compilation.moduleBuilder()
-		                    .withFileName(fn)
-		                    .addToCompilation()
-		                    .build();
+		module = compilation.moduleBuilder().withFileName(fn).addToCompilation().build();
 	}
 
 	public OS_Package defaultPackageName(final @NotNull Qualident aPackageName) {
@@ -35,7 +32,7 @@ public class ParserClosure extends ProgramClosure {
 	}
 
 	public void packageName(final Qualident aPackageName) {
-		//assert module.packageName ==null;
+		// assert module.packageName ==null;
 		module.pushPackageName(aPackageName);
 	}
 
@@ -50,4 +47,3 @@ public class ParserClosure extends ProgramClosure {
 	}
 
 }
-

@@ -17,15 +17,15 @@ import java.util.*;
 public class Loop implements StatementItem, FunctionItem, OS_Element {
 
 	private final OS_Element parent;
-	private final Attached    _a = new Attached();
+	private final Attached _a = new Attached();
 	IdentExpression iterName;
-	private       Scope3     scope3;
+	private Scope3 scope3;
 	/**
 	 * @category type
 	 */
 	private LoopTypes type;
 	private IExpression topart, frompart;
-	private       IExpression expr;
+	private IExpression expr;
 
 	@Deprecated
 	public Loop(final OS_Element aParent) {

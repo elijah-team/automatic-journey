@@ -23,12 +23,10 @@ import tripleo.elijah_fluffy.util.NotImplementedException;
  * Created 11/18/21 10:51 PM
  */
 public class ResolveType {
-	static @NotNull GenType resolve_type(final OS_Module module,
-	                                     final @NotNull OS_Type type,
-	                                     final Context ctx,
-	                                     final ElLog LOG,
-	                                     final @NotNull DeduceTypes2 dt2) throws ResolveError {
-		@NotNull final GenType R = new GenType();
+	static @NotNull GenType resolve_type(final OS_Module module, final @NotNull OS_Type type, final Context ctx,
+			final ElLog LOG, final @NotNull DeduceTypes2 dt2) throws ResolveError {
+		@NotNull
+		final GenType R = new GenType();
 		if (type.getType() != OS_Type.Type.USER_CLASS)
 			R.setTypeName(type);
 
@@ -46,7 +44,7 @@ public class ResolveType {
 		case FUNCTION:
 			break;
 		case FUNC_EXPR:
-			R.setResolved(type);//((OS_FuncExprType)type).getElement();
+			R.setResolved(type);// ((OS_FuncExprType)type).getElement();
 			break;
 		default:
 			throw new IllegalStateException("565 Unexpected value: " + type.getType());
@@ -55,16 +53,19 @@ public class ResolveType {
 		return R;
 	}
 
-	private static void resolve_built_in(final OS_Module module, final @NotNull OS_Type type, final DeduceTypes2 dt2, final @NotNull GenType aR) throws ResolveError {
+	private static void resolve_built_in(final OS_Module module, final @NotNull OS_Type type, final DeduceTypes2 dt2,
+			final @NotNull GenType aR) throws ResolveError {
 		switch (type.getBType()) {
 		case SystemInteger: {
-			@NotNull final String typeName = type.getBType().name();
+			@NotNull
+			final String typeName = type.getBType().name();
 			assert typeName.equals("SystemInteger");
 			OS_Module prelude = module.prelude;
 			if (prelude == null) // README Assume `module' IS prelude
 				prelude = module;
-			final LookupResultList lrl  = prelude.getContext().lookup(typeName);
-			@Nullable OS_Element   best = lrl.chooseBest(null);
+			final LookupResultList lrl = prelude.getContext().lookup(typeName);
+			@Nullable
+			OS_Element best = lrl.chooseBest(null);
 			while (!(best instanceof ClassStatement)) {
 				if (best instanceof AliasStatement) {
 					best = DeduceLookupUtils._resolveAlias2((AliasStatement) best, dt2);
@@ -80,13 +81,15 @@ public class ResolveType {
 			break;
 		}
 		case String_: {
-			@NotNull final String typeName = type.getBType().name();
+			@NotNull
+			final String typeName = type.getBType().name();
 			assert typeName.equals("String_");
 			OS_Module prelude = module.prelude;
 			if (prelude == null) // README Assume `module' IS prelude
 				prelude = module;
-			final LookupResultList lrl  = prelude.getContext().lookup("ConstString"); // TODO not sure about String
-			@Nullable OS_Element   best = lrl.chooseBest(null);
+			final LookupResultList lrl = prelude.getContext().lookup("ConstString"); // TODO not sure about String
+			@Nullable
+			OS_Element best = lrl.chooseBest(null);
 			while (!(best instanceof ClassStatement)) {
 				if (best instanceof AliasStatement) {
 					best = DeduceLookupUtils._resolveAlias2((AliasStatement) best, dt2);
@@ -102,13 +105,15 @@ public class ResolveType {
 			break;
 		}
 		case SystemCharacter: {
-			@NotNull final String typeName = type.getBType().name();
+			@NotNull
+			final String typeName = type.getBType().name();
 			assert typeName.equals("SystemCharacter");
 			OS_Module prelude = module.prelude;
 			if (prelude == null) // README Assume `module' IS prelude
 				prelude = module;
-			final LookupResultList lrl  = prelude.getContext().lookup("SystemCharacter");
-			@Nullable OS_Element   best = lrl.chooseBest(null);
+			final LookupResultList lrl = prelude.getContext().lookup("SystemCharacter");
+			@Nullable
+			OS_Element best = lrl.chooseBest(null);
 			while (!(best instanceof ClassStatement)) {
 				if (best instanceof AliasStatement) {
 					best = DeduceLookupUtils._resolveAlias2((AliasStatement) best, dt2);
@@ -127,7 +132,7 @@ public class ResolveType {
 			OS_Module prelude = module.prelude;
 			if (prelude == null) // README Assume `module' IS prelude
 				prelude = module;
-			final LookupResultList     lrl  = prelude.getContext().lookup("Boolean");
+			final LookupResultList lrl = prelude.getContext().lookup("Boolean");
 			final @Nullable OS_Element best = lrl.chooseBest(null);
 			aR.setResolved(((ClassStatement) best).getOS_Type()); // TODO might change to Type
 			break;
@@ -137,25 +142,27 @@ public class ResolveType {
 		}
 	}
 
-	private static void resolve_user(final @NotNull OS_Type type, final ElLog LOG, final DeduceTypes2 dt2, final @NotNull GenType aR) throws ResolveError {
+	private static void resolve_user(final @NotNull OS_Type type, final ElLog LOG, final DeduceTypes2 dt2,
+			final @NotNull GenType aR) throws ResolveError {
 		final TypeName tn1 = type.getTypeName();
 		switch (tn1.kindOfType()) {
 		case NORMAL: {
 			final Qualident tn = ((NormalTypeName) tn1).getRealName();
 			LOG.info("799 [resolving USER type named] " + tn);
-			final LookupResultList lrl  = DeduceLookupUtils.lookupExpression(tn, tn1.getContext(), dt2);
-			@Nullable OS_Element   best = lrl.chooseBest(null);
+			final LookupResultList lrl = DeduceLookupUtils.lookupExpression(tn, tn1.getContext(), dt2);
+			@Nullable
+			OS_Element best = lrl.chooseBest(null);
 			while (best instanceof AliasStatement) {
 				best = DeduceLookupUtils._resolveAlias2((AliasStatement) best, dt2);
 			}
 			if (best == null) {
 				if (tn.asSimpleString().equals("Any"))
-					/*return*/ aR.setResolved(new OS_AnyType()); // TODO not a class
+					/* return */ aR.setResolved(new OS_AnyType()); // TODO not a class
 				throw new ResolveError(tn1, lrl);
 			}
 
 			if (best instanceof ClassContext.OS_TypeNameElement) {
-				/*return*/
+				/* return */
 				aR.setResolved(new OS_GenericTypeNameType((ClassContext.OS_TypeNameElement) best)); // TODO not a class
 			} else
 				aR.setResolved(((ClassStatement) best).getOS_Type());
@@ -166,7 +173,7 @@ public class ResolveType {
 			throw new NotImplementedException();
 		case TYPE_OF: {
 			final TypeOfTypeName type_of = (TypeOfTypeName) tn1;
-			final Qualident      q       = type_of.typeOf();
+			final Qualident q = type_of.typeOf();
 			if (q.parts().size() == 1 && q.parts().get(0).getText().equals("self")) {
 				assert type_of.getContext() instanceof ClassContext;
 				aR.setResolved(((ClassContext) type_of.getContext()).getCarrier().getOS_Type());
@@ -175,7 +182,7 @@ public class ResolveType {
 
 		}
 //				throw new NotImplementedException();
-		break;
+			break;
 		default:
 			throw new IllegalStateException("414 Unexpected value: " + tn1.kindOfType());
 		}

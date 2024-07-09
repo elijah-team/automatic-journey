@@ -21,8 +21,7 @@ public class ClassInheritance {
 	public final List<TypeName> tns = new ArrayList<TypeName>();
 
 	/**
-	 * Do nothing and wait for addAll or add.
-	 * Used by ClassBuilder
+	 * Do nothing and wait for addAll or add. Used by ClassBuilder
 	 */
 	public ClassInheritance() {
 	}

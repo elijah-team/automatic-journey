@@ -20,10 +20,10 @@ import java.util.stream.*;
  * Created 9/13/21 10:50 PM
  */
 public class OutputFileC implements IOutputFile {
-	private final String              output;
+	private final String output;
 	private final List<DependencyRef> dependencies = new ArrayList<>();
-	private final List<Dependency>    notedDeps    = new ArrayList<>();
-	private final List<Buffer>        buffers      = new ArrayList<>(); // LinkedList??
+	private final List<Dependency> notedDeps = new ArrayList<>();
+	private final List<Buffer> buffers = new ArrayList<>(); // LinkedList??
 
 	public OutputFileC(final String aOutput) {
 		output = aOutput;
@@ -53,31 +53,23 @@ public class OutputFileC implements IOutputFile {
 			return false;
 		};
 
-		final List<Dependency> wnd = notedDeps.stream()
-		                                      .filter(dependencyPredicate)
-		                                      .collect(Collectors.toList());
+		final List<Dependency> wnd = notedDeps.stream().filter(dependencyPredicate).collect(Collectors.toList());
 
-/*
-		//new ArrayList<Dependency>(notedDeps);
-		final Iterator<Dependency> iterator = wnd.iterator();
-
-		// TODO figure this dumb shht out
-		while (iterator.hasNext()) {
-			Dependency next = iterator.next();
-			for (DependencyRef dependency : dependencies) {
-				if (next.dref == dependency) {
-					iterator.remove();
-				}
-			}
-		}
-*/
+		/*
+		 * //new ArrayList<Dependency>(notedDeps); final Iterator<Dependency> iterator =
+		 * wnd.iterator();
+		 * 
+		 * // TODO figure this dumb shht out while (iterator.hasNext()) { Dependency
+		 * next = iterator.next(); for (DependencyRef dependency : dependencies) { if
+		 * (next.dref == dependency) { iterator.remove(); } } }
+		 */
 
 		assert wnd.size() == dependencies.size();
 
 		for (final DependencyRef dependencyRaw : dependencies) {
 			final CDependencyRef dependency = (CDependencyRef) dependencyRaw;
-			final String         headerFile = dependency.getHeaderFile();
-			final String         output     = String.format("#include \"%s\"\n", headerFile.substring(1));
+			final String headerFile = dependency.getHeaderFile();
+			final String output = String.format("#include \"%s\"\n", headerFile.substring(1));
 			sb.append(output);
 		}
 
@@ -85,7 +77,7 @@ public class OutputFileC implements IOutputFile {
 
 		for (final Dependency dependency : wnd) {
 			final String resolvedString = String.valueOf(dependency.resolved);
-			final String output         = String.format("//#include \"%s\" // for %s\n", "nothing.h", resolvedString);
+			final String output = String.format("//#include \"%s\" // for %s\n", "nothing.h", resolvedString);
 			sb.append(output);
 		}
 

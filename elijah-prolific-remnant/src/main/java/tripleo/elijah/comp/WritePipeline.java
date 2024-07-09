@@ -33,10 +33,10 @@ import java.util.stream.*;
  */
 public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResultListener {
 	final OutputStrategy os;
-	final ElSystem       sys;
-	private final Compilation    c;
+	final ElSystem sys;
+	private final Compilation c;
 	private final File file_prefix;
-	private       GenerateResult gr;
+	private GenerateResult gr;
 
 	public WritePipeline(@NotNull final AccessBus ab) {
 		c = ab.getCompilation();
@@ -46,7 +46,7 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 		os = new OutputStrategy();
 		os.per(OutputStrategy.Per.PER_CLASS); // TODO this needs to be configured per lsp
 
-		sys         = new ElSystem();
+		sys = new ElSystem();
 		sys.verbose = false; // TODO flag? ie CompilationOptions
 		sys.setCompilation(c);
 		sys.setOutputStrategy(os);
@@ -110,7 +110,8 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 		return fn01;
 	}
 
-	private void __rest(final @NotNull Multimap<String, Buffer> mb, final @NotNull File aFile_prefix, final List<EOT_OutputFile> leof) throws IOException {
+	private void __rest(final @NotNull Multimap<String, Buffer> mb, final @NotNull File aFile_prefix,
+			final List<EOT_OutputFile> leof) throws IOException {
 		aFile_prefix.mkdirs();
 		final String prefix = aFile_prefix.toString();
 
@@ -118,8 +119,8 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 		write_inputs(aFile_prefix);
 
 		for (final Map.Entry<String, Collection<Buffer>> entry : mb.asMap().entrySet()) {
-			final String key  = entry.getKey();
-			final Path   path = FileSystems.getDefault().getPath(prefix, key);
+			final String key = entry.getKey();
+			final Path path = FileSystems.getDefault().getPath(prefix, key);
 //			BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
 
 			path.getParent().toFile().mkdirs();
@@ -130,9 +131,11 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 			}
 			final CharSink x = c.getIO().openWrite(path);
 
-			final EG_SingleStatement beginning = new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline.beginning"));
+			final EG_SingleStatement beginning = new EG_SingleStatement("",
+					EX_Explanation.withMessage("WritePipeline.beginning"));
 			final EG_Statement middle = new GE_BuffersStatement(entry);
-			final EG_SingleStatement ending = new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline.ending"));
+			final EG_SingleStatement ending = new EG_SingleStatement("",
+					EX_Explanation.withMessage("WritePipeline.ending"));
 			final EX_Explanation explanation = EX_Explanation.withMessage("write output file");
 
 			final EG_CompoundStatement seq = new EG_CompoundStatement(beginning, ending, middle, false, explanation);
@@ -164,9 +167,8 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 //			}
 
 		final List<File> recordedreads = c.getIO().recordedreads;
-		final List<String> recordedread_filenames = recordedreads.stream()
-		                                                         .map(file -> file.toString())
-		                                                         .collect(Collectors.toList());
+		final List<String> recordedread_filenames = recordedreads.stream().map(file -> file.toString())
+				.collect(Collectors.toList());
 
 		for (final @NotNull File file : recordedreads) {
 			final String fn = file.toString();
@@ -174,15 +176,16 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 			append_hash(buf, fn, c.getErrSink());
 		}
 
-		final File   fn1 = new File(file_prefix, "inputs.txt");
-		final String s   = buf.getText();
+		final File fn1 = new File(file_prefix, "inputs.txt");
+		final String s = buf.getText();
 		try (final Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fn1, true)))) {
 			w.write(s);
 		}
 	}
 
 	private void append_hash(final TextBuffer aBuf, final String aFilename, final ErrSink errSink) throws IOException {
-		@Nullable final String hh = Helpers.getHashForFilename(aFilename, errSink);
+		@Nullable
+		final String hh = Helpers.getHashForFilename(aFilename, errSink);
 		if (hh != null) {
 			aBuf.append(hh);
 			aBuf.append(" ");

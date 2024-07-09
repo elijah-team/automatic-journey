@@ -14,29 +14,29 @@ public class CSS2_doFindCIs implements CSS2_Signal {
 	public void trigger(Compilation compilation, Object payload) {
 		if (payload instanceof Pair) {
 			var payloadpair = (Pair<String[], ICompilationBus>) payload;
-			var args2       = payloadpair.getLeft();
-			var cb          = payloadpair.getRight();
+			var args2 = payloadpair.getLeft();
+			var cb = payloadpair.getRight();
 
 			// TODO map + "extract"
 
-			//var crap = compilation.getStartup().getCompilationRunner();
-			//crap.then(cr1 -> {
-				final CompilationRunner.CR_State st1 = new CompilationRunner.CR_State(compilation.getStartup());
+			// var crap = compilation.getStartup().getCompilationRunner();
+			// crap.then(cr1 -> {
+			final CompilationRunner.CR_State st1 = new CompilationRunner.CR_State(compilation.getStartup());
 
-				cb.add(new __CSS2_doFindCIs__CB_Process(), Triple.of(args2, cb, st1));
-			//});
+			cb.add(new __CSS2_doFindCIs__CB_Process(), Triple.of(args2, cb, st1));
+			// });
 		}
 	}
 
 	private static class CB_FindCIs implements ICompilationBus.CB_Action {
 		private final CompilationRunner.CR_Action a;
-		private final CompilationRunner.CR_State  st1;
-		private final CompilationRunner           cr;
+		private final CompilationRunner.CR_State st1;
+		private final CompilationRunner cr;
 
 		public CB_FindCIs(String[] args2, CompilationRunner.CR_State st1) {
 			this.st1 = st1;
-			cr       = st1.ca().getCompilation().__cr;
-			a        = cr.new CR_FindCIs(args2);
+			cr = st1.ca().getCompilation().__cr;
+			a = cr.new CR_FindCIs(args2);
 		}
 
 		@Override
@@ -59,17 +59,17 @@ public class CSS2_doFindCIs implements CSS2_Signal {
 	}
 
 	private static class CB_AlmostComplete implements ICompilationBus.CB_Action {
-		private       CompilationRunner.CR_Action a;
-		private final CompilationRunner.CR_State  st;
-		private       CompilationRunner           cr;
+		private CompilationRunner.CR_Action a;
+		private final CompilationRunner.CR_State st;
+		private CompilationRunner cr;
 
 		public CB_AlmostComplete(CompilationRunner.CR_State aCRState) {
 			st = aCRState;
 			var crp = aCRState.ca().getStartup().getCompilationRunner();
-			crp.then(cr1-> {
-				//cr = aCRState.ca().getCompilation().__cr;
+			crp.then(cr1 -> {
+				// cr = aCRState.ca().getCompilation().__cr;
 				cr = cr1;
-				a  = cr.new CR_AlmostComplete();
+				a = cr.new CR_AlmostComplete();
 			});
 		}
 
@@ -111,9 +111,9 @@ public class CSS2_doFindCIs implements CSS2_Signal {
 		public void adviseObject(final Object aPayload) {
 			assert aPayload instanceof Triple;
 			var payloadtriple = (Triple<String[], ICompilationBus, CompilationRunner.CR_State>) aPayload;
-			var args2         = payloadtriple.getLeft();
-			var cb            = payloadtriple.getMiddle();
-			var st1           = payloadtriple.getRight();
+			var args2 = payloadtriple.getLeft();
+			var cb = payloadtriple.getMiddle();
+			var st1 = payloadtriple.getRight();
 
 			adviseObject(args2, st1);
 		}

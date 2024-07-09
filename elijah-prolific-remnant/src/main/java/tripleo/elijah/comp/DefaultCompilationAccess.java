@@ -10,12 +10,12 @@ import tripleo.elijah_remnant.startup.*;
 import java.util.*;
 
 public class DefaultCompilationAccess implements ICompilationAccess {
-	protected final Compilation      compilation;
-	private final   ProlificStartup2 _startup;
+	protected final Compilation compilation;
+	private final ProlificStartup2 _startup;
 
 	public DefaultCompilationAccess(final Compilation aCompilation, final ProlificStartup2 aStartup) {
 		compilation = aCompilation;
-		_startup    = aStartup;
+		_startup = aStartup;
 	}
 
 	@Override

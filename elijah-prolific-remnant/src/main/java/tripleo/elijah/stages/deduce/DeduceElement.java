@@ -19,7 +19,7 @@ public interface DeduceElement {
 	OS_Element element();
 
 	DeclAnchor declAnchor();
-	//Promise<GenType, Diagnostic, Void> typePromise();
+	// Promise<GenType, Diagnostic, Void> typePromise();
 }
 
 //

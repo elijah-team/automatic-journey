@@ -65,8 +65,8 @@ public class IfConditionalBuilder extends ElBuilder {
 	}
 
 	public static class Doublet {
-		IExpression        expr;
-		List<ElBuilder>    items  = new ArrayList<ElBuilder>();
+		IExpression expr;
+		List<ElBuilder> items = new ArrayList<ElBuilder>();
 		IfConditionalScope _scope = new IfConditionalScope();
 
 		public void expr(final IExpression expr) {

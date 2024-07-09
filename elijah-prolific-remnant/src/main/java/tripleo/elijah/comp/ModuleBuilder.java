@@ -5,10 +5,10 @@ import tripleo.elijah.lang.*;
 import tripleo.elijah.nextgen.query.*;
 
 public class ModuleBuilder {
-	//		private final Compilation compilation;
+	// private final Compilation compilation;
 	private final OS_Module mod;
-	private       boolean   _addToCompilation = false;
-	private       String    _fn               = null;
+	private boolean _addToCompilation = false;
+	private String _fn = null;
 
 	public ModuleBuilder(final Compilation aCompilation) {
 //			compilation = aCompilation;
@@ -24,7 +24,8 @@ public class ModuleBuilder {
 
 	public OS_Module build() {
 		if (_addToCompilation) {
-			if (_fn == null) throw new IllegalStateException("Filename not set in ModuleBuilder");
+			if (_fn == null)
+				throw new IllegalStateException("Filename not set in ModuleBuilder");
 			mod.getCompilation().addModule(mod, _fn);
 		}
 		return mod;

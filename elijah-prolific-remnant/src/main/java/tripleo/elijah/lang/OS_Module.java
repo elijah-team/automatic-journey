@@ -31,15 +31,15 @@ import java.util.*;
 
 public class OS_Module implements OS_Element, OS_Container {
 
-	public final @NotNull                      List<ModuleItem>     items          = new ArrayList<ModuleItem>();
-	public final @NotNull                      Attached             _a             = new Attached();
-	public final @NotNull                      EntryPointList       entryPoints    = new EntryPointList();
-	private final                              Stack<Qualident>     packageNames_q = new Stack<Qualident>();
-	public @org.jetbrains.annotations.Nullable OS_Module            prelude;
-	public                                     Compilation          parent;
-	private                                    LibraryStatementPart lsp;
-	private                                    String               _fileName;
-	private                                    IndexingStatement    indexingStatement;
+	public final @NotNull List<ModuleItem> items = new ArrayList<ModuleItem>();
+	public final @NotNull Attached _a = new Attached();
+	public final @NotNull EntryPointList entryPoints = new EntryPointList();
+	private final Stack<Qualident> packageNames_q = new Stack<Qualident>();
+	public @org.jetbrains.annotations.Nullable OS_Module prelude;
+	public Compilation parent;
+	private LibraryStatementPart lsp;
+	private String _fileName;
+	private IndexingStatement indexingStatement;
 
 	public @org.jetbrains.annotations.Nullable OS_Element findClass(final String aClassName) {
 		for (final ModuleItem item : items) {
@@ -96,8 +96,8 @@ public class OS_Module implements OS_Element, OS_Container {
 	@Override
 	public void add(final OS_Element anElement) {
 		if (!(anElement instanceof ModuleItem)) {
-			parent.getErrSink().info(String.format(
-			  "[Module#add] not adding %s to OS_Module", anElement.getClass().getName()));
+			parent.getErrSink()
+					.info(String.format("[Module#add] not adding %s to OS_Module", anElement.getClass().getName()));
 			return; // TODO FalseAddDiagnostic
 		}
 		items.add((ModuleItem) anElement);
@@ -128,7 +128,8 @@ public class OS_Module implements OS_Element, OS_Container {
 	}
 
 	/**
-	 * A module has no parent which is an element (not even a package - this is not Java).<br>
+	 * A module has no parent which is an element (not even a package - this is not
+	 * Java).<br>
 	 * If you want the Compilation use the member {@link #parent}
 	 *
 	 * @return null
@@ -172,8 +173,8 @@ public class OS_Module implements OS_Element, OS_Container {
 	}
 
 	/**
-	 * Get a class by name. Must not be qualified. Wont return a {@link NamespaceStatement}
-	 * Same as {@link #findClass(String)}
+	 * Get a class by name. Must not be qualified. Wont return a
+	 * {@link NamespaceStatement} Same as {@link #findClass(String)}
 	 *
 	 * @param name the class we are looking for
 	 * @return either the class or null

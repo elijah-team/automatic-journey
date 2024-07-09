@@ -22,27 +22,27 @@ import java.util.*;
  * Created 7/3/21 6:24 AM
  */
 public class WlGenerateCtor implements WorkJob {
-	private final GenerateFunctions    generateFunctions;
-	private final FunctionInvocation   functionInvocation;
-	private final IdentExpression      constructorName;
-	private final ICodeRegistrar       codeRegistrar;
-	private       boolean              _isDone = false;
-	private       GeneratedConstructor result;
+	private final GenerateFunctions generateFunctions;
+	private final FunctionInvocation functionInvocation;
+	private final IdentExpression constructorName;
+	private final ICodeRegistrar codeRegistrar;
+	private boolean _isDone = false;
+	private GeneratedConstructor result;
 
 	@Contract(pure = true)
 	public WlGenerateCtor(@NotNull final GenerateFunctions aGenerateFunctions,
-	                      @NotNull final FunctionInvocation aFunctionInvocation,
-	                      @Nullable final IdentExpression aConstructorName, final ICodeRegistrar aCodeRegistrar) {
-		generateFunctions  = aGenerateFunctions;
+			@NotNull final FunctionInvocation aFunctionInvocation, @Nullable final IdentExpression aConstructorName,
+			final ICodeRegistrar aCodeRegistrar) {
+		generateFunctions = aGenerateFunctions;
 		functionInvocation = aFunctionInvocation;
-		constructorName    = aConstructorName;
-		codeRegistrar      = aCodeRegistrar;
+		constructorName = aConstructorName;
+		codeRegistrar = aCodeRegistrar;
 	}
 
 	@Override
 	public void run(final WorkManager aWorkManager) {
 		if (functionInvocation.generateDeferred().isPending()) {
-			final ClassStatement                  klass     = functionInvocation.getClassInvocation().getKlass();
+			final ClassStatement klass = functionInvocation.getClassInvocation().getKlass();
 			final @NotNull Holder<GeneratedClass> hGenClass = new Holder<>();
 			functionInvocation.getClassInvocation().resolvePromise().then(new DoneCallback<GeneratedClass>() {
 				@Override
@@ -56,7 +56,8 @@ public class WlGenerateCtor implements WorkJob {
 			ConstructorDef ccc = null;
 			if (constructorName != null) {
 				final Collection<ConstructorDef> cs = klass.getConstructors();
-				for (@NotNull final ConstructorDef c : cs) {
+				for (@NotNull
+				final ConstructorDef c : cs) {
 					if (c.name().equals(constructorName.getText())) {
 						ccc = c;
 						break;
@@ -71,14 +72,15 @@ public class WlGenerateCtor implements WorkJob {
 				cd.scope(scope3);
 				for (final GeneratedContainer.VarTableEntry varTableEntry : genClass.varTable) {
 					if (varTableEntry.initialValue != IExpression.UNASSIGNED) {
-						final IExpression left  = varTableEntry.nameToken;
+						final IExpression left = varTableEntry.nameToken;
 						final IExpression right = varTableEntry.initialValue;
 
 						final IExpression e = ExpressionBuilder.build(left, ExpressionKind.ASSIGNMENT, right);
 						scope3.add(new StatementWrapper(e, cd.getContext(), cd));
 					} else {
-						if (true /*|| getPragma("auto_construct")*/) {
-							scope3.add(new ConstructStatement(cd, cd.getContext(), varTableEntry.nameToken, null, null));
+						if (true /* || getPragma("auto_construct") */) {
+							scope3.add(
+									new ConstructStatement(cd, cd.getContext(), varTableEntry.nameToken, null, null));
 						}
 					}
 				}
@@ -88,9 +90,9 @@ public class WlGenerateCtor implements WorkJob {
 			final OS_Element classStatement_ = cd.getParent();
 			assert classStatement_ instanceof ClassStatement;
 
-			final ClassStatement             classStatement = (ClassStatement) classStatement_;
-			final Collection<ConstructorDef> cs             = classStatement.getConstructors();
-			ConstructorDef                   c              = null;
+			final ClassStatement classStatement = (ClassStatement) classStatement_;
+			final Collection<ConstructorDef> cs = classStatement.getConstructors();
+			ConstructorDef c = null;
 			if (constructorName != null) {
 				for (final ConstructorDef cc : cs) {
 					if (cc.name().equals(constructorName.getText())) {
@@ -100,7 +102,7 @@ public class WlGenerateCtor implements WorkJob {
 				}
 			} else {
 				// TODO match based on arguments
-				final ProcTableEntry       pte  = functionInvocation.pte;
+				final ProcTableEntry pte = functionInvocation.pte;
 				final List<TypeTableEntry> args = pte.getArgs();
 				// isResolved -> GeneratedNode, etc or getAttached -> OS_Element
 				for (final ConstructorDef cc : cs) {
@@ -137,7 +139,9 @@ public class WlGenerateCtor implements WorkJob {
 				}
 			}
 
-			@NotNull final GeneratedConstructor gf = generateFunctions.generateConstructor(cd, (ClassStatement) classStatement_, functionInvocation);
+			@NotNull
+			final GeneratedConstructor gf = generateFunctions.generateConstructor(cd, (ClassStatement) classStatement_,
+					functionInvocation);
 //		lgf.add(gf);
 
 			final ClassInvocation ci = functionInvocation.getClassInvocation();

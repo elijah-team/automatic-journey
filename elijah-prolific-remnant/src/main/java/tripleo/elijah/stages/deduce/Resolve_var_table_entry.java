@@ -15,16 +15,17 @@ class Resolve_var_table_entry {
 		deduceTypes2 = aDeduceTypes2;
 	}
 
-	public void act(@NotNull final VariableTableEntry vte, final BaseGeneratedFunction generatedFunction, final Context ctx) {
+	public void act(@NotNull final VariableTableEntry vte, final BaseGeneratedFunction generatedFunction,
+			final Context ctx) {
 		if (vte.getResolvedElement() == null)
 			return;
 		{
 			if (vte.type.getAttached() == null && vte.constructable_pte != null) {
-				final ClassStatement   c        = vte.constructable_pte.getFunctionInvocation().getClassInvocation().getKlass();
+				final ClassStatement c = vte.constructable_pte.getFunctionInvocation().getClassInvocation().getKlass();
 				final @NotNull OS_Type attached = new OS_UserClassType(c);
 				// TODO this should have been set somewhere already
-				//  typeName and nonGenericTypeName are not set
-				//  but at this point probably wont be needed
+				// typeName and nonGenericTypeName are not set
+				// but at this point probably wont be needed
 				vte.type.genType.setResolved(attached);
 				vte.type.setAttached(attached);
 			}
@@ -35,7 +36,8 @@ class Resolve_var_table_entry {
 					genType.genCI(genType.getNonGenericTypeName(), deduceTypes2, deduceTypes2.errSink, deduceTypes2.phase);
 //					genType.node = makeNode(genType);
 					//
-					// registerClassInvocation does the job of makeNode, so results should be immediately available
+					// registerClassInvocation does the job of makeNode, so results should be
+					// immediately available
 					//
 					((ClassInvocation) genType.getCi()).resolvePromise().then(new DoneCallback<GeneratedClass>() {
 						@Override

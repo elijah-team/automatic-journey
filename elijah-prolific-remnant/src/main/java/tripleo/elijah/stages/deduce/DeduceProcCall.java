@@ -24,45 +24,42 @@ import java.util.stream.*;
 public class DeduceProcCall {
 	private final ProcTableEntry procTableEntry;
 	DeduceElement target;
-	private DeduceTypes2          deduceTypes2;
-	private Context               context;
+	private DeduceTypes2 deduceTypes2;
+	private Context context;
 	private BaseGeneratedFunction generatedFunction;
-	private ErrSink               errSink;
+	private ErrSink errSink;
 
 	@Contract(pure = true)
 	public DeduceProcCall(final @NotNull ProcTableEntry aProcTableEntry) {
 		procTableEntry = aProcTableEntry;
 	}
 
-	public void setDeduceTypes2(final DeduceTypes2 aDeduceTypes2,
-	                            final Context aContext,
-	                            final BaseGeneratedFunction aGeneratedFunction,
-	                            final ErrSink aErrSink) {
-		deduceTypes2      = aDeduceTypes2;
-		context           = aContext;
+	public void setDeduceTypes2(final DeduceTypes2 aDeduceTypes2, final Context aContext,
+			final BaseGeneratedFunction aGeneratedFunction, final ErrSink aErrSink) {
+		deduceTypes2 = aDeduceTypes2;
+		context = aContext;
 		generatedFunction = aGeneratedFunction;
-		errSink           = aErrSink;
+		errSink = aErrSink;
 	}
 
 	public @Nullable DeduceElement target() {
-		if (target != null) return target;
+		if (target != null)
+			return target;
 
 		final @NotNull IdentTableEntry t = ((IdentIA) procTableEntry.expression_num).getEntry();
 		if (t.getBacklink() == null) {
 			try {
-				final LookupResultList     lrl  = DeduceLookupUtils.lookupExpression(t.getIdent(), context, deduceTypes2);
+				final LookupResultList lrl = DeduceLookupUtils.lookupExpression(t.getIdent(), context, deduceTypes2);
 				final @Nullable OS_Element best = lrl.chooseBest(null);
 				assert best != null;
-				final OS_Type attached = generatedFunction.vte_list.stream().
-				                                                   filter(x -> x.vtt == VariableTableType.SELF).
-				                                                   collect(Collectors.toList()).
-				                                                   get(0).
-				  type.getAttached();
+				final OS_Type attached = generatedFunction.vte_list.stream()
+						.filter(x -> x.vtt == VariableTableType.SELF).collect(Collectors.toList()).get(0).type
+						.getAttached();
 				assert attached != null;
-				final ClassStatement        self     = attached.getClassOf();
-				final ClassStatement        inherits = DeduceLocalVariable.class_inherits(self, best.getParent());
+				final ClassStatement self = attached.getClassOf();
+				final ClassStatement inherits = DeduceLocalVariable.class_inherits(self, best.getParent());
 				final DeclAnchor.AnchorType anchorType;
-				final OS_Element            declAnchor;
+				final OS_Element declAnchor;
 				if (inherits != null) {
 					anchorType = DeclAnchor.AnchorType.INHERITED;
 					declAnchor = inherits;
@@ -77,10 +74,11 @@ public class DeduceProcCall {
 		} else {
 			final InstructionArgument bl_ = t.getBacklink();
 			if (bl_ instanceof IntegerIA) {
-				final @NotNull VariableTableEntry bl               = ((IntegerIA) bl_).getEntry();
-				final OS_Element                  resolved_element = bl.getResolvedElement();
+				final @NotNull VariableTableEntry bl = ((IntegerIA) bl_).getEntry();
+				final OS_Element resolved_element = bl.getResolvedElement();
 				if (resolved_element instanceof FormalArgListItem) {
-					target = new DeclTarget(resolved_element, generatedFunction.getFD(), DeclAnchor.AnchorType.PARAMS, errSink);
+					target = new DeclTarget(resolved_element, generatedFunction.getFD(), DeclAnchor.AnchorType.PARAMS,
+							errSink);
 				} else {
 					if (resolved_element instanceof VariableStatement) {
 						final OS_Element parent = resolved_element.getParent().getParent();
@@ -90,9 +88,11 @@ public class DeduceProcCall {
 							throw new NotImplementedException();
 					} else {
 						if (resolved_element instanceof IdentExpression)
-							target = new DeclTarget(resolved_element, resolved_element, DeclAnchor.AnchorType.MEMBER, errSink);
+							target = new DeclTarget(resolved_element, resolved_element, DeclAnchor.AnchorType.MEMBER,
+									errSink);
 						else
-							target = new DeclTarget(resolved_element, resolved_element.getParent(), DeclAnchor.AnchorType.MEMBER, errSink);
+							target = new DeclTarget(resolved_element, resolved_element.getParent(),
+									DeclAnchor.AnchorType.MEMBER, errSink);
 					}
 				}
 			}
@@ -110,17 +110,13 @@ public class DeduceProcCall {
 	}
 
 	private class DeclTarget implements DeduceElement {
-		private @NotNull
-		final OS_Element element;
-		private @NotNull
-		final DeclAnchor anchor;
+		private @NotNull final OS_Element element;
+		private @NotNull final DeclAnchor anchor;
 
-		public DeclTarget(final @NotNull OS_Element aBest,
-		                  final @NotNull OS_Element aDeclAnchor,
-		                  final @NotNull DeclAnchor.AnchorType aAnchorType,
-		                  final @NotNull ErrSink errSink) {
+		public DeclTarget(final @NotNull OS_Element aBest, final @NotNull OS_Element aDeclAnchor,
+				final @NotNull DeclAnchor.AnchorType aAnchorType, final @NotNull ErrSink errSink) {
 			element = aBest;
-			anchor  = new DeclAnchor(aDeclAnchor, aAnchorType);
+			anchor = new DeclAnchor(aDeclAnchor, aAnchorType);
 			final IInvocation invocation;
 			if (aAnchorType != DeclAnchor.AnchorType.VAR) {
 				IInvocation declaredInvocation = generatedFunction.fi.getClassInvocation();
@@ -129,15 +125,17 @@ public class DeduceProcCall {
 				}
 				if (aAnchorType == DeclAnchor.AnchorType.INHERITED) {
 					assert declaredInvocation instanceof ClassInvocation;
-					invocation = new DerivedClassInvocation((ClassStatement) aDeclAnchor, (ClassInvocation) declaredInvocation);
+					invocation = new DerivedClassInvocation((ClassStatement) aDeclAnchor,
+							(ClassInvocation) declaredInvocation);
 				} else {
 					invocation = declaredInvocation;
 				}
 			} else {
-				final NormalTypeName   normalTypeName = (NormalTypeName) ((VariableStatement) element).typeName();
-				final LookupResultList lrl            = normalTypeName.getContext().lookup(normalTypeName.getName());
-				final ClassStatement   classStatement = (ClassStatement) lrl.chooseBest(null);
-				invocation = DeduceTypes2.ClassInvocationMake.withGenericPart(classStatement, null, normalTypeName, deduceTypes2, errSink);
+				final NormalTypeName normalTypeName = (NormalTypeName) ((VariableStatement) element).typeName();
+				final LookupResultList lrl = normalTypeName.getContext().lookup(normalTypeName.getName());
+				final ClassStatement classStatement = (ClassStatement) lrl.chooseBest(null);
+				invocation = DeduceTypes2.ClassInvocationMake.withGenericPart(classStatement, null, normalTypeName,
+						deduceTypes2, errSink);
 			}
 			anchor.setInvocation(invocation);
 		}

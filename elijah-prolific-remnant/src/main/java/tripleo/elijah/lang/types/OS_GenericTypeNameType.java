@@ -13,7 +13,6 @@ import tripleo.elijah.lang.*;
 
 import java.text.*;
 
-
 /**
  * Created 7/8/21 6:00 AM
  */
@@ -45,10 +44,10 @@ public class OS_GenericTypeNameType extends __Abstract_OS_Type {
 	}
 
 	protected boolean _isEqual(final OS_Type aType) {
-		return aType.getType() == Type.GENERIC_TYPENAME && genericTypename.equals(((OS_GenericTypeNameType) aType).genericTypename);
+		return aType.getType() == Type.GENERIC_TYPENAME
+				&& genericTypename.equals(((OS_GenericTypeNameType) aType).genericTypename);
 	}
 }
-
 
 //
 //

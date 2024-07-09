@@ -21,13 +21,14 @@ import java.util.*;
 
 public class VariableStatement implements OS_Element, @NotNull Locatable {
 
-	private final VariableSequence  _parent;
-	public        DeduceTypeWatcher dtw;
-	@Nullable List<AnnotationClause> annotations = null;
-	private TypeName        typeName     = new VariableTypeName();
-	private IExpression     initialValue = IExpression.UNASSIGNED;
+	private final VariableSequence _parent;
+	public DeduceTypeWatcher dtw;
+	@Nullable
+	List<AnnotationClause> annotations = null;
+	private TypeName typeName = new VariableTypeName();
+	private IExpression initialValue = IExpression.UNASSIGNED;
 	private IdentExpression name;
-	private TypeModifiers   typeModifiers;
+	private TypeModifiers typeModifiers;
 
 	public VariableStatement(final VariableSequence aSequence) {
 		_parent = aSequence;
@@ -102,7 +103,8 @@ public class VariableStatement implements OS_Element, @NotNull Locatable {
 				}
 			}
 		}
-		if (annotations == null) return;
+		if (annotations == null)
+			return;
 		for (final AnnotationClause annotationClause : annotations) {
 			for (final AnnotationPart annotationPart : annotationClause.aps) {
 				annotationWalker.annotation(annotationPart);

@@ -71,7 +71,8 @@ public class GeneratedConstructor extends BaseGeneratedFunction {
 
 	@Override
 	public @NotNull BaseFunctionDef getFD() {
-		if (cd == null) throw new IllegalStateException("No function");
+		if (cd == null)
+			throw new IllegalStateException("No function");
 		return cd;
 	}
 

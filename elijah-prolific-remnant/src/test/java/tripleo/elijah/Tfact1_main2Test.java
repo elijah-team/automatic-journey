@@ -23,7 +23,6 @@ public class Tfact1_main2Test {
 		final el_Arg arg1 = new el_Arg(new el_genClass("Main"), new el_outName("C"));
 		eh.args(List_of(arg1));
 
-
 		final C_FnHdr cf = new C_FnHdr(eh);
 
 		assertEquals("void", cf.returnType());
@@ -45,7 +44,6 @@ public class Tfact1_main2Test {
 
 		final el_Arg arg1 = new el_Arg(new el_genClass("Main"), new el_outName("C"));
 		eh.args(List_of(arg1));
-
 
 		final C_FnHdr cf = new C_FnHdr(eh);
 
@@ -85,12 +83,12 @@ public class Tfact1_main2Test {
 
 	class EL_Hdr {
 
-		private el_outName       _writename;
-		private el_genClass      _declaring;
+		private el_outName _writename;
+		private el_genClass _declaring;
 		private el_type_NoneType _rt;
-		private List<el_Arg>     _arg;
-		private el_outClass      _eclosing;
-		private el_name          _name;
+		private List<el_Arg> _arg;
+		private el_outClass _eclosing;
+		private el_name _name;
 
 		public void declaring(final el_genClass aMain) {
 			_declaring = aMain;
@@ -118,14 +116,14 @@ public class Tfact1_main2Test {
 	}
 
 	class C_FnHdr {
-		private final String        _returnType;
-		private final String        _fnName;
+		private final String _returnType;
+		private final String _fnName;
 		private final List<C_FnArg> l;
 
 		public C_FnHdr(final EL_Hdr aEh) {
-			l           = List_of(new C_FnArg());
+			l = List_of(new C_FnArg());
 			_returnType = "void";
-			_fnName     = "z100main";
+			_fnName = "z100main";
 		}
 
 		public String returnType() {

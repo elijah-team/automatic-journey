@@ -17,11 +17,12 @@ import tripleo.elijah_fluffy.util.*;
  * Created 12/22/20 5:39 PM
  */
 public class GeneratedNamespace extends GeneratedContainerNC implements GNCoded {
-	private final OS_Module          module;
+	private final OS_Module module;
 	private final NamespaceStatement namespaceStatement;
+
 	public GeneratedNamespace(final NamespaceStatement namespace1, final OS_Module module) {
 		this.namespaceStatement = namespace1;
-		this.module             = module;
+		this.module = module;
 	}
 
 	public void addAccessNotation(final AccessNotation an) {
@@ -36,7 +37,7 @@ public class GeneratedNamespace extends GeneratedContainerNC implements GNCoded 
 		fd.scope(scope3);
 		for (final VarTableEntry varTableEntry : varTable) {
 			if (varTableEntry.initialValue != IExpression.UNASSIGNED) {
-				final IExpression left  = varTableEntry.nameToken;
+				final IExpression left = varTableEntry.nameToken;
 				final IExpression right = varTableEntry.initialValue;
 
 				final @NotNull IExpression e = ExpressionBuilder.build(left, ExpressionKind.ASSIGNMENT, right);

@@ -18,24 +18,25 @@ import java.util.*;
  * Created 6/21/21 11:36 PM
  */
 public abstract class AbstractDependencyTracker implements DependencyTracker {
-	final Subject<GenType>            dependentTypesSubject     = ReplaySubject.create(2);/*new Publisher<GenType>() {
-		List<Subscriber<GenType>> subscribers = new ArrayList<>(2);
-
-		@Override
-		public void subscribe(final Subscriber<? super GenType> aSubscriber) {
-			subscribers.add((Subscriber<GenType>) aSubscriber);
-		}
-	};*/
-	final Subject<FunctionInvocation> dependentFunctionsSubject = ReplaySubject.create(2);/*new Publisher<FunctionInvocation>() {
-		List<Subscriber<FunctionInvocation>> subscribers = new ArrayList<>(2);
-
-		@Override
-		public void subscribe(final Subscriber<? super FunctionInvocation> aSubscriber) {
-			subscribers.add((Subscriber<FunctionInvocation>) aSubscriber);
-		}
-	};*/
+	final Subject<GenType> dependentTypesSubject = ReplaySubject
+			.create(2);/*
+						 * new Publisher<GenType>() { List<Subscriber<GenType>> subscribers = new
+						 * ArrayList<>(2);
+						 * 
+						 * @Override public void subscribe(final Subscriber<? super GenType>
+						 * aSubscriber) { subscribers.add((Subscriber<GenType>) aSubscriber); } };
+						 */
+	final Subject<FunctionInvocation> dependentFunctionsSubject = ReplaySubject
+			.create(2);/*
+						 * new Publisher<FunctionInvocation>() { List<Subscriber<FunctionInvocation>>
+						 * subscribers = new ArrayList<>(2);
+						 * 
+						 * @Override public void subscribe(final Subscriber<? super FunctionInvocation>
+						 * aSubscriber) { subscribers.add((Subscriber<FunctionInvocation>) aSubscriber);
+						 * } };
+						 */
 	private final List<FunctionInvocation> dependentFunctions = new ArrayList<FunctionInvocation>();
-	private final List<GenType>            dependentTypes     = new ArrayList<GenType>();
+	private final List<GenType> dependentTypes = new ArrayList<GenType>();
 
 	@Override
 	public List<GenType> dependentTypes() {

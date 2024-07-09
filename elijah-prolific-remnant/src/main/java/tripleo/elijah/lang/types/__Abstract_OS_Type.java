@@ -20,21 +20,22 @@ abstract class __Abstract_OS_Type implements OS_Type {
 			switch (getBType()) {
 			case SystemInteger: {
 				final LookupResultList r;
-				OS_Element             best;
+				OS_Element best;
 
-				r    = ctx.lookup("SystemInteger");
+				r = ctx.lookup("SystemInteger");
 				best = r.chooseBest(null);
 				while (best instanceof final AliasStatement aliasStatement) {
-					final LookupResultList lrl            = aliasStatement.getContext().lookup(aliasStatement.getExpression().toString());
+					final LookupResultList lrl = aliasStatement.getContext()
+							.lookup(aliasStatement.getExpression().toString());
 					best = lrl.chooseBest(null);
 				}
 				return ((ClassStatement) best).getOS_Type();
 			}
 			case Boolean: {
 				final LookupResultList r;
-				final OS_Element       best;
+				final OS_Element best;
 
-				r    = ctx.lookup("Boolean");
+				r = ctx.lookup("Boolean");
 				best = r.chooseBest(null);
 				return ((ClassStatement) best).getOS_Type();
 			}
@@ -43,9 +44,9 @@ abstract class __Abstract_OS_Type implements OS_Type {
 			}
 			case String_: {
 				final LookupResultList r;
-				final OS_Element       best;
+				final OS_Element best;
 
-				r    = ctx.lookup("String8"); // TODO not sure about this
+				r = ctx.lookup("String8"); // TODO not sure about this
 				best = r.chooseBest(null);
 				return ((ClassStatement) best).getOS_Type();
 			}
@@ -54,8 +55,8 @@ abstract class __Abstract_OS_Type implements OS_Type {
 			}
 		}
 		case USER: {
-			final LookupResultList r    = ctx.lookup(getTypeName().toString()); // TODO
-			final OS_Element       best = r.chooseBest(null);
+			final LookupResultList r = ctx.lookup(getTypeName().toString()); // TODO
+			final OS_Element best = r.chooseBest(null);
 			return ((ClassStatement) best).getOS_Type();
 		}
 		case USER_CLASS:
@@ -83,7 +84,8 @@ abstract class __Abstract_OS_Type implements OS_Type {
 
 	@Override
 	public boolean isEqual(final OS_Type aType) {
-		if (aType.getType() != getType()) return false;
+		if (aType.getType() != getType())
+			return false;
 
 		return _isEqual(aType);
 	}
@@ -91,4 +93,3 @@ abstract class __Abstract_OS_Type implements OS_Type {
 	protected abstract boolean _isEqual(final OS_Type aType);
 
 }
-

@@ -14,7 +14,7 @@ public interface ErrSink {
 
 	void exception(Exception exception);
 
-	/*@ ensures errorCount() == \old errorCount + 1*/
+	/* @ ensures errorCount() == \old errorCount + 1 */
 	void reportError(String s);
 
 	void reportWarning(String s);

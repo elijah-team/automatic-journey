@@ -31,7 +31,8 @@ public abstract class Context {
 		return lookup(name, 0, Result, new ArrayList<Context>(), false);
 	}
 
-	public abstract LookupResultList lookup(String name, int level, LookupResultList Result, List<Context> alreadySearched, boolean one);
+	public abstract LookupResultList lookup(String name, int level, LookupResultList Result,
+			List<Context> alreadySearched, boolean one);
 
 	public @NotNull Compilation compilation() {
 		final OS_Module module = module();
@@ -66,7 +67,7 @@ public abstract class Context {
 //	}
 
 	public @NotNull OS_Module module() {
-		Context ctx = this;//getParent();
+		Context ctx = this;// getParent();
 		while (!(ctx instanceof ModuleContext))
 			ctx = ctx.getParent();
 		return ((ModuleContext) ctx).getCarrier();

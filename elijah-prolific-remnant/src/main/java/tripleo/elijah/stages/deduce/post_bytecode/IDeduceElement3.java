@@ -52,13 +52,7 @@ public interface IDeduceElement3 {
 	DeduceElement3_Kind kind();
 
 	enum DeduceElement3_Kind {
-		CLASS,
-		NAMESPACE,
-		FUNCTION,
-		GEN_FN__VTE,
-		GEN_FN__ITE,
-		GEN_FN__CTE,
-		GEN_FN__PTE
+		CLASS, NAMESPACE, FUNCTION, GEN_FN__VTE, GEN_FN__ITE, GEN_FN__CTE, GEN_FN__PTE
 		// ...
 	}
 }

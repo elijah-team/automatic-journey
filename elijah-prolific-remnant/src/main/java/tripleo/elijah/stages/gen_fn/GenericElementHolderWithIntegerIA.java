@@ -18,10 +18,10 @@ import tripleo.elijah.stages.instructions.*;
  */
 public class GenericElementHolderWithIntegerIA implements IElementHolder {
 	private final OS_Element element;
-	private final IntegerIA  integerIA;
+	private final IntegerIA integerIA;
 
 	public GenericElementHolderWithIntegerIA(final @Nullable OS_Element aElement, final @NotNull IntegerIA aIntegerIA) {
-		element   = aElement;
+		element = aElement;
 		integerIA = aIntegerIA;
 	}
 

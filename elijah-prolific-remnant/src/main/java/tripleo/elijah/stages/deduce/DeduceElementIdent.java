@@ -20,19 +20,20 @@ import tripleo.elijah.stages.instructions.*;
  * Created 11/22/21 8:23 PM
  */
 public class DeduceElementIdent {
-	private final IdentTableEntry                              identTableEntry;
+	private final IdentTableEntry identTableEntry;
 	private final DeferredObject<OS_Element, Diagnostic, Void> _resolvedElementPromise = new DeferredObject<>();
-	private       DeduceTypes2                                 deduceTypes2;
-	private       Context                                      context;
-	private       BaseGeneratedFunction                        generatedFunction;
+	private DeduceTypes2 deduceTypes2;
+	private Context context;
+	private BaseGeneratedFunction generatedFunction;
 
 	public DeduceElementIdent(final IdentTableEntry aIdentTableEntry) {
 		identTableEntry = aIdentTableEntry;
 	}
 
-	public void setDeduceTypes2(final DeduceTypes2 aDeduceTypes2, final Context aContext, final @NotNull BaseGeneratedFunction aGeneratedFunction) {
-		deduceTypes2      = aDeduceTypes2;
-		context           = aContext;
+	public void setDeduceTypes2(final DeduceTypes2 aDeduceTypes2, final Context aContext,
+			final @NotNull BaseGeneratedFunction aGeneratedFunction) {
+		deduceTypes2 = aDeduceTypes2;
+		context = aContext;
 		generatedFunction = aGeneratedFunction;
 
 		calculateResolvedObject();
@@ -56,9 +57,8 @@ public class DeduceElementIdent {
 				@Override
 				public void noFoundElement() {
 					final @NotNull CantResolveElement err = new CantResolveElement(
-					  "DeduceElementIdent: can't resolve element for " + identTableEntry,
-					  identTableEntry,
-					  generatedFunction);
+							"DeduceElementIdent: can't resolve element for " + identTableEntry, identTableEntry,
+							generatedFunction);
 
 					if (_resolvedElementPromise.isPending())
 						_resolvedElementPromise.reject(err);
@@ -73,9 +73,12 @@ public class DeduceElementIdent {
 		}
 	}
 
-	private void resolveIdentIA_(@NotNull final Context context, @NotNull final IdentIA identIA, final BaseGeneratedFunction generatedFunction, @NotNull final FoundElement foundElement) throws ResolveError {
+	private void resolveIdentIA_(@NotNull final Context context, @NotNull final IdentIA identIA,
+			final BaseGeneratedFunction generatedFunction, @NotNull final FoundElement foundElement)
+			throws ResolveError {
 		final DeduceTypes2.DeduceClient3 aDeduceClient3 = new DeduceTypes2.DeduceClient3(deduceTypes2);
-		final Resolve_Ident_IA           ria            = new Resolve_Ident_IA(aDeduceClient3, context, identIA, generatedFunction, foundElement, deduceTypes2._errSink());
+		final Resolve_Ident_IA ria = new Resolve_Ident_IA(aDeduceClient3, context, identIA, generatedFunction,
+				foundElement, deduceTypes2._errSink());
 		ria.action();
 	}
 

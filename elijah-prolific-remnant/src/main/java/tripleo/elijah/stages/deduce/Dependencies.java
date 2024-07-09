@@ -23,13 +23,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 class Dependencies {
-	final         WorkList     wl = new WorkList();
-	final         WorkManager  wm;
+	final WorkList wl = new WorkList();
+	final WorkManager wm;
 	private final DeduceTypes2 deduceTypes2;
 
 	Dependencies(final DeduceTypes2 aDeduceTypes2, final WorkManager aWm) {
 		deduceTypes2 = aDeduceTypes2;
-		wm           = aWm;
+		wm = aWm;
 	}
 
 	public void subscribeTypes(final Subject<GenType> aDependentTypesSubject) {
@@ -59,10 +59,13 @@ class Dependencies {
 	public void action_type(@NotNull final GenType genType) {
 		// TODO work this out further, maybe like a Deepin flavor
 		if (genType.getResolvedn() != null) {
-			@NotNull final OS_Module           mod = genType.getResolvedn().getContext().module();
-			final @NotNull GenerateFunctions   gf  = deduceTypes2.phase.generatePhase.getGenerateFunctions(mod);
-			final NamespaceInvocation          ni  = deduceTypes2.phase.registerNamespaceInvocation(genType.getResolvedn());
-			@NotNull final WlGenerateNamespace gen = new WlGenerateNamespace(gf, ni, deduceTypes2.phase.generatedClasses, deduceTypes2.phase.codeRegistrar);
+			@NotNull
+			final OS_Module mod = genType.getResolvedn().getContext().module();
+			final @NotNull GenerateFunctions gf = deduceTypes2.phase.generatePhase.getGenerateFunctions(mod);
+			final NamespaceInvocation ni = deduceTypes2.phase.registerNamespaceInvocation(genType.getResolvedn());
+			@NotNull
+			final WlGenerateNamespace gen = new WlGenerateNamespace(gf, ni, deduceTypes2.phase.generatedClasses,
+					deduceTypes2.phase.codeRegistrar);
 
 			assert genType.getCi() == null || genType.getCi() == ni;
 			genType.setCi(ni);
@@ -82,10 +85,11 @@ class Dependencies {
 				return;
 			}
 
-			final ClassStatement             c   = genType.getResolved().getClassOf();
-			final @NotNull OS_Module         mod = c.getContext().module();
-			final @NotNull GenerateFunctions gf  = deduceTypes2.phase.generatePhase.getGenerateFunctions(mod);
-			@Nullable ClassInvocation        ci;
+			final ClassStatement c = genType.getResolved().getClassOf();
+			final @NotNull OS_Module mod = c.getContext().module();
+			final @NotNull GenerateFunctions gf = deduceTypes2.phase.generatePhase.getGenerateFunctions(mod);
+			@Nullable
+			ClassInvocation ci;
 			if (genType.getCi() == null) {
 				ci = new ClassInvocation(c, null);
 				ci = deduceTypes2.phase.registerClassInvocation(ci);
@@ -113,8 +117,8 @@ class Dependencies {
 	}
 
 	public void action_function(@NotNull final FunctionInvocation aDependentFunction) {
-		final BaseFunctionDef    function = aDependentFunction.getFunction();
-		final WorkJob            gen;
+		final BaseFunctionDef function = aDependentFunction.getFunction();
+		final WorkJob gen;
 		final @NotNull OS_Module mod;
 		if (function == ConstructorDef.defaultVirtualCtor) {
 			final ClassInvocation ci = aDependentFunction.getClassInvocation();

@@ -20,11 +20,11 @@ import antlr.*;
 public class IndexingItem {
 
 	private final IExpression expr;
-	private final Token       token;
+	private final Token token;
 
 	public IndexingItem(final Token i1, final IExpression c1) {
 		this.token = i1;
-		this.expr  = c1;
+		this.expr = c1;
 	}
 
 }

@@ -7,9 +7,9 @@ import java.io.*;
 import java.time.*;
 
 public class F203 {
-	final         ChooseDirectoryNameBehavior cdn;
-	final         LocalDateTime               localDateTime = LocalDateTime.now();
-	private final ErrSink                     errSink;
+	final ChooseDirectoryNameBehavior cdn;
+	final LocalDateTime localDateTime = LocalDateTime.now();
+	private final ErrSink errSink;
 
 	@Contract(pure = true)
 	public F203(final ErrSink aErrSink, final Compilation c) {

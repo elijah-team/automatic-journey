@@ -18,20 +18,20 @@ import tripleo.elijah_fluffy.util.*;
  */
 public class PropertyStatement implements OS_Element, OS_Element2, ClassItem {
 
-	private final Context    context;
+	private final Context context;
 	private final OS_Element parent;
 
-	public  FunctionDef     set_fn;
-	public  FunctionDef     get_fn;
+	public FunctionDef set_fn;
+	public FunctionDef get_fn;
 	private IdentExpression prop_name;
-	private TypeName        typeName;
-	private boolean         _set_is_abstract;
-	private boolean         _get_is_abstract;
+	private TypeName typeName;
+	private boolean _set_is_abstract;
+	private boolean _get_is_abstract;
 	private AccessNotation access_note;
-	private El_Category    category;
+	private El_Category category;
 
 	public PropertyStatement(final OS_Element parent, final Context cur) {
-		this.parent  = parent;
+		this.parent = parent;
 		this.context = new PropertyStatementContext(cur, this);
 	}
 
@@ -58,17 +58,13 @@ public class PropertyStatement implements OS_Element, OS_Element2, ClassItem {
 //		return tn;
 //	}
 
-/*
-	public Scope get_scope() {
-		throw new NotImplementedException();
-//		return get_fn.scope();
-	}
-
-	public Scope set_scope() {
-		throw new NotImplementedException();
-//		return set_fn.scope();
-	}
-*/
+	/*
+	 * public Scope get_scope() { throw new NotImplementedException(); // return
+	 * get_fn.scope(); }
+	 * 
+	 * public Scope set_scope() { throw new NotImplementedException(); // return
+	 * set_fn.scope(); }
+	 */
 
 	public FunctionDef get_fn() {
 		return get_fn;
@@ -90,8 +86,8 @@ public class PropertyStatement implements OS_Element, OS_Element2, ClassItem {
 	public void setTypeName(final TypeName typeName) {
 //		tripleo.elijah.util.Stupidity.println_err2("** setting TypeName in PropertyStatement to "+typeName);
 		this.typeName = typeName;
-		this.set_fn   = createSetFunction();
-		this.get_fn   = createGetFunction();
+		this.set_fn = createSetFunction();
+		this.get_fn = createGetFunction();
 	}
 
 	@NotNull
@@ -99,13 +95,13 @@ public class PropertyStatement implements OS_Element, OS_Element2, ClassItem {
 		final FunctionDef functionDef = new FunctionDef(this, getContext());
 		functionDef.setName(Helpers.string_to_ident(String.format("<prop_set %s>", prop_name)));
 		functionDef.setSpecies(FunctionDef.Species.PROP_SET);
-		final @NotNull FormalArgList fal  = new FormalArgList();
-		final FormalArgListItem      fali = fal.next();
+		final @NotNull FormalArgList fal = new FormalArgList();
+		final FormalArgListItem fali = fal.next();
 		fali.setName(Helpers.string_to_ident("Value"));
 		fali.setTypeName(this.typeName);
 		final RegularTypeName unitType = new RegularTypeName();
 		unitType.setName(Helpers.string_to_qualident("Unit"));
-		functionDef.setReturnType(unitType/*BuiltInTypes.Unit*/);
+		functionDef.setReturnType(unitType/* BuiltInTypes.Unit */);
 		functionDef.setFal(fal);
 		return functionDef;
 	}

@@ -45,10 +45,12 @@ public class DefFunctionDef extends BaseFunctionDef {
 //	private FormalArgList fal;
 
 	/**
-	 * Can be {@code null} under the following circumstances:<br/><br/>
+	 * Can be {@code null} under the following circumstances:<br/>
+	 * <br/>
 	 * <p>
 	 * 1. The compiler(parser) didn't get a chance to set it yet<br/>
-	 * 2. The programmer did not specify a return value and the compiler must deduce it<br/>
+	 * 2. The programmer did not specify a return value and the compiler must deduce
+	 * it<br/>
 	 * 3. The function is a void-type and specification isn't required <br/>
 	 *
 	 * @return the associated TypeName or NULL

@@ -10,7 +10,7 @@ public abstract class DefaultStateful implements Stateful {
 		assert aO == null;
 
 		if (!aState.checkState(this)) {
-			//throw new BadState();
+			// throw new BadState();
 			return;
 		}
 

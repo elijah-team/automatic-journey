@@ -12,21 +12,22 @@ import tripleo.elijah.nextgen.small.*;
 public class EG_SyntheticStatement implements EG_Statement {
 
 	private final EG_Naming naming;
-	private final ES_Item   s;
-	private final EX_Rule   rule;
-	private       String    text;
+	private final ES_Item s;
+	private final EX_Rule rule;
+	private String text;
 
 	public EG_SyntheticStatement(final EG_Naming aNaming, final String aS, final EX_Rule aRule) {
 
 		naming = aNaming;
-		s      = new ES_String(aS);
-		rule   = aRule;
+		s = new ES_String(aS);
+		rule = aRule;
 
 		doNaming(naming, s);
 	}
 
 	private void doNaming(final EG_Naming aNaming, final ES_Item aS) {
-		if (aNaming == null) return;
+		if (aNaming == null)
+			return;
 
 		final String ss = aNaming.s;
 		final String s1 = aNaming.s1;
@@ -44,8 +45,8 @@ public class EG_SyntheticStatement implements EG_Statement {
 
 	public EG_SyntheticStatement(final EG_Naming aNaming, final ES_Symbol aSymbol, final EX_Rule aRule) {
 		naming = aNaming;
-		s      = aSymbol;
-		rule   = aRule;
+		s = aSymbol;
+		rule = aRule;
 
 		doNaming(naming, s);
 	}

@@ -16,7 +16,7 @@ import java.util.*;
  * Created 4/26/21 4:22 AM
  */
 public class WorkManager {
-	final List<WorkList> jobs     = new ArrayList<WorkList>();
+	final List<WorkList> jobs = new ArrayList<WorkList>();
 	final List<WorkList> doneWork = new ArrayList<WorkList>();
 
 	public void addJobs(final WorkList aList) {
@@ -49,8 +49,10 @@ public class WorkManager {
 
 	public void drain() {
 		while (true) {
-			@Nullable final WorkJob w = next();
-			if (w == null) break;
+			@Nullable
+			final WorkJob w = next();
+			if (w == null)
+				break;
 			w.run(this);
 		}
 	}

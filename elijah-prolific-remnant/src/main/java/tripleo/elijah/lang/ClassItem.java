@@ -9,8 +9,8 @@
 package tripleo.elijah.lang;
 
 /**
- * Marker interface to represent elements that can be added to a class
- * or a namespace or an enum
+ * Marker interface to represent elements that can be added to a class or a
+ * namespace or an enum
  *
  * @see {@link ClassStatement#add(OS_Element) }
  * @see {@link NamespaceStatement#add(OS_Element) }

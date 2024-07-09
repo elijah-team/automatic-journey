@@ -6,10 +6,10 @@ import java.util.function.*;
 
 public class DoubleLatch<T> {
 	private final @NotNull Consumer<T> action;
-	private                T           tt;
-	private                boolean     simple;
+	private T tt;
+	private boolean simple;
 
-	//private IincInsnNode action;
+	// private IincInsnNode action;
 
 	@Contract(pure = true)
 	public DoubleLatch(final Consumer<T> aAction) {

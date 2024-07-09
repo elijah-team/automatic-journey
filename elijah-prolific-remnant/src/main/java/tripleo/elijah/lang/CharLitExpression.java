@@ -27,7 +27,9 @@ public class CharLitExpression implements IExpression {
 		char_lit_raw = c;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see tripleo.elijah.lang.IExpression#getType()
 	 */
 	@Override
@@ -35,7 +37,9 @@ public class CharLitExpression implements IExpression {
 		return ExpressionKind.CHAR_LITERAL;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see tripleo.elijah.lang.IExpression#set(tripleo.elijah.lang.ExpressionType)
 	 */
 	@Override
@@ -44,7 +48,9 @@ public class CharLitExpression implements IExpression {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see tripleo.elijah.lang.IExpression#getLeft()
 	 */
 	@Override
@@ -53,7 +59,9 @@ public class CharLitExpression implements IExpression {
 		return null;
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see tripleo.elijah.lang.IExpression#setLeft(tripleo.elijah.lang.IExpression)
 	 */
 	@Override
@@ -62,7 +70,9 @@ public class CharLitExpression implements IExpression {
 
 	}
 
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see tripleo.elijah.lang.IExpression#repr_()
 	 */
 	@Override

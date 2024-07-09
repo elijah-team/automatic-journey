@@ -16,7 +16,8 @@ import tripleo.elijah.gen.*;
 import tripleo.elijah_fluffy.util.*;
 
 /**
- * To be used with {@link tripleo.elijah.FindBothSourceFiles#CloseCaseChoice(CompilerContext, CloseCaseNode, GenBuffer)}
+ * To be used with
+ * {@link tripleo.elijah.FindBothSourceFiles#CloseCaseChoice(CompilerContext, CloseCaseNode, GenBuffer)}
  *
  * generates <code>break;}</code>
  *

@@ -11,13 +11,13 @@ import tripleo.elijah_fluffy.util.*;
 
 public class DeduceElement3_ConstantTableEntry implements IDeduceElement3 {
 
-	private final ConstantTableEntry    principal;
-	public        BaseGeneratedFunction generatedFunction;
-	public        DeduceTypes2          deduceTypes2;
-	public        IDeduceElement3       deduceElement3;
-	public        OS_Type               osType;
-	public        Diagnostic            diagnostic;
-	private       GenType               genType;
+	private final ConstantTableEntry principal;
+	public BaseGeneratedFunction generatedFunction;
+	public DeduceTypes2 deduceTypes2;
+	public IDeduceElement3 deduceElement3;
+	public OS_Type osType;
+	public Diagnostic diagnostic;
+	private GenType genType;
 
 	@Contract(pure = true)
 	public DeduceElement3_ConstantTableEntry(final ConstantTableEntry aConstantTableEntry) {
@@ -32,10 +32,11 @@ public class DeduceElement3_ConstantTableEntry implements IDeduceElement3 {
 
 	@Override
 	public void resolve(final Context aContext, final DeduceTypes2 aDeduceTypes2) {
-		//		deduceTypes2.resolveIdentIA_(aContext, aIdentIA, generatedFunction, aFoundElement);
+		// deduceTypes2.resolveIdentIA_(aContext, aIdentIA, generatedFunction,
+		// aFoundElement);
 		throw new NotImplementedException();
 		// careful with this
-		//		throw new UnsupportedOperationException("Should not be reached");
+		// throw new UnsupportedOperationException("Should not be reached");
 	}
 
 	@Override

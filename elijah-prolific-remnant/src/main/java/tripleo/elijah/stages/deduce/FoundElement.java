@@ -23,20 +23,22 @@ public abstract class FoundElement {
 	}
 
 	public void doFoundElement(final OS_Element e) {
-		if (_called) return;
+		if (_called)
+			return;
 
 		_didntFind = false;
-		_called    = true;
+		_called = true;
 		foundElement(e);
 	}
 
 	public abstract void foundElement(OS_Element e);
 
 	public void doNoFoundElement() {
-		if (_called) return;
+		if (_called)
+			return;
 
 		_didntFind = true;
-		_called    = true;
+		_called = true;
 		noFoundElement();
 	}
 

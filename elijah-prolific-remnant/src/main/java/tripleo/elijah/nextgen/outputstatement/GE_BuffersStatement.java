@@ -15,10 +15,8 @@ public class GE_BuffersStatement implements EG_Statement {
 
 	@Override
 	public String getText() {
-		return Helpers.String_join("\n\n", entry.getValue()
-		                                        .stream()
-		                                        .map(buffer -> buffer.getText())
-		                                        .collect(Collectors.toList()));
+		return Helpers.String_join("\n\n",
+				entry.getValue().stream().map(buffer -> buffer.getText()).collect(Collectors.toList()));
 	}
 
 	@Override
@@ -27,7 +25,7 @@ public class GE_BuffersStatement implements EG_Statement {
 	}
 
 	private static class GE_BuffersExplanation implements EX_Explanation {
-		final         String              message = "buffers to statement";
+		final String message = "buffers to statement";
 		private final GE_BuffersStatement st;
 
 		public GE_BuffersExplanation(final GE_BuffersStatement aGEBuffersStatement) {

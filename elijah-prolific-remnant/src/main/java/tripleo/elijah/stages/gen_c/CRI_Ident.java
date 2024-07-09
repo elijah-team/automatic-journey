@@ -11,11 +11,11 @@ import java.util.*;
 import java.util.function.*;
 
 class CRI_Ident {
-	private final IdentTableEntry       ite;
+	private final IdentTableEntry ite;
 	private final BaseGeneratedFunction generatedFunction;
 
 	public CRI_Ident(final IdentTableEntry aIdte, final BaseGeneratedFunction aGf) {
-		ite               = aIdte;
+		ite = aIdte;
 		generatedFunction = aGf;
 	}
 
@@ -24,18 +24,12 @@ class CRI_Ident {
 		return new CRI_Ident(aIdte, aGf);
 	}
 
-	public String getIdentIAPath(int i,
-	                             final int sSize,
-	                             final Generate_Code_For_Method.AOG aog,
-	                             final List<String> sl,
-	                             final String aValue,
-	                             final Consumer<CReference.Reference> addRef,
-	                             final List<InstructionArgument> s,
-	                             final IdentIA ia2,
-	                             final CReference aCReference) {
-		final boolean[]  skip             = {false};
+	public String getIdentIAPath(int i, final int sSize, final Generate_Code_For_Method.AOG aog, final List<String> sl,
+			final String aValue, final Consumer<CReference.Reference> addRef, final List<InstructionArgument> s,
+			final IdentIA ia2, final CReference aCReference) {
+		final boolean[] skip = { false };
 		final OS_Element resolved_element = ite.getResolvedElement();
-		final String[]   text             = {null};
+		final String[] text = { null };
 
 		final GeneratedClass _cheat = aCReference._cheat;
 
@@ -44,10 +38,12 @@ class CRI_Ident {
 			if (resolved_element instanceof ClassStatement) {
 				resolved = _re_is_ClassStatement();
 			} else if (resolved_element instanceof FunctionDef) {
-				@Nullable final ProcTableEntry pte = ite.getCallablePTE();
+				@Nullable
+				final ProcTableEntry pte = ite.getCallablePTE();
 				resolved = _re_is_FunctionDef(pte, _cheat);
 			} else if (resolved_element instanceof PropertyStatement) {
-				resolved = _re_is_PropertyStatement(addRef, aog, sSize, i, aValue, (x) -> skip[0] = true, (x) -> text[0] = x);
+				resolved = _re_is_PropertyStatement(addRef, aog, sSize, i, aValue, (x) -> skip[0] = true,
+						(x) -> text[0] = x);
 			}
 			if (!skip[0]) {
 				short state = 1;
@@ -60,11 +56,14 @@ class CRI_Ident {
 						SimplePrintLoggerToRemoveSoon.println_err("***88*** resolved is null for " + ite);
 					}
 					if (sSize >= i + 1) {
-						_getIdentIAPath_IdentIAHelper(null, sl, i, sSize, resolved_element, generatedFunction, resolved, aValue, aCReference);
+						_getIdentIAPath_IdentIAHelper(null, sl, i, sSize, resolved_element, generatedFunction, resolved,
+								aValue, aCReference);
 						text[0] = null;
 					} else {
-						final boolean b = _getIdentIAPath_IdentIAHelper(s.get(i + 1), sl, i, sSize, resolved_element, generatedFunction, resolved, aValue, aCReference);
-						if (b) i++;
+						final boolean b = _getIdentIAPath_IdentIAHelper(s.get(i + 1), sl, i, sSize, resolved_element,
+								generatedFunction, resolved, aValue, aCReference);
+						if (b)
+							i++;
 					}
 					break;
 				case 2:
@@ -73,11 +72,13 @@ class CRI_Ident {
 
 						final GeneratedNode externalRef = ite.externalRef;
 						if (externalRef instanceof GeneratedNamespace) {
-							final String text3 = String.format("zN%d_instance", ((GeneratedNamespace) externalRef).getCode());
+							final String text3 = String.format("zN%d_instance",
+									((GeneratedNamespace) externalRef).getCode());
 							addRef.accept(new CReference.Reference(text3, CReference.Ref.LITERAL, null));
 						} else if (externalRef instanceof GeneratedClass) {
 							assert false;
-							final String text3 = String.format("zN%d_instance", ((GeneratedClass) externalRef).getCode());
+							final String text3 = String.format("zN%d_instance",
+									((GeneratedClass) externalRef).getCode());
 							addRef.accept(new CReference.Reference(text3, CReference.Ref.LITERAL, null));
 						} else
 							throw new IllegalStateException();
@@ -94,7 +95,7 @@ class CRI_Ident {
 				break;
 			case UNCHECKED:
 				final String path2 = generatedFunction.getIdentIAPathNormal(ia2);
-				final String text3 = String.format("<<UNCHECKED ia2: %s>>", path2/*idte.getIdent().getText()*/);
+				final String text3 = String.format("<<UNCHECKED ia2: %s>>", path2/* idte.getIdent().getText() */);
 				text[0] = text3;
 //						assert false;
 				break;
@@ -102,9 +103,11 @@ class CRI_Ident {
 				final String path = generatedFunction.getIdentIAPathNormal(ia2);
 				final String text1 = ite.getIdent().getText();
 //						assert false;
-				// TODO make tests pass but I dont like this (should emit a dummy function or placeholder)
+				// TODO make tests pass but I dont like this (should emit a dummy function or
+				// placeholder)
 				if (sl.size() == 0) {
-					text[0] = Emit.emit("/*149*/") + text1; // TODO check if it belongs somewhere else (what does this mean?)
+					text[0] = Emit.emit("/*149*/") + text1; // TODO check if it belongs somewhere else (what does this
+															// mean?)
 				} else {
 					text[0] = Emit.emit("/*152*/") + "vm" + text1;
 				}
@@ -161,15 +164,11 @@ class CRI_Ident {
 	}
 
 	private GeneratedNode _re_is_PropertyStatement(final Consumer<CReference.Reference> addRef,
-	                                               final Generate_Code_For_Method.AOG aog,
-	                                               final int sSize,
-	                                               final int i,
-	                                               final String aValue,
-	                                               final Consumer<Void> skip,
-	                                               final Consumer<String> text) {
+			final Generate_Code_For_Method.AOG aog, final int sSize, final int i, final String aValue,
+			final Consumer<Void> skip, final Consumer<String> text) {
 		NotImplementedException.raise();
 		final GeneratedNode resolved1 = ite.type.resolved();
-		final int           code;
+		final int code;
 		if (resolved1 != null)
 			code = ((GeneratedContainerNC) resolved1).getCode();
 		else
@@ -189,12 +188,14 @@ class CRI_Ident {
 		}
 		switch (state) {
 		case 1:
-			addRef.accept(new CReference.Reference(String.format("ZP%d_get%s(", code, ite.getIdent().getText()), CReference.Ref.PROPERTY_GET));
+			addRef.accept(new CReference.Reference(String.format("ZP%d_get%s(", code, ite.getIdent().getText()),
+					CReference.Ref.PROPERTY_GET));
 			skip.accept(null);
 			text.accept(null);
 			break;
 		case 2:
-			addRef.accept(new CReference.Reference(String.format("ZP%d_set%s(", code, ite.getIdent().getText()), CReference.Ref.PROPERTY_SET, aValue));
+			addRef.accept(new CReference.Reference(String.format("ZP%d_set%s(", code, ite.getIdent().getText()),
+					CReference.Ref.PROPERTY_SET, aValue));
 			skip.accept(null);
 			text.accept(null);
 			break;
@@ -204,14 +205,10 @@ class CRI_Ident {
 		return resolved1;
 	}
 
-	boolean _getIdentIAPath_IdentIAHelper(final InstructionArgument ia_next,
-	                                      final List<String> sl,
-	                                      final int i,
-	                                      final int sSize,
-	                                      final OS_Element resolved_element,
-	                                      final BaseGeneratedFunction generatedFunction,
-	                                      final GeneratedNode aResolved,
-	                                      final String aValue, final CReference aCReference) {
-		return new CReference_getIdentIAPath_IdentIAHelper(ia_next, sl, i, sSize, resolved_element, generatedFunction, aResolved, aValue).action(this, aCReference);
+	boolean _getIdentIAPath_IdentIAHelper(final InstructionArgument ia_next, final List<String> sl, final int i,
+			final int sSize, final OS_Element resolved_element, final BaseGeneratedFunction generatedFunction,
+			final GeneratedNode aResolved, final String aValue, final CReference aCReference) {
+		return new CReference_getIdentIAPath_IdentIAHelper(ia_next, sl, i, sSize, resolved_element, generatedFunction,
+				aResolved, aValue).action(this, aCReference);
 	}
 }

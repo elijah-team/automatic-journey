@@ -25,7 +25,7 @@ import static tripleo.elijah_fluffy.util.Helpers.*;
 public class GetIdentIAPathTest_ForC {
 
 	GeneratedFunction gf;
-	OS_Module         mod;
+	OS_Module mod;
 
 	@Before
 	public void setUp() throws Exception {
@@ -48,15 +48,15 @@ public class GetIdentIAPathTest_ForC {
 		final VariableStatement foo_vs = new VariableStatement(vsq);
 		foo_vs.setName(foo_ident);
 		//
-		final OS_Type         type      = null;
-		final TypeTableEntry  tte       = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, type, x_ident);
-		final int             int_index = gf.addVariableTableEntry("x", VariableTableType.VAR, tte, mock(VariableStatement.class));
-		final int             ite_index = gf.addIdentTableEntry(foo_ident, null);
-		final IdentTableEntry ite       = gf.getIdentTableEntry(ite_index);
+		final OS_Type type = null;
+		final TypeTableEntry tte = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, type, x_ident);
+		final int int_index = gf.addVariableTableEntry("x", VariableTableType.VAR, tte, mock(VariableStatement.class));
+		final int ite_index = gf.addIdentTableEntry(foo_ident, null);
+		final IdentTableEntry ite = gf.getIdentTableEntry(ite_index);
 		ite.setResolvedElement(foo_vs);
 		ite.backlink = new IntegerIA(int_index, gf);
 		final IdentIA ident_ia = new IdentIA(ite_index, gf);
-		final String  x        = getIdentIAPath(ident_ia, gf);
+		final String x = getIdentIAPath(ident_ia, gf);
 		Assert.assertEquals("vvx->vmfoo", x);
 	}
 
@@ -87,28 +87,27 @@ public class GetIdentIAPathTest_ForC {
 		final VariableStatement x_vs = new VariableStatement(vsq2);
 		x_vs.setName(x_ident);
 
-/*
-		expect(mod.pullPackageName()).andReturn(OS_Package.default_package);
-		mod.add(anyObject(ClassStatement.class));
-		replay(mod);
-		ClassStatement el1 = new ClassStatement(mod, null);
-*/
+		/*
+		 * expect(mod.pullPackageName()).andReturn(OS_Package.default_package);
+		 * mod.add(anyObject(ClassStatement.class)); replay(mod); ClassStatement el1 =
+		 * new ClassStatement(mod, null);
+		 */
 
-		//		el1.add(vsq);
+		// el1.add(vsq);
 		//
 		final Boilerplate b = new Boilerplate();
 		b.get();
 		final Compilation c = b.comp;
 //		final OS_Module mod = b.defaultMod();
 
-		final AccessBus         ab            = new AccessBus(c);
-		final PipelineLogic     pl            = new PipelineLogic(ab);
+		final AccessBus ab = new AccessBus(c);
+		final PipelineLogic pl = new PipelineLogic(ab);
 		final GeneratePhase generatePhase = pl.getGeneratePhase();
-		final GenerateFunctions gen           = generatePhase.getGenerateFunctions(mod);
-		final Context           ctx           = mock(Context.class);
+		final GenerateFunctions gen = generatePhase.getGenerateFunctions(mod);
+		final Context ctx = mock(Context.class);
 		//
-		final DotExpression       expr = new DotExpression(x_ident, foo_ident);
-		final InstructionArgument xx   = gen.simplify_expression(expr, gf, ctx);
+		final DotExpression expr = new DotExpression(x_ident, foo_ident);
+		final InstructionArgument xx = gen.simplify_expression(expr, gf, ctx);
 		//
 		@NotNull
 		final IdentTableEntry x_ite = gf.getIdentTableEntry(0); // x
@@ -118,7 +117,7 @@ public class GetIdentIAPathTest_ForC {
 		foo_ite.setResolvedElement(foo_vs);
 		//
 		final IdentIA ident_ia = (IdentIA) xx;
-		final String  x        = getIdentIAPath(ident_ia, gf);
+		final String x = getIdentIAPath(ident_ia, gf);
 //		Assert.assertEquals("vvx->vmfoo", x);  // TODO real expectation, IOW output below is wrong
 		// TODO actually compiler should comlain that it can't find x
 		Assert.assertEquals("->vmx->vmfoo", x);
@@ -126,7 +125,7 @@ public class GetIdentIAPathTest_ForC {
 
 	@Test
 	public void testManualXDotFoo3() {
-		final IdentExpression          x_ident   = Helpers.string_to_ident("x");
+		final IdentExpression x_ident = Helpers.string_to_ident("x");
 		@NotNull
 		final IdentExpression foo_ident = Helpers.string_to_ident("foo");
 		//
@@ -135,30 +134,29 @@ public class GetIdentIAPathTest_ForC {
 		final Compilation c = b.comp;
 //		final OS_Module mod = b.defaultMod();
 
-		final AccessBus         ab            = new AccessBus(c);
-		final PipelineLogic     pl            = new PipelineLogic(ab);
+		final AccessBus ab = new AccessBus(c);
+		final PipelineLogic pl = new PipelineLogic(ab);
 		final GeneratePhase generatePhase = pl.getGeneratePhase();
-		final GenerateFunctions gen           = generatePhase.getGenerateFunctions(mod);
-		final Context           ctx           = mock(Context.class);
+		final GenerateFunctions gen = generatePhase.getGenerateFunctions(mod);
+		final Context ctx = mock(Context.class);
 		//
-		final OS_Type        type      = null;
-		final TypeTableEntry tte       = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, type, x_ident);
-		final int            int_index = gf.addVariableTableEntry("x", VariableTableType.VAR, tte, mock(VariableStatement.class));
+		final OS_Type type = null;
+		final TypeTableEntry tte = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, type, x_ident);
+		final int int_index = gf.addVariableTableEntry("x", VariableTableType.VAR, tte, mock(VariableStatement.class));
 		//
-		final DotExpression       expr = new DotExpression(x_ident, foo_ident);
-		final InstructionArgument xx   = gen.simplify_expression(expr, gf, ctx);
+		final DotExpression expr = new DotExpression(x_ident, foo_ident);
+		final InstructionArgument xx = gen.simplify_expression(expr, gf, ctx);
 		//
-/*
-		int ite_index = gf.addIdentTableEntry(foo_ident);
-		IdentTableEntry ite = gf.getIdentTableEntry(ite_index);
-		ite.backlink = new IntegerIA(int_index);
-*/
+		/*
+		 * int ite_index = gf.addIdentTableEntry(foo_ident); IdentTableEntry ite =
+		 * gf.getIdentTableEntry(ite_index); ite.backlink = new IntegerIA(int_index);
+		 */
 		final VariableSequence vsq = new VariableSequence(null);
 		vsq.setParent(mock(ClassStatement.class));
 		final VariableStatement foo_vs = new VariableStatement(vsq);
 		foo_vs.setName(foo_ident);
 
-		final IdentIA                  ident_ia = (IdentIA) xx;
+		final IdentIA ident_ia = (IdentIA) xx;
 		@NotNull
 		final IdentTableEntry ite = ((IdentIA) xx).getEntry();
 		ite.setResolvedElement(foo_vs);
@@ -175,10 +173,10 @@ public class GetIdentIAPathTest_ForC {
 		@NotNull
 		final IdentExpression foo_ident = Helpers.string_to_ident("foo");
 		//
-		final Context ctx         = mock(Context.class);
+		final Context ctx = mock(Context.class);
 		final Context mockContext = mock(Context.class);
 
-		final LookupResultList lrl  = new LookupResultList();
+		final LookupResultList lrl = new LookupResultList();
 		final LookupResultList lrl2 = new LookupResultList();
 
 		expect(mod.pullPackageName()).andReturn(OS_Package.default_package);
@@ -213,9 +211,9 @@ public class GetIdentIAPathTest_ForC {
 		//
 
 		//
-		final OS_Type        type      = new OS_UserClassType(classStatement);
-		final TypeTableEntry tte       = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, type, x_ident);
-		final int            int_index = gf.addVariableTableEntry("x", VariableTableType.VAR, tte, mock(VariableStatement.class));
+		final OS_Type type = new OS_UserClassType(classStatement);
+		final TypeTableEntry tte = gf.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, type, x_ident);
+		final int int_index = gf.addVariableTableEntry("x", VariableTableType.VAR, tte, mock(VariableStatement.class));
 		//
 		final DotExpression expr = new DotExpression(x_ident, foo_ident);
 		//
@@ -224,22 +222,22 @@ public class GetIdentIAPathTest_ForC {
 		final Compilation c = b.comp;
 //		final OS_Module mod = b.defaultMod();
 
-		final AccessBus           ab            = new AccessBus(c);
-		final PipelineLogic       pl            = new PipelineLogic(ab);
+		final AccessBus ab = new AccessBus(c);
+		final PipelineLogic pl = new PipelineLogic(ab);
 		final GeneratePhase generatePhase = pl.getGeneratePhase();
-		final GenerateFunctions   gen           = generatePhase.getGenerateFunctions(mod);
-		final InstructionArgument xx            = gen.simplify_expression(expr, gf, ctx);
+		final GenerateFunctions gen = generatePhase.getGenerateFunctions(mod);
+		final InstructionArgument xx = gen.simplify_expression(expr, gf, ctx);
 
 		//
 		// This is the Deduce portion.
 		// Not very extensive is it?
 		//
-		final IdentIA         ident_ia = (IdentIA) xx;
-		final IdentTableEntry ite      = ident_ia.getEntry();
+		final IdentIA ident_ia = (IdentIA) xx;
+		final IdentTableEntry ite = ident_ia.getEntry();
 		ite.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(functionDef));
 
 		final TypeTableEntry tte1 = new TypeTableEntry(0, TypeTableEntry.Type.TRANSIENT, null, expr, null);
-		final ProcTableEntry pte  = new ProcTableEntry(0, expr, new IntegerIA(0, gf), List_of(tte1));
+		final ProcTableEntry pte = new ProcTableEntry(0, expr, new IntegerIA(0, gf), List_of(tte1));
 		ite.setCallablePTE(pte);
 
 		// This assumes we want a function call

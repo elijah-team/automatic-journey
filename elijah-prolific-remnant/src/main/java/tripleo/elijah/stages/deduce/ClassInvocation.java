@@ -21,10 +21,10 @@ import java.util.*;
  * Created 3/5/21 3:51 AM
  */
 public class ClassInvocation implements IInvocation {
-	public final @Nullable Map<TypeName, OS_Type>                     genericPart;
-	private final @NotNull ClassStatement                             cls;
-	private final          String                                     constructorName;
-	private final          DeferredObject<GeneratedClass, Void, Void> resolvePromise = new DeferredObject<GeneratedClass, Void, Void>();
+	public final @Nullable Map<TypeName, OS_Type> genericPart;
+	private final @NotNull ClassStatement cls;
+	private final String constructorName;
+	private final DeferredObject<GeneratedClass, Void, Void> resolvePromise = new DeferredObject<GeneratedClass, Void, Void>();
 
 	public ClassInvocation(@NotNull final ClassStatement aClassStatement, final String aConstructorName) {
 		cls = aClassStatement;

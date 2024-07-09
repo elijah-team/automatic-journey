@@ -13,30 +13,28 @@ import java.util.*;
 public abstract class AbstractTypeName implements NormalTypeName {
 
 	protected TypeModifiers tm;
-	protected boolean   pr_constant;
-	protected boolean   pr_reference;
-	protected boolean   pr_out;
-	protected boolean   pr_in;
+	protected boolean pr_constant;
+	protected boolean pr_reference;
+	protected boolean pr_out;
+	protected boolean pr_in;
 	protected Qualident pr_name;
 	private boolean isNullable = false;
 
 	@Override
 	public boolean isNull() {
-		return !pr_constant && !pr_reference && !pr_out && !pr_in
-		  && (pr_name == null);
+		return !pr_constant && !pr_reference && !pr_out && !pr_in && (pr_name == null);
 	}
 
 	@Override
 	public boolean equals(final Object o) {
-		if (this == o) return true;
-		if (!(o instanceof final NormalTypeName that)) return false;
-		return getConstant() == that.getConstant() &&
-		  getReference() == that.getReference() &&
-		  getOut() == that.getOut() &&
-		  getIn() == that.getIn() &&
+		if (this == o)
+			return true;
+		if (!(o instanceof final NormalTypeName that))
+			return false;
+		return getConstant() == that.getConstant() && getReference() == that.getReference() && getOut() == that.getOut()
+				&& getIn() == that.getIn() &&
 //				type == that.type &&
-		  getModifiers().containsAll(that.getModifiers()) &&
-		  getName().equals(that.getName());
+				getModifiers().containsAll(that.getModifiers()) && getName().equals(that.getName());
 	}
 
 	@Override

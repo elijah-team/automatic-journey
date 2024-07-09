@@ -15,13 +15,13 @@ import tripleo.elijah_fluffy.util.*;
 
 public class VariableReferenceNode3 implements IExpressionNode {
 
-	private final String  _name;
-	private final Node    _container;
+	private final String _name;
+	private final Node _container;
 	private final TypeRef _typeRef;
 
 	public VariableReferenceNode3(final String name, final Node container, final TypeRef typeRef) {
-		this._name      = name;
-		_typeRef        = typeRef;
+		this._name = name;
+		_typeRef = typeRef;
 		this._container = container;
 	}
 
@@ -57,7 +57,7 @@ public class VariableReferenceNode3 implements IExpressionNode {
 
 	@Override
 	public boolean is_simple() {
-		return true; //is_const_expr() || is_underscore(); // TODO only handles simple varrefs
+		return true; // is_const_expr() || is_underscore(); // TODO only handles simple varrefs
 	}
 
 	@Override
@@ -67,7 +67,8 @@ public class VariableReferenceNode3 implements IExpressionNode {
 
 	@Contract(pure = true)
 	private char a() {
-		if (_container == null) throw new IllegalStateException("null _container in VarRefNode3");
+		if (_container == null)
+			throw new IllegalStateException("null _container in VarRefNode3");
 		//
 		if (_container instanceof MethHdrNode)
 			return 'a';

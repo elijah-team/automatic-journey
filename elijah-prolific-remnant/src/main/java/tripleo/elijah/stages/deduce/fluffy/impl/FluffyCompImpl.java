@@ -10,7 +10,7 @@ import java.util.*;
 
 public class FluffyCompImpl implements FluffyComp {
 
-	private final CompilationImpl              _comp;
+	private final CompilationImpl _comp;
 	private final Map<OS_Module, FluffyModule> fluffyModuleMap = new HashMap<>();
 
 	public FluffyCompImpl(final CompilationImpl aComp) {

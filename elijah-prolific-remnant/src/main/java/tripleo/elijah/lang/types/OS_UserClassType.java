@@ -39,16 +39,19 @@ public class OS_UserClassType extends __Abstract_OS_Type {
 	}
 
 	@NotNull
-	public ClassInvocation resolvedUserClass(final @NotNull GenType genType,
-	                                         final TypeName aGenericTypeName,
-	                                         final DCC dcc) {
-		final ClassStatement   best            = _classStatement;
-		@Nullable final String constructorName = null; // TODO what to do about this, nothing I guess
+	public ClassInvocation resolvedUserClass(final @NotNull GenType genType, final TypeName aGenericTypeName,
+			final DCC dcc) {
+		final ClassStatement best = _classStatement;
+		@Nullable
+		final String constructorName = null; // TODO what to do about this, nothing I guess
 
 		final Supplier<IInvocation> supplier = () -> {
-			@Nullable ClassInvocation clsinv1;
-			clsinv1 = ClassInvocationMake.withGenericPart(best, constructorName, (NormalTypeName) aGenericTypeName, dcc);
-			if (clsinv1 == null) return null;
+			@Nullable
+			ClassInvocation clsinv1;
+			clsinv1 = ClassInvocationMake.withGenericPart(best, constructorName, (NormalTypeName) aGenericTypeName,
+					dcc);
+			if (clsinv1 == null)
+				return null;
 			clsinv1 = dcc.phase().registerClassInvocation(clsinv1);
 			return clsinv1;
 		};

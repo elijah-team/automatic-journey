@@ -6,10 +6,10 @@ import tripleo.elijah.nextgen.outputtree.*;
 import java.util.*;
 
 public class Finally {
-	private final Set<Outs>    outputOffs = new HashSet<>();
-	private final List<Input>  inputs  = new ArrayList<>();
+	private final Set<Outs> outputOffs = new HashSet<>();
+	private final List<Input> inputs = new ArrayList<>();
 	private final List<Output> outputs = new ArrayList<>();
-	private       boolean      turnAllOutputOff;
+	private boolean turnAllOutputOff;
 
 	public void turnOutputOff(final Outs aOut) {
 		outputOffs.add(aOut);
@@ -47,7 +47,10 @@ public class Finally {
 		outputs.add(new Output(aFileNameProvider, aOff));
 	}
 
-	public enum Outs {Out_6262, Out_727, Out_350, Out_364, Out_252, Out_2121, Out_486, Out_5757, Out_1069, Out_141, Out_EVTE_159, Out_401b}
+	public enum Outs {
+		Out_6262, Out_727, Out_350, Out_364, Out_252, Out_2121, Out_486, Out_5757, Out_1069, Out_141, Out_EVTE_159,
+		Out_401b
+	}
 
 	public enum Out2 {
 		EZ, ELIJAH
@@ -64,7 +67,7 @@ public class Finally {
 
 		public Input(final Nameable aNameable, final Out2 aTy) {
 			nameable = aNameable;
-			ty       = aTy;
+			ty = aTy;
 		}
 
 		public Input(final CompilerInput aInp, final Out2 aTy) {
@@ -74,7 +77,7 @@ public class Finally {
 					return aInp.getInp();
 				}
 			};
-			ty  = aTy;
+			ty = aTy;
 		}
 
 		public Input(final CompFactory.InputRequest aInp, final Out2 aTy) {
@@ -89,10 +92,7 @@ public class Finally {
 
 		@Override
 		public String toString() {
-			return "Input{" +
-			  "name=" + nameable.getName() +
-			  ", ty=" + ty +
-			  '}';
+			return "Input{" + "name=" + nameable.getName() + ", ty=" + ty + '}';
 		}
 
 		public String name() {
@@ -106,7 +106,7 @@ public class Finally {
 
 		public Output(final EOT_OutputFile.FileNameProvider aFileNameProvider, final EOT_OutputFile aOff) {
 			fileNameProvider = aFileNameProvider;
-			off              = aOff;
+			off = aOff;
 		}
 
 		public String name() {
