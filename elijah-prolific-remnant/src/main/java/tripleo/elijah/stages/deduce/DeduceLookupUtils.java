@@ -139,7 +139,7 @@ public class DeduceLookupUtils {
 			if (t.getResolved() == null)
 				return new LookupResultList(); // TODO is this right?? feb 20
 			final LookupResultList lrl = t.getResolved().getElement()/* .getParent() */.getContext()
-					.lookup(((IdentExpression) ss).getText());
+			                              .lookup(((IdentExpression) ss).getText());
 			return lrl;
 		}
 	}

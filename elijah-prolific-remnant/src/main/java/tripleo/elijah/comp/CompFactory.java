@@ -4,7 +4,8 @@ import org.jetbrains.annotations.*;
 import tripleo.elijah.ci.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.nextgen.inputtree.*;
-import tripleo.elijah.nextgen.query.*;
+
+import tripleo.elijah.util.*;
 import tripleo.elijah.world.i.*;
 
 import java.io.*;
@@ -23,8 +24,8 @@ public interface CompFactory {
 	class InputRequest {
 		private final File _file;
 		private final boolean _do_out;
-		private final LibraryStatementPart lsp;
-		private Operation2<WorldModule> op;
+		private final LibraryStatementPart    lsp;
+		private       Operation2<WorldModule> op;
 
 		public InputRequest(final File aFile, final boolean aDoOut, final @Nullable LibraryStatementPart aLsp) {
 			_file = aFile;

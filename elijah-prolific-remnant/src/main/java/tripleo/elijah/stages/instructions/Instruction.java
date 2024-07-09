@@ -10,6 +10,7 @@ package tripleo.elijah.stages.instructions;
 
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah_fluffy.util.*;
 
 import java.util.*;
 
@@ -62,6 +63,11 @@ public class Instruction {
 
 	public int getArgsSize() {
 		return args.size();
+	}
+
+	public Eventual<InstructionArgument> getArg2(final int aI) {
+		assert false;
+		return null;
 	}
 
 //	public List<InstructionArgument> getArgs() {

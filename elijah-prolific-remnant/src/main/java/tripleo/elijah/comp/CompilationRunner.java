@@ -8,8 +8,8 @@ import tripleo.elijah.comp.i.*;
 import tripleo.elijah.comp.internal.*;
 import tripleo.elijah.comp.specs.*;
 import tripleo.elijah.diagnostic.*;
-import tripleo.elijah.nextgen.query.*;
 import tripleo.elijah.stages.deduce.post_bytecode.*;
+import tripleo.elijah.util.*;
 import tripleo.elijah_prolific.comp_signals.*;
 import tripleo.elijah_remnant.startup.*;
 
@@ -189,7 +189,7 @@ public class CompilationRunner {
 
 	private @NotNull List<CompilerInstructions> searchEzFiles(final @NotNull File directory, final ErrSink errSink,
 			final IO io, final Compilation c) {
-		final QuerySearchEzFiles q = new QuerySearchEzFiles(c, errSink, io, this);
+		final QuerySearchEzFiles                     q    = new QuerySearchEzFiles(c, errSink, io, this);
 		final Operation2<List<CompilerInstructions>> olci = q.process(directory);
 
 		if (olci.mode() == Mode.SUCCESS) {

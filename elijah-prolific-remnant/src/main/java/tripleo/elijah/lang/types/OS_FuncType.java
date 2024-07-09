@@ -13,7 +13,7 @@
 package tripleo.elijah.lang.types;
 
 import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.i.*;
+import tripleo.elijah.comp.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.ClassInvocation;
 import tripleo.elijah.stages.deduce.DeducePhase;
@@ -52,7 +52,7 @@ public class OS_FuncType extends __Abstract_OS_Type {
 
 	@NotNull
 	public ClassInvocation resolvedFunction(final @NotNull GenType genType, final TypeName aGenericTypeName,
-			final DeduceTypes2 deduceTypes2, final ErrSink errSink, final DeducePhase phase) {
+	                                        final DeduceTypes2 deduceTypes2, final ErrSink errSink, final DeducePhase phase) {
 		// TODO what to do here?
 		final OS_Element ele = function_def;
 		final @Nullable ClassStatement best = (ClassStatement) ele.getParent();// genType.resolved.getClassOf();
@@ -64,8 +64,7 @@ public class OS_FuncType extends __Abstract_OS_Type {
 		@Nullable
 		ClassInvocation clsinv;
 		if (genType.getCi() == null) {
-			clsinv = ClassInvocationMake.withGenericPart(best, constructorName, (NormalTypeName) aGenericTypeName,
-					deduceTypes2, errSink);
+			clsinv = ClassInvocationMake.withGenericPart(best, constructorName, (NormalTypeName) aGenericTypeName, deduceTypes2.dcc());
 			if (clsinv == null)
 				return null;
 			clsinv = phase.registerClassInvocation(clsinv);

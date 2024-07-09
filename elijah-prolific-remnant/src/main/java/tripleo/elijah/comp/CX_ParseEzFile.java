@@ -4,14 +4,14 @@ import antlr.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.ci.*;
 import tripleo.elijah.comp.specs.*;
-import tripleo.elijah.nextgen.query.*;
+import tripleo.elijah.util.*;
 import tripleo.elijjah.*;
 
 import java.io.*;
 
 class CX_ParseEzFile {
 	public static Operation<CompilerInstructions> parseAndCache(final EzSpec aSpec, final EzCache aEzCache,
-			final String absolutePath) {
+	                                                            final String absolutePath) {
 		final Operation<CompilerInstructions> cio = parseEzFile_(aSpec);
 
 		if (cio.mode() == Mode.SUCCESS) {

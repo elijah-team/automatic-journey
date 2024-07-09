@@ -2,7 +2,6 @@ package tripleo.elijah_prolific.comp_signals;
 
 import org.apache.commons.lang3.tuple.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.ICompilationBus;
 import tripleo.elijah.comp.i.*;
 
 import java.util.*;

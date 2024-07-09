@@ -9,7 +9,7 @@ import tripleo.elijah.stages.deduce.ClassInvocation;
 import tripleo.elijah.stages.deduce.DeducePhase;
 import tripleo.elijah.stages.deduce.DeduceTypes2;
 import tripleo.elijah.stages.gen_fn.GenType;
-import tripleo.elijah_fluffy.deduce.*;
+import tripleo.elijah_durable_prolific.deduce.*;
 
 import java.text.*;
 import java.util.function.*;
@@ -39,8 +39,9 @@ public class OS_UserClassType extends __Abstract_OS_Type {
 	}
 
 	@NotNull
-	public ClassInvocation resolvedUserClass(final @NotNull GenType genType, final TypeName aGenericTypeName,
-			final DCC dcc) {
+	public ClassInvocation resolvedUserClass(final @NotNull GenType genType,
+	                                         final TypeName aGenericTypeName,
+	                                         final DCC dcc) {
 		final ClassStatement best = _classStatement;
 		@Nullable
 		final String constructorName = null; // TODO what to do about this, nothing I guess
@@ -49,7 +50,7 @@ public class OS_UserClassType extends __Abstract_OS_Type {
 			@Nullable
 			ClassInvocation clsinv1;
 			clsinv1 = ClassInvocationMake.withGenericPart(best, constructorName, (NormalTypeName) aGenericTypeName,
-					dcc);
+			                                              dcc);
 			if (clsinv1 == null)
 				return null;
 			clsinv1 = dcc.phase().registerClassInvocation(clsinv1);

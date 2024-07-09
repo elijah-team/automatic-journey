@@ -170,7 +170,7 @@ public class VTE_TypePromises {
 			@Override
 			public void onDone(@NotNull final GenType result) {
 				final boolean found1 = aDeduceTypes2.lookup_name_calls(result.getResolved().getClassOf().getContext(), pn,
-						pte);
+				                                                       pte);
 				if (found1) {
 					final int y = 2;
 //					tripleo.elijah.util.Stupidity.println2("3071 "+pte.getStatus());

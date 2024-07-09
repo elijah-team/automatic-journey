@@ -58,7 +58,7 @@ public class WriteMesonPipeline implements PipelineMember, @NotNull Consumer<Sup
 	}
 
 	private void pl_slot(final PipelineLogic pll) {
-		grs = pll.__ab::getGr;
+		grs = pll.get__ab()::getGr;
 	}
 
 	private void write_makefiles_action(final Multimap<CompilerInstructions, String> lsp_outputs) {

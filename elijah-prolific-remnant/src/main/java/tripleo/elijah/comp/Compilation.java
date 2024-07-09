@@ -21,7 +21,7 @@ import tripleo.elijah.comp.functionality.f202.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.nextgen.inputtree.*;
 import tripleo.elijah.nextgen.outputtree.*;
-import tripleo.elijah.nextgen.query.*;
+
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.deduce.fluffy.i.*;
 import tripleo.elijah.stages.gen_fn.*;
