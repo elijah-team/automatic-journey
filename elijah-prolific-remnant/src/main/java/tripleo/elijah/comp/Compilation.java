@@ -37,59 +37,30 @@ import java.io.File;
 import java.util.*;
 
 public abstract class Compilation {
-
-	public final List<ElLog> elLogs = new LinkedList<ElLog>();
-	public final CompilationConfig cfg = new CompilationConfig();
-	public final EDR_CIS _cis = new EDR_CIS();
-	public final DefaultLivingRepo _repo = new DefaultLivingRepo();
-	final EDR_MOD mod = new EDR_MOD();
-	private final Pipeline pipelines;
-	private final int _compilationNumber;
-	private final ErrSink errSink;
-	private final IO io;
-	private final USE use = new USE(this);
-	private final CompFactory _con = new CompFactory() {
-		@Override
-		public @NotNull EIT_ModuleInput createModuleInput(final OS_Module aModule) {
-			return new EIT_ModuleInput(aModule, Compilation.this);
-		}
-
-		@Override
-		public @NotNull Qualident createQualident(final @NotNull List<String> sl) {
-			var R = new Qualident();
-			for (String s : sl) {
-				R.append(Helpers.string_to_ident(s));
-			}
-			return R;
-		}
-
-		@Override
-		public @NotNull InputRequest createInputRequest(final File aFile, final boolean aDo_out,
-				final @Nullable LibraryStatementPart aLsp) {
-			return new InputRequest(aFile, aDo_out, aLsp);
-		}
-
-		@Override
-		public @NotNull WorldModule createWorldModule(final OS_Module m) {
-			CompilationEnclosure ce = getCompilationEnclosure();
-			final WorldModule R = new DefaultWorldModule(m, ce);
-
-			return R;
-		}
-	};
-	private final Eventual<File> _m_comp_dir_promise = new Eventual<>();
-	private final Finally _f = new Finally();
-	public PipelineLogic pipelineLogic;
-	public CompilerInstructionsObserver _cio;
-	public CompilationRunner __cr;
-	private CompilerInstructions rootCI;
-	private World world;
+	public final  List<ElLog>                  elLogs              = new LinkedList<ElLog>();
+	public final  CompilationConfig            cfg                 = new CompilationConfig();
+	public final  EDR_CIS                      _cis                = new EDR_CIS();
+	public final  DefaultLivingRepo            _repo               = new DefaultLivingRepo();
+	final         EDR_MOD                      mod                 = new EDR_MOD();
+	private final Pipeline                     pipelines;
+	private final int                          _compilationNumber;
+	private final ErrSink                      errSink;
+	private final IO                           io;
+	private final USE                          use                 = new USE(this);
+	private final CompFactory                  _con                = new DefaultCompFactory();
+	private final Eventual<File>               _m_comp_dir_promise = new Eventual<>();
+	private final Finally                      _f                  = new Finally();
+	public        PipelineLogic                pipelineLogic;
+	public        CompilerInstructionsObserver _cio;
+	public        CompilationRunner            __cr;
+	private       CompilerInstructions         rootCI;
+	private       World                        world;
 
 	public Compilation(final @NotNull ErrSink aErrSink, final IO aIO) {
-		errSink = aErrSink;
-		io = aIO;
+		errSink            = aErrSink;
+		io                 = aIO;
 		_compilationNumber = new Random().nextInt(Integer.MAX_VALUE);
-		pipelines = new Pipeline(aErrSink);
+		pipelines          = new Pipeline(aErrSink);
 	}
 
 	public static ElLog.Verbosity gitlabCIVerbosity() {
@@ -280,9 +251,9 @@ public abstract class Compilation {
 	}
 
 	public Operation<CM_Prelude> findPrelude2(final @NotNull CM_Preludes aPreludeTag) {
-		final CM_Prelude result;
-		final tripleo.elijah.util.Operation2<OS_Module> x = findPrelude(aPreludeTag.getName());
-		final var _c = this;
+		final CM_Prelude                                result;
+		final tripleo.elijah.util.Operation2<OS_Module> x  = findPrelude(aPreludeTag.getName());
+		final var                                       _c = this;
 		result = new CM_Prelude() {
 			@Override
 			public OS_Module getModule() {
@@ -324,12 +295,12 @@ public abstract class Compilation {
 
 	@SuppressWarnings("UnusedReturnValue")
 	public <T, U> File inputFile(final File aDirectory, final String aFileName,
-			final /* BiFunction<Consumer<T>, Consumer<U>, Void> */ _Inputter2<CompilerInstructions> func) {
+	                             final /* BiFunction<Consumer<T>, Consumer<U>, Void> */ _Inputter2<CompilerInstructions> func) {
 		// noinspection unchecked
 		final T[] t = (T[]) new Object[1];
 		// noinspection unchecked
-		final U[] diag = (U[]) new Object[1];
-		final File f = new File(aDirectory, aFileName);
+		final U[]  diag = (U[]) new Object[1];
+		final File f    = new File(aDirectory, aFileName);
 		func.acceptFile(f);
 		// noinspection unchecked
 		func.apply(tt -> t[0] = (T) tt, uu -> diag[0] = (U) uu);
@@ -337,14 +308,14 @@ public abstract class Compilation {
 	}
 
 	static class CompilationConfig {
-		public boolean do_out;
-		public Stages stage = Stages.O; // Output
+		public    boolean do_out;
+		public    Stages  stage  = Stages.O; // Output
 		protected boolean silent = false;
 		boolean showTree = false;
 	}
 
 	public static class CompilationAlways {
-		public static boolean VOODOO = false;
+		public static boolean     VOODOO          = false;
 		public static CM_Preludes _defaultPrelude = CM_Preludes.C;
 
 		/**
@@ -359,6 +330,36 @@ public abstract class Compilation {
 	public static class World {
 		public void subscribeLgc(DoneCallback<CWS_LGC> consumer) {
 //		lgcsub.
+		}
+	}
+
+	private class DefaultCompFactory implements CompFactory {
+		@Override
+		public @NotNull EIT_ModuleInput createModuleInput(final OS_Module aModule) {
+			return new EIT_ModuleInput(aModule, Compilation.this);
+		}
+
+		@Override
+		public @NotNull Qualident createQualident(final @NotNull List<String> sl) {
+			var R = new Qualident();
+			for (String s : sl) {
+				R.append(Helpers.string_to_ident(s));
+			}
+			return R;
+		}
+
+		@Override
+		public @NotNull InputRequest createInputRequest(final File aFile, final boolean aDo_out,
+		                                                final @Nullable LibraryStatementPart aLsp) {
+			return new InputRequest(aFile, aDo_out, aLsp);
+		}
+
+		@Override
+		public @NotNull WorldModule createWorldModule(final OS_Module m) {
+			CompilationEnclosure ce = getCompilationEnclosure();
+			final WorldModule    R  = new DefaultWorldModule(m, ce);
+
+			return R;
 		}
 	}
 }
