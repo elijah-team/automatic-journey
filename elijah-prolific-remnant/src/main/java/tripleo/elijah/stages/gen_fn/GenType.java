@@ -271,16 +271,16 @@ public class GenType {
 			if (genType.getResolved() != null) {
 				final OS_Type.Type type = genType.getResolved().getType();
 				switch (type) {
-				case USER_CLASS:
-					return ((OS_UserClassType) genType.getResolved()).resolvedUserClass(genType, aGenericTypeName, phase,
-					                                                                    deduceTypes2, errSink);
-				case FUNCTION:
-					return ((OS_FuncType) genType.getResolved()).resolvedFunction(genType, aGenericTypeName, deduceTypes2,
-					                                                              errSink, phase);
-				case FUNC_EXPR:
-					// TODO what to do here?
-					final int y = 2;
-					break;
+					case USER_CLASS -> {
+						return ((OS_UserClassType) genType.getResolved()).resolvedUserClass(genType, aGenericTypeName, deduceTypes2.dcc());
+					}
+					case FUNCTION -> {
+						return ((OS_FuncType) genType.getResolved()).resolvedFunction(genType, aGenericTypeName, deduceTypes2, errSink, phase);
+					}
+					case FUNC_EXPR -> {
+						// TODO what to do here?
+						final int y = 2;
+					}
 				}
 			}
 			return null;
@@ -301,8 +301,7 @@ public class GenType {
 			case USER_CLASS:
 				final @NotNull ClassStatement best = genType.getResolved().getClassOf();
 				//
-				ClassInvocation clsinv2 = ClassInvocationMake.withGenericPart(best, constructorName, aTyn1,
-				                                                              deduceTypes2, errSink);
+				ClassInvocation clsinv2 = ClassInvocationMake.withGenericPart(best, constructorName, aTyn1, deduceTypes2.dcc());
 				clsinv2 = phase.registerClassInvocation(clsinv2);
 				genType.setCi(clsinv2);
 				return clsinv2;
