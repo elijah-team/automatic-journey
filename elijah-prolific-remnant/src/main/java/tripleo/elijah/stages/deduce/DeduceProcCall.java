@@ -134,8 +134,7 @@ public class DeduceProcCall {
 				final NormalTypeName normalTypeName = (NormalTypeName) ((VariableStatement) element).typeName();
 				final LookupResultList lrl = normalTypeName.getContext().lookup(normalTypeName.getName());
 				final ClassStatement classStatement = (ClassStatement) lrl.chooseBest(null);
-				invocation = ClassInvocationMake.withGenericPart(classStatement, null, normalTypeName,
-				                                                 deduceTypes2, errSink);
+				invocation = ClassInvocationMake.withGenericPart(classStatement, null, normalTypeName, deduceTypes2.dcc());
 			}
 			anchor.setInvocation(invocation);
 		}
