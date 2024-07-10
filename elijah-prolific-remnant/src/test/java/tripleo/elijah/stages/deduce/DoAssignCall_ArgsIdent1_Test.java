@@ -11,7 +11,8 @@ import tripleo.elijah.lang2.BuiltInTypes;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.Instruction;
 import tripleo.elijah.stages.instructions.VariableTableType;
-import tripleo.elijah_fluffy.deduce.ElLog;
+import tripleo.elijah.stages.logging.*;
+import tripleo.elijah_durable_prolific.deduce.ElLog;
 import tripleo.elijah_fluffy.util.Helpers;
 import tripleo.elijah_remnant.rosetta.*;
 
@@ -65,11 +66,11 @@ public class DoAssignCall_ArgsIdent1_Test {
 			final TypeTableEntry    b1_type           = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, sts_int);
 			final OS_Type           b1_attached       = sts_int;
 			b1_type.setAttached(sts_int);
-			final int index_b1 = generatedFunction.addVariableTableEntry("b1", VariableTableType.VAR, b1_type, null);
-			final FunctionContext ctx = mock(FunctionContext.class);
+			final int             index_b1 = generatedFunction.addVariableTableEntry("b1", VariableTableType.VAR, b1_type, null);
+			final FunctionContext ctx      = mock(FunctionContext.class);
 
-			final LookupResultList lrl_b1 = new LookupResultList();
-			final VariableSequence vs = new VariableSequence();
+			final LookupResultList  lrl_b1 = new LookupResultList();
+			final VariableSequence  vs     = new VariableSequence();
 			final VariableStatement b1_var = new VariableStatement(vs);
 			b1_var.setName(Helpers.string_to_ident("b1"));
 			final Context b1_ctx = mock(Context.class);
@@ -80,25 +81,25 @@ public class DoAssignCall_ArgsIdent1_Test {
 			replay(fd, /* generatedFunction, */ ctx, b1_ctx);
 
 			final TypeTableEntry vte_tte = null;
-			final OS_Element el = null;
+			final OS_Element     el      = null;
 
-			final VariableTableEntry vte = generatedFunction.getVarTableEntry(index_self);
-			final int instructionIndex = -1;
-			final ProcTableEntry pte = new ProcTableEntry(-2, null, null, new ArrayList()/* List_of() */);
-			final int i = 0;
-			final TypeTableEntry tte = new TypeTableEntry(-3, TypeTableEntry.Type.SPECIFIED, null, null, null);
-			final IdentExpression identExpression = Helpers.string_to_ident("b1"); // TODO ctx
+			final VariableTableEntry vte              = generatedFunction.getVarTableEntry(index_self);
+			final int                instructionIndex = -1;
+			final ProcTableEntry     pte              = new ProcTableEntry(-2, null, null, new ArrayList()/* List_of() */);
+			final int                i                = 0;
+			final TypeTableEntry     tte              = new TypeTableEntry(-3, TypeTableEntry.Type.SPECIFIED, null, null, null);
+			final IdentExpression    identExpression  = Helpers.string_to_ident("b1"); // TODO ctx
 
 			d.do_assign_call_args_ident(generatedFunction, ctx, vte, instructionIndex, pte, i, tte, identExpression);
 
 			final Instruction instruction = null;
-			final Context fd_ctx = fd.getContext();
-			final Context context = generatedFunction.getContextFromPC(instruction.getIndex());
+			final Context     fd_ctx      = fd.getContext();
+			final Context     context     = generatedFunction.getContextFromPC(instruction.getIndex());
 
 			final _DT_Deducer1 d1 = new _DT_Deducer1(generatedFunction, fd, fd_ctx);
 			final _DT_Deducer2 d2 = new _DT_Deducer2(d1, instruction, context);
 
-			d.onExitFunction(d2, generatedFunction, ctx, ctx, new DCC(d._phase(), d, d._errSink()));
+			d.onExitFunction(d2, generatedFunction, ctx, ctx, new DCC(d, d._phase(), d._errSink()));
 
 			verify(mod, fd, /* generatedFunction, */ ctx);
 		});
