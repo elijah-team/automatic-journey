@@ -2466,8 +2466,14 @@ public class DeduceTypes2 {
 	}
 
 	public DCC dcc() {
-		return new DCC(this, this._phase());
+		return new DCC(this, this._phase(), this.errSink);
 	}
+
+	public void onExitFunction(final _DT_Deducer aD2, final GeneratedFunction aGeneratedFunction, final FunctionContext aCtx, final FunctionContext aCtx1, final DCC aDCC) {
+		onExitFunction(aGeneratedFunction, aCtx, aCtx1);
+	}
+
+	public interface _DT_Deducer {}
 
 	public void onExitFunction(final _DT_Deducer aD2,
 							   final GeneratedFunction aGeneratedFunction,
