@@ -144,7 +144,9 @@ public class VariableTableEntry extends BaseTableEntry1
 	public void setConstructable(final ProcTableEntry aPte) {
 		if (constructable_pte != aPte) {
 			constructable_pte = aPte;
-			constructableDeferred.resolve(constructable_pte);
+			if (constructableDeferred.isPending())
+				constructableDeferred.resolve(constructable_pte);
+			else System.err.println("[0998-0149] Double set");
 		}
 	}
 
