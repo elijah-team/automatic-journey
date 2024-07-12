@@ -1,9 +1,19 @@
 package tripleo.elijah_prolific.v;
 
 import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.comp.*;
+import tripleo.elijah.nextgen.inputtree.*;
+import tripleo.elijah.nextgen.outputstatement.*;
+import tripleo.elijah.nextgen.outputtree.*;
+import tripleo.elijah.stages.gen_generic.*;
 
 import java.io.*;
 import java.util.*;
+import java.io.*;
+import java.util.*;
+import java.util.stream.*;
+
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 public class V {
 	private static final List<String> logs = new ArrayList<>();
@@ -21,7 +31,7 @@ public class V {
 			final String ty = "" + ab.ty;
 //			stream.println(ty);
 			final String ou = ab.output;
-//			stream.println(ou);
+			stream.println(ou);
 			final String ns = ab.node.identityString();
 //			stream.println(ns);
 			final String bt = ab.buffer.getText();
@@ -31,19 +41,17 @@ public class V {
 		}
 	}
 
-	public static void exit() {
+	public static void exit(Compilation c) {
 		final String x = "{{V.exit}}";
 		addLog(x);
 
-		try {
-			final FileOutputStream out1 = new FileOutputStream("out");
-			final PrintStream out = new PrintStream(out1);
-			for (String log : logs) {
-				out.println(log);
-			}
-		} catch (IOException aE) {
-			// throw new RuntimeException(aE);
-			assert false;
+		{
+			final List<EIT_Input>                     inputs          = List_of();
+			final List<EG_Statement>                  sts             = logs.stream().map(EG_SingleStatement::new).collect(Collectors.toList());
+			final EG_SequenceFactory._SequenceBuilder sequenceBuilder = EG_SequenceFactory.newSequence().addParts(sts);
+			final EG_Statement                        seq             = sequenceBuilder.build();
+			final EOT_OutputFile                      off             = new EOT_OutputFile(c, inputs, "error-report.txt", EOT_OutputType.ERROR_REPORT, seq);
+			c.getOutputTree().add(off);
 		}
 	}
 

@@ -15,14 +15,17 @@ import java.util.List;
  * @author olu
  */
 public class EOT_OutputTree {
-	public List<EOT_OutputFile> list;
+	private List<EOT_OutputFile> list;
 
-	public void set(final List<EOT_OutputFile> aLeof) {
-		list = aLeof;
+	public void set(final List<EOT_OutputFile> aOutputFileList) {
+		if (list == null) {
+			list = new ArrayList<>();
+		}
+		list.addAll(aOutputFileList);
 	}
 
 	public void _putSeq(final String aKey, final Path aPath, final EG_Statement aStatement) {
-//		System.err.printf("[_putSeq] %s %s {{%s}}%n", aKey, aPath, aStatement.getExplanation().getText());
+		//System.err.printf("[_putSeq] %s %s {{%s}}%n", aKey, aPath, aStatement.getExplanation().getText());
 		V.asv(V.e._putSeq, aKey);
 	}
 
@@ -31,9 +34,20 @@ public class EOT_OutputTree {
 	}
 
 	public List<EOT_OutputFile> list() {
-		if (list == null)
+		//noinspection ReplaceNullCheck
+		if (list == null) {
 			// noinspection unchecked
 			return Collections.EMPTY_LIST;
+		}
+		return list;
+	}
+
+	public void add(final EOT_OutputFile aOutputFile) {
+		if (list == null) list = new ArrayList<>();
+		list.add(aOutputFile);
+	}
+
+	public List<EOT_OutputFile> getList() {
 		return list;
 	}
 }
