@@ -8,16 +8,20 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.junit.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.contexts.*;
+import org.junit.Assert;
+import org.junit.Test;
+import tripleo.elijah.comp.AccessBus;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.PipelineLogic;
+import tripleo.elijah.contexts.FunctionContext;
+import tripleo.elijah.contexts.ModuleContext;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.test_help.*;
-import tripleo.elijah_fluffy.comp.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.lang.types.OS_UserType;
+import tripleo.elijah.stages.gen_fn.GenType;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.test_help.Boilerplate;
+import tripleo.elijah_fluffy.comp.CM_Preludes;
+import tripleo.elijah_fluffy.util.Helpers;
 
 public class DeduceTypesTest2 {
 
@@ -77,7 +81,7 @@ public class DeduceTypesTest2 {
 
 	private boolean genTypeEquals(final GenType a, final GenType b) {
 		// TODO hack
-		return a.typeName.isEqual(b.typeName) &&
-		  a.resolved.isEqual(b.resolved);
+		return a.getTypeName().isEqual(b.getTypeName()) &&
+		  a.getResolved().isEqual(b.getResolved());
 	}
 }

@@ -8,24 +8,33 @@
  */
 package tripleo.elijah;
 
-import com.google.common.base.*;
-import com.google.common.io.*;
-import io.activej.test.rules.*;
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import tripleo.elijah.comp.*;
+import com.google.common.base.Charsets;
+import com.google.common.io.Files;
+import io.activej.test.rules.EventloopRule;
+import org.jdeferred2.Promise;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Assert;
+import org.junit.ClassRule;
+import org.junit.Test;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.comp.IO;
+import tripleo.elijah.comp.StdErrSink;
 import tripleo.elijah.factory.comp.CompilationFactory;
-import tripleo.elijah.nextgen.outputstatement.*;
-import tripleo.elijah.nextgen.outputtree.*;
+import tripleo.elijah.nextgen.outputstatement.EG_SequenceStatement;
+import tripleo.elijah.nextgen.outputstatement.EG_Statement;
+import tripleo.elijah.nextgen.outputtree.EOT_OutputTree;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.function.Predicate;
-import java.util.stream.*;
+import java.util.stream.Collectors;
 
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 /**
  * @author Tripleo(envy)
@@ -98,7 +107,7 @@ public class TestBasic {
 		if (c.errorCount() != 0)
 			System.err.printf("Error count should be 0 but is %d for %s%n", c.errorCount(), s);
 
-		Assert.assertEquals(12, c.getOutputTree().getList().size());
+		Assert.assertEquals(12, c.getOutputTree().list().size());
 		Assert.assertEquals(24, c.errorCount()); // TODO Error count obviously should be 0
 	}
 
@@ -133,11 +142,11 @@ public class TestBasic {
 
 		Assert.assertEquals(18, cot.size()); // TODO why not 6?
 
-		select(cot.getList(), f -> f.getFilename().equals("/main2/Main.h")).then(f -> {
+		select(cot.list(), f -> f.getFilename().equals("/main2/Main.h")).then(f -> {
 			final EG_SequenceStatement statementSequence = (EG_SequenceStatement) f.getStatementSequence();
 			System.out.println(_mapGetTextToSequence(statementSequence));
 		  });
-		select(cot.getList(), f -> f.getFilename().equals("/main2/Main.c")).then(f -> {
+		select(cot.list(), f -> f.getFilename().equals("/main2/Main.c")).then(f -> {
 			final EG_SequenceStatement statementSequence = (EG_SequenceStatement) f.getStatementSequence();
 			System.out.println(_mapGetTextToSequence(statementSequence));
 		  });
