@@ -20,31 +20,70 @@
         <maven-javadoc-plugin.version>3.0.0-M1</maven-javadoc-plugin.version>
         <jdeferred.version>2.0.0</jdeferred.version>
         <scala.version>2.12</scala.version>
+        <activej.version>6.0-SNAPSHOT</activej.version>
+<!--       <activej.version>5.5</activej.version>-->
     </properties>
 
     <dependencies>
         <dependency>
-            <groupId>ai.timefold.solver</groupId>
-            <artifactId>timefold-solver-core</artifactId>
-        </dependency>
-        <dependency>
-            <groupId>ai.timefold.solver</groupId>
-            <artifactId>timefold-solver-test</artifactId>
-            <scope>test</scope>
+            <groupId>io.activej</groupId>
+            <artifactId>activej-net</artifactId>
+            <version>6.0-beta2</version>
         </dependency>
 
         <dependency>
-            <groupId>com.typesafe.akka</groupId>
-<!--            <artifactId>akka-stream_${scala.version}</artifactId>-->
-            <artifactId>akka-stream_2.12</artifactId>
-            <!--            <version>${akkastreams.version}</version>-->
-            <version>2.8.4</version>
+            <groupId>io.activej</groupId>
+            <artifactId>activej-inject</artifactId>
+            <version>${activej.version}</version>
         </dependency>
         <dependency>
-            <groupId>com.typesafe.akka</groupId>
-            <artifactId>akka-stream-testkit_${scala.version}</artifactId>
-            <!--            <version>${akkastreams.version}</version>-->
-            <version>2.8.4</version>
+            <groupId>io.activej</groupId>
+            <artifactId>activej-launcher</artifactId>
+            <version>${activej.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.activej</groupId>
+            <artifactId>activej-csp</artifactId>
+            <version>${activej.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.activej</groupId>
+            <artifactId>activej-common</artifactId>
+            <version>${activej.version}</version>
+        </dependency>
+<!--
+        <dependency>
+            <groupId>io.activej</groupId>
+            <artifactId>activej-net</artifactId>
+            <version>${activej.version}</version>
+        </dependency>
+-->
+        <dependency>
+            <groupId>io.activej</groupId>
+            <artifactId>activej-http</artifactId>
+            <version>${activej.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.activej</groupId>
+            <artifactId>activej-eventloop</artifactId>
+            <version>${activej.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.activej</groupId>
+            <artifactId>activej-launchers-http</artifactId>
+            <version>${activej.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.activej</groupId>
+            <artifactId>activej-jmxapi</artifactId>
+            <version>${activej.version}</version>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>1.5.3</version>
+            <scope>test</scope>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind -->
@@ -54,18 +93,14 @@
             <version>2.17.0</version>
         </dependency>
 
+<!--c-->
         <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
             <version>4.12.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>io.undertow</groupId>
-            <artifactId>undertow-servlet</artifactId>
-            <version>2.3.12.Final</version>
-        </dependency>
+<!--/c-->
 
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -224,10 +259,10 @@
 
     <repositories>
         <!--
-                <repository>
-                    <id>gitlab-maven</id>
-                    <url>https://gitlab.com/api/v4/projects/${env.CI_PROJECT_ID}/packages/maven</url>
-                </repository>
+        <repository>
+            <id>gitlab-maven</id>
+            <url>https://gitlab.com/api/v4/projects/${env.CI_PROJECT_ID}/packages/maven</url>
+        </repository>
         -->
         <repository>
             <id>gitlab-maven-buffers</id>
@@ -241,56 +276,48 @@
             <id>central</id>
             <url>https://repo1.maven.org/maven2/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>ai.timefold.solver</groupId>
-                <artifactId>timefold-solver-bom</artifactId>
-                <version>1.8.1</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
     <distributionManagement>
+<!--
         <repository>
             <id>github</id>
             <name>GitHub elijah-team/fluffy-umbrella Apache Maven Packages</name>
             <url>https://maven.pkg.github.com/elijah-team/prolific-remnant</url>
         </repository>
-    </distributionManagement>
-
-
-    <!--
-    <distributionManagement>
+-->
+<!--
         <repository>
             <id>gitlab-maven</id>
             <url>https://gitlab.com/api/v4/projects/${env.CI_PROJECT_ID}/packages/maven</url>
         </repository>
-    </distributionManagement>
 -->
+    </distributionManagement>
 
     <build>
-        <!--
         <plugins>
-        <plugin>
-            <groupId>org.antlr</groupId>
-            <artifactId>antlr4-maven-plugin</artifactId>
-            <version>4.7.1</version>
-            <executions>
-                <execution>
-                    <goals>
-                        <goal>antlr4</goal>
-                    </goals>
-                </execution>
-            </executions>
-        </plugin>
-        </plugins>
-        -->
-        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-jar-plugin</artifactId>
 
+
+
+                <version>3.3.0</version>
+
+
+
+                <configuration>
+                    <archive>
+                        <manifestEntries>
+                            <Automatic-Module-Name>io.activej.launcher</Automatic-Module-Name>
+                        </manifestEntries>
+                    </archive>
+                </configuration>
+            </plugin>
 
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
@@ -307,7 +334,6 @@
                         <configuration>
                             <sources>
                                 <source>src-mal/java/</source>
-                                <source>src-undertow/java/</source>
                                 <source>src-cef/java/</source>
                             </sources>
                         </configuration>
@@ -340,8 +366,8 @@
                 <version>3.3.1</version>
                 <configuration>
                     <!--
-                                        <outputDirectory>/absolute/path/to/the/output/directory</outputDirectory>
-                                        <finalName>filename-of-generated-jar-file</finalName>
+                    <outputDirectory>/absolute/path/to/the/output/directory</outputDirectory>
+                    <finalName>filename-of-generated-jar-file</finalName>
                     -->
                     <attach>true</attach>
                 </configuration>
@@ -357,6 +383,15 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
+
+
+
+
+                <version>3.13.0</version>
+
+
+
+
                 <configuration>
                     <source>16</source>
                     <target>16</target>
