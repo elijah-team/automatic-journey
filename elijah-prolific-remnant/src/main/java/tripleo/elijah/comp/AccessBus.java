@@ -19,8 +19,8 @@ import java.util.function.*;
 import java.util.stream.*;
 
 public class AccessBus {
-	public final  GenerateResult                                  gr                    = new GenerateResult();
-	final         DeferredObject<GenerateResult, Void, Void>      generateResultPromise = new DeferredObject<>();
+	private final DeferredObject<GenerateResult, Void, Void>      generateResultPromise = new DeferredObject<>();
+	private final GenerateResult                                  gr                    = new GenerateResult();
 	private final Compilation                                     _c;
 	private final DeferredObject<PipelineLogic, Void, Void>       pipeLineLogicPromise  = new DeferredObject<>();
 	private final DeferredObject<List<GeneratedNode>, Void, Void> lgcPromise            = new DeferredObject<>();
@@ -146,6 +146,14 @@ public class AccessBus {
 		if (!(pipelinePlugins.containsKey(aPipelineName))) return null;
 
 		return pipelinePlugins.get(aPipelineName);
+	}
+
+	public GenerateResult getGr() {
+		return this.gr;
+	}
+
+	public DeferredObject<GenerateResult, Void, Void> getGenerateResultPromise() {
+		return generateResultPromise;
 	}
 
 	public interface AB_ModuleListListener {

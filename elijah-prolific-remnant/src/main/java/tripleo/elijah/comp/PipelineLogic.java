@@ -139,11 +139,15 @@ public class PipelineLogic implements AccessBus.AB_ModuleListListener {
 	}
 
 	public GenerateResult getGR() {
-		return __ab.gr;
+		return __ab.getGr();
 	}
 
 	public List<GeneratedNode> generatedClassesCopy() {
 		return dp.generatedClasses.copy();
+	}
+
+	public EIT_ModuleList mods() {
+		return this.mods;
 	}
 }
 

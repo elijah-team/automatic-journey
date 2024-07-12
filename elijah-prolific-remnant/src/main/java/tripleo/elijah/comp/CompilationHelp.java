@@ -166,7 +166,7 @@ class OStageProcess implements RuntimeProcess {
 	@Override
 	public void prepare() throws Exception {
 		Preconditions.checkNotNull(pr);
-		Preconditions.checkNotNull(pr.ab.gr);
+		Preconditions.checkNotNull(pr.ab.getGr());
 
 		final AccessBus ab = pr.ab;
 
