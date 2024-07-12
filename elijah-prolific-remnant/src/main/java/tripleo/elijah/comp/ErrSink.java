@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.comp;
 
-import tripleo.elijah.diagnostic.*;
+import tripleo.elijah.diagnostic.Diagnostic;
 
 public interface ErrSink {
 

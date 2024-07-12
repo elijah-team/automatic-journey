@@ -9,7 +9,7 @@
 
 package tripleo.elijah.comp.functionality.f202;
 
-import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.stages.logging.ElLog;
 
 /**
  * Created 8/11/21 5:49 AM

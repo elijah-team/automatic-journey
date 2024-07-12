@@ -8,11 +8,11 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.junit.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.factory.comp.*;
+import org.junit.Test;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.factory.comp.CompilationFactory;
 
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 /**
  * Created 3/5/21 4:32 AM

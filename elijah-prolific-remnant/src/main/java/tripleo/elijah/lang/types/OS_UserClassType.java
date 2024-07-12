@@ -1,20 +1,16 @@
 package tripleo.elijah.lang.types;
 
-import org.jetbrains.annotations.*;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.comp.ErrSink;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.ClassInvocation;
-import tripleo.elijah.stages.deduce.DeducePhase;
-import tripleo.elijah.stages.deduce.DeduceTypes2;
+import tripleo.elijah.stages.deduce.ClassInvocationMake;
+import tripleo.elijah.stages.deduce.IInvocation;
 import tripleo.elijah.stages.gen_fn.GenType;
-import tripleo.elijah_durable_prolific.deduce.*;
+import tripleo.elijah_durable_prolific.deduce.DCC;
 
-import java.text.*;
-import java.util.function.*;
 import java.text.MessageFormat;
-import java.util.List;
+import java.util.function.Supplier;
 
 public class OS_UserClassType extends __Abstract_OS_Type {
 	private final ClassStatement _classStatement;

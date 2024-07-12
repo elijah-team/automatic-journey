@@ -8,21 +8,30 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.entrypoints.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Assert;
+import org.junit.Test;
+import tripleo.elijah.comp.AccessBus;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.PipelineLogic;
+import tripleo.elijah.entrypoints.MainClassEntryPoint;
 import tripleo.elijah.factory.comp.CompilationFactory;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.work.*;
-import tripleo.elijah_fluffy.comp.*;
+import tripleo.elijah.lang.ClassStatement;
+import tripleo.elijah.lang.FunctionDef;
+import tripleo.elijah.lang.OS_Module;
+import tripleo.elijah.lang.OS_Type;
+import tripleo.elijah.stages.deduce.DeducePhase;
+import tripleo.elijah.stages.deduce.FunctionMapHook;
+import tripleo.elijah.stages.instructions.InstructionName;
+import tripleo.elijah.work.WorkManager;
+import tripleo.elijah_fluffy.comp.CM_Preludes;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 /**
  * Created 9/10/20 2:20 PM

@@ -25,18 +25,6 @@ import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.nextgen.outputstatement.EG_SequenceStatement;
 import tripleo.elijah.nextgen.outputstatement.EG_Statement;
 import tripleo.elijah.nextgen.outputtree.EOT_OutputTree;
-import com.google.common.base.*;
-import com.google.common.io.*;
-import io.activej.test.rules.*;
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.factory.comp.CompilationFactory;
-import tripleo.elijah.nextgen.outputstatement.*;
-import tripleo.elijah.nextgen.outputstatement.*;
-import tripleo.elijah.nextgen.outputtree.*;
 
 import java.io.File;
 import java.util.ArrayList;

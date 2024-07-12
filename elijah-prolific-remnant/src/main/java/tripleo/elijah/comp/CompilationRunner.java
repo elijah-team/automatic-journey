@@ -1,23 +1,33 @@
 package tripleo.elijah.comp;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.ci.*;
-import tripleo.elijah.comp.caches.*;
-import tripleo.elijah.comp.diagnostic.*;
-import tripleo.elijah.comp.i.*;
-import tripleo.elijah.comp.internal.*;
-import tripleo.elijah.comp.specs.*;
-import tripleo.elijah.diagnostic.*;
-import tripleo.elijah.stages.deduce.post_bytecode.*;
-import tripleo.elijah.util.*;
-import tripleo.elijah_prolific.comp_signals.*;
-import tripleo.elijah_remnant.startup.*;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.ci.CompilerInstructions;
+import tripleo.elijah.comp.caches.DefaultEzCache;
+import tripleo.elijah.comp.diagnostic.TooManyEz_ActuallyNone;
+import tripleo.elijah.comp.diagnostic.TooManyEz_BeSpecific;
+import tripleo.elijah.comp.i.ICompilationBus;
+import tripleo.elijah.comp.i.IProgressSink;
+import tripleo.elijah.comp.i.ProgressSinkComponent;
+import tripleo.elijah.comp.internal.ProcessRecord;
+import tripleo.elijah.comp.specs.EzCache;
+import tripleo.elijah.comp.specs.EzSpec;
+import tripleo.elijah.diagnostic.Diagnostic;
+import tripleo.elijah.stages.deduce.post_bytecode.Maybe;
+import tripleo.elijah.util.Mode;
+import tripleo.elijah.util.Operation2;
+import tripleo.elijah_prolific.comp_signals.CSS2_AlmostComplete;
+import tripleo.elijah_prolific.comp_signals.CSS2_CCI_Accept;
+import tripleo.elijah_remnant.startup.ProlificStartup2;
 
-import java.io.*;
-import java.util.*;
-import java.util.regex.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.List;
+import java.util.Optional;
+import java.util.regex.Pattern;
 
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 public class CompilationRunner {
 	private final Compilation compilation;

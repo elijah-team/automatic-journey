@@ -8,9 +8,9 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import org.eclipse.jdt.annotation.*;
-import tripleo.elijah.gen.*;
-import tripleo.elijah.lang.*;
+import org.eclipse.jdt.annotation.NonNull;
+import tripleo.elijah.gen.CompilerContext;
+import tripleo.elijah.lang.NumericExpression;
 
 public class CaseChoiceNode {
 

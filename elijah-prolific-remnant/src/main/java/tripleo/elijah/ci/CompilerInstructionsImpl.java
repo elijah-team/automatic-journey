@@ -8,13 +8,15 @@
  */
 package tripleo.elijah.ci;
 
-import antlr.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import antlr.Token;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.lang.IExpression;
+import tripleo.elijah.lang.StringExpression;
+import tripleo.elijah_fluffy.util.Helpers;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created 9/6/20 11:20 AM

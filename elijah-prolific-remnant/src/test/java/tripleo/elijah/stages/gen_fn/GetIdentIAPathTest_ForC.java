@@ -8,18 +8,28 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import tripleo.elijah.comp.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import tripleo.elijah.comp.AccessBus;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.PipelineLogic;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.stages.gen_c.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.test_help.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.lang.types.OS_UserClassType;
+import tripleo.elijah.stages.gen_c.CReference;
+import tripleo.elijah.stages.gen_c.Emit;
+import tripleo.elijah.stages.gen_c.Generate_Code_For_Method;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.stages.instructions.InstructionArgument;
+import tripleo.elijah.stages.instructions.IntegerIA;
+import tripleo.elijah.stages.instructions.VariableTableType;
+import tripleo.elijah.test_help.Boilerplate;
+import tripleo.elijah_fluffy.util.Helpers;
 
 import static org.easymock.EasyMock.*;
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 @Ignore
 public class GetIdentIAPathTest_ForC {

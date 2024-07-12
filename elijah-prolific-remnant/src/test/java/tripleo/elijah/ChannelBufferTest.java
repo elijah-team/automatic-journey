@@ -1,6 +1,6 @@
 package tripleo.elijah;
 
-import io.activej.csp.queue.*;
+import io.activej.csp.queue.ChannelBuffer;
 import io.activej.csp.supplier.ChannelSuppliers;
 import io.activej.test.rules.EventloopRule;
 import org.junit.ClassRule;

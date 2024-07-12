@@ -1,10 +1,14 @@
 package tripleo.elijah.gen.nodes;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.lang.ExpressionKind;
+import tripleo.elijah.lang.ExpressionList;
+import tripleo.elijah.lang.IExpression;
+import tripleo.elijah.lang.VariableReference;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Created on 5/18/2019 at 16:36

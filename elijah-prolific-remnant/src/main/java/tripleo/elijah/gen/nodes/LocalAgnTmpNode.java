@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 /**
  * @author Tripleo(sb)

@@ -25,13 +25,6 @@ public class SimplePrintLoggerToRemoveSoon {
 	 * Make a note of workarounds
 	 */
 	public static void ilf(final String aS) {
-		System.out.println(aS);
-	}
-
-	/*
-	 * Make a note of workarounds
-	 */
-	public static void ilf(final String aS) {
 		System.out.println(""+aS);
 	}
 }

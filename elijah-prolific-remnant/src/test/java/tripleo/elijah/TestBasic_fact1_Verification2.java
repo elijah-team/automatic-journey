@@ -1,11 +1,12 @@
 package tripleo.elijah;
 
-import org.junit.*;
-import tripleo.elijah.comp.*;
+import org.junit.Before;
+import org.junit.Test;
+import tripleo.elijah.comp.Compilation;
 import tripleo.elijah.factory.comp.CompilationFactory;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_fluffy.util.Helpers;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertTrue;
 
 @SuppressWarnings("NewClassNamingConvention")
 public class TestBasic_fact1_Verification2 {

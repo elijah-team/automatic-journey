@@ -1,8 +1,9 @@
 package tripleo.elijah.comp;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.internal.*;
-import tripleo.elijah_fluffy.util.*;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.internal.ProcessRecord;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 public enum Stages {
 	E("E") {

@@ -11,8 +11,8 @@
  */
 package tripleo.elijah.comp;
 
-import tripleo.elijah.diagnostic.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.diagnostic.Diagnostic;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
 /**
  * @author tripleo(sb)

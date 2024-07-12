@@ -8,15 +8,18 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
+import org.jdeferred2.Promise;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.lang.BaseFunctionDef;
+import tripleo.elijah.lang.ConstructorDef;
+import tripleo.elijah.lang.OS_Element;
+import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah_fluffy.util.Helpers;
 
-import java.util.*;
-
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import java.util.List;
 
 /**
  * Created 1/21/21 9:04 PM
@@ -129,7 +132,7 @@ public class FunctionInvocation {
 
 	public List<TypeTableEntry> getArgs() {
 		if (pte == null)
-			return List_of();
+			return Helpers.List_of();
 		return pte.args;
 	}
 

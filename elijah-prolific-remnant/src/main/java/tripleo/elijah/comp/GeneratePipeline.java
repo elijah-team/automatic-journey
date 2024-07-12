@@ -8,18 +8,19 @@
  */
 package tripleo.elijah.comp;
 
-import com.google.common.base.*;
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.nextgen.inputtree.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.work.*;
+import com.google.common.base.Preconditions;
+import org.jdeferred2.DoneCallback;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.lang.OS_Module;
+import tripleo.elijah.nextgen.inputtree.EIT_ModuleInput;
+import tripleo.elijah.nextgen.inputtree.EIT_ModuleList;
+import tripleo.elijah.stages.gen_fn.GeneratedNode;
+import tripleo.elijah.stages.gen_generic.GenerateResult;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.work.WorkManager;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created 8/21/21 10:16 PM
@@ -56,7 +57,7 @@ public class GeneratePipeline implements PipelineMember/*, AccessBus.AB_LgcListe
 		assert lgc.size() > 0;
 
 		/*pipelineLogic.*/
-		generate(lgc, errSink, pipelineLogic.mods, pipelineLogic.getVerbosity());
+		generate(lgc, errSink, pipelineLogic.mods(), pipelineLogic.getVerbosity());
 	}
 
 	protected void generate(final @NotNull List<GeneratedNode> lgc,

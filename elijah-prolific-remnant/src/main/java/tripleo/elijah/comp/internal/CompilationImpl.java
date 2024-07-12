@@ -8,17 +8,21 @@
  */
 package tripleo.elijah.comp.internal;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.nextgen.outputtree.*;
-import tripleo.elijah.stages.deduce.fluffy.i.*;
-import tripleo.elijah.stages.deduce.fluffy.impl.*;
-import tripleo.elijah.testing.comp.*;
-import tripleo.elijah_fluffy.util.*;
-import tripleo.elijah_fluffy.util.*;
-import tripleo.elijah_remnant.startup.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.comp.ICompilationAccess;
+import tripleo.elijah.comp.IO;
+import tripleo.elijah.nextgen.outputtree.EOT_OutputTree;
+import tripleo.elijah.stages.deduce.fluffy.i.FluffyComp;
+import tripleo.elijah.stages.deduce.fluffy.impl.FluffyCompImpl;
+import tripleo.elijah.testing.comp.IFunctionMapHook;
+import tripleo.elijah_fluffy.util.Eventual;
+import tripleo.elijah_fluffy.util.EventualExtract;
+import tripleo.elijah_fluffy.util.NotImplementedException;
+import tripleo.elijah_remnant.startup.ProlificStartup2;
 
-import java.util.*;
+import java.util.List;
 
 public class CompilationImpl extends Compilation {
 	private final @NotNull FluffyCompImpl _fluffyComp;

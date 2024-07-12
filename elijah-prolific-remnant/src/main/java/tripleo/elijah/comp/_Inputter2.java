@@ -1,7 +1,7 @@
 package tripleo.elijah.comp;
 
-import java.io.*;
-import java.util.function.*;
+import java.io.File;
+import java.util.function.Consumer;
 
 public interface _Inputter2<T> {
 	void acceptFile(File aF);

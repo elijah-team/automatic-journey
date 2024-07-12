@@ -1,10 +1,11 @@
 package tripleo.elijah.comp.diagnostic;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.diagnostic.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.diagnostic.Diagnostic;
+import tripleo.elijah.diagnostic.Locatable;
 
-import java.io.*;
-import java.util.*;
+import java.io.PrintStream;
+import java.util.List;
 
 class TooManyEz_UseFirst implements Diagnostic {
 	final String message = "Too many .ez files, using first.";

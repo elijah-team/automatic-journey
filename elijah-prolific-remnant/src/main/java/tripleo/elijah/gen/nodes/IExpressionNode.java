@@ -8,8 +8,9 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah.gen.*;
-import tripleo.elijah.lang.*;
+import tripleo.elijah.gen.CompilerContext;
+import tripleo.elijah.gen.TypeRef;
+import tripleo.elijah.lang.IExpression;
 
 public interface IExpressionNode {
 //	String getStringPCE(ProcedureCallExpression expr);

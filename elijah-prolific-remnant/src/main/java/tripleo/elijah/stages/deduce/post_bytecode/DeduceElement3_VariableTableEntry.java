@@ -14,9 +14,6 @@ import tripleo.elijah.diagnostic.Diagnostic;
 import tripleo.elijah.diagnostic.Locatable;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.lang.types.OS_UserType;
-import tripleo.elijah.nextgen.query.Operation2;
-import tripleo.elijah.lang.types.*;
-
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.deduce.post_bytecode.DED.DED_VTE;
 import tripleo.elijah.stages.gen_fn.*;
@@ -24,7 +21,7 @@ import tripleo.elijah.stages.instructions.IdentIA;
 import tripleo.elijah.stages.instructions.InstructionArgument;
 import tripleo.elijah.stages.instructions.VariableTableType;
 import tripleo.elijah.stages.logging.ElLog;
-import tripleo.elijah.util.*;
+import tripleo.elijah.util.Operation2;
 import tripleo.elijah_fluffy.util.NotImplementedException;
 import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 

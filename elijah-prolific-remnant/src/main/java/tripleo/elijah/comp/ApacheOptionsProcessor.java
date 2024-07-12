@@ -1,10 +1,14 @@
 package tripleo.elijah.comp;
 
-import org.apache.commons.cli.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.i.*;
+import org.apache.commons.cli.CommandLine;
+import org.apache.commons.cli.CommandLineParser;
+import org.apache.commons.cli.DefaultParser;
+import org.apache.commons.cli.Options;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.i.ICompilationBus;
 
-import java.util.*;
+import java.util.List;
 
 public class ApacheOptionsProcessor implements OptionsProcessor {
 	final Options options = new Options();

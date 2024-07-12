@@ -1,8 +1,10 @@
 package tripleo.elijah;
 
-import org.junit.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import org.junit.Assert;
+import org.junit.Test;
+import tripleo.elijah.lang.IExpression;
+import tripleo.elijah.lang.Qualident;
+import tripleo.elijah_fluffy.util.Helpers;
 
 public class QualidentToDotExpressionTest {
 

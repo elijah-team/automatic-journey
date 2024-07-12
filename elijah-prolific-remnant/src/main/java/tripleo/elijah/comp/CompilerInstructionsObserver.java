@@ -1,12 +1,13 @@
 package tripleo.elijah.comp;
 
-import io.reactivex.rxjava3.annotations.*;
+import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
-import io.reactivex.rxjava3.disposables.*;
-import tripleo.elijah.ci.*;
-import tripleo.elijah_fluffy.util.*;
+import io.reactivex.rxjava3.disposables.Disposable;
+import tripleo.elijah.ci.CompilerInstructions;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class CompilerInstructionsObserver implements Observer<CompilerInstructions> {
 	private final List<CompilerInstructions> l = new ArrayList<>();

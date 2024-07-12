@@ -1,9 +1,12 @@
 package tripleo.elijah.stages.deduce;
 
-import org.junit.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.contexts.*;
-import tripleo.elijah.factory.comp.*;
+import org.junit.Ignore;
+import org.junit.Test;
+import tripleo.elijah.comp.AccessBus;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.PipelineLogic;
+import tripleo.elijah.contexts.FunctionContext;
+import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.lang.types.OS_BuiltinType;
 import tripleo.elijah.lang.types.OS_UserClassType;
@@ -11,10 +14,10 @@ import tripleo.elijah.lang2.BuiltInTypes;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.Instruction;
 import tripleo.elijah.stages.instructions.VariableTableType;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah_durable_prolific.deduce.ElLog;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah_durable_prolific.deduce.DCC;
 import tripleo.elijah_fluffy.util.Helpers;
-import tripleo.elijah_remnant.rosetta.*;
+import tripleo.elijah_remnant.rosetta.FakeRosetta3;
 
 import java.util.ArrayList;
 

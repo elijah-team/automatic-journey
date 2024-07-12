@@ -11,13 +11,17 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import org.eclipse.jdt.annotation.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.gen.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import org.eclipse.jdt.annotation.NonNull;
+import tripleo.elijah.comp.GenBuffer;
+import tripleo.elijah.gen.CompilerContext;
+import tripleo.elijah.gen.Node;
+import tripleo.elijah.gen.TypeRef;
+import tripleo.elijah.lang.IdentExpression;
+import tripleo.elijah.lang.TypeModifiers;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
-import java.util.*;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * @author Tripleo(sb)

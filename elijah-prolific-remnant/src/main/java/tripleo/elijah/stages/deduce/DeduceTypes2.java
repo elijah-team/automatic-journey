@@ -9,33 +9,37 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.contexts.*;
+import org.jdeferred2.DoneCallback;
+import org.jdeferred2.Promise;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.contexts.ClassContext;
 import tripleo.elijah.contexts.FunctionContext;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.lang.types.*;
-import tripleo.elijah.lang2.*;
-import tripleo.elijah.stages.deduce.declarations.*;
-import tripleo.elijah.stages.deduce.post_bytecode.*;
-import tripleo.elijah.stages.deduce.zero.*;
+import tripleo.elijah.lang2.BuiltInTypes;
+import tripleo.elijah.lang2.ElElementVisitor;
+import tripleo.elijah.stages.deduce.declarations.DeferredMember;
+import tripleo.elijah.stages.deduce.declarations.DeferredMemberFunction;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_IdentTableEntry;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_ProcTableEntry;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_VariableTableEntry;
+import tripleo.elijah.stages.deduce.zero.IZero;
+import tripleo.elijah.stages.deduce.zero.Zero_FuncExprType;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.ElLog;
 import tripleo.elijah.work.WorkJob;
 import tripleo.elijah.work.WorkList;
 import tripleo.elijah.work.WorkManager;
+import tripleo.elijah_durable_prolific.deduce.DCC;
 import tripleo.elijah_fluffy.util.Helpers;
 import tripleo.elijah_fluffy.util.NotImplementedException;
 import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 import tripleo.elijah_prolific.v.V;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.work.*;
-import tripleo.elijah_durable_prolific.deduce.*;
-import tripleo.elijah_fluffy.util.*;
-import tripleo.elijah_prolific.v.*;
 
 import java.util.*;
 
@@ -2468,10 +2472,6 @@ public class DeduceTypes2 {
 		return new DCC(this, this._phase(), this.errSink);
 	}
 
-	public void onExitFunction(final _DT_Deducer aD2, final GeneratedFunction aGeneratedFunction, final FunctionContext aCtx, final FunctionContext aCtx1, final DCC aDCC) {
-		onExitFunction(aGeneratedFunction, aCtx, aCtx1);
-	}
-
 	public interface _DT_Deducer {}
 
 	public void onExitFunction(final _DT_Deducer aD2,
@@ -2506,9 +2506,6 @@ public class DeduceTypes2 {
 
 	public interface ExpectationBase {
 		String expectationString();
-	}
-
-	public interface _DT_Deducer {
 	}
 
 	static class Deduce_Type {

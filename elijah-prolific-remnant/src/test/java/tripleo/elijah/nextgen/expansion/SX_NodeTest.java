@@ -1,17 +1,21 @@
 package tripleo.elijah.nextgen.expansion;
 
-import junit.framework.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.Compilation.*;
+import junit.framework.TestCase;
+import tripleo.elijah.comp.AccessBus;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.Compilation.CompilationAlways;
+import tripleo.elijah.comp.PipelineLogic;
 import tripleo.elijah.factory.comp.CompilationFactory;
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.nextgen.model.*;
-import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.stages.gen_generic.GenerateFiles;
+import tripleo.elijah.stages.gen_generic.OutputFileFactory;
+import tripleo.elijah.stages.gen_generic.OutputFileFactoryParams;
+import tripleo.elijah.stages.logging.ElLog;
 
-import java.util.*;
+import java.util.List;
 
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 public class SX_NodeTest extends TestCase {
 

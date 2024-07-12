@@ -8,9 +8,9 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah.gen.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.gen.CompilerContext;
+import tripleo.elijah.lang.IdentExpression;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 public class VariableReferenceNode2 extends ExpressionNode {
 	private final String _type;

@@ -1,13 +1,13 @@
 package tripleo.elijah.comp;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.diagnostic.*;
-import tripleo.elijah.lang.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.diagnostic.Diagnostic;
+import tripleo.elijah.diagnostic.Locatable;
+import tripleo.elijah.lang.OS_Module;
+import tripleo.elijah.util.Operation2;
 
-import tripleo.elijah.util.*;
-
-import java.io.*;
-import java.util.*;
+import java.io.PrintStream;
+import java.util.List;
 
 class UnknownExceptionDiagnostic implements Diagnostic {
 	private final Operation2<OS_Module> m;

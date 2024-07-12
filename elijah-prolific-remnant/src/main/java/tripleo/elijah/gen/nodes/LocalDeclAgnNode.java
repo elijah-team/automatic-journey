@@ -3,10 +3,10 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.gen.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.gen.TypeRef;
+import tripleo.elijah.lang.NumericExpression;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 /**
  * @author Tripleo(sb)
