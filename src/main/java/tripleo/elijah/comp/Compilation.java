@@ -25,7 +25,6 @@ import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.deduce.fluffy.i.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.ut.*;
 import tripleo.elijah.util.*;
 import tripleo.elijah.world.i.*;
 import tripleo.elijah.world.impl.*;
@@ -123,8 +122,6 @@ public abstract class Compilation {
 
 		if (ctl instanceof DefaultCompilerController) {
 			((DefaultCompilerController) ctl)._set(this, args);
-		} else if (ctl instanceof final UT_Controller uctl) {
-			uctl._set(this, args);
 		}
 
 		ctl.processOptions();
