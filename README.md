@@ -1,30 +1,33 @@
-Elijah prolific remnant
-========================
+Elijah automatic journey
+=========================
 
 Elijah is:
 
-- ... a high-level language suitable for replacement of* Java and C/C++.
+- ... a high-level language suitable for programming in the large or in the small.
 - ... a historical curiosity.
 - ... is meant to integrate into current C and Java projects. 
 - ... is free software intended for use on all systems, including GNU/Linux.
 - ... is licensed under LGPL.
 
-`prolific-remnant` is:
+`automatic-journey` is:
 
 - ... implemented in Java (17)
 - ... uses Maven
 
+
 Instructions
 -------------
 
-[https://github.com/elijah-team/prolific-remnant](https://github.com/elijah-team/prolific-remnant)
+https://github.com/elijah-team/automatic-journey
 
 ```shell
-git clone https://github.com/elijah-team/prolific-remnant
-cd prolific-remnant
+git clone https://github.com/elijah-team/automatic-journey
+cd automatic-journey/elijah-automatic-journey
 mkdir COMP
-nix-shell -p maven jdk-17
-mvn test
+```
+
+```shell
+nix-shell -p maven jdk17_headless --command "mvn test"
 ```
 
 Goals
@@ -32,9 +35,12 @@ Goals
 
 - Don't know yet
 
+
 Lineage
 --------
 
 `Fluffy mainline-k`
 
 `Fluffy mainline-k-2023-09`
+
+`Fluffy prolific-remnant`
