@@ -30,29 +30,6 @@ public class EOT_OutputFile {
 		_inputs.addAll(inputs);
 	}
 
-	/*
-	 * public static EOT_OutputFile grToOutputFile(final Compilation aC, final
-	 * GenerateResultItem ab) { final List<EIT_Input> inputs = List_of(new
-	 * EIT_ModuleInput(ab.node.module(), aC));
-	 * 
-	 * final EG_SingleStatement beginning = new EG_SingleStatement("", new
-	 * EX_Explanation() { }); final EG_SingleStatement middle = new
-	 * EG_SingleStatement(ab.buffer.getText(), new EX_Explanation() { }); final
-	 * EG_SingleStatement ending = new EG_SingleStatement("", new EX_Explanation() {
-	 * }); final EX_Explanation explanation = new EX_Explanation() { public String
-	 * getText() { return "generate-result-item"; } };
-	 * 
-	 * final EG_CompoundStatement seq = new EG_CompoundStatement(beginning, ending,
-	 * middle, false, explanation);
-	 * 
-	 * final EOT_OutputFile eof = new EOT_OutputFile(aC, inputs, ab.output,
-	 * EOT_OutputType.SOURCES, seq);
-	 * 
-	 * aC.reports().addCodeOutput(()->ab.output, eof);
-	 * 
-	 * return eof; }
-	 */
-
 	public static @NotNull EOT_OutputFile bufferSetToOutputFile(final String aFilename,
 			final @NotNull Collection<Buffer> aBuffers, final Compilation comp, final OS_Module aModule) {
 		final List<EIT_Input> inputs = List_of(new EIT_ModuleInput(aModule, comp));
@@ -68,11 +45,6 @@ public class EOT_OutputFile {
 
 		return eof;
 	}
-
-	/*
-	 * public EOT_OutputFile(final OS_Module module, final Compilation c) {
-	 * this.module = module; this.c = c; }
-	 */
 
 	public String getFilename() {
 		return _filename;
