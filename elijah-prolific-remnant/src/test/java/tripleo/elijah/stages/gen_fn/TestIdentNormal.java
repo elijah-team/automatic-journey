@@ -11,7 +11,6 @@ package tripleo.elijah.stages.gen_fn;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.instructions.*;
@@ -42,7 +41,7 @@ public class TestIdentNormal {
 		final ElLog.Verbosity verbosity1    = Compilation.gitlabCIVerbosity();
 		final AccessBus       ab            = new AccessBus(comp);
 		final PipelineLogic   pl            = new PipelineLogic(ab);
-		final GeneratePhase   generatePhase = pl.generatePhase;
+		final GeneratePhase generatePhase = pl.getGeneratePhase();
 //		GenerateFunctions generateFunctions = new GenerateFunctions(generatePhase, mod, pl);
 		final GenerateFunctions generateFunctions = generatePhase.getGenerateFunctions(mod);
 		final GeneratedFunction generatedFunction = new GeneratedFunction(fd);
@@ -55,7 +54,8 @@ public class TestIdentNormal {
 		pce.setLeft(new DotExpression(x, foo));
 
 		final InstructionArgument                s = generateFunctions.simplify_expression(pce, generatedFunction, ctx2);
-		@NotNull final List<InstructionArgument> l = BaseGeneratedFunction._getIdentIAPathList(s);
+		@NotNull
+		final List<InstructionArgument> l = BaseGeneratedFunction._getIdentIAPathList(s);
 		System.out.println(l);
 //      System.out.println(generatedFunction.getIdentIAPathNormal());
 
@@ -75,10 +75,10 @@ public class TestIdentNormal {
 
 		final IdentIA identIA = new IdentIA(1, generatedFunction);
 
-		final DeduceTypes2 d2 = new DeduceTypes2(mod, pl.dp);
+		final DeduceTypes2 d2 = new DeduceTypes2(mod, pl.getDp());
 
 		final List<InstructionArgument> ss = BaseGeneratedFunction._getIdentIAPathList(identIA);
-		d2.resolveIdentIA2_(ctx2, null, ss/*identIA*/, generatedFunction, new FoundElement(pl.dp) {
+		d2.resolveIdentIA2_(ctx2, null, ss/* identIA */, generatedFunction, new FoundElement(pl.getDp()) {
 			@Override
 			public void foundElement(final OS_Element e) {
 				System.out.println(e);
@@ -102,11 +102,10 @@ public class TestIdentNormal {
 //		FunctionDef fd = mock(FunctionDef.class);
 		final Context ctx2 = mock(Context.class);
 
-		final ElLog.Verbosity verbosity1    = new CompilationImpl(new StdErrSink(), new IO()).gitlabCIVerbosity();
 		final AccessBus       ab            = new AccessBus(comp);
 		final PipelineLogic   pl            = new PipelineLogic(ab);
-		final GeneratePhase   generatePhase = pl.generatePhase;
-		final DeducePhase     phase         = pl.dp;
+		final GeneratePhase generatePhase = pl.getGeneratePhase();
+		final DeducePhase phase = pl.getDp();
 
 		final GenerateFunctions generateFunctions = generatePhase.getGenerateFunctions(mod);
 
@@ -185,12 +184,12 @@ public class TestIdentNormal {
 		//
 		//
 
-
 		ClassInvocation invocation2 = new ClassInvocation(cs, null);
 		invocation2 = phase.registerClassInvocation(invocation2);
 		final ProcTableEntry     pte3               = null;
 		final FunctionInvocation fi2                = new FunctionInvocation(fd2, pte3, invocation2, generatePhase);
-		final GeneratedFunction  generatedFunction2 = generateFunctions.generateFunction(fd2, fd2.getParent(), fi2);//new GeneratedFunction(fd2);
+		final GeneratedFunction generatedFunction2 = generateFunctions.generateFunction(fd2, fd2.getParent(), fi2);// new
+																													// GeneratedFunction(fd2);
 //		generatedFunction2.addVariableTableEntry("self", VariableTableType.SELF, null, null);
 //		final TypeTableEntry type = null;
 //		int res = generatedFunction2.addVariableTableEntry("Result", VariableTableType.RESULT, type, null);

@@ -3,7 +3,7 @@ package tripleo.elijah.nextgen.expansion;
 import junit.framework.*;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.Compilation.*;
-import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.nextgen.model.*;
 import tripleo.elijah.stages.gen_generic.*;
@@ -16,16 +16,12 @@ import static tripleo.elijah_fluffy.util.Helpers.*;
 public class SX_NodeTest extends TestCase {
 
 	public void testFullText() {
-		final StdErrSink      errSink       = new StdErrSink();
-		final IO              io            = new IO();
-		final CompilationImpl comp          = new CompilationImpl(errSink, io);
+		final Compilation comp = CompilationFactory.mkCompilation();
 		final AccessBus       ab            = new AccessBus(comp);
 		final PipelineLogic   pipelineLogic = new PipelineLogic(ab);
-		final OS_Module mod = comp.moduleBuilder()
-		                          .withFileName("filename.elijah")
-		                          .addToCompilation()
-		                          .build();
-		final OutputFileFactoryParams p    = new OutputFileFactoryParams(mod, errSink, ElLog.Verbosity.SILENT, pipelineLogic);
+		final OS_Module mod = comp.moduleBuilder().withFileName("filename.elijah").addToCompilation().build();
+		final OutputFileFactoryParams p = new OutputFileFactoryParams(mod, comp.getErrSink(), ElLog.Verbosity.SILENT,
+				pipelineLogic);
 		final GenerateFiles           fgen = OutputFileFactory.create(CompilationAlways.defaultPrelude(), p);
 
 		final SM_ClassDeclaration node = new SM_ClassDeclaration() {

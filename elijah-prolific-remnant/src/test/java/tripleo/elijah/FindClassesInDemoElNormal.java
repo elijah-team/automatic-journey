@@ -10,8 +10,9 @@ package tripleo.elijah;
 
 import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.comp.i.*;
 import tripleo.elijah.entrypoints.*;
+import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.lang.*;
 import tripleo.elijah_fluffy.util.*;
 
@@ -26,7 +27,7 @@ public class FindClassesInDemoElNormal {
 	public final void testParseFile() throws Exception {
 		final List<String> args = Helpers.List_of("test/demo-el-normal", "test/demo-el-normal/main2", "-sE");
 		final ErrSink      eee  = new StdErrSink();
-		final Compilation  c    = new CompilationImpl(eee, new IO());
+		final Compilation c = CompilationFactory.mkCompilation(eee, new IO());
 
 		c.feedCmdLine(args);
 
@@ -42,7 +43,7 @@ public class FindClassesInDemoElNormal {
 	public final void testListFolders() throws Exception {
 		final List<String> args = Helpers.List_of("test/demo-el-normal/listfolders/", "-sE");
 		final ErrSink      eee  = new StdErrSink();
-		final Compilation  c    = new CompilationImpl(eee, new IO());
+		final Compilation c = CompilationFactory.mkCompilation(eee, new IO());
 
 		c.feedCmdLine(args);
 

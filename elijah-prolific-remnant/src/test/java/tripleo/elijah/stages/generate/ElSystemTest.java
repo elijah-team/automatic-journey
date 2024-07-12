@@ -11,7 +11,7 @@ package tripleo.elijah.stages.generate;
 
 import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah_fluffy.util.*;
 
 public class ElSystemTest {
@@ -22,7 +22,7 @@ public class ElSystemTest {
 
 	@Before
 	public void setUp() throws Exception {
-		c  = new CompilationImpl(new StdErrSink(), new IO());
+		c = CompilationFactory.mkCompilation();
 		ab = new AccessBus(c);
 
 		final String f = "test/basic1/backlink3";
@@ -38,7 +38,7 @@ public class ElSystemTest {
 		final OutputStrategy os = new OutputStrategy();
 		os.per(OutputStrategy.Per.PER_CLASS);
 		sys.setOutputStrategy(os);
-		sys.generateOutputs(ab.getGr());
+		ab.subscribe_GenerateResult(sys::generateOutputs);
 	}
 }
 

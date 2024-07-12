@@ -3,7 +3,7 @@ package tripleo.elijah.nextgen.expansion;
 import junit.framework.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.nextgen.model.*;
 import tripleo.elijah.nextgen.outputstatement.*;
 import tripleo.elijah.nextgen.outputtree.*;
@@ -18,9 +18,7 @@ import static tripleo.elijah_fluffy.util.Helpers.*;
 public class SX_NodeTest2 extends TestCase {
 
 	public void testFullText() {
-		final StdErrSink      errSink = new StdErrSink();
-		final IO              io      = new IO();
-		final CompilationImpl comp    = new CompilationImpl(errSink, io);
+		final Compilation comp = CompilationFactory.mkCompilation();
 //		final AccessBus       ab            = new AccessBus(comp);
 //		final PipelineLogic   pipelineLogic = new PipelineLogic(ab);
 //		final OS_Module mod = comp.moduleBuilder()
@@ -152,7 +150,7 @@ public class SX_NodeTest2 extends TestCase {
 //		System.out.println(y);
 		System.out.println();
 
-		final List<EOT_OutputFile> l   = rt.list;
+		final List<EOT_OutputFile> l = rt.list();
 		final int                  yyy = 2;
 		final List<EOT_OutputFile> wmainl = l.stream()
 		                                     .filter(eof -> eof.getFilename().equals("/while100/Main.c"))

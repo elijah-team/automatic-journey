@@ -10,7 +10,7 @@ package tripleo.elijah.lang;
 
 import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.logging.*;
@@ -28,7 +28,7 @@ public class TypeOfTypeNameTest {
 		//
 		final Context     ctx = mock(Context.class);
 		final OS_Module   mod = mock(OS_Module.class);
-		final Compilation c   = new CompilationImpl(new StdErrSink(), new IO());
+		final Compilation c = CompilationFactory.mkCompilation();
 
 		//
 		// CREATE VARIABLES
@@ -65,21 +65,22 @@ public class TypeOfTypeNameTest {
 		//
 		final AccessBus     ab           = new AccessBus(c);
 		final PipelineLogic pl           = new PipelineLogic(ab);
-		final DeduceTypes2  deduceTypes2 = new DeduceTypes2(mod, pl.dp);
+		final DeduceTypes2 deduceTypes2 = new DeduceTypes2(mod, pl.getDp());
 		final TypeName      tn           = t.resolve(ctx, deduceTypes2);
 //		System.out.println(tn);
 		verify(ctx, mod);
 		Assert.assertEquals(typeNameString, tn.toString());
 	}
 
-	@Ignore  @Test
+	@Ignore
+	@Test
 	public void typeOfComplexQualident() throws ResolveError {
 		//
 		// CREATE MOCKS
 		//
 		final Context     ctx = mock(Context.class);
 		final OS_Module   mod = mock(OS_Module.class);
-		final Compilation c   = new CompilationImpl(new StdErrSink(), new IO());
+		final Compilation c = CompilationFactory.mkCompilation();
 
 		//
 		// CREATE VARIABLES
@@ -117,7 +118,7 @@ public class TypeOfTypeNameTest {
 		//
 		final AccessBus     ab           = new AccessBus(c);
 		final PipelineLogic pl           = new PipelineLogic(ab);
-		final DeduceTypes2  deduceTypes2 = new DeduceTypes2(mod, pl.dp);
+		final DeduceTypes2 deduceTypes2 = new DeduceTypes2(mod, pl.getDp());
 		final TypeName      tn           = t.resolve(ctx, deduceTypes2);
 //		System.out.println(tn);
 		verify(ctx, mod);
@@ -187,7 +188,8 @@ public class TypeOfTypeNameTest {
 //		Assert.assertEquals(typeNameString, tn.toString());
 //	}
 
-	@Ignore @Test
+	@Ignore
+	@Test
 	public void typeOfComplexQualident2() throws ResolveError {
 		//
 		// CREATE MOCK
@@ -202,7 +204,7 @@ public class TypeOfTypeNameTest {
 		final String typeNameString  = "SystemInteger";
 
 		final OS_Module mod = new OS_Module();
-		mod.parent = new CompilationImpl(new StdErrSink(), new IO());
+		mod.parent = CompilationFactory.mkCompilation();
 		final Context mod_ctx = mod.getContext();
 
 		final ClassStatement st_af = new ClassStatement(mod, mod_ctx);
@@ -251,8 +253,8 @@ public class TypeOfTypeNameTest {
 		final ElLog.Verbosity verbosity1    = Compilation.gitlabCIVerbosity();
 		final AccessBus       ab            = new AccessBus(mod.parent);
 		final PipelineLogic   pl            = new PipelineLogic(ab);
-		final GeneratePhase   generatePhase = pl.generatePhase;
-		final DeduceTypes2    deduceTypes2  = new DeduceTypes2(mod, pl.dp);
+		final GeneratePhase generatePhase = pl.getGeneratePhase();
+		final DeduceTypes2 deduceTypes2 = new DeduceTypes2(mod, pl.getDp());
 //		expect(mod.getFileName()).andReturn("foo.elijah");
 		expect(ctx.lookup("x")).andReturn(lrl);
 //		expect(ctx.lookup("y")).andReturn(lrl4);

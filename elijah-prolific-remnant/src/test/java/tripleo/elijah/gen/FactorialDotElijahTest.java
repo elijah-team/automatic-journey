@@ -25,12 +25,10 @@ public class FactorialDotElijahTest {
 		final ModuleRef main_m  = new ModuleRef("fact.elijah", -2);
 		final TypeRef   main_k  = new TypeRef(main_m, main_m, "Main", 100);
 
-
 		final ArgumentNode argumentNode = new ArgumentNode("i", u64);
 		Assert.assertEquals("vai", argumentNode.getGenName());
 
-		final MethHdrNode mhn = new MethHdrNode(u64, main_k, "factorial_r",
-		  List_of(argumentNode), 1000);
+		final MethHdrNode mhn = new MethHdrNode(u64, main_k, "factorial_r", List_of(argumentNode), 1000);
 		Assert.assertEquals("z100factorial_r", mhn.genName());
 	}
 
@@ -42,17 +40,13 @@ public class FactorialDotElijahTest {
 		final ModuleRef       main_m  = new ModuleRef("fact.elijah", -2);
 		final TypeRef         main_k  = new TypeRef(main_m, main_m, "Main", 100);
 
-
-		final MethHdrNode mhn = new MethHdrNode(u64, main_k, "factorial_r",
-		  List_of(new ArgumentNode("i", u64)), 1000);
+		final MethHdrNode mhn = new MethHdrNode(u64, main_k, "factorial_r", List_of(new ArgumentNode("i", u64)), 1000);
 		final CaseHdrNode shn = new CaseHdrNode(ExpressionNodeBuilder.varref("i", mhn, u64));
 
-
 		final TmpSSACtxNode tccssan = new TmpSSACtxNode(cctx);
-		final LocalAgnTmpNode lamn = new LocalAgnTmpNode(tccssan, ExpressionNodeBuilder.binex(u64,
-		  ExpressionNodeBuilder.varref("n", shn, u64),
-		  ExpressionOperators.OP_MINUS,
-		  ExpressionNodeBuilder.integer(1)));
+		final LocalAgnTmpNode lamn = new LocalAgnTmpNode(tccssan,
+				ExpressionNodeBuilder.binex(u64, ExpressionNodeBuilder.varref("n", shn, u64),
+						ExpressionOperators.OP_MINUS, ExpressionNodeBuilder.integer(1)));
 //		BeginTmpSSACtx(cctx, tccssan, gbn);
 
 		final String s = tccssan.getType().genText(cctx);
@@ -80,25 +74,22 @@ public class FactorialDotElijahTest {
 		fact_r.setReturnType(u64);
 		fact_r.setArgTypes(u64);
 
-		final MethHdrNode mhn = new MethHdrNode(u64, main_k, "factorial_r",
-		  List_of(new ArgumentNode("i", u64)), 1001);
+		final MethHdrNode mhn = new MethHdrNode(u64, main_k, "factorial_r", List_of(new ArgumentNode("i", u64)), 1001);
 		final CaseHdrNode shn = new CaseHdrNode(ExpressionNodeBuilder.varref("i", mhn, u64));
 
 		final TmpSSACtxNode tccssan = new TmpSSACtxNode(cctx);
-		final LocalAgnTmpNode lamn = new LocalAgnTmpNode(tccssan, ExpressionNodeBuilder.binex(u64,
-		  ExpressionNodeBuilder.varref("n", shn, u64),
+		final LocalAgnTmpNode lamn = new LocalAgnTmpNode(tccssan,
+				ExpressionNodeBuilder.binex(u64, ExpressionNodeBuilder.varref("n", shn, u64),
 		  ExpressionOperators.OP_MINUS, ExpressionNodeBuilder.integer(1)));
 		final TextBuffer b1 = FactorialR.BeginTmpSSACtx(cctx, tccssan, gbn);
 //		Assert.assertEquals("{\n\tu64 ", b1.getText()); // TODO maybe this wll be right in the future.
 		Assert.assertEquals("{\n\tZ81 ", b1.getText());
 
 		final TmpSSACtxNode tccssan2 = new TmpSSACtxNode(cctx);
-		final LocalAgnTmpNode latn2 = new LocalAgnTmpNode(tccssan2, ExpressionNodeBuilder.fncall(
-		  fact_r, List_of(lamn)));
+		final LocalAgnTmpNode latn2 = new LocalAgnTmpNode(tccssan2,
+				ExpressionNodeBuilder.fncall(fact_r, List_of(lamn)));
 		final TextBuffer b2 = FactorialR.GenLocalAgn(cctx, latn2, gbn);
-		Assert.assertEquals("{\n" +
-		  "\tZ81 vt2 = z100factorial_r(vt1);\n" +
-		  "\t", b2.getText());
+		Assert.assertEquals("{\n" + "\tZ81 vt2 = z100factorial_r(vt1);\n" + "\t", b2.getText());
 	}
 
 }

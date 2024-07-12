@@ -57,7 +57,7 @@ public class DeduceTypesTest2 {
 		final ElLog.Verbosity verbosity1 = Compilation.gitlabCIVerbosity();
 		final AccessBus       ab         = new AccessBus(c);
 		final PipelineLogic   pl         = new PipelineLogic(ab);
-		final DeducePhase     dp         = pl.dp;
+		final DeducePhase dp = pl.getDp();
 		final DeduceTypes2    d          = dp.deduceModule(mod, verbosity1);
 //		final DeduceTypes d = new DeduceTypes(mod);
 		final GenType x = DeduceLookupUtils.deduceExpression(d, x1, fc);

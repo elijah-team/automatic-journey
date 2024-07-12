@@ -10,7 +10,6 @@ package tripleo.elijah.stages.deduce;
 
 import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
 import tripleo.elijah.factory.comp.*;
 
 import static tripleo.elijah_fluffy.util.Helpers.*;
@@ -21,25 +20,25 @@ import static tripleo.elijah_fluffy.util.Helpers.*;
 public class ClassInstantiationTest {
 
 	@Test
-	public void classInstantiation() throws Exception {
-		final String      f = "test/basic1/class_instantiation/";
-		final Compilation c = new CompilationImpl(new StdErrSink(), new IO());
+	public void classInstantiation() {
+		final String f = "test/basic1/class_instantiation/";
+		final Compilation c = CompilationFactory.mkCompilation();
 
 		c.feedCmdLine(List_of(f));
 	}
 
 	@Test
-	public void classInstantiation2() throws Exception {
-		final String      f = "test/basic1/class_instantiation2/";
-		final Compilation c = new CompilationImpl(new StdErrSink(), new IO());
+	public void classInstantiation2() {
+		final String f = "test/basic1/class_instantiation2/";
+		final Compilation c = CompilationFactory.mkCompilation();
 
 		c.feedCmdLine(List_of(f));
 	}
 
 	@Test
-	public void classInstantiation3() throws Exception {
-		final String      f = "test/basic1/class_instantiation3/";
-		final Compilation c = CompilationFactory.mkCompilation(new StdErrSink(), new IO());
+	public void classInstantiation3() {
+		final String f = "test/basic1/class_instantiation3/";
+		final Compilation c = CompilationFactory.mkCompilation();
 
 		c.feedCmdLine(List_of(f));
 	}
