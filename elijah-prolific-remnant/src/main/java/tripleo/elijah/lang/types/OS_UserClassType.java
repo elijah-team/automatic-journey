@@ -1,13 +1,16 @@
 package tripleo.elijah.lang.types;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.comp.ErrSink;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.deduce.ClassInvocation;
+import tripleo.elijah.stages.deduce.DeducePhase;
+import tripleo.elijah.stages.deduce.DeduceTypes2;
+import tripleo.elijah.stages.gen_fn.GenType;
 
-import java.text.*;
-import java.util.*;
+import java.text.MessageFormat;
+import java.util.List;
 
 public class OS_UserClassType extends __Abstract_OS_Type {
 	private final ClassStatement _classStatement;
@@ -38,13 +41,13 @@ public class OS_UserClassType extends __Abstract_OS_Type {
 
 		@NotNull final List<TypeName> gp = best.getGenericPart();
 		@Nullable ClassInvocation     clsinv;
-		if (genType.ci == null) {
+		if (genType.getCi() == null) {
 			clsinv = DeduceTypes2.ClassInvocationMake.withGenericPart(best, constructorName, (NormalTypeName) aGenericTypeName, deduceTypes2, errSink);
 			if (clsinv == null) return null;
 			clsinv     = phase.registerClassInvocation(clsinv);
-			genType.ci = clsinv;
+			genType.setCi(clsinv);
 		} else
-			clsinv = (ClassInvocation) genType.ci;
+			clsinv = (ClassInvocation) genType.getCi();
 		return clsinv;
 	}
 

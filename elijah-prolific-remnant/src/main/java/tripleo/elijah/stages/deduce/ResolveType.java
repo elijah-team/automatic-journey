@@ -9,13 +9,15 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.contexts.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.contexts.ClassContext;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.lang.types.OS_AnyType;
+import tripleo.elijah.lang.types.OS_GenericTypeNameType;
+import tripleo.elijah.stages.gen_fn.GenType;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 /**
  * Created 11/18/21 10:51 PM
@@ -28,7 +30,7 @@ public class ResolveType {
 	                                     final @NotNull DeduceTypes2 dt2) throws ResolveError {
 		@NotNull final GenType R = new GenType();
 		if (type.getType() != OS_Type.Type.USER_CLASS)
-			R.typeName = type;
+			R.setTypeName(type);
 
 		switch (type.getType()) {
 
@@ -39,12 +41,12 @@ public class ResolveType {
 			resolve_user(type, LOG, dt2, R);
 			break;
 		case USER_CLASS:
-			R.resolved = type;
+			R.setResolved(type);
 			break;
 		case FUNCTION:
 			break;
 		case FUNC_EXPR:
-			R.resolved = type;//((OS_FuncExprType)type).getElement();
+			R.setResolved(type);//((OS_FuncExprType)type).getElement();
 			break;
 		default:
 			throw new IllegalStateException("565 Unexpected value: " + type.getType());
@@ -74,7 +76,7 @@ public class ResolveType {
 			if (best == null) {
 				throw new ResolveError(IdentExpression.forString(typeName), lrl);
 			}
-			aR.resolved = ((ClassStatement) best).getOS_Type();
+			aR.setResolved(((ClassStatement) best).getOS_Type());
 			break;
 		}
 		case String_: {
@@ -96,7 +98,7 @@ public class ResolveType {
 			if (best == null) {
 				throw new ResolveError(IdentExpression.forString(typeName), lrl);
 			}
-			aR.resolved = (((ClassStatement) best).getOS_Type());
+			aR.setResolved((((ClassStatement) best).getOS_Type()));
 			break;
 		}
 		case SystemCharacter: {
@@ -118,7 +120,7 @@ public class ResolveType {
 			if (best == null) {
 				throw new ResolveError(IdentExpression.forString(typeName), lrl);
 			}
-			aR.resolved = ((ClassStatement) best).getOS_Type();
+			aR.setResolved(((ClassStatement) best).getOS_Type());
 			break;
 		}
 		case Boolean: {
@@ -127,7 +129,7 @@ public class ResolveType {
 				prelude = module;
 			final LookupResultList     lrl  = prelude.getContext().lookup("Boolean");
 			final @Nullable OS_Element best = lrl.chooseBest(null);
-			aR.resolved = ((ClassStatement) best).getOS_Type(); // TODO might change to Type
+			aR.setResolved(((ClassStatement) best).getOS_Type()); // TODO might change to Type
 			break;
 		}
 		default:
@@ -148,15 +150,15 @@ public class ResolveType {
 			}
 			if (best == null) {
 				if (tn.asSimpleString().equals("Any"))
-					/*return*/ aR.resolved = new OS_AnyType(); // TODO not a class
+					/*return*/ aR.setResolved(new OS_AnyType()); // TODO not a class
 				throw new ResolveError(tn1, lrl);
 			}
 
 			if (best instanceof ClassContext.OS_TypeNameElement) {
 				/*return*/
-				aR.resolved = new OS_GenericTypeNameType((ClassContext.OS_TypeNameElement) best); // TODO not a class
+				aR.setResolved(new OS_GenericTypeNameType((ClassContext.OS_TypeNameElement) best)); // TODO not a class
 			} else
-				aR.resolved = ((ClassStatement) best).getOS_Type();
+				aR.setResolved(((ClassStatement) best).getOS_Type());
 			break;
 		}
 		case FUNCTION:
@@ -167,7 +169,7 @@ public class ResolveType {
 			final Qualident      q       = type_of.typeOf();
 			if (q.parts().size() == 1 && q.parts().get(0).getText().equals("self")) {
 				assert type_of.getContext() instanceof ClassContext;
-				aR.resolved = ((ClassContext) type_of.getContext()).getCarrier().getOS_Type();
+				aR.setResolved(((ClassContext) type_of.getContext()).getCarrier().getOS_Type());
 			}
 			final int y = 2;
 

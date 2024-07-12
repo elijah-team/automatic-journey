@@ -9,15 +9,16 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import org.jdeferred2.DoneCallback;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.comp.ErrSink;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.stages.deduce.declarations.*;
+import tripleo.elijah.lang.types.OS_UserType;
+import tripleo.elijah.stages.deduce.declarations.DeferredMember;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.stages.logging.ElLog;
 
 /**
  * Created 9/2/21 11:36 PM
@@ -90,8 +91,8 @@ class Found_Element_For_ITE {
 
 								  if (ite.type == null)
 									  ite.makeType(generatedFunction, TypeTableEntry.Type.TRANSIENT, vs.initialValue());
-								  assert result.resolved != null;
-								  if (result.ci == null) {
+								  assert result.getResolved() != null;
+								  if (result.getCi() == null) {
 									  genCIForGenType(result);
 								  }
 								  ite.setGenType(result);
@@ -124,7 +125,7 @@ class Found_Element_For_ITE {
 							public void onDone(final GenType result) {
 								if (ite.type == null)
 									ite.makeType(generatedFunction, TypeTableEntry.Type.TRANSIENT, vs.initialValue());
-								assert result.resolved != null;
+								assert result.getResolved() != null;
 								ite.setGenType(result);
 //								ite.resolveTypeToClass(result.node); // TODO setting this has no effect on output
 
@@ -171,7 +172,7 @@ class Found_Element_For_ITE {
 			break;
 		case NORMAL:
 			try {
-				attached = (dc.resolve_type(new OS_UserType(ps.getTypeName()), ctx).resolved.getClassOf()).getOS_Type();
+				attached = (dc.resolve_type(new OS_UserType(ps.getTypeName()), ctx).getResolved().getClassOf()).getOS_Type();
 			} catch (final ResolveError resolveError) {
 				LOG.err("378 resolveError");
 				resolveError.printStackTrace();
@@ -209,20 +210,20 @@ class Found_Element_For_ITE {
 	public void genCIForGenType(final GenType aGenType) {
 		//assert aGenType.nonGenericTypeName != null ;//&& ((NormalTypeName) aGenType.nonGenericTypeName).getGenericPart().size() > 0;
 
-		dc.genCI(aGenType, aGenType.nonGenericTypeName);
-		final IInvocation invocation = aGenType.ci;
+		dc.genCI(aGenType, aGenType.getNonGenericTypeName());
+		final IInvocation invocation = aGenType.getCi();
 		if (invocation instanceof final NamespaceInvocation namespaceInvocation) {
 			namespaceInvocation.resolveDeferred().then(new DoneCallback<GeneratedNamespace>() {
 				@Override
 				public void onDone(final GeneratedNamespace result) {
-					aGenType.node = result;
+					aGenType.setNode(result);
 				}
 			});
 		} else if (invocation instanceof final ClassInvocation classInvocation) {
 			classInvocation.resolvePromise().then(new DoneCallback<GeneratedClass>() {
 				@Override
 				public void onDone(final GeneratedClass result) {
-					aGenType.node = result;
+					aGenType.setNode(result);
 				}
 			});
 		} else

@@ -9,17 +9,22 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
+import org.jdeferred2.DoneCallback;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.stages.deduce.declarations.*;
+import tripleo.elijah.lang.types.OS_FuncType;
+import tripleo.elijah.stages.deduce.declarations.DeferredMemberFunction;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.stages.instructions.InstructionArgument;
+import tripleo.elijah.stages.instructions.IntegerIA;
+import tripleo.elijah.stages.instructions.VariableTableType;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * Created 11/30/21 1:32 AM
@@ -59,12 +64,12 @@ public class DeduceLocalVariable {
 		if (vte.vtt == VariableTableType.TEMP) {
 			final GenType genType = vte.type.genType;
 			final int     pts     = vte.potentialTypes().size();
-			if (genType.typeName != null && genType.typeName == genType.resolved) {
+			if (genType.getTypeName() != null && genType.getTypeName() == genType.getResolved()) {
 				try {
-					genType.resolved = deduceTypes2.resolve_type(genType.typeName, ctx/*genType.typeName.getTypeName().getContext()*/).resolved;
+					genType.setResolved(deduceTypes2.resolve_type(genType.getTypeName(), ctx/*genType.typeName.getTypeName().getContext()*/).getResolved());
 					genType.genCIForGenType2(deduceTypes2);
 					vte.resolveType(genType);
-					vte.resolveTypeToClass(genType.node);
+					vte.resolveTypeToClass(genType.getNode());
 					final int y = 2;
 				} catch (final ResolveError aResolveError) {
 //					aResolveError.printStackTrace();
@@ -82,7 +87,7 @@ public class DeduceLocalVariable {
 				// TODO this should have been set somewhere already
 				//  typeName and nonGenericTypeName are not set
 				//  but at this point probably wont be needed
-				vte.type.genType.resolved = attached;
+				vte.type.genType.setResolved(attached);
 				vte.type.setAttached(attached);
 			}
 			if (vte.type.getAttached() == null && vte.potentialTypes().size() > 0) {
@@ -94,12 +99,12 @@ public class DeduceLocalVariable {
 					final TypeTableEntry pot = attached_list.get(0);
 					vte.type.setAttached(pot.getAttached());
 					vte.type.genType.genCI(null, deduceTypes2, deduceTypes2.errSink, deduceTypes2.phase);
-					final ClassInvocation classInvocation = (ClassInvocation) vte.type.genType.ci;
+					final ClassInvocation classInvocation = (ClassInvocation) vte.type.genType.getCi();
 					if (classInvocation != null) {
 						classInvocation.resolvePromise().then(new DoneCallback<GeneratedClass>() {
 							@Override
 							public void onDone(final GeneratedClass result) {
-								vte.type.genType.node = result;
+								vte.type.genType.setNode(result);
 								vte.resolveTypeToClass(result);
 								vte.genType = vte.type.genType; // TODO who knows if this is necessary?
 							}
@@ -114,12 +119,12 @@ public class DeduceLocalVariable {
 			{
 				final GenType genType = vte.type.genType;
 				final int     pts     = vte.potentialTypes().size();
-				if (genType.typeName != null && genType.typeName == genType.resolved) {
+				if (genType.getTypeName() != null && genType.getTypeName() == genType.getResolved()) {
 					try {
-						genType.resolved = deduceTypes2.resolve_type(genType.typeName, ctx/*genType.typeName.getTypeName().getContext()*/).resolved;
+						genType.setResolved(deduceTypes2.resolve_type(genType.getTypeName(), ctx/*genType.typeName.getTypeName().getContext()*/).getResolved());
 						genType.genCIForGenType2(deduceTypes2);
 						vte.resolveType(genType);
-						vte.resolveTypeToClass(genType.node);
+						vte.resolveTypeToClass(genType.getNode());
 					} catch (final ResolveError aResolveError) {
 //						aResolveError.printStackTrace();
 						deduceTypes2.errSink.reportDiagnostic(aResolveError);
@@ -129,10 +134,10 @@ public class DeduceLocalVariable {
 			vte.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(vte.getResolvedElement()));
 			{
 				final GenType genType = vte.type.genType;
-				if (genType.resolved != null && genType.node == null) {
-					if (genType.resolved.getType() != OS_Type.Type.USER_CLASS && genType.resolved.getType() != OS_Type.Type.FUNCTION) {
+				if (genType.getResolved() != null && genType.getNode() == null) {
+					if (genType.getResolved().getType() != OS_Type.Type.USER_CLASS && genType.getResolved().getType() != OS_Type.Type.FUNCTION) {
 						try {
-							genType.resolved = deduceTypes2.resolve_type(genType.resolved, ctx).resolved;
+							genType.setResolved(deduceTypes2.resolve_type(genType.getResolved(), ctx).getResolved());
 						} catch (final ResolveError aResolveError) {
 							aResolveError.printStackTrace();
 							assert false;
@@ -168,13 +173,13 @@ public class DeduceLocalVariable {
 					break;
 					}
 
-					if (genType.ci != null) { // TODO we may need this call...
-						((ClassInvocation) genType.ci).resolvePromise().then(new DoneCallback<GeneratedClass>() {
+					if (genType.getCi() != null) { // TODO we may need this call...
+						((ClassInvocation) genType.getCi()).resolvePromise().then(new DoneCallback<GeneratedClass>() {
 							@Override
 							public void onDone(final @NotNull GeneratedClass result) {
-								genType.node = result;
+								genType.setNode(result);
 								if (!vte.typePromise().isResolved()) { // HACK
-									if (genType.resolved instanceof final OS_FuncType resolved) {
+									if (genType.getResolved() instanceof final OS_FuncType resolved) {
 										result.functionMapDeferred(((FunctionDef) resolved.getElement()), new FunctionMapDeferred() {
 											@Override
 											public void onNotify(final GeneratedFunction aGeneratedFunction) {
@@ -296,7 +301,7 @@ public class DeduceLocalVariable {
 					public void onDone(final GenType result) {
 						vte.type.setAttached(result);
 						vte.resolveType(result);
-						vte.resolveTypeToClass(result.node);
+						vte.resolveTypeToClass(result.getNode());
 					}
 				});
 			}

@@ -8,26 +8,37 @@
  */
 package tripleo.elijah.stages.gen_c;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.ErrSink;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.lang2.*;
-import tripleo.elijah.nextgen.model.*;
-import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.lang.types.OS_FuncExprType;
+import tripleo.elijah.lang2.BuiltInTypes;
+import tripleo.elijah.lang2.SpecialVariables;
+import tripleo.elijah.nextgen.model.SM_ClassDeclaration;
+import tripleo.elijah.nextgen.model.SM_Node;
+import tripleo.elijah.stages.deduce.ClassInvocation;
+import tripleo.elijah.stages.deduce.FunctionInvocation;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.stages.gen_generic.CodeGenerator;
+import tripleo.elijah.stages.gen_generic.GenerateFiles;
+import tripleo.elijah.stages.gen_generic.GenerateResult;
+import tripleo.elijah.stages.gen_generic.OutputFileFactoryParams;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.work.*;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.work.WorkJob;
+import tripleo.elijah.work.WorkList;
+import tripleo.elijah.work.WorkManager;
 import tripleo.elijah_fluffy.util.*;
-import tripleo.util.buffer.*;
+import tripleo.util.buffer.Buffer;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
-import static tripleo.elijah.stages.deduce.DeduceTypes2.*;
+import static tripleo.elijah.stages.deduce.DeduceTypes2.to_int;
 
 /**
  * Created 10/8/20 7:13 AM
@@ -617,8 +628,8 @@ public class GenerateC implements CodeGenerator, GenerateFiles {
 			//
 			// special case
 			//
-			if (input.type.genType.node != null)
-				return Emit.emit("/*395*/") + getTypeNameForGenClass(input.type.genType.node) + "*";
+			if (input.type.genType.getNode() != null)
+				return Emit.emit("/*395*/") + getTypeNameForGenClass(input.type.genType.getNode()) + "*";
 			//
 			if (input.getStatus() == BaseTableEntry.Status.UNCHECKED)
 				return "Error_UNCHECKED_Type";

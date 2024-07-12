@@ -1,14 +1,16 @@
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
+import org.jdeferred2.DoneCallback;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
+import tripleo.elijah.lang.types.OS_UserType;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
 class Implement_construct {
 
@@ -96,10 +98,10 @@ class Implement_construct {
 							assert el3 == el2;
 							if (el2 instanceof ConstructorDef) {
 								@Nullable final GenType type = deducePath.getType(i);
-								if (type.nonGenericTypeName == null) {
-									type.nonGenericTypeName = deducePath.getType(i - 1).nonGenericTypeName; // HACK. not guararnteed to work!
+								if (type.getNonGenericTypeName() == null) {
+									type.setNonGenericTypeName(deducePath.getType(i - 1).getNonGenericTypeName()); // HACK. not guararnteed to work!
 								}
-								@NotNull final OS_Type ty = new OS_UserType(type.nonGenericTypeName);
+								@NotNull final OS_Type ty = new OS_UserType(type.getNonGenericTypeName());
 								implement_construct_type(idte2, ty, s);
 							}
 						} else {
@@ -158,7 +160,7 @@ class Implement_construct {
 				try {
 					// TODO transition to GenType
 					typeName2 = deduceTypes2.resolve_type(new OS_UserType(typeName), typeName.getContext());
-					clsinv.set(i, gp.get(i), typeName2.resolved);
+					clsinv.set(i, gp.get(i), typeName2.getResolved());
 				} catch (final ResolveError aResolveError) {
 					aResolveError.printStackTrace();
 				}

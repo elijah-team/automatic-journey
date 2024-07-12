@@ -1797,27 +1797,39 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import com.google.common.base.*;
-import com.google.common.collect.*;
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.entrypoints.*;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import org.jdeferred2.DoneCallback;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.comp.PipelineLogic;
+import tripleo.elijah.entrypoints.EntryPoint;
+import tripleo.elijah.entrypoints.EntryPointList;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.lang2.*;
-import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.lang.types.OS_BuiltinType;
+import tripleo.elijah.lang.types.OS_FuncExprType;
+import tripleo.elijah.lang.types.OS_UnitType;
+import tripleo.elijah.lang.types.OS_UserType;
+import tripleo.elijah.lang2.BuiltInTypes;
+import tripleo.elijah.lang2.SpecialFunctions;
+import tripleo.elijah.stages.deduce.ClassInvocation;
+import tripleo.elijah.stages.deduce.DeduceConstructStatement;
+import tripleo.elijah.stages.deduce.DeducePhase;
+import tripleo.elijah.stages.deduce.FunctionInvocation;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.stages.stage1.*;
-import tripleo.elijah.work.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.stages.stage1.S1_Constructor;
+import tripleo.elijah.work.WorkManager;
+import tripleo.elijah_fluffy.util.Helpers;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 import tripleo.util.range.Range;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
-import static tripleo.elijah.stages.deduce.DeduceTypes2.*;
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah.stages.deduce.DeduceTypes2.to_int;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 /**
  * Created 9/10/20 2:28 PM
@@ -1886,12 +1898,12 @@ public class GenerateFunctions {
 				final GenType  genType  = new GenType();
 				final TypeName typeName = fali.typeName();
 				if (typeName != null)
-					genType.typeName = new OS_UserType(typeName);
-				genType.resolved = attached;
+					genType.setTypeName(new OS_UserType(typeName));
+				genType.setResolved(attached);
 
 				final OS_Type attached1;
 				if (attached == null && typeName != null)
-					attached1 = genType.typeName;
+					attached1 = genType.getTypeName();
 				else
 					attached1 = attached;
 
@@ -2082,12 +2094,12 @@ public class GenerateFunctions {
 					final GenType  genType  = new GenType();
 					final TypeName typeName = fali.typeName();
 					if (typeName != null)
-						genType.typeName = new OS_UserType(typeName);
-					genType.resolved = attached;
+						genType.setTypeName(new OS_UserType(typeName));
+					genType.setResolved(attached);
 
 					final OS_Type attached1;
 					if (attached == null && typeName != null)
-						attached1 = genType.typeName;
+						attached1 = genType.getTypeName();
 					else
 						attached1 = attached;
 
@@ -2630,7 +2642,7 @@ public class GenerateFunctions {
 				pte.typePromise().then(new DoneCallback<GenType>() { // TODO should this be done here?
 					@Override
 					public void onDone(final GenType result) {
-						@NotNull final TypeTableEntry tte = gf.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, result.resolved);
+						@NotNull final TypeTableEntry tte = gf.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, result.getResolved());
 						tte.genType.copy(result);
 						idte.addPotentialType(instructionIndex, tte);
 					}

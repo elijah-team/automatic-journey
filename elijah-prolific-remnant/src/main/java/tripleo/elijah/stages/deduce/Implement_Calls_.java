@@ -1,14 +1,17 @@
 package tripleo.elijah.stages.deduce;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang2.*;
+import tripleo.elijah.lang2.SpecialFunctions;
+import tripleo.elijah.lang2.SpecialVariables;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.stages.instructions.InstructionArgument;
+import tripleo.elijah.stages.instructions.IntegerIA;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
-import java.util.*;
-import java.util.regex.*;
+import java.util.List;
+import java.util.regex.Pattern;
 
 class Implement_Calls_ {
 	private final DeduceTypes2          deduceTypes2;
@@ -124,7 +127,7 @@ class Implement_Calls_ {
 			final Context ctx2 = context;//x.getTypeName().getContext();
 			try {
 				@NotNull final GenType ty2 = deduceTypes2.resolve_type(x, ctx2);
-				pot_types_size_is_1_USER_CLASS(pn, pn2, ty2.resolved);
+				pot_types_size_is_1_USER_CLASS(pn, pn2, ty2.getResolved());
 				return true;
 			} catch (final ResolveError resolveError) {
 				resolveError.printStackTrace();

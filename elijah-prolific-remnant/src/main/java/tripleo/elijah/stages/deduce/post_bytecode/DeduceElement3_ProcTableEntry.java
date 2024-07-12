@@ -1,15 +1,16 @@
 package tripleo.elijah.stages.deduce.post_bytecode;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.comp.ErrSink;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
+import tripleo.elijah.lang.types.OS_FuncType;
 import tripleo.elijah.stages.deduce.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah_fluffy.util.*;
-import tripleo.elijah_prolific.deduce.*;
-import tripleo.elijah_prolific.v.*;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
+import tripleo.elijah_prolific.deduce.DT_Element3;
+import tripleo.elijah_prolific.v.V;
 
 public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 	private final ProcTableEntry        principal;
@@ -102,7 +103,7 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 							final VariableTableEntry vte = ((IntegerIA) vrl).getEntry();
 
 							vte.typePromise().then(left_type -> {
-								final ClassStatement cs = left_type.resolved.getClassOf(); // TODO we want a DeduceClass here. GeneratedClass may suffice
+								final ClassStatement cs = left_type.getResolved().getClassOf(); // TODO we want a DeduceClass here. GeneratedClass may suffice
 
 								final ClassInvocation ci = deduceTypes2._phase().registerClassInvocation(cs);
 								ci.resolvePromise().then(gc2 -> {

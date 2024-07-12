@@ -4,16 +4,20 @@
 package tripleo.elijah.stages.stage1;
 
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.gen_fn.GenerateFunctions.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.util.range.*;
+import tripleo.elijah.lang.types.OS_UserType;
+import tripleo.elijah.stages.deduce.FunctionInvocation;
+import tripleo.elijah.stages.gen_fn.GenType;
+import tripleo.elijah.stages.gen_fn.GenerateFunctions.S1toG_GC_Processor;
+import tripleo.elijah.stages.gen_fn.GeneratedConstructor;
+import tripleo.elijah.stages.gen_fn.TypeTableEntry;
+import tripleo.elijah.stages.instructions.InstructionName;
+import tripleo.elijah.stages.instructions.IntegerIA;
+import tripleo.elijah.stages.instructions.VariableTableType;
+import tripleo.util.range.Range;
 
-import java.util.*;
+import java.util.List;
 
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 /**
  * @author Created    Oct 7, 2022 at 7:00:43 PM
@@ -70,13 +74,13 @@ public class S1_Constructor {
 			final GenType  genType  = new GenType();
 			final TypeName typeName = fali.typeName();
 			if (typeName != null) {
-				genType.typeName = new OS_UserType(typeName);
+				genType.setTypeName(new OS_UserType(typeName));
 			}
-			genType.resolved = attached;
+			genType.setResolved(attached);
 
 			final OS_Type attached1;
 			if (attached == null && typeName != null) {
-				attached1 = genType.typeName;
+				attached1 = genType.getTypeName();
 			} else {
 				attached1 = attached;
 			}

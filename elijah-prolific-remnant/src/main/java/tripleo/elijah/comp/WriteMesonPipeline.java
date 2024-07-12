@@ -8,21 +8,31 @@
  */
 package tripleo.elijah.comp;
 
-import com.google.common.collect.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.ci.*;
-import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah_fluffy.util.*;
-import tripleo.util.io.*;
+import com.google.common.collect.Multimap;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.ci.CompilerInstructions;
+import tripleo.elijah.stages.gen_generic.DoubleLatch;
+import tripleo.elijah.stages.gen_generic.GenerateResult;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
+import tripleo.util.io.CharSink;
+import tripleo.util.io.FileCharSink;
 
-import java.io.*;
-import java.nio.file.*;
-import java.util.*;
-import java.util.function.*;
-import java.util.regex.*;
-import java.util.stream.*;
+import java.io.IOException;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
+import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
+import java.util.Set;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
+import static tripleo.elijah_fluffy.util.Helpers.String_join;
 
 /**
  * Created 9/13/21 11:58 PM
@@ -65,8 +75,8 @@ public class WriteMesonPipeline implements PipelineMember, @NotNull Consumer<Sup
 //		});
 //	}
 
-	private void pl_slot(final PipelineLogic pll) {
-		grs = () -> pll.__ab.getGr();
+	private void pl_slot(final PipelineLogic aPipelineLogic) {
+		grs = () -> aPipelineLogic.getAccessBus().getGr();
 	}
 
 	private void write_makefiles_action(final Multimap<CompilerInstructions, String> lsp_outputs) {

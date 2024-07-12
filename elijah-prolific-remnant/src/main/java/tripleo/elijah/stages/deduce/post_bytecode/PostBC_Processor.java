@@ -1,16 +1,23 @@
 package tripleo.elijah.stages.deduce.post_bytecode;
 
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.diagnostic.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah_fluffy.util.*;
+import org.jdeferred2.Promise;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.diagnostic.Diagnostic;
+import tripleo.elijah.lang.Context;
+import tripleo.elijah.lang.OS_Type;
+import tripleo.elijah.stages.deduce.CantDecideType;
+import tripleo.elijah.stages.deduce.DeduceTypes2;
+import tripleo.elijah.stages.deduce.ResolveError;
+import tripleo.elijah.stages.gen_fn.GenType;
+import tripleo.elijah.stages.gen_fn.VariableTableEntry;
+import tripleo.elijah_fluffy.util.NotImplementedException;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.util.function.*;
+import java.util.function.Supplier;
 
 public interface PostBC_Processor {
 	@Contract("_, _, _ -> new")
@@ -274,7 +281,7 @@ public interface PostBC_Processor {
 				try {
 					final GenType aGenType = deduceTypes2.resolve_type(attached, fd_ctx);
 					SimplePrintLoggerToRemoveSoon.println2("xxxxxxxxxxxxxx " + aGenType);
-					r = new Maybe<>(aGenType.resolved, null); // TODO incomplete!! (send whole GenType)
+					r = new Maybe<>(aGenType.getResolved(), null); // TODO incomplete!! (send whole GenType)
 					// -------------------------- vte.type.setAttached(aGenType);
 				} catch (final ResolveError aResolveError) {
 					r = new Maybe<>(null, aResolveError);

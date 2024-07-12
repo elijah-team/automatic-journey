@@ -9,15 +9,23 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.*;
-import tripleo.elijah.diagnostic.*;
-import tripleo.elijah.lang.*;
+import org.jdeferred2.DoneCallback;
+import org.jdeferred2.FailCallback;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.DebugFlags;
+import tripleo.elijah.diagnostic.Diagnostic;
+import tripleo.elijah.lang.Context;
+import tripleo.elijah.lang.LookupResultList;
+import tripleo.elijah.lang.OS_Element;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.*;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.stages.instructions.InstructionArgument;
+import tripleo.elijah.stages.instructions.IntegerIA;
+import tripleo.elijah.stages.instructions.ProcIA;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Created 7/9/21 6:10 AM
@@ -172,7 +180,7 @@ public class DeducePath {
 		@Override
 		public LookupResultList lookup(final String name, final int level, final LookupResultList Result, final List<Context> alreadySearched, final boolean one) {
 //			if (index == 0)
-			return type.resolved.getElement().getContext().lookup(name, level, Result, alreadySearched, one);
+			return type.getResolved().getElement().getContext().lookup(name, level, Result, alreadySearched, one);
 //			else
 //				return null;
 		}

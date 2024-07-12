@@ -9,30 +9,38 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import com.google.common.collect.*;
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.diagnostic.*;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Iterables;
+import com.google.common.collect.Multimap;
+import org.jdeferred2.DoneCallback;
+import org.jdeferred2.Promise;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.PipelineLogic;
+import tripleo.elijah.diagnostic.Diagnostic;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.nextgen.*;
-import tripleo.elijah.nextgen.diagnostic.*;
-import tripleo.elijah.stages.deduce.declarations.*;
-import tripleo.elijah.stages.deduce.post_bytecode.*;
+import tripleo.elijah.lang.types.OS_UnknownType;
+import tripleo.elijah.nextgen.ClassDefinition;
+import tripleo.elijah.nextgen.diagnostic.CouldntGenerateClass;
+import tripleo.elijah.stages.deduce.declarations.DeferredMember;
+import tripleo.elijah.stages.deduce.declarations.DeferredMemberFunction;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_IdentTableEntry;
+import tripleo.elijah.stages.deduce.post_bytecode.State;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.work.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.stages.gen_generic.ICodeRegistrar;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.work.WorkList;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 import java.util.*;
-import java.util.concurrent.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.function.Predicate;
+import java.util.stream.Collectors;
 
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 /**
  * Created 12/24/20 3:59 AM
@@ -507,8 +515,8 @@ public class DeducePhase {
 
 								// TODO just getting first element here (without processing of any kind); HACK
 								final GenType ty = gc_vte.connectionPairs.get(0).vte.type.genType;
-								assert ty.resolved != null;
-								gc_vte.varType = ty.resolved; // TODO make sure this is right in all cases
+								assert ty.getResolved() != null;
+								gc_vte.varType = ty.getResolved(); // TODO make sure this is right in all cases
 								if (deferredMember.typeResolved().isPending())
 									deferredMember.typeResolved().resolve(ty);
 								break;
