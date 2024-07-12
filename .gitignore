@@ -1,8 +1,9 @@
 /bin/
 /docs/
-/eljc*out
 /out/
 /target/
 /output/
 /COMP*/
 /.idea
+/jcef-bundle/
+/ll.c

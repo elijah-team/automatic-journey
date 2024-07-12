@@ -13,7 +13,7 @@
         <maven.compiler.target>1.8</maven.compiler.target>
         <jacoco.version>0.8.6</jacoco.version>
         <downloadSources>true</downloadSources>
-        <guava.version>29.0-jre</guava.version>
+        <guava.version>32.0.0-jre</guava.version>
         <buffers.version>0.0.3</buffers.version>
         <range.version>0.0.3b</range.version>
         <maven-site-plugin.version>3.7.1</maven-site-plugin.version>
@@ -27,20 +27,20 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
-            <version>2.14.2</version>
+            <version>2.16.1</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <dependency>
             <groupId>com.squareup.okhttp3</groupId>
             <artifactId>okhttp</artifactId>
-            <version>4.10.0</version>
+            <version>4.12.0</version>
         </dependency>
 
         <dependency>
             <groupId>io.undertow</groupId>
             <artifactId>undertow-servlet</artifactId>
-            <version>2.3.4.Final</version>
+            <version>2.3.10.Final</version>
         </dependency>
 
         <dependency>
@@ -51,20 +51,20 @@
         <dependency>
             <groupId>net.java.dev.jna</groupId>
             <artifactId>jna</artifactId>
-            <version>4.0.0</version>
+            <version>5.13.0</version>
         </dependency>
 
         <!-- https://search.maven.org/artifact/io.reactivex.rxjava3/rxjava/3.1.0/jar -->
         <dependency>
             <groupId>io.reactivex.rxjava3</groupId>
             <artifactId>rxjava</artifactId>
-            <version>3.1.0</version>
+            <version>3.1.8</version>
         </dependency>
 
         <dependency>
             <groupId>me.friwi</groupId>
             <artifactId>jcefmaven</artifactId>
-            <version>105.3.36</version>
+            <version>116.0.19.1</version>
         </dependency>
 
 
@@ -72,26 +72,26 @@
         <dependency>
             <groupId>org.reactivestreams</groupId>
             <artifactId>reactive-streams</artifactId>
-            <version>1.0.3</version>
+            <version>1.0.4</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/commons-codec/commons-codec -->
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
-            <version>1.15</version> <!-- Use 1.6 for java 1.5 -->
+            <version>1.16.0</version> <!-- Use 1.6 for java 1.5 -->
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.slf4j/slf4j-simple -->
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-simple</artifactId>
-            <version>1.7.25</version>
+            <version>2.0.11</version>
         </dependency>
         <dependency>
             <groupId>org.slf4j</groupId>
             <artifactId>slf4j-api</artifactId>
-            <version>1.7.25</version>
+            <version>1.7.36</version>
         </dependency>
 
         <dependency>
@@ -111,21 +111,21 @@
         <dependency>
             <groupId>org.eclipse.jdt</groupId>
             <artifactId>org.eclipse.jdt.annotation</artifactId>
-            <version>2.2.200</version>
+            <version>2.2.800</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/org.jetbrains/annotations -->
         <dependency>
             <groupId>org.jetbrains</groupId>
             <artifactId>annotations</artifactId>
-            <version>16.0.2</version>
+            <version>24.1.0</version>
         </dependency>
 
         <!-- https://mvnrepository.com/artifact/junit/junit -->
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
-            <version>4.12</version>
+            <version>4.13.2</version>
             <scope>test</scope>
         </dependency>
 
@@ -169,13 +169,13 @@
         <dependency>
             <groupId>commons-cli</groupId>
             <artifactId>commons-cli</artifactId>
-            <version>1.4</version>
+            <version>1.6.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.github.spotbugs</groupId>
             <artifactId>spotbugs-annotations</artifactId>
-            <version>4.0.1</version>
+            <version>4.8.3</version>
         </dependency>
 
         <dependency>
@@ -256,7 +256,7 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>build-helper-maven-plugin</artifactId>
-                <version>3.2.0</version>
+                <version>3.5.0</version>
 
                 <executions>
                     <execution>
@@ -267,8 +267,9 @@
                         </goals>
                         <configuration>
                             <sources>
-                                <source>src/main-mal/</source>
-                                <source>src/main-undertow/java/</source>
+                                <source>src-mal/java/</source>
+                                <source>src-undertow/java/</source>
+                                <source>src-cef/java/</source>
                             </sources>
                         </configuration>
                     </execution>
@@ -284,7 +285,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-                <version>3.0.0-M5</version>
+                <version>3.2.5</version>
             </plugin>
 
             <!-- To use the plugin goals in your POM or parent POM -->
