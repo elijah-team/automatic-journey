@@ -56,6 +56,10 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 
 	@Override
 	public void run() throws Exception {
+		if (gr == null) {
+			SimplePrintLoggerToRemoveSoon.ilf("9889-0060 - gr is null in WritePipeline");
+			return;
+		}
 		sys.generateOutputs(gr);
 
 		write_files();
