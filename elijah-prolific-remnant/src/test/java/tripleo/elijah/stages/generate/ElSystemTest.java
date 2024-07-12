@@ -38,7 +38,7 @@ public class ElSystemTest {
 		final OutputStrategy os = new OutputStrategy();
 		os.per(OutputStrategy.Per.PER_CLASS);
 		sys.setOutputStrategy(os);
-		sys.generateOutputs(ab.gr);
+		sys.generateOutputs(ab.getGr());
 	}
 }
 

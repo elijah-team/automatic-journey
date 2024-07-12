@@ -64,7 +64,7 @@ public class GeneratePipeline implements PipelineMember/*, AccessBus.AB_LgcListe
 	                        final @NotNull EIT_ModuleList mods,
 	                        final @NotNull ElLog.Verbosity verbosity) {
 		final WorkManager    wm   = new WorkManager();
-		final GenerateResult gr   = __ab.gr;
+		final GenerateResult gr   = __ab.getGr();
 		final Compilation    comp = __ab.getCompilation();
 
 		for (final @NotNull OS_Module mod : mods.getMods()) {
