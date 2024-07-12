@@ -8,8 +8,10 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
+import io.activej.test.rules.EventloopRule;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
+import org.junit.ClassRule;
 import org.junit.Test;
 import tripleo.elijah.comp.AccessBus;
 import tripleo.elijah.comp.Compilation;
@@ -37,6 +39,8 @@ import static tripleo.elijah_fluffy.util.Helpers.List_of;
  * Created 9/10/20 2:20 PM
  */
 public class TestGenFunction {
+	@ClassRule
+	public static final EventloopRule eventloopRule = new EventloopRule();
 
 	@Test
 	public void testDemoElNormalFact1Elijah() throws Exception {
@@ -215,6 +219,8 @@ public class TestGenFunction {
 		final Compilation c = CompilationFactory.mkCompilation();
 
 		final String f = "test/basic1/genericA/";
+
+//		new WorkManager().apply().run(); // HACK FIXME
 
 		c.feedCmdLine(List_of(f));
 
