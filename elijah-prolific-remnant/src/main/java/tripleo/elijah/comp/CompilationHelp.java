@@ -8,11 +8,13 @@
  */
 package tripleo.elijah.comp;
 
-import com.google.common.base.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.*;
-import tripleo.elijah.comp.internal.*;
-import tripleo.vendor.mal.*;
+import com.google.common.base.Preconditions;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.DebugFlags;
+import tripleo.elijah.comp.internal.ProcessRecord;
+import tripleo.vendor.mal.stepA_mal;
+import tripleo.vendor.mal.types;
 
 interface RuntimeProcess {
 	void run();

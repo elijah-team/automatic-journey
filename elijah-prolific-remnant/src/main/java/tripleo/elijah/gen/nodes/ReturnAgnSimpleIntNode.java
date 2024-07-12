@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.NumericExpression;
 
 /**
  * @author Tripleo(sb)

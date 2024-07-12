@@ -11,8 +11,8 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah.gen.*;
-import tripleo.elijah.lang.*;
+import tripleo.elijah.gen.TypeRef;
+import tripleo.elijah.lang.IdentExpression;
 
 /**
  * @author Tripleo(acer)

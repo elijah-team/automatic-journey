@@ -11,7 +11,7 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah.gen.*;
+import tripleo.elijah.gen.CompilerContext;
 
 /**
  * @author Tripleo(sb)

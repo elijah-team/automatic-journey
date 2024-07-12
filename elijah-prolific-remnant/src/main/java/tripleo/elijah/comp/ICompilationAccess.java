@@ -1,10 +1,10 @@
 package tripleo.elijah.comp;
 
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah_remnant.startup.*;
+import tripleo.elijah.stages.deduce.FunctionMapHook;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah_remnant.startup.ProlificStartup2;
 
-import java.util.*;
+import java.util.List;
 
 public interface ICompilationAccess {
 	void setPipelineLogic(final PipelineLogic pl);

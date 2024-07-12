@@ -1,21 +1,30 @@
 package tripleo.elijah.comp;
 
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.Compilation.*;
-import tripleo.elijah.comp.internal.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.nextgen.inputtree.*;
-import tripleo.elijah.nextgen.outputtree.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.work.*;
-import tripleo.elijah_fluffy.util.*;
+import org.jdeferred2.DoneCallback;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.Compilation.CompilationAlways;
+import tripleo.elijah.comp.internal.ProcessRecord;
+import tripleo.elijah.lang.OS_Module;
+import tripleo.elijah.nextgen.inputtree.EIT_ModuleList;
+import tripleo.elijah.nextgen.outputtree.EOT_OutputTree;
+import tripleo.elijah.stages.gen_fn.GeneratedContainerNC;
+import tripleo.elijah.stages.gen_fn.GeneratedNode;
+import tripleo.elijah.stages.gen_generic.GenerateFiles;
+import tripleo.elijah.stages.gen_generic.GenerateResult;
+import tripleo.elijah.stages.gen_generic.OutputFileFactory;
+import tripleo.elijah.stages.gen_generic.OutputFileFactoryParams;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.work.WorkManager;
+import tripleo.elijah_fluffy.util.Eventual;
+import tripleo.elijah_fluffy.util.EventualExtract;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 public class AccessBus {
 	private final Compilation _c;
@@ -156,7 +165,7 @@ public class AccessBus {
 		return gr;
 	}
 
-	public DeferredObject<GenerateResult, Void, Void> getGenerateResultPromise() {
+	public Eventual<GenerateResult> getGenerateResultPromise() {
 		return generateResultPromise;
 	}
 

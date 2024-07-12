@@ -9,12 +9,16 @@
 
 package tripleo.elijah.stages.deduce;
 
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Test;
+import tripleo.elijah.lang.DotExpression;
+import tripleo.elijah.lang.IExpression;
+import tripleo.elijah.lang.IdentExpression;
+import tripleo.elijah_fluffy.util.Helpers;
 
-import java.util.*;
+import java.util.Stack;
 
 public class DotExpressionToStackTest {
 

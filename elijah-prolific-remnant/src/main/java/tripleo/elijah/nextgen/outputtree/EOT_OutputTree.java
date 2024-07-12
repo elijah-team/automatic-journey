@@ -8,6 +8,7 @@ import tripleo.elijah.nextgen.outputstatement.EG_Statement;
 import tripleo.elijah_prolific.v.V;
 
 import java.nio.file.Path;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 

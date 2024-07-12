@@ -1,8 +1,8 @@
 package tripleo.elijah.ci;
 
-import antlr.*;
+import antlr.Token;
 
-import java.util.*;
+import java.util.List;
 
 public interface CompilerInstructions {
 

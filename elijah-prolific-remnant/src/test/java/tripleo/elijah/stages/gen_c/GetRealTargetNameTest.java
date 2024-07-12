@@ -9,19 +9,27 @@
 
 package tripleo.elijah.stages.gen_c;
 
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import tripleo.elijah.comp.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import tripleo.elijah.comp.AccessBus;
+import tripleo.elijah.comp.PipelineLogic;
+import tripleo.elijah.comp.StdErrSink;
 import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah_fluffy.comp.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.stages.gen_fn.GeneratedFunction;
+import tripleo.elijah.stages.gen_fn.TypeTableEntry;
+import tripleo.elijah.stages.gen_generic.OutputFileFactoryParams;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.stages.instructions.IntegerIA;
+import tripleo.elijah.stages.instructions.VariableTableType;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah_fluffy.comp.CM_Preludes;
+import tripleo.elijah_fluffy.util.Helpers;
 
-import static org.easymock.EasyMock.*;
+import static org.easymock.EasyMock.mock;
 
 public class GetRealTargetNameTest {
 

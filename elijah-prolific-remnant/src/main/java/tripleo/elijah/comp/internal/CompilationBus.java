@@ -1,9 +1,11 @@
 package tripleo.elijah.comp.internal;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.i.*;
-import tripleo.elijah_prolific.comp_signals.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.CompilationChange;
+import tripleo.elijah.comp.ILazyCompilerInstructions;
+import tripleo.elijah.comp.i.ICompilationBus;
+import tripleo.elijah_prolific.comp_signals.CSS2_Advisable;
 
 public class CompilationBus implements ICompilationBus {
 	private final Compilation c;

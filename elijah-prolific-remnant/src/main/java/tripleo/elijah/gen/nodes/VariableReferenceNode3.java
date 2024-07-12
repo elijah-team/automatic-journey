@@ -8,10 +8,12 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.gen.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import org.jetbrains.annotations.Contract;
+import tripleo.elijah.gen.CompilerContext;
+import tripleo.elijah.gen.Node;
+import tripleo.elijah.gen.TypeRef;
+import tripleo.elijah.lang.IExpression;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 public class VariableReferenceNode3 implements IExpressionNode {
 

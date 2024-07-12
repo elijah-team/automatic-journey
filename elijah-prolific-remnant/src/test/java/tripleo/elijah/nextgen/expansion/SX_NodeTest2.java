@@ -1,19 +1,20 @@
 package tripleo.elijah.nextgen.expansion;
 
-import junit.framework.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import junit.framework.TestCase;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.Compilation;
 import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.nextgen.model.*;
 import tripleo.elijah.nextgen.outputstatement.*;
-import tripleo.elijah.nextgen.outputtree.*;
-import tripleo.elijah.nextgen.small.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.nextgen.outputtree.EOT_OutputFile;
+import tripleo.elijah.nextgen.outputtree.EOT_OutputTree;
+import tripleo.elijah.nextgen.small.ES_Symbol;
+import tripleo.elijah_fluffy.util.Helpers;
 
-import java.util.*;
-import java.util.stream.*;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 public class SX_NodeTest2 extends TestCase {
 

@@ -1,10 +1,11 @@
 package tripleo.elijah.comp;
 
-import io.reactivex.rxjava3.annotations.*;
-import io.reactivex.rxjava3.core.*;
-import io.reactivex.rxjava3.disposables.*;
-import io.reactivex.rxjava3.subjects.*;
-import tripleo.elijah.ci.*;
+import io.reactivex.rxjava3.annotations.NonNull;
+import io.reactivex.rxjava3.core.Observer;
+import io.reactivex.rxjava3.disposables.Disposable;
+import io.reactivex.rxjava3.subjects.ReplaySubject;
+import io.reactivex.rxjava3.subjects.Subject;
+import tripleo.elijah.ci.CompilerInstructions;
 
 public class EDR_CIS implements Observer<CompilerInstructions> {
 	private final Subject<CompilerInstructions> compilerInstructionsSubject = ReplaySubject.create();

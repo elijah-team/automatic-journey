@@ -1,6 +1,6 @@
 package tripleo.elijah.alibaba_fastjson;
 
-import java.util.*;
+import java.util.List;
 
 public class Group {
 

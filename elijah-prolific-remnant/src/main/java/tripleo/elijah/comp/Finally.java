@@ -1,9 +1,12 @@
 package tripleo.elijah.comp;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.nextgen.outputtree.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.nextgen.outputtree.EOT_OutputFile;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class Finally {
 	private final Set<Outs> outputOffs = new HashSet<>();

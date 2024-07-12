@@ -1,11 +1,10 @@
 package tripleo.elijah.comp;
 
-import org.apache.commons.lang3.tuple.*;
-import tripleo.elijah.comp.i.*;
-import tripleo.elijah.comp.internal.*;
-import tripleo.elijah_prolific.comp_signals.*;
+import org.apache.commons.lang3.tuple.Pair;
+import tripleo.elijah.comp.internal.CompilationBus;
+import tripleo.elijah_prolific.comp_signals.CSS2_doFindCIs;
 
-import java.util.*;
+import java.util.List;
 
 public abstract class _CompilerControllerBase implements tripleo.elijah.comp.i.CompilerController {
 	protected String[] args2;

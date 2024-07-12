@@ -1,6 +1,6 @@
 package tripleo.elijah.gen;
 
-import tripleo.elijah.contexts.*;
+import tripleo.elijah.contexts.ClassContext;
 import tripleo.elijah.lang.*;
 
 public interface ICodeGen {

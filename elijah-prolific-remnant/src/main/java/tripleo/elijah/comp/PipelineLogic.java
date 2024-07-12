@@ -161,14 +161,6 @@ public class PipelineLogic implements AccessBus.AB_ModuleListListener {
 		return this.__ab;
 	}
 
-	public GeneratePhase getGeneratePhase() {
-		return generatePhase;
-	}
-
-	public DeducePhase getDp() {
-		return dp;
-	}
-
 	public AccessBus get__ab() {
 		return __ab;
 	}

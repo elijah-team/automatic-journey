@@ -8,8 +8,10 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah.gen.*;
-import tripleo.elijah.lang.*;
+import tripleo.elijah.gen.CompilerContext;
+import tripleo.elijah.gen.TypeRef;
+import tripleo.elijah.lang.IExpression;
+import tripleo.elijah.lang.NumericExpression;
 
 /*
  * Created on 5/13/2019 at 01:44

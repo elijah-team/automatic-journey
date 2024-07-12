@@ -8,8 +8,8 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah.gen.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.gen.Node;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 public class ScopeNode implements Node {
 	@Override

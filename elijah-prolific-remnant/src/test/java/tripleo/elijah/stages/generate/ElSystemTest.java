@@ -9,10 +9,12 @@
 
 package tripleo.elijah.stages.generate;
 
-import org.junit.*;
-import tripleo.elijah.comp.*;
+import org.junit.Before;
+import org.junit.Test;
+import tripleo.elijah.comp.AccessBus;
+import tripleo.elijah.comp.Compilation;
 import tripleo.elijah.factory.comp.CompilationFactory;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_fluffy.util.Helpers;
 
 public class ElSystemTest {
 

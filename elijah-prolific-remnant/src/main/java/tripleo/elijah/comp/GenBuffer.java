@@ -8,14 +8,18 @@
  */
 package tripleo.elijah.comp;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.gen.*;
-import tripleo.elijah.gen.nodes.*;
-import tripleo.util.*;
-import tripleo.util.buffer.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.gen.CompilerContext;
+import tripleo.elijah.gen.nodes.ImportNode;
+import tripleo.elijah.gen.nodes.LocalDeclAgnNode;
+import tripleo.util.NotImplementedException;
+import tripleo.util.buffer.FileBackedBuffer;
+import tripleo.util.buffer.TextBuffer;
 
-import java.io.*;
-import java.util.*;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class GenBuffer {
 

@@ -8,25 +8,36 @@
  */
 package tripleo.elijah.comp;
 
-import com.google.common.collect.*;
-import org.jetbrains.annotations.*;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.DebugFlags;
-import tripleo.elijah.comp.functionality.f203.*;
-import tripleo.elijah.lang.*;
+import tripleo.elijah.comp.functionality.f203.F203;
+import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.nextgen.outputstatement.*;
-import tripleo.elijah.nextgen.outputtree.*;
-import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.stages.generate.*;
-import tripleo.elijah_fluffy.util.*;
-import tripleo.elijah_prolific.v.*;
-import tripleo.util.buffer.*;
-import tripleo.util.io.*;
+import tripleo.elijah.nextgen.outputtree.EOT_OutputFile;
+import tripleo.elijah.nextgen.outputtree.EOT_OutputTree;
+import tripleo.elijah.stages.gen_generic.GenerateResult;
+import tripleo.elijah.stages.gen_generic.GenerateResultItem;
+import tripleo.elijah.stages.generate.ElSystem;
+import tripleo.elijah.stages.generate.OutputStrategy;
+import tripleo.elijah_fluffy.util.Helpers;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
+import tripleo.elijah_prolific.v.V;
+import tripleo.util.buffer.Buffer;
+import tripleo.util.buffer.DefaultBuffer;
+import tripleo.util.buffer.TextBuffer;
+import tripleo.util.io.CharSink;
+import tripleo.util.io.FileCharSink;
 
 import java.io.*;
-import java.nio.file.*;
+import java.nio.file.FileSystems;
+import java.nio.file.Path;
 import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.function.Consumer;
+import java.util.function.Supplier;
+import java.util.stream.Collectors;
 
 /**
  * Created 8/21/21 10:19 PM

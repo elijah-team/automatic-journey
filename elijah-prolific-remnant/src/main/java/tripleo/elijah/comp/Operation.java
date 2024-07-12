@@ -1,6 +1,6 @@
 package tripleo.elijah.comp;
 
-import tripleo.elijah.util.*;
+import tripleo.elijah.util.Mode;
 
 /**
  * An emulation of Rust's Result type

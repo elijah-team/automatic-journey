@@ -11,7 +11,7 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.IExpression;
 
 /**
  * @author Tripleo(sb)

@@ -11,9 +11,10 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah.comp.*;
-import tripleo.elijah.gen.*;
-import tripleo.elijah.lang.*;
+import tripleo.elijah.comp.GenBuffer;
+import tripleo.elijah.gen.CompilerContext;
+import tripleo.elijah.lang.IExpression;
+import tripleo.elijah.lang.ProcedureCallExpression;
 
 /**
  * @author Tripleo(sb)

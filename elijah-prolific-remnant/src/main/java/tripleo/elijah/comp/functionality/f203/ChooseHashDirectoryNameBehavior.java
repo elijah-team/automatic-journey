@@ -1,16 +1,17 @@
 package tripleo.elijah.comp.functionality.f203;
 
-import org.apache.commons.codec.digest.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import org.apache.commons.codec.digest.DigestUtils;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.Compilation;
 
-import java.io.*;
-import java.time.*;
-import java.time.format.*;
-import java.util.*;
-import java.util.stream.*;
+import java.io.File;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.List;
+import java.util.stream.Collectors;
 
-import static org.apache.commons.codec.digest.MessageDigestAlgorithms.*;
+import static org.apache.commons.codec.digest.MessageDigestAlgorithms.SHA_256;
 
 public class ChooseHashDirectoryNameBehavior implements ChooseDirectoryNameBehavior {
 	private final Compilation c;

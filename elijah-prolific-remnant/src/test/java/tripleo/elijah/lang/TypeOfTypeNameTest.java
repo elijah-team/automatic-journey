@@ -8,13 +8,17 @@
  */
 package tripleo.elijah.lang;
 
-import org.junit.*;
-import tripleo.elijah.comp.*;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+import tripleo.elijah.comp.AccessBus;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.PipelineLogic;
 import tripleo.elijah.factory.comp.CompilationFactory;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.stages.deduce.DeduceTypes2;
+import tripleo.elijah.stages.deduce.ResolveError;
+import tripleo.elijah.stages.gen_fn.GeneratePhase;
+import tripleo.elijah_fluffy.util.Helpers;
 
 import static org.easymock.EasyMock.*;
 

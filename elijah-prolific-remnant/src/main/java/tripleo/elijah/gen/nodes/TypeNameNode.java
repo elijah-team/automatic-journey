@@ -3,8 +3,8 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import org.eclipse.jdt.annotation.*;
-import tripleo.elijah.lang.*;
+import org.eclipse.jdt.annotation.NonNull;
+import tripleo.elijah.lang.IdentExpression;
 
 /**
  * @author Tripleo(acer)

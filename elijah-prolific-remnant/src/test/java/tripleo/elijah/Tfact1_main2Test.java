@@ -1,11 +1,11 @@
 package tripleo.elijah;
 
-import org.junit.*;
+import org.junit.Test;
 
-import java.util.*;
+import java.util.List;
 
-import static org.junit.Assert.*;
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static org.junit.Assert.assertEquals;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 public class Tfact1_main2Test {
 

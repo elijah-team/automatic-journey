@@ -1,6 +1,6 @@
 package tripleo.elijah.comp.internal;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.*;
 
 public class ProcessRecord {

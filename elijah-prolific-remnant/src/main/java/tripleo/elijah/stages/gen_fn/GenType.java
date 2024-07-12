@@ -22,7 +22,7 @@ import tripleo.elijah.stages.deduce.zero.Zero_FuncExprType;
 import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
 import java.util.Objects;
-import java.util.function.*;
+import java.util.function.Supplier;
 
 /**
  * Created 5/31/21 1:32 PM
@@ -259,6 +259,13 @@ public class GenType {
 
 	public void setFunctionInvocation(FunctionInvocation aFunctionInvocation) {
 		functionInvocation = aFunctionInvocation;
+	}
+
+	public IInvocation getCi(final Supplier<IInvocation> aSupplier) {
+		if (this.ci == null) {
+			this.ci = aSupplier.get();
+		}
+		return this.ci;
 	}
 
 	static class SetGenCI {

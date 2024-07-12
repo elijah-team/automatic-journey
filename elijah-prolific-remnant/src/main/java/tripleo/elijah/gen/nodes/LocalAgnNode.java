@@ -3,8 +3,8 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import tripleo.elijah.comp.*;
-import tripleo.elijah.gen.*;
+import tripleo.elijah.comp.GenBuffer;
+import tripleo.elijah.gen.CompilerContext;
 
 /**
  * @author Tripleo(sb)

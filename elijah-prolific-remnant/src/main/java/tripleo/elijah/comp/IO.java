@@ -8,12 +8,16 @@
  */
 package tripleo.elijah.comp;
 
-import org.jetbrains.annotations.*;
-import tripleo.util.io.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.util.io.CharSink;
+import tripleo.util.io.CharSource;
+import tripleo.util.io.FileCharSink;
 
 import java.io.*;
-import java.nio.file.*;
-import java.util.*;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IO {
 

@@ -14,17 +14,23 @@
  */
 package tripleo.elijah.gen.nodes;
 
-import antlr.*;
-import com.google.common.base.*;
-import com.google.common.collect.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.gen.*;
+import antlr.CommonToken;
+import antlr.Token;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.gen.CompilerContext;
+import tripleo.elijah.gen.Node;
+import tripleo.elijah.gen.TypeRef;
 import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
-import java.util.*;
+import java.util.List;
 
-import static tripleo.elijah.gen.TypeRef.*;
+import static tripleo.elijah.gen.TypeRef.CODE_U64;
+import static tripleo.elijah.gen.TypeRef.is_integer_code;
 
 /**
  * Please consider that there is no such thing as an ExpressionNode

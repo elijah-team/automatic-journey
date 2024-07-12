@@ -1,8 +1,9 @@
 package tripleo.elijah.comp;
 
-import tripleo.elijah.contexts.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.util.*;
+import tripleo.elijah.contexts.ModuleContext;
+import tripleo.elijah.lang.OS_Module;
+import tripleo.elijah.util.Mode;
+import tripleo.elijah.util.Operation2;
 
 
 public class ModuleBuilder {

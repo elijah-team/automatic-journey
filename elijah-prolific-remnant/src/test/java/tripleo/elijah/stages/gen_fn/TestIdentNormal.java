@@ -8,16 +8,20 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import tripleo.elijah.comp.*;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Ignore;
+import org.junit.Test;
+import tripleo.elijah.comp.AccessBus;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.PipelineLogic;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah.test_help.*;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.stages.instructions.InstructionArgument;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.test_help.Boilerplate;
 
-import java.util.*;
+import java.util.List;
 
 import static org.easymock.EasyMock.*;
 

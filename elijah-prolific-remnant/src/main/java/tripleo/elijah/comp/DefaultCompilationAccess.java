@@ -1,13 +1,16 @@
 package tripleo.elijah.comp;
 
-import com.google.common.collect.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.functionality.f202.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah_remnant.startup.*;
+import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Multimap;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.functionality.f202.F202;
+import tripleo.elijah.stages.deduce.FunctionMapHook;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah_remnant.startup.ProlificStartup2;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
+import java.util.Map;
 
 public class DefaultCompilationAccess implements ICompilationAccess {
 	protected final Compilation compilation;

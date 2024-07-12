@@ -8,15 +8,18 @@
  */
 package tripleo.elijah;
 
-import org.junit.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.i.*;
-import tripleo.elijah.entrypoints.*;
+import org.junit.Assert;
+import org.junit.Test;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.comp.IO;
+import tripleo.elijah.comp.StdErrSink;
+import tripleo.elijah.entrypoints.MainClassEntryPoint;
 import tripleo.elijah.factory.comp.CompilationFactory;
-import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.lang.ClassStatement;
+import tripleo.elijah_fluffy.util.Helpers;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * @author Tripleo

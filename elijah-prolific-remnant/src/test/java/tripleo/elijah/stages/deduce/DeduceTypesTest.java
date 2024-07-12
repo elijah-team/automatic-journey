@@ -8,16 +8,22 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
-import org.junit.*;
-import tripleo.elijah.comp.*;
+import org.jdeferred2.DoneCallback;
+import org.jdeferred2.Promise;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.junit.Assert;
+import org.junit.Before;
+import org.junit.Ignore;
+import org.junit.Test;
+import tripleo.elijah.comp.Compilation;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.lang2.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.test_help.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.lang.types.OS_BuiltinType;
+import tripleo.elijah.lang.types.OS_UserType;
+import tripleo.elijah.lang2.BuiltInTypes;
+import tripleo.elijah.stages.gen_fn.GenType;
+import tripleo.elijah.test_help.Boilerplate;
+import tripleo.elijah_fluffy.util.Helpers;
 
 /**
  * Useless tests. We really want to know if a TypeName will resolve to the same

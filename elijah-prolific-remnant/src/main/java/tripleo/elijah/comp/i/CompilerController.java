@@ -1,8 +1,8 @@
 package tripleo.elijah.comp.i;
 
-import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.Compilation;
 
-import java.util.*;
+import java.util.List;
 
 public interface CompilerController {
 	void printUsage();

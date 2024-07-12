@@ -1,8 +1,11 @@
 package tripleo.elijah.comp;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.OS_Module;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 class EDR_MOD {
 	final         List<OS_Module>        modules = new ArrayList<OS_Module>();

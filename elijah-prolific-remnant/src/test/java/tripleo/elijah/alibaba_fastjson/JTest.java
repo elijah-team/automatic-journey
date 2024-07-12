@@ -1,9 +1,10 @@
 package tripleo.elijah.alibaba_fastjson;
 
-import com.alibaba.fastjson.*;
-import org.junit.*;
+import com.alibaba.fastjson.JSON;
+import org.junit.Test;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 

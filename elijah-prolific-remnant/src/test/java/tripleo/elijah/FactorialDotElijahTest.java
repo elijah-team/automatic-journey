@@ -8,13 +8,16 @@
  */
 package tripleo.elijah;
 
-import org.junit.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.gen.*;
+import org.junit.Assert;
+import org.junit.Test;
+import tripleo.elijah.comp.GenBuffer;
+import tripleo.elijah.gen.CompilerContext;
+import tripleo.elijah.gen.ModuleRef;
+import tripleo.elijah.gen.TypeRef;
 import tripleo.elijah.gen.nodes.*;
-import tripleo.util.buffer.*;
+import tripleo.util.buffer.TextBuffer;
 
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 public class FactorialDotElijahTest {
 
