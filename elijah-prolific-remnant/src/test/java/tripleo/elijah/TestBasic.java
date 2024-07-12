@@ -27,6 +27,7 @@ import tripleo.elijah.nextgen.outputstatement.EG_Statement;
 import tripleo.elijah.nextgen.outputtree.EOT_OutputTree;
 import com.google.common.base.*;
 import com.google.common.io.*;
+import io.activej.test.rules.*;
 import org.jdeferred2.*;
 import org.jdeferred2.impl.*;
 import org.jetbrains.annotations.*;
