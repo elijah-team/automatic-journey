@@ -21,8 +21,11 @@ public class EOT_OutputFile {
 	private final EOT_OutputType _type;
 	private final EG_Statement _sequence; // TODO List<?> ??
 
-	public EOT_OutputFile(final Compilation c, final @NotNull List<EIT_Input> inputs, final String filename,
-			final EOT_OutputType type, final EG_Statement sequence) {
+	public EOT_OutputFile(final Compilation c,
+	                      final @NotNull List<EIT_Input> inputs,
+	                      final String filename,
+	                      final EOT_OutputType type,
+	                      final EG_Statement sequence) {
 		this.c = c;
 		_filename = filename;
 		_type = type;
@@ -31,7 +34,9 @@ public class EOT_OutputFile {
 	}
 
 	public static @NotNull EOT_OutputFile bufferSetToOutputFile(final String aFilename,
-			final @NotNull Collection<Buffer> aBuffers, final Compilation comp, final OS_Module aModule) {
+	                                                            final @NotNull Collection<Buffer> aBuffers,
+	                                                            final Compilation comp,
+	                                                            final OS_Module aModule) {
 		final List<EIT_Input> inputs = List_of(new EIT_ModuleInput(aModule, comp));
 
 		final List<EG_Statement> statementStream = aBuffers.stream().map(
