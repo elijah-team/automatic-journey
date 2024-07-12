@@ -99,7 +99,7 @@ public abstract class Compilation {
 		ctl.processOptions();
 		ctl.runner();
 
-		V.exit();
+		V.exit(this);
 	}
 
 	public String getProjectName() {
