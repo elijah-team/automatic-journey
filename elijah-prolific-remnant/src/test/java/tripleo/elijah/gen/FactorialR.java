@@ -85,8 +85,9 @@ public class FactorialR /* extends TestCase */ {
 		final ImportNode impn = new ImportNode("wprust.demo.fact");
 		gbn.GenImportStmt(cctx, impn);
 
-		final ClassDeclNode cdn = new ClassDeclNode("Main", null,
-		  List_of(new Inherited("Arguments", false))); // gen inh code
+		final ClassDeclNode cdn = new ClassDeclNode("Main", null, List_of(new Inherited("Arguments", false))); // gen
+																												// inh
+																												// code
 		cdn.GenClassDecl(cctx, gbn);
 
 		final MethHdrNode mhn = new MethHdrNode(null, cdn.type(), "main", null, 1000);
@@ -96,8 +97,7 @@ public class FactorialR /* extends TestCase */ {
 		final LocalDeclAgnNode ldan1 = new LocalDeclAgnNode("b1", ExpressionNodeBuilder.integer(3));
 		gbn.GenLocalDeclAgn(cctx, ldan1);
 
-		final LocalDeclAgnNode ldan_a1 = new LocalDeclAgnNode("a1", sys_int,
-		  ExpressionNodeBuilder.fncall("argument",
+		final LocalDeclAgnNode ldan_a1 = new LocalDeclAgnNode("a1", sys_int, ExpressionNodeBuilder.fncall("argument",
 			convertToLocalAgnTmpNode(List_of(ExpressionNodeBuilder.integer(1)))));
 		gbn.GenLocalDeclAgn(cctx, ldan_a1);
 
@@ -107,13 +107,12 @@ public class FactorialR /* extends TestCase */ {
 		final IfNode ifn = new IfNode(latn);
 		ifn.BeginIfCtx(cctx, gbn);
 
-		final LocalAgnNode lan_b1 = new LocalAgnNode(
-		  ExpressionNodeBuilder.fncall("a1.toInt", null));
+		final LocalAgnNode lan_b1 = new LocalAgnNode(ExpressionNodeBuilder.fncall("a1.toInt", null));
 		lan_b1.GenLocalAgn(cctx, gbn);
 		ifn.CloseIfCtx(cctx, gbn);
 
-		final LocalDeclAgnNode ldan_f1 = new LocalDeclAgnNode("f1",
-		  convertToLocalAgnTmpNode2(ExpressionNodeBuilder.fncall("factorial", List_of(new LocalAgnTmpNode("b1")))));
+		final LocalDeclAgnNode ldan_f1 = new LocalDeclAgnNode("f1", convertToLocalAgnTmpNode2(
+				ExpressionNodeBuilder.fncall("factorial", List_of(new LocalAgnTmpNode("b1")))));
 		gbn.GenLocalAgn(cctx, ldan_f1);
 
 		final SimpleFnCall sfc = new SimpleFnCall("print", List_of("f1"));
@@ -140,9 +139,7 @@ public class FactorialR /* extends TestCase */ {
 		final ModuleRef main_m  = new ModuleRef("fact.elijah", -2);
 		final TypeRef   main_k  = new TypeRef(main_m, main_m, "Main", 100);
 
-
-		final MethHdrNode mhn = new MethHdrNode(u64, main_k, "factorial_r",
-		  List_of(new ArgumentNode("i", u64)), 1000);
+		final MethHdrNode mhn = new MethHdrNode(u64, main_k, "factorial_r", List_of(new ArgumentNode("i", u64)), 1000);
 		GenMethHdr(cctx, mhn, gbn);
 		BeginMeth(cctx, mhn, gbn);
 
@@ -164,14 +161,14 @@ public class FactorialR /* extends TestCase */ {
 		BeginDefaultCaseStatement(cctx, csn2, gbn);
 
 		final TmpSSACtxNode tccssan = new TmpSSACtxNode(cctx);
-		final LocalAgnTmpNode lamn = new LocalAgnTmpNode(tccssan, ExpressionNodeBuilder.binex(u64,
-		  ExpressionNodeBuilder.varref("n", shn, u64),
+		final LocalAgnTmpNode lamn = new LocalAgnTmpNode(tccssan,
+				ExpressionNodeBuilder.binex(u64, ExpressionNodeBuilder.varref("n", shn, u64),
 		  ExpressionOperators.OP_MINUS, ExpressionNodeBuilder.integer(1)));
 		BeginTmpSSACtx(cctx, tccssan, gbn);
 
 		final TmpSSACtxNode tccssan2 = new TmpSSACtxNode(cctx);
-		final LocalAgnTmpNode latn2 = new LocalAgnTmpNode(tccssan2, ExpressionNodeBuilder.fncall(
-		  "factorial_r", List_of(lamn)));
+		final LocalAgnTmpNode latn2 = new LocalAgnTmpNode(tccssan2,
+				ExpressionNodeBuilder.fncall("factorial_r", List_of(lamn)));
 		GenLocalAgn(cctx, latn2, gbn);
 
 		final TmpSSACtxNode tccssan3 = new TmpSSACtxNode(cctx);
@@ -261,8 +258,7 @@ public class FactorialR /* extends TestCase */ {
 		final TextBuffer buf        = gbn.moduleBufImpl(cctx.module());
 		final boolean    is_simple  = node.left.is_const_expr();
 		final boolean    is_default = node.is_simple();
-		assert !is_default || node.left.is_underscore() ||
-		  (node.left.is_var_ref() && node.left.ref_ == null);
+		assert !is_default || node.left.is_underscore() || (node.left.is_var_ref() && node.left.ref_ == null);
 		if (is_simple) {
 			buf.append("case " + node.left.genText(cctx));
 			buf.append_s(": {");

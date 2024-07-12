@@ -10,7 +10,8 @@ package tripleo.elijah;
 
 import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.comp.i.*;
+import tripleo.elijah.factory.comp.CompilationFactory;
 
 import java.io.*;
 import java.util.*;
@@ -26,7 +27,7 @@ public class CompilationTest {
 	public final void testEz() throws Exception {
 		final List<String> args = List_of("test/comp_test/main3", "-sE"/*, "-out"*/);
 		final ErrSink      eee  = new StdErrSink();
-		final Compilation  c    = new CompilationImpl(eee, new IO());
+		final Compilation c = CompilationFactory.mkCompilation(eee, new IO());
 
 		c.feedCmdLine(args);
 

@@ -10,7 +10,7 @@ package tripleo.elijah.stages.deduce;
 
 import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.factory.comp.CompilationFactory;
 
 import static tripleo.elijah_fluffy.util.Helpers.*;
 
@@ -21,21 +21,21 @@ public class Feb2021Test {
 
 	@Test
 	public void testProperty() {
-		final Compilation c = new CompilationImpl(new StdErrSink(), new IO());
+		final Compilation c = CompilationFactory.mkCompilation();
 
 		c.feedCmdLine(List_of("test/feb2021/property/"));
 	}
 
 	@Test
 	public void testFunction() {
-		final Compilation c = new CompilationImpl(new StdErrSink(), new IO());
+		final Compilation c = CompilationFactory.mkCompilation();
 
 		c.feedCmdLine(List_of("test/feb2021/function/"));
 	}
 
 	@Test
 	public void testHier() {
-		final Compilation c = new CompilationImpl(new StdErrSink(), new IO());
+		final Compilation c = CompilationFactory.mkCompilation();
 
 		c.feedCmdLine(List_of("test/feb2021/hier/"));
 	}

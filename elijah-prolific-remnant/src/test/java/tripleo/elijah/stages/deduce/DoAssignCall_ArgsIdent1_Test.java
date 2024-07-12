@@ -2,36 +2,43 @@ package tripleo.elijah.stages.deduce;
 
 import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
 import tripleo.elijah.contexts.*;
+import tripleo.elijah.factory.comp.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.lang.types.*;
 import tripleo.elijah.lang2.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.*;
+import tripleo.elijah_durable_prolific.deduce.*;
 import tripleo.elijah_fluffy.util.*;
 import tripleo.elijah_remnant.rosetta.*;
 
 import java.util.*;
 
 import static org.easymock.EasyMock.*;
-import static tripleo.elijah.stages.logging.ElLog.Verbosity.*;
 
 public class DoAssignCall_ArgsIdent1_Test {
 	/*
-	    model and test
-
-	    var f1 = factorial(b1)
+	 * model and test
+	 *
+	 * var f1 = factorial(b1)
 	 */
 
-	@Ignore @Test
+	@Ignore
+	@Test
 	public void f1_eq_factorial_b1() {
-		final CompilationImpl c             = new CompilationImpl(new StdErrSink(), new IO());
+		final Compilation   c             = CompilationFactory.mkCompilation();
 		final OS_Module       mod           = mock(OS_Module.class);
 		final PipelineLogic   pipelineLogic = new PipelineLogic(new AccessBus(c));
-		final GeneratePhase   generatePhase = new GeneratePhase(VERBOSE, pipelineLogic, c);
-		final DeducePhase     phase         = new DeducePhase(generatePhase, pipelineLogic, ElLog.Verbosity.VERBOSE, c);
+
+
+		// HACK
+		final ElLog.Verbosity verbosity = ElLog.Verbosity.SILENT;
+
+
+		final GeneratePhase generatePhase = new GeneratePhase(verbosity, pipelineLogic, c);
+		final DeducePhase   phase         = new DeducePhase(generatePhase, pipelineLogic, verbosity, c);
 
 		expect(mod.getCompilation()).andReturn(c);
 		expect(mod.getFileName()).andReturn("foo.elijah");
@@ -45,10 +52,14 @@ public class DoAssignCall_ArgsIdent1_Test {
 			final FunctionDef fd = mock(FunctionDef.class);
 			// final GeneratedFunction generatedFunction = mock(GeneratedFunction.class);
 			final GeneratedFunction generatedFunction = new GeneratedFunction(fd);
-			final TypeTableEntry    self_type         = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, new OS_UserClassType(mock(ClassStatement.class)));
-			final int               index_self        = generatedFunction.addVariableTableEntry("self", VariableTableType.SELF, self_type, null);
+			final TypeTableEntry self_type = generatedFunction.newTypeTableEntry(
+					TypeTableEntry.Type.SPECIFIED,
+					new OS_UserClassType(mock(ClassStatement.class)));
+			final int index_self = generatedFunction.addVariableTableEntry("self", VariableTableType.SELF, self_type,
+			                                                               null);
 			final TypeTableEntry    result_type       = null;
-			final int               index_result      = generatedFunction.addVariableTableEntry("Result", VariableTableType.RESULT, result_type, null);
+			final int index_result = generatedFunction.addVariableTableEntry("Result", VariableTableType.RESULT,
+			                                                                 result_type, null);
 			final OS_Type           sts_int           = new OS_BuiltinType(BuiltInTypes.SystemInteger);
 			final TypeTableEntry    b1_type           = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.SPECIFIED, sts_int);
 			final OS_Type           b1_attached       = sts_int;
@@ -79,12 +90,29 @@ public class DoAssignCall_ArgsIdent1_Test {
 
 			d.do_assign_call_args_ident(generatedFunction, ctx, vte, instructionIndex, pte, i, tte, identExpression);
 
-			d.onExitFunction(generatedFunction, ctx, ctx);
+			final Instruction instruction = null;
+			final Context     fd_ctx      = fd.getContext();
+			final Context     context     = generatedFunction.getContextFromPC(instruction.getIndex());
+
+			final _DT_Deducer1 d1 = new _DT_Deducer1(generatedFunction, fd, fd_ctx);
+			final _DT_Deducer2 d2 = new _DT_Deducer2(d1, instruction, context);
+
+			d.onExitFunction(d2, generatedFunction, ctx, ctx, new DCC(d, d._phase(), d._errSink()));
 
 			verify(mod, fd, /*generatedFunction,*/ ctx);
 		});
 
 		FakeRosetta3.ensure_all();
+	}
+
+	public class _DT_Deducer2 implements DeduceTypes2._DT_Deducer {
+		public _DT_Deducer2(final _DT_Deducer1 aDeducer1, final Instruction aInstruction, final Context aContext) {
+		}
+	}
+
+	public class _DT_Deducer1 implements DeduceTypes2._DT_Deducer {
+		public _DT_Deducer1(final GeneratedFunction aGeneratedFunction, final FunctionDef aFd, final Context aFdCtx) {
+		}
 	}
 
 }

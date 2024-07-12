@@ -38,8 +38,10 @@ public class GetIdentIAPathTest_ForC {
 
 	@Test
 	public void testManualXDotFoo() {
-		@NotNull final IdentExpression x_ident   = IdentExpression.forString("X");
-		@NotNull final IdentExpression foo_ident = IdentExpression.forString("foo");
+		@NotNull
+		final IdentExpression x_ident = IdentExpression.forString("X");
+		@NotNull
+		final IdentExpression foo_ident = IdentExpression.forString("foo");
 		//
 		final VariableSequence vsq = new VariableSequence(null);
 		vsq.setParent(mock(ClassStatement.class));
@@ -66,8 +68,10 @@ public class GetIdentIAPathTest_ForC {
 
 	@Test
 	public void testManualXDotFoo2() {
-		@NotNull final IdentExpression x_ident   = IdentExpression.forString("x");
-		@NotNull final IdentExpression foo_ident = IdentExpression.forString("foo");
+		@NotNull
+		final IdentExpression x_ident = IdentExpression.forString("x");
+		@NotNull
+		final IdentExpression foo_ident = IdentExpression.forString("foo");
 		//
 		final OS_Element mock_class = mock(ClassStatement.class);
 		expect(gf.getFD().getParent()).andReturn(mock_class);
@@ -99,16 +103,18 @@ public class GetIdentIAPathTest_ForC {
 
 		final AccessBus         ab            = new AccessBus(c);
 		final PipelineLogic     pl            = new PipelineLogic(ab);
-		final GeneratePhase     generatePhase = pl.generatePhase;
+		final GeneratePhase generatePhase = pl.getGeneratePhase();
 		final GenerateFunctions gen           = generatePhase.getGenerateFunctions(mod);
 		final Context           ctx           = mock(Context.class);
 		//
 		final DotExpression       expr = new DotExpression(x_ident, foo_ident);
 		final InstructionArgument xx   = gen.simplify_expression(expr, gf, ctx);
 		//
-		@NotNull final IdentTableEntry x_ite = gf.getIdentTableEntry(0); // x
+		@NotNull
+		final IdentTableEntry x_ite = gf.getIdentTableEntry(0); // x
 		x_ite.setResolvedElement(x_vs);
-		@NotNull final IdentTableEntry foo_ite = gf.getIdentTableEntry(1); // foo
+		@NotNull
+		final IdentTableEntry foo_ite = gf.getIdentTableEntry(1); // foo
 		foo_ite.setResolvedElement(foo_vs);
 		//
 		final IdentIA ident_ia = (IdentIA) xx;
@@ -121,7 +127,8 @@ public class GetIdentIAPathTest_ForC {
 	@Test
 	public void testManualXDotFoo3() {
 		final IdentExpression          x_ident   = Helpers.string_to_ident("x");
-		@NotNull final IdentExpression foo_ident = Helpers.string_to_ident("foo");
+		@NotNull
+		final IdentExpression foo_ident = Helpers.string_to_ident("foo");
 		//
 		final Boilerplate b = new Boilerplate();
 		b.get();
@@ -130,7 +137,7 @@ public class GetIdentIAPathTest_ForC {
 
 		final AccessBus         ab            = new AccessBus(c);
 		final PipelineLogic     pl            = new PipelineLogic(ab);
-		final GeneratePhase     generatePhase = pl.generatePhase;
+		final GeneratePhase generatePhase = pl.getGeneratePhase();
 		final GenerateFunctions gen           = generatePhase.getGenerateFunctions(mod);
 		final Context           ctx           = mock(Context.class);
 		//
@@ -152,7 +159,8 @@ public class GetIdentIAPathTest_ForC {
 		foo_vs.setName(foo_ident);
 
 		final IdentIA                  ident_ia = (IdentIA) xx;
-		@NotNull final IdentTableEntry ite      = ((IdentIA) xx).getEntry();
+		@NotNull
+		final IdentTableEntry ite = ((IdentIA) xx).getEntry();
 		ite.setResolvedElement(foo_vs);
 
 		final String x = getIdentIAPath(ident_ia, gf);
@@ -162,8 +170,10 @@ public class GetIdentIAPathTest_ForC {
 
 	@Test
 	public void testManualXDotFooWithFooBeingFunction() {
-		@NotNull final IdentExpression x_ident   = Helpers.string_to_ident("x");
-		@NotNull final IdentExpression foo_ident = Helpers.string_to_ident("foo");
+		@NotNull
+		final IdentExpression x_ident = Helpers.string_to_ident("x");
+		@NotNull
+		final IdentExpression foo_ident = Helpers.string_to_ident("foo");
 		//
 		final Context ctx         = mock(Context.class);
 		final Context mockContext = mock(Context.class);
@@ -216,7 +226,7 @@ public class GetIdentIAPathTest_ForC {
 
 		final AccessBus           ab            = new AccessBus(c);
 		final PipelineLogic       pl            = new PipelineLogic(ab);
-		final GeneratePhase       generatePhase = pl.generatePhase;
+		final GeneratePhase generatePhase = pl.getGeneratePhase();
 		final GenerateFunctions   gen           = generatePhase.getGenerateFunctions(mod);
 		final InstructionArgument xx            = gen.simplify_expression(expr, gf, ctx);
 
@@ -241,7 +251,6 @@ public class GetIdentIAPathTest_ForC {
 
 		Assert.assertEquals("z-1foo(vvx)", x); // FIXME (??) if foo is a named ctor then make this cap, otherwise, oops
 	}
-
 
 }
 

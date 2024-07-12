@@ -7,7 +7,7 @@
  *
  */
 package tripleo.elijah.stages.deduce;
-//
+
 //import org.junit.Assert;
 //import org.junit.Before;
 //import org.junit.Test;
@@ -17,7 +17,7 @@ package tripleo.elijah.stages.deduce;
 //import tripleo.elijah.contexts.FunctionContext;
 //import tripleo.elijah.contexts.ModuleContext;
 //import tripleo.elijah.lang.*;
-//import tripleo.elijah.util.Helpers;
+//import tripleo.elijah_fluffy.util.Helpers;
 //
 
 /**
@@ -30,7 +30,7 @@ public class DeduceTypesTest3 {
 //	@Before
 //	public void setUp() {
 //		final OS_Module mod = new OS_Module();
-//		mod.parent = new CompilationImpl(new StdErrSink(), new IO());
+//		mod.parent = CompilationFactory.mkCompilation();
 ////		final DeduceTypes d = new DeduceTypes(mod);
 //		final ModuleContext mctx = new ModuleContext(mod);
 //		mod.setContext(mctx);

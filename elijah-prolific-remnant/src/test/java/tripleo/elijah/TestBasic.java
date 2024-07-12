@@ -10,12 +10,13 @@ package tripleo.elijah;
 
 import com.google.common.base.*;
 import com.google.common.io.*;
+import io.activej.test.rules.*;
 import org.jdeferred2.*;
 import org.jdeferred2.impl.*;
 import org.jetbrains.annotations.*;
 import org.junit.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
+import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.nextgen.outputstatement.*;
 import tripleo.elijah.nextgen.outputtree.*;
 
@@ -30,6 +31,9 @@ import static tripleo.elijah_fluffy.util.Helpers.*;
  * @author Tripleo(envy)
  */
 public class TestBasic {
+	@ClassRule
+	public static final EventloopRule eventloopRule = new EventloopRule();
+
 
 	@Test
 	public final void testBasicParse() throws Exception {
@@ -38,7 +42,7 @@ public class TestBasic {
 		args.addAll(ez_files);
 		args.add("-sE");
 		final ErrSink     eee = new StdErrSink();
-		final Compilation c   = new CompilationImpl(eee, new IO());
+		final Compilation c = CompilationFactory.mkCompilation(eee, new IO());
 
 		c.feedCmdLine(args);
 
@@ -66,7 +70,7 @@ public class TestBasic {
 		for (final String s : ez_files) {
 //			List<String> args = List_of("test/basic", "-sO"/*, "-out"*/);
 			final ErrSink     eee = new StdErrSink();
-			final Compilation c   = new CompilationImpl(eee, new IO());
+			final Compilation c = CompilationFactory.mkCompilation(eee, new IO());
 
 			c.feedCmdLine(List_of(s, "-sO"));
 
@@ -87,14 +91,14 @@ public class TestBasic {
 		final String s = "test/basic/listfolders3/listfolders3.ez";
 
 		final ErrSink     eee = new StdErrSink();
-		final Compilation c   = new CompilationImpl(eee, new IO());
+		final Compilation c = CompilationFactory.mkCompilation(eee, new IO());
 
 		c.feedCmdLine(List_of(s, "-sO"));
 
 		if (c.errorCount() != 0)
 			System.err.printf("Error count should be 0 but is %d for %s%n", c.errorCount(), s);
 
-		Assert.assertEquals(12, c.getOutputTree().list.size());
+		Assert.assertEquals(12, c.getOutputTree().getList().size());
 		Assert.assertEquals(24, c.errorCount()); // TODO Error count obviously should be 0
 	}
 
@@ -103,7 +107,7 @@ public class TestBasic {
 		final String s = "test/basic/listfolders4/listfolders4.ez";
 
 		final ErrSink     eee = new StdErrSink();
-		final Compilation c   = new CompilationImpl(eee, new IO());
+		final Compilation c = CompilationFactory.mkCompilation(eee, new IO());
 
 		c.feedCmdLine(List_of(s, "-sO"));
 
@@ -118,7 +122,7 @@ public class TestBasic {
 		final String s = "test/basic/fact1/main2";
 
 		final ErrSink     eee = new StdErrSink();
-		final Compilation c   = new CompilationImpl(eee, new IO());
+		final Compilation c = CompilationFactory.mkCompilation(eee, new IO());
 
 		c.feedCmdLine(List_of(s, "-sO"));
 
@@ -127,19 +131,23 @@ public class TestBasic {
 
 		final @NotNull EOT_OutputTree cot = c.getOutputTree();
 
-		Assert.assertEquals(18, cot.list.size()); // TODO why not 6?
+		Assert.assertEquals(18, cot.size()); // TODO why not 6?
 
-		select(cot.list, f -> f.getFilename().equals("/main2/Main.h"))
-		  .then(f -> {
-			  System.out.println(((EG_SequenceStatement) f.getStatementSequence())._list().stream().map(EG_Statement::getText).collect(Collectors.toList()));
+		select(cot.getList(), f -> f.getFilename().equals("/main2/Main.h")).then(f -> {
+			final EG_SequenceStatement statementSequence = (EG_SequenceStatement) f.getStatementSequence();
+			System.out.println(_mapGetTextToSequence(statementSequence));
 		  });
-		select(cot.list, f -> f.getFilename().equals("/main2/Main.c"))
-		  .then(f -> {
-			  System.out.println(((EG_SequenceStatement) f.getStatementSequence())._list().stream().map(EG_Statement::getText).collect(Collectors.toList()));
+		select(cot.getList(), f -> f.getFilename().equals("/main2/Main.c")).then(f -> {
+			final EG_SequenceStatement statementSequence = (EG_SequenceStatement) f.getStatementSequence();
+			System.out.println(_mapGetTextToSequence(statementSequence));
 		  });
 
 		// TODO Error count obviously should be 0
 		Assert.assertEquals(123, c.errorCount()); // FIXME why 123?? 04/15
+	}
+
+	private static @NotNull List<String> _mapGetTextToSequence(final EG_SequenceStatement statementSequence) {
+		return statementSequence._list().stream().map(EG_Statement::getText).collect(Collectors.toList());
 	}
 }
 
