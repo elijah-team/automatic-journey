@@ -1,13 +1,17 @@
 package tripleo.elijah.test_help;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
-import tripleo.elijah.contexts.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.comp.internal.CompilationImpl;
+import tripleo.elijah.comp.internal.ProcessRecord;
+import tripleo.elijah.contexts.ModuleContext;
+import tripleo.elijah.lang.OS_Module;
+import tripleo.elijah.stages.deduce.DeducePhase;
+import tripleo.elijah.stages.deduce.DeduceTypes2;
+import tripleo.elijah.stages.gen_generic.GenerateFiles;
+import tripleo.elijah.stages.gen_generic.OutputFileFactory;
+import tripleo.elijah.stages.gen_generic.OutputFileFactoryParams;
+import tripleo.elijah.stages.logging.ElLog;
 
 public class Boilerplate {
 	public Compilation        comp;
@@ -80,6 +84,6 @@ public class Boilerplate {
 	}
 
 	public DeducePhase getDeducePhase() {
-		return pipelineLogic.dp;
+		return pipelineLogic.getDp();
 	}
 }

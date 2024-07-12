@@ -9,23 +9,29 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import com.google.common.base.*;
-import com.google.common.collect.*;
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import org.jdeferred2.DoneCallback;
+import org.jdeferred2.Promise;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.comp.ErrSink;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.lang2.*;
-import tripleo.elijah.stages.deduce.declarations.*;
+import tripleo.elijah.lang.types.OS_BuiltinType;
+import tripleo.elijah.lang.types.OS_UnknownType;
+import tripleo.elijah.lang.types.OS_UserType;
+import tripleo.elijah.lang2.BuiltInTypes;
+import tripleo.elijah.stages.deduce.declarations.DeferredMemberFunction;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah_fluffy.util.NotImplementedException;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-import static tripleo.elijah.stages.deduce.DeduceTypes2.*;
+import static tripleo.elijah.stages.deduce.DeduceTypes2.to_int;
 
 /**
  * Created 12/12/21 12:30 AM
@@ -142,7 +148,7 @@ public class DoAssignCall {
 										@Override
 										public void onDone(@NotNull final GenType result) {
 											pe.satisfy(result);
-											@NotNull final TypeTableEntry tte = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, result.resolved); // TODO there has to be a better way
+											@NotNull final TypeTableEntry tte = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, result.getResolved()); // TODO there has to be a better way
 											tte.genType.copy(result);
 											vte.addPotentialType(instructionIndex, tte);
 										}
@@ -404,7 +410,7 @@ public class DoAssignCall {
 								break;
 							case USER_CLASS:
 								final GenType gt = vte1.genType;
-								gt.resolved = attached;
+								gt.setResolved(attached);
 								vte1.resolveType(gt);
 								break;
 							default:
@@ -437,7 +443,7 @@ public class DoAssignCall {
 										break;
 									case USER_CLASS:
 										final GenType gt = vte1.genType;
-										gt.resolved = attached;
+										gt.setResolved(attached);
 										vte1.resolveType(gt);
 										break;
 									default:
@@ -460,7 +466,7 @@ public class DoAssignCall {
 							else {
 								final GenType gt       = vte1.genType;
 								final OS_Type attached = vte2.type.getAttached();
-								gt.resolved = attached;
+								gt.setResolved(attached);
 								vte1.resolveType(gt);
 							}
 //								vte.type = vte2.type;
@@ -546,8 +552,8 @@ public class DoAssignCall {
 									errSink.reportError("Cant resolve " + ty); // TODO print better diagnostic
 									return;
 								}
-								if (rtype.resolved != null && rtype.resolved.getType() == OS_Type.Type.USER_CLASS) {
-									final LookupResultList     lrl2  = rtype.resolved.getClassOf().getContext().lookup("__getitem__");
+								if (rtype.getResolved() != null && rtype.getResolved().getType() == OS_Type.Type.USER_CLASS) {
+									final LookupResultList     lrl2  = rtype.getResolved().getClassOf().getContext().lookup("__getitem__");
 									@Nullable final OS_Element best2 = lrl2.chooseBest(null);
 									if (best2 != null) {
 										if (best2 instanceof @NotNull final FunctionDef fd) {

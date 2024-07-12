@@ -9,16 +9,18 @@
  */
 package tripleo.elijah.comp;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.entrypoints.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.nextgen.inputtree.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_fn.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.entrypoints.EntryPoint;
+import tripleo.elijah.lang.OS_Module;
+import tripleo.elijah.nextgen.inputtree.EIT_ModuleList;
+import tripleo.elijah.stages.deduce.DeducePhase;
+import tripleo.elijah.stages.gen_fn.GenerateFunctions;
+import tripleo.elijah.stages.gen_fn.GeneratedNode;
 
-import java.util.*;
-import java.util.function.*;
-import java.util.stream.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Function;
+import java.util.stream.Collectors;
 
 /**
  * Created 8/21/21 10:10 PM
@@ -102,7 +104,7 @@ public class DeducePipeline implements PipelineMember, AccessBus.AB_ModuleListLi
 
 		protected DeducePhase.@NotNull GeneratedClasses run2() {
 			final GenerateFunctions gfm         = mapper.apply(mod);
-			final DeducePhase       deducePhase = pipelineLogic.dp;
+			final DeducePhase       deducePhase = pipelineLogic.getDp();
 
 			gfm.generateFromEntryPoints(entryPoints, deducePhase);
 

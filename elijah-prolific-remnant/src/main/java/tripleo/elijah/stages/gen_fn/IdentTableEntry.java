@@ -11,17 +11,24 @@ package tripleo.elijah.stages.gen_fn;
 
 //import edu.umd.cs.findbugs.annotations.SuppressFBWarnings;
 
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
+import org.jdeferred2.DoneCallback;
+import org.jdeferred2.Promise;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.deduce.post_bytecode.*;
-import tripleo.elijah.stages.deduce.zero.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_IdentTableEntry;
+import tripleo.elijah.stages.deduce.post_bytecode.IDeduceElement3;
+import tripleo.elijah.stages.deduce.zero.ITE_Zero;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.stages.instructions.InstructionArgument;
+import tripleo.elijah.stages.instructions.IntegerIA;
+import tripleo.elijah_fluffy.util.Holder;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created 9/12/20 10:27 PM
@@ -166,7 +173,7 @@ public class IdentTableEntry extends BaseTableEntry1 implements Constructable, T
 
 	public void setGenType(final GenType genType, final BaseGeneratedFunction gf) {
 		if (type == null) {
-			makeType(gf, TypeTableEntry.Type.SPECIFIED, genType.resolved);
+			makeType(gf, TypeTableEntry.Type.SPECIFIED, genType.getResolved());
 		}
 
 		type.genType.copy(genType);

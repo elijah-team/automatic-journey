@@ -8,21 +8,25 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
+import org.jdeferred2.DoneCallback;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.stages.gen_generic.Dependency;
+import tripleo.elijah.stages.gen_generic.IDependencyReferent;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.world.i.*;
-import tripleo.elijah_fluffy.util.*;
-import tripleo.elijah.stages.deduce.*;
+import tripleo.elijah.world.i.LivingFunction;
+import tripleo.elijah_fluffy.util.Helpers;
+import tripleo.elijah_fluffy.util.Holder;
+import tripleo.elijah_fluffy.util.NotImplementedException;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 import tripleo.util.range.Range;
 
 import java.util.*;
 
-import static tripleo.elijah.stages.deduce.DeduceTypes2.*;
+import static tripleo.elijah.stages.deduce.DeduceTypes2.to_int;
 
 /**
  * Created 9/10/20 2:57 PM
@@ -112,8 +116,7 @@ public abstract class BaseGeneratedFunction extends AbstractDependencyTracker im
 	/**
 	 * Returns a string that represents the path encoded by ia2.
 	 * Does not transform the string into target language (ie C).
-	 * Called from {@link DeduceTypes2#do_assign_call(BaseGeneratedFunction, Context, IdentTableEntry, FnCallArgs, int)}
-	 * or {@link DeduceTypes2#deduce_generated_function(GeneratedFunction)}
+	 * Called from {@link DeduceTypes2#deduce_generated_function(GeneratedFunction)}
 	 * or {@link DeduceTypes2#resolveIdentIA_(Context, IdentIA, BaseGeneratedFunction, FoundElement)}
 	 *
 	 * @param ia2 the path

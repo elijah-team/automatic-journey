@@ -1,11 +1,14 @@
 package tripleo.elijah.stages.deduce.post_bytecode;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.diagnostic.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_fn.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.diagnostic.Diagnostic;
+import tripleo.elijah.lang.OS_Type;
+import tripleo.elijah.stages.deduce.DeduceTypes2;
+import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
+import tripleo.elijah.stages.gen_fn.GenType;
+import tripleo.elijah.stages.gen_fn.IdentTableEntry;
+import tripleo.elijah.stages.gen_fn.VariableTableEntry;
 
 class DeduceType3 implements DED {
 	private final OS_Type         osType;
@@ -59,7 +62,7 @@ class DeduceType3 implements DED {
 	public GenType getGenType() {
 		if (_genType == null) {
 			_genType          = new GenType();
-			_genType.resolved = osType;
+			_genType.setResolved(osType);
 		}
 
 		return _genType;

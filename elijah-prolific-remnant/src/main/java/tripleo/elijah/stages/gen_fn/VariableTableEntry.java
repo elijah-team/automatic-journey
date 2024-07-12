@@ -8,17 +8,26 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.deduce.post_bytecode.*;
-import tripleo.elijah.stages.deduce.zero.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah_fluffy.util.*;
+import org.jdeferred2.Promise;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.lang.Context;
+import tripleo.elijah.lang.OS_Element;
+import tripleo.elijah.lang.OS_Type;
+import tripleo.elijah.stages.deduce.ClassInvocation;
+import tripleo.elijah.stages.deduce.DeduceLocalVariable;
+import tripleo.elijah.stages.deduce.DeduceTypes2;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_VariableTableEntry;
+import tripleo.elijah.stages.deduce.post_bytecode.IDeduceElement3;
+import tripleo.elijah.stages.deduce.post_bytecode.PostBC_Processor;
+import tripleo.elijah.stages.deduce.zero.VTE_Zero;
+import tripleo.elijah.stages.instructions.VariableTableType;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created 9/10/20 4:51 PM
@@ -148,7 +157,7 @@ public class VariableTableEntry extends BaseTableEntry1 implements Constructable
 //	@Override
 	public void resolveTypeToClass(final GeneratedNode aNode) {
 		_resolvedType = aNode;
-		genType.node  = aNode;
+		genType.setNode(aNode);
 		type.resolve(aNode); // TODO maybe this obviates above
 	}
 
@@ -160,7 +169,7 @@ public class VariableTableEntry extends BaseTableEntry1 implements Constructable
 
 	public void resolveType(final @NotNull GenType aGenType) {
 		if (_resolveTypeCalled != null) { // TODO what a hack
-			if (_resolveTypeCalled.resolved != null) {
+			if (_resolveTypeCalled.getResolved() != null) {
 				if (!aGenType.equals(_resolveTypeCalled)) {
 					System.err.printf("** 130 Attempting to replace %s with %s in %s%n", _resolveTypeCalled.asString(), aGenType.asString(), this);
 //					throw new AssertionError();
@@ -230,8 +239,8 @@ public class VariableTableEntry extends BaseTableEntry1 implements Constructable
 		bGenType.copy(aGenType);
 
 		// 2. set node when available
-		((ClassInvocation) bGenType.ci).resolvePromise().done(aGeneratedClass -> {
-			bGenType.node = aGeneratedClass;
+		((ClassInvocation) bGenType.getCi()).resolvePromise().done(aGeneratedClass -> {
+			bGenType.setNode(aGeneratedClass);
 			resolveTypeToClass(aGeneratedClass);
 			genType = bGenType; // TODO who knows if this is necessary?
 		});

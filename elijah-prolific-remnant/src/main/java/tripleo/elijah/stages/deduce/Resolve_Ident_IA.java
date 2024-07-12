@@ -1,24 +1,28 @@
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.*;
-import tripleo.elijah.comp.*;
+import org.jdeferred2.DoneCallback;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.DebugFlags;
+import tripleo.elijah.comp.ErrSink;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.stages.deduce.post_bytecode.*;
-import tripleo.elijah.stages.deduce.zero.*;
+import tripleo.elijah.lang.types.OS_UserType;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_ProcTableEntry;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_VariableTableEntry;
+import tripleo.elijah.stages.deduce.zero.ITE_Zero;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.IdentIA;
 import tripleo.elijah.stages.instructions.InstructionArgument;
 import tripleo.elijah.stages.instructions.IntegerIA;
 import tripleo.elijah.stages.instructions.ProcIA;
 import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.work.WorkJob;
 import tripleo.elijah_fluffy.util.NotImplementedException;
 import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
-import tripleo.elijah.work.WorkJob;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created 7/8/21 2:31 AM
@@ -282,7 +286,7 @@ public class Resolve_Ident_IA {
 					final TypeName tn = ((MatchConditional.MatchArm_TypeMatch) el).getTypeName();
 					try {
 						final @NotNull GenType ty = dc.resolve_type(new OS_UserType(tn), tn.getContext());
-						ectx = ty.resolved.getElement().getContext();
+						ectx = ty.getResolved().getElement().getContext();
 					} catch (final ResolveError resolveError) {
 						resolveError.printStackTrace();
 						LOG.err("1182 Can't resolve " + tn);
@@ -339,9 +343,9 @@ public class Resolve_Ident_IA {
 			final ClassInvocation    ci = fi.getClassInvocation();
 			if (fi.getFunction() instanceof ConstructorDef) {
 				@NotNull final GenType genType = new GenType(ci.getKlass());
-				genType.ci = ci;
+				genType.setCi(ci);
 				assert ci.resolvePromise().isResolved();
-				ci.resolvePromise().then(result -> genType.node = result);
+				ci.resolvePromise().then(result -> genType.setNode(result));
 				final @NotNull OS_Module         module            = ci.getKlass().getContext().module();
 				final @NotNull GenerateFunctions generateFunctions = dc.getGenerateFunctions(module);
 				final WorkJob                    j;
@@ -443,11 +447,11 @@ public class Resolve_Ident_IA {
 		pte.setFunctionInvocation(fi);
 		if (fi.getFunction() instanceof ConstructorDef) {
 			@NotNull final GenType genType = new GenType(ci.getKlass());
-			genType.ci = ci;
+			genType.setCi(ci);
 			ci.resolvePromise().then(new DoneCallback<GeneratedClass>() {
 				@Override
 				public void onDone(final GeneratedClass result) {
-					genType.node = result;
+					genType.setNode(result);
 				}
 			});
 			generatedFunction.addDependentType(genType);

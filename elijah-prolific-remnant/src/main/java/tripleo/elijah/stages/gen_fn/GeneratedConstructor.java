@@ -8,9 +8,14 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.lang.BaseFunctionDef;
+import tripleo.elijah.lang.ClassStatement;
+import tripleo.elijah.lang.ConstructorDef;
+import tripleo.elijah.stages.deduce.ClassInvocation;
+import tripleo.elijah.stages.deduce.FunctionInvocation;
+import tripleo.elijah.stages.deduce.NamespaceInvocation;
 
 /**
  * Created 6/27/21 9:45 AM
@@ -26,18 +31,18 @@ public class GeneratedConstructor extends BaseGeneratedFunction {
 		final GenType genType = new GenType();
 
 		// TODO will fail on namespace constructors; next line too
-		if (genType.ci instanceof final ClassInvocation classInvocation) {
+		if (genType.getCi() instanceof final ClassInvocation classInvocation) {
 //			throw new IllegalStateException("34 Needs class invocation");
 
-			genType.ci       = classInvocation;
-			genType.resolved = classInvocation.getKlass().getOS_Type();
-		} else if (genType.ci instanceof final NamespaceInvocation namespaceInvocation) {
+			genType.setCi(classInvocation);
+			genType.setResolved(classInvocation.getKlass().getOS_Type());
+		} else if (genType.getCi() instanceof final NamespaceInvocation namespaceInvocation) {
 
-			genType.ci       = namespaceInvocation;
-			genType.resolved = namespaceInvocation.getNamespace().getOS_Type();
+			genType.setCi(namespaceInvocation);
+			genType.setResolved(namespaceInvocation.getNamespace().getOS_Type());
 		}
 
-		genType.node = this;
+		genType.setNode(this);
 
 		resolveTypeDeferred(genType);
 	}

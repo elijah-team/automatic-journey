@@ -1,28 +1,36 @@
 package tripleo.elijah.stages.deduce.post_bytecode;
 
-import com.google.common.base.*;
-import com.google.common.collect.*;
-import org.apache.commons.lang3.tuple.*;
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.diagnostic.*;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import org.apache.commons.lang3.tuple.ImmutablePair;
+import org.apache.commons.lang3.tuple.Pair;
+import org.jdeferred2.Promise;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.diagnostic.Diagnostic;
+import tripleo.elijah.diagnostic.Locatable;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.nextgen.query.*;
+import tripleo.elijah.lang.types.OS_UserType;
+import tripleo.elijah.nextgen.query.Operation2;
 import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.deduce.post_bytecode.DED.*;
+import tripleo.elijah.stages.deduce.post_bytecode.DED.DED_VTE;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah.stages.logging.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.stages.instructions.InstructionArgument;
+import tripleo.elijah.stages.instructions.VariableTableType;
+import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah_fluffy.util.NotImplementedException;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.io.*;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
-import java.util.*;
 
-import static tripleo.elijah.stages.deduce.DeduceTypes2.*;
+import static tripleo.elijah.stages.deduce.DeduceTypes2.to_int;
 
 public class DeduceElement3_VariableTableEntry extends DefaultStateful implements IDeduceElement3 {
 
@@ -171,7 +179,7 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 					break;
 				case USER_CLASS:
 					final GenType gt = vte1.genType;
-					gt.resolved = attached;
+					gt.setResolved(attached);
 					vte1.resolveType(gt);
 					break;
 				default:
@@ -204,7 +212,7 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 							break;
 						case USER_CLASS:
 							final GenType gt = vte1.genType;
-							gt.resolved = attached;
+							gt.setResolved(attached);
 							vte1.resolveType(gt);
 							break;
 						default:
@@ -227,7 +235,7 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 				else {
 					final GenType gt       = vte1.genType;
 					final OS_Type attached = vte2.type.getAttached();
-					gt.resolved = attached;
+					gt.setResolved(attached);
 					vte1.resolveType(gt);
 				}
 //								vte.type = vte2.type;
@@ -282,7 +290,7 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 
 		if (resolvedElement instanceof IdentExpression) {
 			backlink.typePromise().then(result -> {
-				final Context context = result.resolved.getClassOf().getContext();
+				final Context context = result.getResolved().getClassOf().getContext();
 				d.resolve(context);
 			});
 		} else {

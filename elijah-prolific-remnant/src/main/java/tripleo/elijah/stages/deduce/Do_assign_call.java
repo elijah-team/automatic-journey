@@ -1,15 +1,18 @@
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
+import org.jdeferred2.DoneCallback;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.lang2.*;
+import tripleo.elijah.lang.types.OS_BuiltinType;
+import tripleo.elijah.lang.types.OS_FuncType;
+import tripleo.elijah.lang.types.OS_UserClassType;
+import tripleo.elijah.lang2.BuiltInTypes;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
-import java.util.*;
+import java.util.List;
 
 class Do_assign_call {
 	private final DeduceTypes2 deduceTypes2;
@@ -75,7 +78,7 @@ class Do_assign_call {
 										@Override
 										public void onDone(@NotNull final GenType result) {
 											pe.satisfy(result);
-											@NotNull final TypeTableEntry tte = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, result.resolved); // TODO there has to be a better way
+											@NotNull final TypeTableEntry tte = generatedFunction.newTypeTableEntry(TypeTableEntry.Type.TRANSIENT, result.getResolved()); // TODO there has to be a better way
 											tte.genType.copy(result);
 											vte.addPotentialType(instructionIndex, tte);
 										}

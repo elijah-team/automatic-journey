@@ -9,18 +9,26 @@
  */
 package tripleo.elijah.stages.gen_c;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.deduce.post_bytecode.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.lang.ConstructorDef;
+import tripleo.elijah.lang.IdentExpression;
+import tripleo.elijah.lang.OS_Module;
+import tripleo.elijah.lang.RegularTypeName;
+import tripleo.elijah.lang.types.OS_FuncType;
+import tripleo.elijah.lang.types.OS_UserType;
+import tripleo.elijah.stages.deduce.ClassInvocation;
+import tripleo.elijah.stages.deduce.post_bytecode.IDeduceElement3;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah.stages.instructions.InstructionArgument;
+import tripleo.elijah.stages.instructions.IntegerIA;
+import tripleo.elijah.stages.instructions.ProcIA;
+import tripleo.elijah_fluffy.util.Helpers;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 import java.util.*;
 
-import static tripleo.elijah.stages.deduce.DeduceTypes2.*;
+import static tripleo.elijah.stages.deduce.DeduceTypes2.to_int;
 
 /**
  * Created 1/9/21 7:12 AM
@@ -77,7 +85,7 @@ public class CReference {
 				if (vte.getName().equals("a1")) {
 					final GenType        gt1 = vte.genType;
 					final GenType        gt2 = vte.type.genType;
-					final GeneratedClass gc1 = (GeneratedClass) vte.genType.node;
+					final GeneratedClass gc1 = (GeneratedClass) vte.genType.getNode();
 
 					_cheat = gc1;
 
@@ -88,18 +96,18 @@ public class CReference {
 
 					// gt2
 
-					assert gt2.resolvedn == null;
-					assert gt2.typeName instanceof OS_UserType;
-					assert gt2.nonGenericTypeName instanceof RegularTypeName;
-					assert gt2.resolved instanceof OS_FuncType; // wrong: should be usertype: GeneratedClass
-					assert ((ClassInvocation) gt2.ci).resolvePromise().isResolved();
+					assert gt2.getResolvedn() == null;
+					assert gt2.getTypeName() instanceof OS_UserType;
+					assert gt2.getNonGenericTypeName() instanceof RegularTypeName;
+					assert gt2.getResolved() instanceof OS_FuncType; // wrong: should be usertype: GeneratedClass
+					assert ((ClassInvocation) gt2.getCi()).resolvePromise().isResolved();
 
-					((ClassInvocation) gt2.ci).resolvePromise().then(gc -> { // wrong: should be ConstString
+					((ClassInvocation) gt2.getCi()).resolvePromise().then(gc -> { // wrong: should be ConstString
 						assert gc.getCode() == 102;
 						assert gc.getKlass().getName().equals("Arguments");
 					});
 
-					assert gt2.functionInvocation == null;
+					assert gt2.getFunctionInvocation() == null;
 
 					final int y = 2;
 				}

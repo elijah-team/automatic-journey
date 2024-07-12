@@ -8,24 +8,26 @@
  */
 package tripleo.elijah.comp;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.nextgen.inputtree.*;
-import tripleo.elijah.stages.deduce.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.lang.OS_Module;
+import tripleo.elijah.nextgen.inputtree.EIT_ModuleList;
+import tripleo.elijah.stages.deduce.DeducePhase;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.stages.logging.*;
+import tripleo.elijah.stages.gen_generic.GenerateResult;
+import tripleo.elijah.stages.gen_generic.GenerateResultItem;
+import tripleo.elijah.stages.logging.ElLog;
 
-import java.io.*;
-import java.util.*;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created 12/30/20 2:14 AM
  */
 public class PipelineLogic implements AccessBus.AB_ModuleListListener {
-	public final GeneratePhase generatePhase;
-	public final DeducePhase   dp;
-	final        AccessBus     __ab;
+	private final GeneratePhase generatePhase;
+	private final DeducePhase   dp;
+	final         AccessBus     __ab;
 
 	private final ElLog.Verbosity verbosity;
 
@@ -148,6 +150,18 @@ public class PipelineLogic implements AccessBus.AB_ModuleListListener {
 
 	public EIT_ModuleList mods() {
 		return this.mods;
+	}
+
+	public DeducePhase getDp() {
+		return this.dp;
+	}
+
+	public GeneratePhase getGeneratePhase() {
+		return generatePhase;
+	}
+
+	public AccessBus getAccessBus() {
+		return this.__ab;
 	}
 }
 

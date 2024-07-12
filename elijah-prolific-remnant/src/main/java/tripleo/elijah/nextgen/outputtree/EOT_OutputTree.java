@@ -4,11 +4,12 @@
  */
 package tripleo.elijah.nextgen.outputtree;
 
-import tripleo.elijah.nextgen.outputstatement.*;
+import tripleo.elijah.nextgen.outputstatement.EG_Statement;
 import tripleo.elijah_prolific.v.V;
 
-import java.nio.file.*;
-import java.util.*;
+import java.nio.file.Path;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * @author olu
@@ -23,5 +24,19 @@ public class EOT_OutputTree {
 	public void _putSeq(final String aKey, final Path aPath, final EG_Statement aStatement) {
 //		System.err.printf("[_putSeq] %s %s {{%s}}%n", aKey, aPath, aStatement.getExplanation().getText());
 		V.asv(V.e._putSeq, aKey);
+	}
+
+	public List<EOT_OutputFile> list() {
+		if (list == null) return Collections.EMPTY_LIST;
+		return list;
+	}
+
+	@Deprecated
+	public List<EOT_OutputFile> getList() {
+		return list();
+	}
+
+	public int size() {
+		return list.size();
 	}
 }

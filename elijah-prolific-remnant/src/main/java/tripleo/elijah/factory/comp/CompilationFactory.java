@@ -1,11 +1,15 @@
 package tripleo.elijah.factory.comp;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.internal.*;
-import tripleo.elijah.testing.comp.*;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.comp.IO;
+import tripleo.elijah.comp.StdErrSink;
+import tripleo.elijah.comp.internal.CompilationImpl;
+import tripleo.elijah.testing.comp.IFunctionMapHook;
 
-import java.util.*;
+import java.util.List;
 
 public class CompilationFactory {
 
@@ -23,5 +27,9 @@ public class CompilationFactory {
 	@Contract("_, _ -> new")
 	public static @NotNull CompilationImpl mkCompilation(final ErrSink eee, final IO io) {
 		return new CompilationImpl(eee, io);
+	}
+
+	public static Compilation mkCompilation() {
+		return mkCompilation(new StdErrSink(), new IO());
 	}
 }

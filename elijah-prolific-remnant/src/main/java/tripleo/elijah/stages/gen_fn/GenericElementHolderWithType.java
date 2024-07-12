@@ -9,9 +9,11 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.*;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.lang.OS_Element;
+import tripleo.elijah.lang.OS_Type;
+import tripleo.elijah.stages.deduce.DeduceTypes2;
 
 /**
  * Created 11/18/21 8:43 PM
@@ -32,7 +34,7 @@ public class GenericElementHolderWithType implements IElementHolder {
 	@Contract(pure = true)
 	public GenericElementHolderWithType(final OS_Element aEle2, @NotNull final GenType aResult, final DeduceTypes2 aDeduceTypes2) {
 		element = aEle2;
-		type    = aResult.typeName; // TODO may be something stupid
+		type    = aResult.getTypeName(); // TODO may be something stupid
 		dt2     = aDeduceTypes2;
 	}
 

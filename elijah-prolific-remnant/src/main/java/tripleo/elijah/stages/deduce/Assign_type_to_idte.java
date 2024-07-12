@@ -1,13 +1,16 @@
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
+import org.jdeferred2.DoneCallback;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.instructions.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.stages.instructions.IdentIA;
+import tripleo.elijah_fluffy.util.NotImplementedException;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.util.*;
+import java.util.Objects;
 
 class Assign_type_to_idte {
 	private final DeduceTypes2          aDeduceTypes2;
@@ -100,7 +103,7 @@ class Assign_type_to_idte {
 					cpte.typePromise().then(new DoneCallback<GenType>() {
 						@Override
 						public void onDone(@NotNull final GenType result) {
-							SimplePrintLoggerToRemoveSoon.println2("1483 " + result.resolved + " " + result.node);
+							SimplePrintLoggerToRemoveSoon.println2("1483 " + result.getResolved() + " " + result.getNode());
 						}
 					});
 				}
