@@ -8,3 +8,7 @@
 /jcef-bundle/
 /ll.c
 *.class
+/elijah-prolific-remnant/target/**
+/elijah-prolific-remnant/COMP/**
+/elijah-prolific-remnant/elijah-prolific-remnant.iml
+/target/**
