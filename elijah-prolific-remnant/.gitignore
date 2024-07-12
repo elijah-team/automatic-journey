@@ -6,9 +6,5 @@
 /COMP*/
 /.idea
 /jcef-bundle/
-/elijah-prolific-remnant.iml
 /ll.c
-/build/bld/rifers/RifersBuild.class
-/lib/bld/
-/lib/standalone/
-/lib/test/
+*.class
