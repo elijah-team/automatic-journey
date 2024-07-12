@@ -1,3 +1,23 @@
+## Radical paradox
+
+`Radical paradox` is:
+
+* a blend of `pr-fluffy-cegont-paf-240626-007` and
+  `pr-fluffy-cegont-paf-240709`, with some stuff taken out/history rewritten.
+
+* a testbed for newer tools than raw git and Idea.
+
+* going to be rewritten a couple times before it's really beautiful.
+
+* of the lineage of the above from github.  I'll pull in the kindof stuff later.
+
+* (idk) likely a merge point for the stuff from the other branches as well.
+
+
+
+<details>
+  <summary>Click me to see the old stuff</summary>
+
 Elijah prolific remnant
 ========================
 
@@ -5,7 +25,7 @@ Elijah is:
 
 - ... a high-level language suitable for replacement of* Java and C/C++.
 - ... a historical curiosity.
-- ... is meant to integrate into current C and Java projects. 
+- ... is meant to integrate into current C and Java projects.
 - ... is free software intended for use on all systems, including GNU/Linux.
 - ... is licensed under LGPL.
 
@@ -13,6 +33,7 @@ Elijah is:
 
 - ... implemented in Java (17)
 - ... uses Maven
+
 
 Instructions
 -------------
@@ -24,6 +45,7 @@ git clone https://github.com/elijah-team/prolific-remnant
 mkdir prolific-remnant/COMP
 ( cd prolific-remnant && nix-shell -p maven jdk17 --pure --command "mvn test")
 ```
+
 
 Goals
 ------
@@ -58,7 +80,7 @@ Stolen from rife2
 
 Go to:
 
-[http://localhost:8080/](http://localhost:8080/)
+http://localhost:8080/
 
 
 ## Deploying the app
@@ -83,3 +105,5 @@ Then run it with:
 ```bash
 java -jar build/dist/rifers-1.0.0-uber.jar
 ```
+
+</details>
