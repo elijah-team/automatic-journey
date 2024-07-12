@@ -3,6 +3,9 @@ package tripleo.elijah.nextgen.outputstatement;
 import java.util.*;
 
 public class EG_SequenceFactory {
+	public static _SequenceBuilder newSequence() {
+		return new _SequenceBuilder();
+	}
 
 	public static class _SequenceBuilder {
 		private List<EG_Statement> statementList;
@@ -19,9 +22,5 @@ public class EG_SequenceFactory {
 			result = new EG_SequenceStatement("", "", statementList);
 			return result;
 		}
-	}
-
-	public static _SequenceBuilder newSequence() {
-		return new _SequenceBuilder();
 	}
 }
