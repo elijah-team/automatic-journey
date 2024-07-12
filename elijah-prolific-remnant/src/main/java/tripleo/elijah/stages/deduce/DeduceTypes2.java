@@ -1294,7 +1294,13 @@ public class DeduceTypes2 {
 	}
 
 	private void implement_is_a(final @NotNull BaseGeneratedFunction gf, final @NotNull Instruction instruction) {
-		final IntegerIA testing_var_  = (IntegerIA) instruction.getArg(0);
+		final InstructionArgument arg = instruction.getArg(0);
+        if (!(arg instanceof IntegerIA)) {
+			System.err.println("9998-1299 Fix me");
+			return;
+        }
+
+        final IntegerIA testing_var_  = (IntegerIA) arg;
 		final IntegerIA testing_type_ = (IntegerIA) instruction.getArg(1);
 		final Label     target_label  = ((LabelIA) instruction.getArg(2)).label;
 
