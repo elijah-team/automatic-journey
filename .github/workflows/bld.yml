@@ -23,4 +23,4 @@ jobs:
           java-version: ${{ matrix.java-version }}
 
       - name: Run tests
-        run: ./bld download compile test
+        run: cd elijah-prolific-remnant && ./bld download compile test
