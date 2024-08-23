@@ -1,0 +1,92 @@
+/*
+ * Elijjah compiler, copyright Tripleo <oluoluolu+elijah@gmail.com>
+ *
+ * The contents of this library are released under the LGPL licence v3,
+ * the GNU Lesser General Public License text was downloaded from
+ * http://www.gnu.org/licenses/lgpl.html from `Version 3, 29 June 2007'
+ *
+ */
+package tripleo.elijah.work;
+
+import io.activej.csp.consumer.*;
+import io.activej.csp.supplier.*;
+import io.activej.eventloop.*;
+import io.activej.promise.*;
+import io.activej.reactor.*;
+import org.jetbrains.annotations.*;
+import org.pcollections.*;
+
+import java.util.*;
+
+import static io.activej.common.exception.FatalErrorHandlers.rethrow;
+
+/**
+ * Created 4/26/21 4:22 AM
+ */
+public class WorkManager {
+	private final List<WorkList> jobs     = new ArrayList<>();
+	private final Set<WorkJob>   doneJobs = new HashSet<>();
+
+	private static Eventloop createEventloop() {
+		//noinspection UnnecessaryLocalVariable
+		Eventloop eventLoop = Eventloop.builder()
+		                               .withCurrentThread()
+		                               .withFatalErrorHandler(rethrow())
+		                               .build();
+		return eventLoop;
+	}
+
+	public void addJobs(final WorkList aList) {
+		jobs.add(aList);
+	}
+
+	public Eventloop apply() {
+		Reactor currentReactor = Reactor.getCurrentReactor();
+		if (!(currentReactor instanceof Eventloop) || !currentReactor.inReactorThread()) {
+			return createEventloop();
+		}
+		return null;
+	}
+
+	public void drain() {
+		apply();
+
+		final var _c = this;
+
+		TreePVector<WorkList> jobs1 = TreePVector.empty();
+		for (WorkList job : jobs) {
+			jobs1 = jobs1.plus(job);
+		}
+
+		for (WorkList jobList : jobs1) {
+			if (jobList.isDone()) continue;
+			for (WorkJob job : jobList.getJobs()) {
+				if (job.isDone()) continue;
+
+				ChannelSuppliers.ofValue(job)
+				                .streamTo(new ChannelConsumer<>() {
+					                          @Override
+					                          public Promise<Void> accept(@Nullable final WorkJob w) {
+						                          if (w != null) {
+							                          if (!_c.doneJobs.contains(w)) {
+								                          w.run(_c);
+								                          if (w.isDone()) _c.doneJobs.add(w);
+							                          }
+						                          }
+						                          return Promise.of(null);
+					                          }
+
+					                          @Override
+					                          public void closeEx(final Exception e) {
+
+					                          }
+				                          }
+				                );
+			}
+		}
+	}
+}
+
+//
+//
+//
