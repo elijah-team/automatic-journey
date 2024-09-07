@@ -121,8 +121,9 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 		return fn01;
 	}
 
-	private void __rest(final @NotNull Multimap<String, Buffer> mb, final @NotNull File aFile_prefix,
-			final List<EOT_OutputFile> leof) throws IOException {
+	private void __rest(final @NotNull Multimap<String, Buffer> mb,
+	                    final @NotNull File aFile_prefix,
+	                    final List<EOT_OutputFile> leof) throws IOException {
 		aFile_prefix.mkdirs();
 		final String prefix = aFile_prefix.toString();
 
@@ -137,16 +138,15 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 			path.getParent().toFile().mkdirs();
 
 			// TODO functionality
-			if (DebugFlags.lgJan25) {
+			if (true||DebugFlags.lgJan25) {
 				System.out.println("201 Writing path: " + path);
 			}
+			c.reports().add401b(new Finally._401bSpec(){});;
 			final CharSink x = c.getIO().openWrite(path);
 
-			final EG_SingleStatement beginning = new EG_SingleStatement("",
-					EX_Explanation.withMessage("WritePipeline.beginning"));
+			final EG_SingleStatement beginning = new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline" + ".beginning"));
 			final EG_Statement middle = new GE_BuffersStatement(entry);
-			final EG_SingleStatement ending = new EG_SingleStatement("",
-					EX_Explanation.withMessage("WritePipeline.ending"));
+			final EG_SingleStatement ending = new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline.ending"));
 			final EX_Explanation explanation = EX_Explanation.withMessage("write output file");
 
 			final EG_CompoundStatement seq = new EG_CompoundStatement(beginning, ending, middle, false, explanation);

@@ -9,10 +9,12 @@ import java.util.List;
 import java.util.Set;
 
 public class Finally {
-	private final Set<Outs> outputOffs = new HashSet<>();
-	private final List<Input> inputs = new ArrayList<>();
-	private final List<Output> outputs = new ArrayList<>();
-	private boolean turnAllOutputOff;
+	private final Set<Outs>       outputOffs = new HashSet<>();
+	private final List<Input>     inputs     = new ArrayList<>();
+	private final List<Output>    outputs    = new ArrayList<>();
+	private final List<_401bSpec> specs      = new ArrayList<>();
+
+	private       boolean         turnAllOutputOff;
 
 	public void turnOutputOff(final Outs aOut) {
 		outputOffs.add(aOut);
@@ -51,7 +53,14 @@ public class Finally {
 	}
 
 	public boolean contains401b(final _401bMatcher aBMatcher) {
+		for (_401bSpec spec : specs) {
+			assert false;
+		}
 		return false;
+	}
+
+	public void add401b(final _401bSpec spec) {
+		specs.add(spec);
 	}
 
 	public enum Outs {
@@ -67,14 +76,30 @@ public class Finally {
 		String getName();
 	}
 
+	public interface _401bSpec {}
+
+	public interface _401bMatcher {
+		static _401bMatcher ofFull(final String aS) {
+			final _401bMatcher res = new _401bMatcher() {
+				@Override
+				public boolean matches(final _401bSpec spec) {
+					return false;
+				}
+			};
+			return res;
+		}
+
+		boolean matches(_401bSpec spec);
+	}
+
 	public class Input {
 
 		private final Nameable nameable;
-		private final Out2 ty;
+		private final Out2     ty;
 
 		public Input(final Nameable aNameable, final Out2 aTy) {
 			nameable = aNameable;
-			ty = aTy;
+			ty       = aTy;
 		}
 
 		public Input(final CompilerInput aInp, final Out2 aTy) {
@@ -84,7 +109,7 @@ public class Finally {
 					return aInp.getInp();
 				}
 			};
-			ty = aTy;
+			ty       = aTy;
 		}
 
 		public Input(final CompFactory.InputRequest aInp, final Out2 aTy) {
@@ -94,7 +119,7 @@ public class Finally {
 					return aInp.file().toString();
 				}
 			};
-			ty = aTy;
+			ty       = aTy;
 		}
 
 		@Override
@@ -109,31 +134,16 @@ public class Finally {
 
 	class Output {
 		private final EOT_OutputFile.FileNameProvider fileNameProvider;
-		private final EOT_OutputFile off;
+		private final EOT_OutputFile                  off;
 
 		public Output(final EOT_OutputFile.FileNameProvider aFileNameProvider, final EOT_OutputFile aOff) {
 			fileNameProvider = aFileNameProvider;
-			off = aOff;
+			off              = aOff;
 		}
 
 		public String name() {
 			return fileNameProvider.getFilename();
 		}
-	}
-
-	public interface _401bSpec {}
-
-	public interface  _401bMatcher {
-		public static _401bMatcher ofFull(final String aS) {
-			final _401bMatcher res = new _401bMatcher(){
-				@Override
-				public boolean matches(final _401bSpec spec) {
-					return false;
-				}
-			};
-			return res;
-		}
-		boolean matches(_401bSpec spec);
 	}
 
 }
