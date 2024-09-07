@@ -32,7 +32,7 @@ class ProlificCompilationLauncher extends Launcher {
 
     @Override
     protected void run() {
-        controller._set(compilation, args);
+        controller.setInputs(compilation, args);
         controller.processOptions();
         controller.runner();
 

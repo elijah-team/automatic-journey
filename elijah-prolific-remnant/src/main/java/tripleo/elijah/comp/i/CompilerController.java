@@ -11,5 +11,5 @@ public interface CompilerController {
 
 	void runner();
 
-	void _set(Compilation aCompilation, List<String> aArgumentList);
+	void setInputs(Compilation aCompilation, List<String> aArgumentList);
 }
