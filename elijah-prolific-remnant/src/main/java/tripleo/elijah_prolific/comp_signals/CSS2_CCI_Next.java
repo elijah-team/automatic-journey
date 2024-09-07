@@ -8,6 +8,6 @@ class CSS2_CCI_Next implements CSS2_Signal {
 	public void trigger(Compilation compilation, Object payload) {
 		assert payload instanceof CompilerInstructions;
 
-		compilation._cis.onNext((CompilerInstructions) payload);
+		compilation.get_cis().onNext((CompilerInstructions) payload);
 	}
 }

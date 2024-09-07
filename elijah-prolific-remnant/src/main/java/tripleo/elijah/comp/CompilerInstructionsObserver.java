@@ -15,7 +15,7 @@ public class CompilerInstructionsObserver implements Observer<CompilerInstructio
 
 	public CompilerInstructionsObserver(final Compilation aCompilation, final EDR_CIS cis) {
 		compilation = aCompilation;
-		compilation._cio = this;
+		compilation.set_cio(this);
 
 		cis.subscribe(this);
 	}

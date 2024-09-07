@@ -69,11 +69,11 @@ public class TestGenFunction {
 		final AccessBus ab = new AccessBus(c);
 		ab.addPipelineLogic(PipelineLogic::new);
 
-		c.pipelineLogic = ab.__getPL();
+		c.setPipelineLogic(ab.__getPL());
 
-		final @NotNull GeneratePhase generatePhase1 = c.pipelineLogic.getGeneratePhase();// new GeneratePhase();
+		final @NotNull GeneratePhase generatePhase1 = c.getPipelineLogic().getGeneratePhase();// new GeneratePhase();
 		final GenerateFunctions      gfm            = generatePhase1.getGenerateFunctions(m);
-		final @NotNull DeducePhase dp = c.pipelineLogic.getDp();// new DeducePhase(generatePhase1);
+		final @NotNull DeducePhase dp = c.getPipelineLogic().getDp();// new DeducePhase(generatePhase1);
 		gfm.generateFromEntryPoints(m.entryPoints, dp);
 
 		final DeducePhase.@NotNull GeneratedClasses lgc = dp.generatedClasses; //new ArrayList<>();

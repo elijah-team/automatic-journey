@@ -34,7 +34,7 @@ public class CSS2_doFindCIs implements CSS2_Signal {
 
 		public CB_FindCIs(String[] args2, CompilationRunner.CR_State st1) {
 			this.st1 = st1;
-			cr = st1.ca().getCompilation().__cr;
+			cr = st1.ca().getCompilation().get__cr();
 			a = cr.new CR_FindCIs(args2);
 		}
 

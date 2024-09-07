@@ -10,9 +10,6 @@ package tripleo.elijah.comp;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import io.activej.inject.annotation.Inject;
-import io.activej.inject.annotation.Provides;
-import io.activej.launcher.Launcher;
 import org.jdeferred2.DoneCallback;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -48,11 +45,11 @@ import java.io.File;
 import java.util.*;
 
 public abstract class Compilation {
-	public final  List<ElLog>                  elLogs              = new LinkedList<ElLog>();
-	public final  CompilationConfig            cfg                 = new CompilationConfig();
-	public final  EDR_CIS                      _cis                = new EDR_CIS();
-	public final  DefaultLivingRepo            _repo               = new DefaultLivingRepo();
-	final         EDR_MOD                      mod                 = new EDR_MOD();
+	private final List<ElLog>                  elLogs = new LinkedList<>();
+	private final CompilationConfig            cfg    = new CompilationConfig();
+	private final EDR_CIS                      _cis   = new EDR_CIS();
+	private final DefaultLivingRepo            _repo  = new DefaultLivingRepo();
+	private final EDR_MOD                      mod    = new EDR_MOD();
 	private final Pipeline                     pipelines;
 	private final int                          _compilationNumber;
 	private final ErrSink                      errSink;
@@ -60,10 +57,10 @@ public abstract class Compilation {
 	private final USE                          use                 = new USE(this);
 	private final CompFactory                  _con                = new DefaultCompFactory();
 	private final Eventual<File>               _m_comp_dir_promise = new Eventual<>();
-	private final Finally                      _f                  = new Finally();
-	public        PipelineLogic                pipelineLogic;
-	public        CompilerInstructionsObserver _cio;
-	public        CompilationRunner            __cr;
+	private final Finally                      _f     = new Finally();
+	private       PipelineLogic                pipelineLogic;
+	private       CompilerInstructionsObserver _cio;
+	private       CompilationRunner            __cr;
 	private       CompilerInstructions         rootCI;
 	private       World                        world;
 
@@ -101,25 +98,8 @@ public abstract class Compilation {
 	}
 
 	private void feedCmdLine(final @NotNull List<String> args1, final CompilerController controller) {
-		final Launcher launcher /*HelloWorldExample*/ = new Launcher() {
-			@Inject
-			String message;
-
-			@Provides
-			String message() {
-				return "Hello, world!";
-			}
-
-			@Override
-			protected void run() {
-				_actual_feedCmdLine(args1, controller);
-			}
-		};
-        try {
-            launcher.launch(new String[0]);
-        } catch (Exception aE) {
-            throw new RuntimeException(aE);
-        }
+		final var launcher = new ProlificCompilationLauncher(this, args1, controller);
+		launcher.launch0();
     }
 
 	public void _actual_feedCmdLine(final @NotNull List<String> args, final tripleo.elijah.comp.i.CompilerController ctl) {
@@ -338,6 +318,50 @@ public abstract class Compilation {
 		// noinspection unchecked
 		func.apply(tt -> t[0] = (T) tt, uu -> diag[0] = (U) uu);
 		return f;
+	}
+
+	public List<ElLog> getElLogs() {
+		return elLogs;
+	}
+
+	public CompilationConfig getCfg() {
+		return cfg;
+	}
+
+	public EDR_CIS get_cis() {
+		return _cis;
+	}
+
+	public DefaultLivingRepo get_repo() {
+		return _repo;
+	}
+
+	public EDR_MOD getMod() {
+		return mod;
+	}
+
+	public PipelineLogic getPipelineLogic() {
+		return pipelineLogic;
+	}
+
+	public void setPipelineLogic(PipelineLogic aPipelineLogic) {
+		pipelineLogic = aPipelineLogic;
+	}
+
+	public CompilerInstructionsObserver get_cio() {
+		return _cio;
+	}
+
+	public void set_cio(CompilerInstructionsObserver a_cio) {
+		_cio = a_cio;
+	}
+
+	public CompilationRunner get__cr() {
+		return __cr;
+	}
+
+	public void set__cr(CompilationRunner a__cr) {
+		__cr = a__cr;
 	}
 
 	static class CompilationConfig {

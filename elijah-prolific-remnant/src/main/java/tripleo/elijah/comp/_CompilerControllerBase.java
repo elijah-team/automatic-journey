@@ -20,7 +20,7 @@ public abstract class _CompilerControllerBase implements tripleo.elijah.comp.i.C
 	@Override
 	public void processOptions() {
 		final OptionsProcessor op = new ApacheOptionsProcessor();
-		final CompilerInstructionsObserver cio = new CompilerInstructionsObserver(c, c._cis);
+		final CompilerInstructionsObserver cio = new CompilerInstructionsObserver(c, c.get_cis());
 
 		var cbp = c.getStartup().getCompilationBus();
 		cb = new CompilationBus(c);

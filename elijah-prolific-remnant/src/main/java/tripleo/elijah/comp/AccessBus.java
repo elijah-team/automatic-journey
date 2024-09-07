@@ -138,7 +138,7 @@ public class AccessBus {
 		@NotNull
 		final Compilation comp = getCompilation(); // this._c
 
-		comp.writeLogs(comp.elLogs);
+		comp.writeLogs(comp.getElLogs());
 	}
 
 	public @NotNull Compilation getCompilation() {

@@ -29,7 +29,7 @@ public class DefaultCompilationAccess implements ICompilationAccess {
 	@Override
 	@NotNull
 	public ElLog.Verbosity testSilence() {
-		final boolean isSilent = compilation.cfg.silent;
+		final boolean isSilent = compilation.getCfg().silent;
 		if (isSilent) {
 			return ElLog.Verbosity.SILENT;
 		} else {
@@ -46,7 +46,7 @@ public class DefaultCompilationAccess implements ICompilationAccess {
 	public void writeLogs() {
 		final boolean silent = testSilence() == ElLog.Verbosity.SILENT;
 
-		writeLogs(silent, compilation.elLogs);
+		writeLogs(silent, compilation.getElLogs());
 	}
 
 	@Override
@@ -56,7 +56,7 @@ public class DefaultCompilationAccess implements ICompilationAccess {
 
 	@Override
 	public Stages getStage() {
-		return getCompilation().cfg.stage;
+		return getCompilation().getCfg().stage;
 	}
 
 	@Override
