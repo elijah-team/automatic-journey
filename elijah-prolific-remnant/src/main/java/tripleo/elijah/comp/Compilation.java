@@ -38,7 +38,6 @@ import tripleo.elijah_fluffy.util.Eventual;
 import tripleo.elijah_fluffy.util.EventualExtract;
 import tripleo.elijah_fluffy.util.Helpers;
 import tripleo.elijah_prolific.comp_signals.CSS2_Signal;
-import tripleo.elijah_prolific.v.V;
 import tripleo.elijah_remnant.startup.ProlificStartup2;
 
 import java.io.File;
@@ -98,22 +97,14 @@ public abstract class Compilation {
 	}
 
 	private void feedCmdLine(final @NotNull List<String> args1, final CompilerController controller) {
-		final var launcher = new ProlificCompilationLauncher(this, args1, controller);
-		launcher.launch0();
-    }
-
-	public void _actual_feedCmdLine(final @NotNull List<String> args, final tripleo.elijah.comp.i.CompilerController ctl) {
-		if (args.isEmpty()) {
-			ctl.printUsage();
+		if (args1.isEmpty()) {
+			controller.printUsage();
 			return; // ab
 		}
 
-		ctl._set(this, args);
-		ctl.processOptions();
-		ctl.runner();
-
-		V.exit(this);
-	}
+		final var launcher = new ProlificCompilationLauncher(this, args1, controller);
+		launcher.launch0();
+    }
 
 	public String getProjectName() {
 		return rootCI.getName();
