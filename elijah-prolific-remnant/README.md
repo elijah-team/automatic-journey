@@ -7,9 +7,9 @@
 
 * a testbed for newer tools than raw git and Idea.
 
-* going to be rewritten a couple times before it's really beautiful.
+* going to be rewritten a couple of times before it's really beautiful.
 
-* of the lineage of the above from github.  I'll pull in the kindof stuff later.
+* of the lineage of the above from GitHub.  I'll pull in the `kindof` stuff later.
 
 * (idk) likely a merge point for the stuff from the other branches as well.
 
