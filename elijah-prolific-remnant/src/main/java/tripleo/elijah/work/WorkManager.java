@@ -40,26 +40,16 @@ public class WorkManager {
 		jobs.add(aList);
 	}
 
-	public Eventloop apply() {
-		Reactor currentReactor = Reactor.getCurrentReactor();
-		if (!(currentReactor instanceof Eventloop) || !currentReactor.inReactorThread()) {
-			return createEventloop();
-		}
-		return null;
-	}
-
 	public void drain() {
-		apply();
-
 		final var _c = this;
 
 		TreePVector<WorkList> jobs1 = TreePVector.empty();
-		for (WorkList job : jobs) {
-			jobs1 = jobs1.plus(job);
+		for (WorkList workList : jobs) {
+			if (workList.isDone()) continue;
+			jobs1 = jobs1.plus(workList);
 		}
 
 		for (WorkList jobList : jobs1) {
-			if (jobList.isDone()) continue;
 			for (WorkJob job : jobList.getJobs()) {
 				if (job.isDone()) continue;
 
@@ -78,7 +68,7 @@ public class WorkManager {
 
 					                          @Override
 					                          public void closeEx(final Exception e) {
-
+												  assert false;
 					                          }
 				                          }
 				                );
