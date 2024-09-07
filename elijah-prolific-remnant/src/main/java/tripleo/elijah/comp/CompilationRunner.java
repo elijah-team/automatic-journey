@@ -33,20 +33,20 @@ import java.util.regex.Pattern;
 import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 public class CompilationRunner {
-	private final Compilation compilation;
-	private final ProlificStartup2 _startup;
-	private final ICompilationBus cb;
-	private final EzCache ezCache;
+	private final Compilation         compilation;
+	private final ProlificStartup2    _startup;
+	private final ICompilationBus     cb;
+	private final EzCache             ezCache;
 	private final CSS2_AlmostComplete almostComplete;
-	private final CSS2_CCI_Accept cciAcceptSignal;
+	private final CSS2_CCI_Accept     cciAcceptSignal;
 
 	@Contract(pure = true)
 	public CompilationRunner(final Compilation aCompilation, final ICompilationBus aCb) {
-		compilation = aCompilation;
-		cb = aCb;
-		_startup = compilation.getStartup();
-		ezCache = new DefaultEzCache();
-		almostComplete = new CSS2_AlmostComplete();
+		compilation     = aCompilation;
+		cb              = aCb;
+		_startup        = compilation.getStartup();
+		ezCache         = new DefaultEzCache();
+		almostComplete  = new CSS2_AlmostComplete();
 		cciAcceptSignal = new CSS2_CCI_Accept();
 	}
 
@@ -125,13 +125,13 @@ public class CompilationRunner {
 
 	private void logProgress(final int number, final String text) {
 		switch (number) {
-		case 130:
-			break;
-		default: {
+			case 130:
+				break;
+			default: {
 
-			// noinspection RedundantStringFormatCall
-			System.err.println(String.format("%d %s", number, text));
-		}
+				// noinspection RedundantStringFormatCall
+				System.err.println(String.format("%d %s", number, text));
+			}
 		}
 	}
 
@@ -172,9 +172,9 @@ public class CompilationRunner {
 	}
 
 	private @NotNull Operation<CompilerInstructions> findStdLib(final String prelude_name,
-			final @NotNull Compilation c) {
+	                                                            final @NotNull Compilation c) {
 		final ErrSink errSink = c.getErrSink();
-		final IO io = c.getIO();
+		final IO      io      = c.getIO();
 
 		// TODO CP_Paths.stdlib(...)
 		final File local_stdlib = new File("lib_elijjah/lib-" + prelude_name + "/stdlib.ez");
@@ -201,7 +201,7 @@ public class CompilationRunner {
 	}
 
 	private @NotNull List<CompilerInstructions> searchEzFiles(final @NotNull File directory, final ErrSink errSink,
-			final IO io, final Compilation c) {
+	                                                          final IO io, final Compilation c) {
 		final QuerySearchEzFiles                     q    = new QuerySearchEzFiles(c, errSink, io, this);
 		final Operation2<List<CompilerInstructions>> olci = q.process(directory);
 
@@ -227,11 +227,11 @@ public class CompilationRunner {
 
 	public static class CR_State {
 		@SuppressWarnings("FieldCanBeLocal")
-		private final ProlificStartup2 _startup;
-		public ICompilationBus.CB_Action cur;
+		private final ProlificStartup2          _startup;
+		public        ICompilationBus.CB_Action cur;
 		ICompilationAccess ca;
-		ProcessRecord pr;
-		RuntimeProcesses rt;
+		ProcessRecord      pr;
+		RuntimeProcesses   rt;
 
 		public CR_State(final ProlificStartup2 aStartup) {
 			_startup = aStartup;
@@ -288,7 +288,7 @@ public class CompilationRunner {
 			final IProgressSink ps = new IProgressSink() {
 				@Override
 				public void note(final int aCode, final ProgressSinkComponent aCci, final int aType,
-						final Object[] aParams) {
+				                 final Object[] aParams) {
 
 				}
 			};
@@ -309,11 +309,11 @@ public class CompilationRunner {
 		                        final IProgressSink ps) {
 			CompilerInstructions ez_file;
 			for (final String file_name : args2) {
-				final File f = new File(file_name);
+				final File    f        = new File(file_name);
 				final boolean matches2 = Pattern.matches(".+\\.ez$", file_name);
 				if (matches2) {
 					final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(f, c);
-					cb.inst(ilci, Instergram.EZ, ()->{cci_accept(new Maybe<>(ilci, null));});
+					cb.inst(ilci, Instergram.EZ, () -> {cci_accept(new Maybe<>(ilci, null));});
 				} else {
 					// errSink.reportError("9996 Not an .ez file "+file_name);
 					if (f.isDirectory()) {
@@ -400,10 +400,10 @@ public class CompilationRunner {
 
 	private class CR_ProcessInitialAction implements CR_Action {
 		private final CompilerInstructions ci;
-		private final boolean do_out;
+		private final boolean              do_out;
 
 		public CR_ProcessInitialAction(final CompilerInstructions aCi, final boolean aDo_out) {
-			ci = aCi;
+			ci     = aCi;
 			do_out = aDo_out;
 		}
 
