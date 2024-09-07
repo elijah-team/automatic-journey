@@ -8,6 +8,7 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
+import org.jdeferred2.DoneCallback;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Ignore;
 import org.junit.Test;
@@ -20,6 +21,7 @@ import tripleo.elijah.stages.instructions.IdentIA;
 import tripleo.elijah.stages.instructions.InstructionArgument;
 import tripleo.elijah.stages.logging.ElLog;
 import tripleo.elijah.test_help.Boilerplate;
+import tripleo.elijah_remnant.rosetta.FakeRosetta3;
 
 import java.util.List;
 
@@ -36,8 +38,8 @@ public class TestIdentNormal {
 		b.get();
 		final Compilation comp = b.comp;
 		final OS_Module mod = comp.moduleBuilder()
-		                          .addToCompilation()
-		                          .build();
+				.addToCompilation()
+				.build();
 		final FunctionDef fd   = mock(FunctionDef.class);
 		final Context     ctx1 = mock(Context.class);
 		final Context     ctx2 = mock(Context.class);
@@ -45,7 +47,7 @@ public class TestIdentNormal {
 		final ElLog.Verbosity verbosity1    = Compilation.gitlabCIVerbosity();
 		final AccessBus       ab            = new AccessBus(comp);
 		final PipelineLogic   pl            = new PipelineLogic(ab);
-		final GeneratePhase generatePhase = pl.getGeneratePhase();
+		final GeneratePhase   generatePhase = pl.getGeneratePhase();
 //		GenerateFunctions generateFunctions = new GenerateFunctions(generatePhase, mod, pl);
 		final GenerateFunctions generateFunctions = generatePhase.getGenerateFunctions(mod);
 		final GeneratedFunction generatedFunction = new GeneratedFunction(fd);
@@ -57,9 +59,8 @@ public class TestIdentNormal {
 		final ProcedureCallExpression pce = new ProcedureCallExpression();
 		pce.setLeft(new DotExpression(x, foo));
 
-		final InstructionArgument                s = generateFunctions.simplify_expression(pce, generatedFunction, ctx2);
-		@NotNull
-		final List<InstructionArgument> l = BaseGeneratedFunction._getIdentIAPathList(s);
+		final InstructionArgument s = generateFunctions.simplify_expression(pce, generatedFunction, ctx2);
+		@NotNull final List<InstructionArgument> l = BaseGeneratedFunction._getIdentIAPathList(s);
 		System.out.println(l);
 //      System.out.println(generatedFunction.getIdentIAPathNormal());
 
@@ -79,18 +80,21 @@ public class TestIdentNormal {
 
 		final IdentIA identIA = new IdentIA(1, generatedFunction);
 
-		final DeduceTypes2 d2 = new DeduceTypes2(mod, pl.getDp());
-
-		final List<InstructionArgument> ss = BaseGeneratedFunction._getIdentIAPathList(identIA);
-		d2.resolveIdentIA2_(ctx2, null, ss/* identIA */, generatedFunction, new FoundElement(pl.getDp()) {
+		FakeRosetta3.mkDeduceTypes2(mod, pl.getDp(), new DoneCallback<DeduceTypes2>() {
 			@Override
-			public void foundElement(final OS_Element e) {
-				System.out.println(e);
-			}
+			public void onDone(final DeduceTypes2 d2) {
+				final List<InstructionArgument> ss = BaseGeneratedFunction._getIdentIAPathList(identIA);
+				d2.resolveIdentIA2_(ctx2, null, ss/* identIA */, generatedFunction, new FoundElement(pl.getDp()) {
+					@Override
+					public void foundElement(final OS_Element e) {
+						System.out.println(e);
+					}
 
-			@Override
-			public void noFoundElement() {
-				final int y = 2;
+					@Override
+					public void noFoundElement() {
+						final int y = 2;
+					}
+				});
 			}
 		});
 	}
@@ -106,10 +110,10 @@ public class TestIdentNormal {
 //		FunctionDef fd = mock(FunctionDef.class);
 		final Context ctx2 = mock(Context.class);
 
-		final AccessBus       ab            = new AccessBus(comp);
-		final PipelineLogic   pl            = new PipelineLogic(ab);
+		final AccessBus     ab            = new AccessBus(comp);
+		final PipelineLogic pl            = new PipelineLogic(ab);
 		final GeneratePhase generatePhase = pl.getGeneratePhase();
-		final DeducePhase phase = pl.getDp();
+		final DeducePhase   phase         = pl.getDp();
 
 		final GenerateFunctions generateFunctions = generatePhase.getGenerateFunctions(mod);
 
@@ -192,8 +196,8 @@ public class TestIdentNormal {
 		invocation2 = phase.registerClassInvocation(invocation2);
 		final ProcTableEntry     pte3               = null;
 		final FunctionInvocation fi2                = new FunctionInvocation(fd2, pte3, invocation2, generatePhase);
-		final GeneratedFunction generatedFunction2 = generateFunctions.generateFunction(fd2, fd2.getParent(), fi2);// new
-																													// GeneratedFunction(fd2);
+		final GeneratedFunction  generatedFunction2 = generateFunctions.generateFunction(fd2, fd2.getParent(), fi2);// new
+		// GeneratedFunction(fd2);
 //		generatedFunction2.addVariableTableEntry("self", VariableTableType.SELF, null, null);
 //		final TypeTableEntry type = null;
 //		int res = generatedFunction2.addVariableTableEntry("Result", VariableTableType.RESULT, type, null);
@@ -210,24 +214,27 @@ public class TestIdentNormal {
 
 		final IdentIA identIA = new IdentIA(0, generatedFunction);
 
-		final DeduceTypes2 d2 = new DeduceTypes2(mod, phase);
-
-		generatedFunction.getVarTableEntry(0).setConstructable(generatedFunction.getProcTableEntry(0));
-		identIA.getEntry().setCallablePTE(generatedFunction.getProcTableEntry(1));
-
-		d2.resolveIdentIA2_(ctx2, identIA, generatedFunction, new FoundElement(phase) {
+		FakeRosetta3.mkDeduceTypes2(mod, phase, new DoneCallback<DeduceTypes2>() {
 			@Override
-			public void foundElement(final OS_Element e) {
-				assert e == fd2;
-			}
+			public void onDone(final DeduceTypes2 d2) {
+				generatedFunction.getVarTableEntry(0).setConstructable(generatedFunction.getProcTableEntry(0));
+				identIA.getEntry().setCallablePTE(generatedFunction.getProcTableEntry(1));
 
-			@Override
-			public void noFoundElement() {
-				assert false;
+				d2.resolveIdentIA2_(ctx2, identIA, generatedFunction, new FoundElement(phase) {
+					@Override
+					public void foundElement(final OS_Element e) {
+						assert e == fd2;
+					}
+
+					@Override
+					public void noFoundElement() {
+						assert false;
+					}
+				});
+
+				verify(ctx2);
 			}
 		});
-
-		verify(ctx2);
 	}
 
 }

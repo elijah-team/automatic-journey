@@ -19,6 +19,7 @@ import tripleo.elijah.stages.deduce.DeduceTypes2;
 import tripleo.elijah.stages.deduce.ResolveError;
 import tripleo.elijah.stages.gen_fn.GeneratePhase;
 import tripleo.elijah_fluffy.util.Helpers;
+import tripleo.elijah_remnant.rosetta.FakeRosetta3;
 
 import static org.easymock.EasyMock.*;
 
@@ -69,11 +70,17 @@ public class TypeOfTypeNameTest {
 		//
 		final AccessBus ab = new AccessBus(c);
 		final PipelineLogic pl = new PipelineLogic(ab);
-		final DeduceTypes2 deduceTypes2 = new DeduceTypes2(mod, pl.getDp());
-		final TypeName tn = t.resolve(ctx, deduceTypes2);
+		FakeRosetta3.mkDeduceTypes2(mod, pl.getDp(), (final DeduceTypes2 deduceTypes2) -> {
+			final TypeName tn;
+			try {
+				tn = t.resolve(ctx, deduceTypes2);
+			} catch (ResolveError aE) {
+				throw new RuntimeException(aE);
+			}
 //		System.out.println(tn);
-		verify(ctx, mod);
-		Assert.assertEquals(typeNameString, tn.toString());
+			verify(ctx, mod);
+			Assert.assertEquals(typeNameString, tn.toString());
+		});
 	}
 
 	@Ignore
@@ -122,11 +129,17 @@ public class TypeOfTypeNameTest {
 		//
 		final AccessBus ab = new AccessBus(c);
 		final PipelineLogic pl = new PipelineLogic(ab);
-		final DeduceTypes2 deduceTypes2 = new DeduceTypes2(mod, pl.getDp());
-		final TypeName tn = t.resolve(ctx, deduceTypes2);
+		FakeRosetta3.mkDeduceTypes2(mod, pl.getDp(), (final DeduceTypes2 deduceTypes2) -> {
+			final TypeName tn;
+			try {
+				tn = t.resolve(ctx, deduceTypes2);
+			} catch (ResolveError aE) {
+				throw new RuntimeException(aE);
+			}
 //		System.out.println(tn);
-		verify(ctx, mod);
-		Assert.assertEquals(typeNameString, tn.toString());
+			verify(ctx, mod);
+			Assert.assertEquals(typeNameString, tn.toString());
+		});
 	}
 
 //	@Test
@@ -257,22 +270,28 @@ public class TypeOfTypeNameTest {
 		final AccessBus       ab            = new AccessBus(mod.parent);
 		final PipelineLogic   pl            = new PipelineLogic(ab);
 		final GeneratePhase   generatePhase = pl.getGeneratePhase();
-		final DeduceTypes2    deduceTypes2  = new DeduceTypes2(mod, pl.getDp());
+		FakeRosetta3.mkDeduceTypes2(mod, pl.getDp(), (final DeduceTypes2 deduceTypes2) -> {
 //		expect(mod.getFileName()).andReturn("foo.elijah");
-		expect(ctx.lookup("x")).andReturn(lrl);
+			expect(ctx.lookup("x")).andReturn(lrl);
 //		expect(ctx.lookup("y")).andReturn(lrl4);
-		expect(ctx.lookup(typeNameString1)).andReturn(lrl2);
+			expect(ctx.lookup(typeNameString1)).andReturn(lrl2);
 //		expect(ctx.lookup("SystemInteger")).andReturn(lrl3);
-		replay(ctx);
+			replay(ctx);
 //		replay(mod.parent);
 
-		//
-		// VERIFY EXPECTATIONS
-		//
-		final TypeName tn = t.resolve(ctx, deduceTypes2);
+			//
+			// VERIFY EXPECTATIONS
+			//
+			final TypeName tn;
+			try {
+				tn = t.resolve(ctx, deduceTypes2);
+			} catch (ResolveError aE) {
+				throw new RuntimeException(aE);
+			}
 //		System.out.println(tn);
-		verify(ctx/* , mod.parent */);
-		Assert.assertEquals(typeNameString, tn.toString());
+			verify(ctx/* , mod.parent */);
+			Assert.assertEquals(typeNameString, tn.toString());
+		});
 	}
 
 }
