@@ -1,4 +1,4 @@
-package tripleo.elijah;
+package tripleo.elijah.activej_testing;
 
 import io.activej.csp.ChannelInput;
 import io.activej.csp.ChannelOutput;

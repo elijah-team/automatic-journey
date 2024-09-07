@@ -1,4 +1,4 @@
-package tripleo.elijah;
+package tripleo.elijah.activej_testing;
 
 import io.activej.csp.queue.ChannelBuffer;
 import io.activej.csp.supplier.ChannelSuppliers;
