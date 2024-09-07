@@ -10,6 +10,10 @@ package tripleo.elijah.comp;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
+import io.activej.eventloop.Eventloop;
+import io.activej.reactor.Reactor;
+import io.activej.worker.WorkerPool;
+import io.activej.worker.WorkerPools;
 import org.jdeferred2.DoneCallback;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -17,6 +21,7 @@ import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.ci.CompilerInstructions;
 import tripleo.elijah.ci.LibraryStatementPart;
 import tripleo.elijah.comp.functionality.f202.F202;
+import tripleo.elijah.comp.i.CompilerController;
 import tripleo.elijah.lang.ClassStatement;
 import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.lang.OS_Package;
@@ -42,6 +47,7 @@ import tripleo.elijah_remnant.startup.ProlificStartup2;
 
 import java.io.File;
 import java.util.*;
+import java.util.concurrent.ExecutionException;
 
 public abstract class Compilation {
 	public final  List<ElLog>                  elLogs              = new LinkedList<ElLog>();
@@ -96,7 +102,23 @@ public abstract class Compilation {
 		feedCmdLine(args, new DefaultCompilerController());
 	}
 
-	public void feedCmdLine(final @NotNull List<String> args, final tripleo.elijah.comp.i.CompilerController ctl) {
+	private void feedCmdLine(final @NotNull List<String> args, final CompilerController controller) {
+//		WorkerPool workerPool = WorkerPools.createPool(4);
+//		workerPool.submit(() -> {
+//			// Your code here
+//		}).get();
+//		Reactor reactor = Eventloop.create();
+//        try {
+//            reactor.submit(() -> {
+//                // Your code here
+//            }).get();
+//        } catch (InterruptedException | ExecutionException aE) {
+//            throw new RuntimeException(aE);
+//        }
+//        reactor.run();
+	}
+
+	public void _actual_feedCmdLine(final @NotNull List<String> args, final tripleo.elijah.comp.i.CompilerController ctl) {
 		if (args.isEmpty()) {
 			ctl.printUsage();
 			return; // ab
