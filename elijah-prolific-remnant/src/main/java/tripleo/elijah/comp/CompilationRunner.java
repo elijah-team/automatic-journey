@@ -7,6 +7,7 @@ import tripleo.elijah.comp.caches.DefaultEzCache;
 import tripleo.elijah.comp.diagnostic.TooManyEz_ActuallyNone;
 import tripleo.elijah.comp.diagnostic.TooManyEz_BeSpecific;
 import tripleo.elijah.comp.i.ICompilationBus;
+import tripleo.elijah.comp.i.ICompilationBus.Instergram;
 import tripleo.elijah.comp.i.IProgressSink;
 import tripleo.elijah.comp.i.ProgressSinkComponent;
 import tripleo.elijah.comp.internal.ProcessRecord;
@@ -298,18 +299,19 @@ public class CompilationRunner {
 			return "find cis";
 		}
 
-		protected void find_cis(final @NotNull String @NotNull [] args2, final @NotNull Compilation c,
-				final @NotNull ErrSink errSink, final @NotNull IO io, final ICompilationBus cb,
-				final IProgressSink ps) {
+		protected void find_cis(final @NotNull String @NotNull [] args2,
+		                        final @NotNull Compilation c,
+		                        final @NotNull ErrSink errSink,
+		                        final @NotNull IO io,
+		                        final ICompilationBus cb,
+		                        final IProgressSink ps) {
 			CompilerInstructions ez_file;
 			for (final String file_name : args2) {
 				final File f = new File(file_name);
 				final boolean matches2 = Pattern.matches(".+\\.ez$", file_name);
 				if (matches2) {
 					final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(f, c);
-					cci_accept(new Maybe<>(ilci, null));
-
-					cb.inst(ilci);
+					cb.inst(ilci, Instergram.EZ, ()->{cci_accept(new Maybe<>(ilci, null));});
 				} else {
 					// errSink.reportError("9996 Not an .ez file "+file_name);
 					if (f.isDirectory()) {
@@ -319,22 +321,17 @@ public class CompilationRunner {
 						case 0:
 							final Diagnostic d_toomany = new TooManyEz_ActuallyNone();
 							final Maybe<ILazyCompilerInstructions> m = new Maybe<>(null, d_toomany);
-							cci_accept(m);
+							cb.inst(null, Instergram.ZERO, ()->{cci_accept(m);});
 							break;
 						case 1:
 							ez_file = ezs.get(0);
 							final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(ez_file);
-							cci_accept(new Maybe<>(ilci, null));
-							cb.inst(ilci);
+							cb.inst(ilci, Instergram.ONE, ()->{cci_accept(new Maybe<>(ilci, null));});
 							break;
 						default:
-							// final Diagnostic d_toomany = new TooManyEz_UseFirst();
-							// add_ci(ezs.get(0));
-
-							// more than 1 (negative is not possible)
 							final Diagnostic d_toomany2 = new TooManyEz_BeSpecific();
 							final Maybe<ILazyCompilerInstructions> m2 = new Maybe<>(null, d_toomany2);
-							cci_accept(m2);
+							cb.inst(null, Instergram.TWO_MANY, ()->cci_accept(m2));
 							break;
 						}
 					} else
@@ -413,7 +410,7 @@ public class CompilationRunner {
 			try {
 				compilation.use(ci, do_out);
 			} catch (final Exception aE) {
-				throw new RuntimeException(aE); // FIXME
+				compilation.getErrSink().exception(aE);
 			}
 		}
 

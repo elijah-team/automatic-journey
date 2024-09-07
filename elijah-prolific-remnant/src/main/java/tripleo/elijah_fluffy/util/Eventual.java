@@ -64,4 +64,8 @@ public class Eventual<P> {
 	public void fail(final Exception aE) {
 		fail(new ExceptionDiagnostic(aE));
 	}
+
+	public void reject(final Throwable aFailure) {
+		prom.reject(new ExceptionDiagnostic(aFailure));
+	}
 }

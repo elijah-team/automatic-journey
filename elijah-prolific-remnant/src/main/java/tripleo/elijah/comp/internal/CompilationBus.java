@@ -1,5 +1,6 @@
 package tripleo.elijah.comp.internal;
 
+import net.bytebuddy.utility.nullability.NeverNull;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.Compilation;
 import tripleo.elijah.comp.CompilationChange;
@@ -20,8 +21,29 @@ public class CompilationBus implements ICompilationBus {
 	}
 
 	@Override
-	public void inst(final @NotNull ILazyCompilerInstructions aLazyCompilerInstructions) {
-		System.out.println("** [ci] " + aLazyCompilerInstructions.get().getFilename());
+	public void inst(final ILazyCompilerInstructions aLazyCompilerInstructions, final Instergram reason, final Runnable cheat) {
+		if (aLazyCompilerInstructions != null) {
+			System.out.println("** [ci] " + aLazyCompilerInstructions.get().getFilename());
+			cheat.run();
+		} else {
+			switch (reason) {
+				case EZ -> {
+					assert false; // should remove prob
+				}
+				case ZERO -> {
+					// assert false; // for another reason
+					int y=2;
+				}
+				case TWO_MANY -> {
+					assert false; // for another nother reason
+				}
+				case ONE -> {
+					assert false; // this should never be hit
+//					throw new NeverReached();
+				}
+			}
+			cheat.run();
+		}
 	}
 
 	public void add(final CB_Action action) {

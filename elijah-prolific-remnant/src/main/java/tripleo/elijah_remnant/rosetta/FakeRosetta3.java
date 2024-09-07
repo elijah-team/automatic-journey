@@ -10,8 +10,8 @@ import java.util.*;
 
 public class FakeRosetta3 {
 	private static class FakeRosetta3$ {
-		private static final List<Pair<DoneCallback<?>, Boolean>> called = new ArrayList<>(); // TODO prol doesnt need
-																								// to be pcoll?
+		// TODO prol doesnt need to be pcoll?
+		private static final List<Pair<DoneCallback<?>, Boolean>> called = new ArrayList<>();
 
 		private static final FakeRosetta3 INSTANCE = new FakeRosetta3();
 	}

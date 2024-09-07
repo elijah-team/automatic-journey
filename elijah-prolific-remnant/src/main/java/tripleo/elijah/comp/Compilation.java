@@ -44,11 +44,11 @@ import java.io.File;
 import java.util.*;
 
 public abstract class Compilation {
-	private final List<ElLog>                  elLogs = new LinkedList<>();
-	private final CompilationConfig            cfg    = new CompilationConfig();
-	private final EDR_CIS                      _cis   = new EDR_CIS();
-	private final DefaultLivingRepo            _repo  = new DefaultLivingRepo();
-	private final EDR_MOD                      mod    = new EDR_MOD();
+	private final List<ElLog>                  elLogs              = new LinkedList<>();
+	private final CompilationConfig            cfg                 = new CompilationConfig();
+	private final EDR_CIS                      _cis                = new EDR_CIS();
+	private final DefaultLivingRepo            _repo               = new DefaultLivingRepo();
+	private final EDR_MOD                      mod                 = new EDR_MOD();
 	private final Pipeline                     pipelines;
 	private final int                          _compilationNumber;
 	private final ErrSink                      errSink;
@@ -56,7 +56,7 @@ public abstract class Compilation {
 	private final USE                          use                 = new USE(this);
 	private final CompFactory                  _con                = new DefaultCompFactory();
 	private final Eventual<File>               _m_comp_dir_promise = new Eventual<>();
-	private final Finally                      _f     = new Finally();
+	private final Finally                      _f                  = new Finally();
 	private       PipelineLogic                pipelineLogic;
 	private       CompilerInstructionsObserver _cio;
 	private       CompilationRunner            __cr;
@@ -85,7 +85,7 @@ public abstract class Compilation {
 	}
 
 	void hasInstructions(final @NotNull List<CompilerInstructions> cis) {
-		assert cis.size() > 0;
+		assert !cis.isEmpty();
 
 		rootCI = cis.get(0);
 
@@ -97,21 +97,25 @@ public abstract class Compilation {
 	}
 
 	private void feedCmdLine(final @NotNull List<String> args1, final CompilerController ctl) {
-        if (args1.isEmpty()) {
-            ctl.printUsage();
-        } else {
-            final var launcher = new ProlificCompilationLauncher(this, args1, ctl);
-            launcher.launch0();
-        }
-    }
+		if (args1.isEmpty()) {
+			ctl.printUsage();
+		} else {
+			final var launcher = new ProlificCompilationLauncher(this, args1, ctl);
+			launcher.launch0();
+		}
+	}
 
 	public String getProjectName() {
 		return rootCI.getName();
 	}
 
-	public OS_Module realParseElijjahFile(final String f, final @NotNull File file, final boolean do_out)
-			throws Exception {
-		return use.realParseElijjahFile(f, file, do_out).success();
+	public CM_Module realParseElijjahFile(final String f, final @NotNull File file, final boolean do_out) {
+		CM_Module res = new CM_Module();
+		res.advise(this, use);
+		res.advise(f, file, do_out);
+		res.action();
+		final Operation<OS_Module> osModuleOperation = res.getOperation();
+		return res;
 	}
 
 	public void pushItem(final CompilerInstructions aci) {

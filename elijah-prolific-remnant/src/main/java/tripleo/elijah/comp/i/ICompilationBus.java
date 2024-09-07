@@ -8,7 +8,7 @@ import java.util.List;
 public interface ICompilationBus {
 	void option(CompilationChange aChange);
 
-	void inst(ILazyCompilerInstructions aLazyCompilerInstructions);
+	void inst(ILazyCompilerInstructions aLazyCompilerInstructions, Instergram reason, Runnable cheat);
 
 	void add(CB_Action aCBAction);
 
@@ -47,5 +47,10 @@ public interface ICompilationBus {
 		public String getText() {
 			return _text;
 		}
+	}
+
+	public enum Instergram {
+		EZ, ZERO, TWO_MANY, ONE
+
 	}
 }
