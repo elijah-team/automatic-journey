@@ -96,14 +96,13 @@ public abstract class Compilation {
 		feedCmdLine(args, new DefaultCompilerController());
 	}
 
-	private void feedCmdLine(final @NotNull List<String> args1, final CompilerController controller) {
-		if (args1.isEmpty()) {
-			controller.printUsage();
-			return; // ab
-		}
-
-		final var launcher = new ProlificCompilationLauncher(this, args1, controller);
-		launcher.launch0();
+	private void feedCmdLine(final @NotNull List<String> args1, final CompilerController ctl) {
+        if (args1.isEmpty()) {
+            ctl.printUsage();
+        } else {
+            final var launcher = new ProlificCompilationLauncher(this, args1, ctl);
+            launcher.launch0();
+        }
     }
 
 	public String getProjectName() {

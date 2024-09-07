@@ -5,11 +5,11 @@ import io.reactivex.rxjava3.core.Observer;
 import io.reactivex.rxjava3.disposables.Disposable;
 import io.reactivex.rxjava3.subjects.ReplaySubject;
 import io.reactivex.rxjava3.subjects.Subject;
+import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.ci.CompilerInstructions;
 
 public class EDR_CIS implements Observer<CompilerInstructions> {
 	private final Subject<CompilerInstructions> compilerInstructionsSubject = ReplaySubject.create();
-	CompilerInstructionsObserver _cio;
 
 	@Override
 	public void onSubscribe(@NonNull final Disposable d) {
@@ -28,11 +28,10 @@ public class EDR_CIS implements Observer<CompilerInstructions> {
 
 	@Override
 	public void onComplete() {
-		throw new IllegalStateException();
-		//compilerInstructionsSubject.onComplete();
+		throw new IllegalStateException(); // FIXME UUE("how'd you get here?")
 	}
 
-	public void almostComplete(CompilerInstructionsObserver aCio) {
+	public void almostComplete(@NotNull CompilerInstructionsObserver aCio) {
 		aCio.almostComplete();
 	}
 
