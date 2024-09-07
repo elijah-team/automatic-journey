@@ -2,6 +2,7 @@ package tripleo.elijah.comp;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.DebugFlags;
 import tripleo.elijah.ci.CompilerInstructions;
 import tripleo.elijah.comp.caches.DefaultEzCache;
 import tripleo.elijah.comp.diagnostic.TooManyEz_ActuallyNone;
@@ -19,6 +20,7 @@ import tripleo.elijah.util.Mode;
 import tripleo.elijah.util.Operation2;
 import tripleo.elijah_prolific.comp_signals.CSS2_AlmostComplete;
 import tripleo.elijah_prolific.comp_signals.CSS2_CCI_Accept;
+import tripleo.elijah_prolific.comp_signals.CSS2_CCI_Next;
 import tripleo.elijah_remnant.startup.ProlificStartup2;
 
 import java.io.File;
@@ -318,21 +320,29 @@ public class CompilationRunner {
 						final List<CompilerInstructions> ezs = searchEzFiles(f, errSink, io, c);
 
 						switch (ezs.size()) {
-						case 0:
-							final Diagnostic d_toomany = new TooManyEz_ActuallyNone();
-							final Maybe<ILazyCompilerInstructions> m = new Maybe<>(null, d_toomany);
-							cb.inst(null, Instergram.ZERO, ()->{cci_accept(m);});
-							break;
-						case 1:
-							ez_file = ezs.get(0);
-							final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(ez_file);
-							cb.inst(ilci, Instergram.ONE, ()->{cci_accept(new Maybe<>(ilci, null));});
-							break;
-						default:
-							final Diagnostic d_toomany2 = new TooManyEz_BeSpecific();
-							final Maybe<ILazyCompilerInstructions> m2 = new Maybe<>(null, d_toomany2);
-							cb.inst(null, Instergram.TWO_MANY, ()->cci_accept(m2));
-							break;
+							case 0:
+								final Diagnostic d_toomany = new TooManyEz_ActuallyNone();
+								final Maybe<ILazyCompilerInstructions> m = new Maybe<>(null, d_toomany);
+								cb.inst(null, Instergram.ZERO, () -> {cci_accept(m);});
+								break;
+							case 1:
+								ez_file = ezs.get(0);
+								final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(ez_file);
+								final CompilerInstructions finalEz_file = ez_file;
+								cb.inst(ilci, Instergram.ONE, () -> {
+									if (!DebugFlags.letsRemove_cci_accept) {
+										cci_accept(new Maybe<>(ilci, null));
+									} else {
+										CSS2_CCI_Next css2_cciNext = new CSS2_CCI_Next();
+										compilation.signal(css2_cciNext, finalEz_file);
+									}
+								});
+								break;
+							default:
+								final Diagnostic d_toomany2 = new TooManyEz_BeSpecific();
+								final Maybe<ILazyCompilerInstructions> m2 = new Maybe<>(null, d_toomany2);
+								cb.inst(null, Instergram.TWO_MANY, () -> cci_accept(m2));
+								break;
 						}
 					} else
 						errSink.reportError("9995 Not a directory " + f.getAbsolutePath());
@@ -371,12 +381,9 @@ public class CompilationRunner {
 			final Operation<CompilerInstructions> oci = findStdLib(Compilation.CompilationAlways.defaultPrelude(),
 					compilation);
 			switch (oci.mode()) {
-			case SUCCESS -> compilation.pushItem(oci.success()); // caught twice!!
-			case FAILURE -> {
-				compilation.getErrSink().exception(oci.failure());
-				return;
-			}
-			default -> throw new IllegalStateException("Unexpected value: " + oci.mode());
+				case SUCCESS -> compilation.pushItem(oci.success()); // caught twice!!
+				case FAILURE -> compilation.getErrSink().exception(oci.failure());
+				default -> throw new IllegalStateException("Unexpected value: " + oci.mode());
 			}
 		}
 
