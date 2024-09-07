@@ -1,9 +1,8 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package tripleo.elijah.nextgen.outputtree;
 
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.DebugFlags;
 import tripleo.elijah.nextgen.outputstatement.EG_Statement;
 import tripleo.elijah_prolific.v.V;
 
@@ -26,7 +25,7 @@ public class EOT_OutputTree {
 	}
 
 	public void _putSeq(final String aKey, final Path aPath, final EG_Statement aStatement) {
-		//System.err.printf("[_putSeq] %s %s {{%s}}%n", aKey, aPath, aStatement.getExplanation().getText());
+		if (true||DebugFlags.lgSep07) {System.err.printf("[_putSeq] %s %s {{%s}}%n", aKey, aPath, aStatement.getExplanation().getText());}
 		V.asv(V.e._putSeq, aKey);
 	}
 
@@ -34,7 +33,7 @@ public class EOT_OutputTree {
 		return list == null ? 0 : list.size();
 	}
 
-	public List<EOT_OutputFile> list() {
+	public @NotNull List<@NotNull EOT_OutputFile> list() {
 		//noinspection ReplaceNullCheck
 		if (list == null) {
 			// noinspection unchecked
@@ -46,9 +45,11 @@ public class EOT_OutputTree {
 	public void add(final EOT_OutputFile aOutputFile) {
 		if (list == null) list = new ArrayList<>();
 		list.add(aOutputFile);
+		// wanted: list().add(aOutputFile);
+		// could: set(List_of(aOutputFile));
 	}
 
-	public List<EOT_OutputFile> getList() {
+	public @Nullable List<@NotNull EOT_OutputFile> getList() {
 		return list;
 	}
 }
