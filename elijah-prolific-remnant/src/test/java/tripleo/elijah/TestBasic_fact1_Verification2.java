@@ -3,6 +3,7 @@ package tripleo.elijah;
 import org.junit.Before;
 import org.junit.Test;
 import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.Finally._401bMatcher;
 import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah_fluffy.util.Helpers;
 
@@ -45,21 +46,22 @@ public class TestBasic_fact1_Verification2 {
 		assertTrue(c.reports().containsCodeOutput("/main2/Main.c"));
 	}
 
-    /*
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/sww/modules-sw-writer
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/inputs.txt
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/buffers.txt
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/Makefile
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/(DEDUCE_PHASE)
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/lib_elijjah~~lib-c~~Prelude.elijjah
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/test~~basic~~fact1~~fact1.elijah
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/test~~basic~~fact1~~main2~~main2.elijah
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/test~~basic~~fact1~~main2~~main2.elijah
-401b Writing path: COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/test~~basic~~fact1~~main2~~main2.elijah
+	@Test
+	public void test1() {
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/sww/modules-sw-writer")));
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/")));
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/")));
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/inputs.txt")));
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/buffers.txt")));
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/Makefile")));
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/(DEDUCE_PHASE)")));
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/lib_elijjah~~lib-c~~Prelude.elijjah")));
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/test~~basic~~fact1~~fact1.elijah")));
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/test~~basic~~fact1~~main2~~main2.elijah")));
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/test~~basic~~fact1~~main2~~main2.elijah")));
+		assertTrue(c.reports().contains401b(_401bMatcher.ofFull("/COMP/2408d3e32dc3f2d0d6254141917fa7629c71352a506a0edd17a007d1e3baa781/<date>/logs/test~~basic~~fact1~~main2~~main2.elijah")));
+	}
 
-*/
     /*
 import wprust.demo.fact
 

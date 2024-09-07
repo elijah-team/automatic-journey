@@ -50,6 +50,10 @@ public class Finally {
 		outputs.add(new Output(aFileNameProvider, aOff));
 	}
 
+	public boolean contains401b(final _401bMatcher aBMatcher) {
+		return false;
+	}
+
 	public enum Outs {
 		Out_6262, Out_727, Out_350, Out_364, Out_252, Out_2121, Out_486, Out_5757, Out_1069, Out_141, Out_EVTE_159,
 		Out_401b
@@ -116,4 +120,20 @@ public class Finally {
 			return fileNameProvider.getFilename();
 		}
 	}
+
+	public interface _401bSpec {}
+
+	public interface  _401bMatcher {
+		public static _401bMatcher ofFull(final String aS) {
+			final _401bMatcher res = new _401bMatcher(){
+				@Override
+				public boolean matches(final _401bSpec spec) {
+					return false;
+				}
+			};
+			return res;
+		}
+		boolean matches(_401bSpec spec);
+	}
+
 }
