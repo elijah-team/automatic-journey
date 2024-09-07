@@ -10,10 +10,9 @@ package tripleo.elijah.comp;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import io.activej.eventloop.Eventloop;
-import io.activej.reactor.Reactor;
-import io.activej.worker.WorkerPool;
-import io.activej.worker.WorkerPools;
+import io.activej.inject.annotation.Inject;
+import io.activej.inject.annotation.Provides;
+import io.activej.launcher.Launcher;
 import org.jdeferred2.DoneCallback;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
@@ -47,7 +46,6 @@ import tripleo.elijah_remnant.startup.ProlificStartup2;
 
 import java.io.File;
 import java.util.*;
-import java.util.concurrent.ExecutionException;
 
 public abstract class Compilation {
 	public final  List<ElLog>                  elLogs              = new LinkedList<ElLog>();
@@ -102,21 +100,27 @@ public abstract class Compilation {
 		feedCmdLine(args, new DefaultCompilerController());
 	}
 
-	private void feedCmdLine(final @NotNull List<String> args, final CompilerController controller) {
-//		WorkerPool workerPool = WorkerPools.createPool(4);
-//		workerPool.submit(() -> {
-//			// Your code here
-//		}).get();
-//		Reactor reactor = Eventloop.create();
-//        try {
-//            reactor.submit(() -> {
-//                // Your code here
-//            }).get();
-//        } catch (InterruptedException | ExecutionException aE) {
-//            throw new RuntimeException(aE);
-//        }
-//        reactor.run();
-	}
+	private void feedCmdLine(final @NotNull List<String> args1, final CompilerController controller) {
+		final Launcher launcher /*HelloWorldExample*/ = new Launcher() {
+			@Inject
+			String message;
+
+			@Provides
+			String message() {
+				return "Hello, world!";
+			}
+
+			@Override
+			protected void run() {
+				_actual_feedCmdLine(args1, controller);
+			}
+		};
+        try {
+            launcher.launch(new String[0]);
+        } catch (Exception aE) {
+            throw new RuntimeException(aE);
+        }
+    }
 
 	public void _actual_feedCmdLine(final @NotNull List<String> args, final tripleo.elijah.comp.i.CompilerController ctl) {
 		if (args.isEmpty()) {
