@@ -18,6 +18,7 @@ import tripleo.elijah.ci.CompilerInstructions;
 import tripleo.elijah.ci.LibraryStatementPart;
 import tripleo.elijah.comp.functionality.f202.F202;
 import tripleo.elijah.comp.i.CompilerController;
+import tripleo.elijah.comp.internal.CompilationBus;
 import tripleo.elijah.lang.ClassStatement;
 import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.lang.OS_Package;
@@ -62,6 +63,7 @@ public abstract class Compilation {
 	private       CompilationRunner            __cr;
 	private       CompilerInstructions         rootCI;
 	private       World                        world;
+	private CompilationBus __cb;
 
 	public Compilation(final @NotNull ErrSink aErrSink, final IO aIO) {
 		errSink            = aErrSink;
@@ -100,6 +102,7 @@ public abstract class Compilation {
 		if (args1.isEmpty()) {
 			ctl.printUsage();
 		} else {
+			this.__cb = ctl.getCB();
 			final var launcher = new ProlificCompilationLauncher(this, args1, ctl);
 			launcher.launch0();
 		}
@@ -356,6 +359,10 @@ public abstract class Compilation {
 
 	public void set__cr(CompilationRunner a__cr) {
 		__cr = a__cr;
+	}
+
+	public CompilationBus get_cb() {
+		return this.__cb;
 	}
 
 	static class CompilationConfig {

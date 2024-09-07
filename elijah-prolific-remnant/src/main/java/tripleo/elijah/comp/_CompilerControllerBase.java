@@ -1,12 +1,13 @@
 package tripleo.elijah.comp;
 
 import org.apache.commons.lang3.tuple.Pair;
+import tripleo.elijah.comp.i.CompilerController;
 import tripleo.elijah.comp.internal.CompilationBus;
 import tripleo.elijah_prolific.comp_signals.CSS2_doFindCIs;
 
 import java.util.List;
 
-public abstract class _CompilerControllerBase implements tripleo.elijah.comp.i.CompilerController {
+public abstract class _CompilerControllerBase implements CompilerController {
 	protected String[] args2;
 	protected CompilationBus cb;
 	protected Compilation c;
@@ -44,5 +45,10 @@ public abstract class _CompilerControllerBase implements tripleo.elijah.comp.i.C
 			c.getErrSink().exception(e);
 			throw new RuntimeException(e);
 		}
+	}
+
+	@Override
+	public CompilationBus getCB() {
+		return this.cb;
 	}
 }

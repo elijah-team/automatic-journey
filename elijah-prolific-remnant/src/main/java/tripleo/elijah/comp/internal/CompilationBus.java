@@ -1,6 +1,7 @@
 package tripleo.elijah.comp.internal;
 
 import net.bytebuddy.utility.nullability.NeverNull;
+import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.Compilation;
 import tripleo.elijah.comp.CompilationChange;
@@ -8,8 +9,12 @@ import tripleo.elijah.comp.ILazyCompilerInstructions;
 import tripleo.elijah.comp.i.ICompilationBus;
 import tripleo.elijah_prolific.comp_signals.CSS2_Advisable;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class CompilationBus implements ICompilationBus {
-	private final Compilation c;
+	private final Compilation                                           c;
+	public final  List<Pair< ILazyCompilerInstructions ,  Instergram >> cs = new ArrayList<>();
 
 	public CompilationBus(final Compilation aC) {
 		c = aC;
@@ -21,7 +26,9 @@ public class CompilationBus implements ICompilationBus {
 	}
 
 	@Override
-	public void inst(final ILazyCompilerInstructions aLazyCompilerInstructions, final Instergram reason, final Runnable cheat) {
+	public void inst(final ILazyCompilerInstructions aLazyCompilerInstructions, final @NotNull Instergram reason, final Runnable cheat) {
+		this.cs.add(Pair.of(aLazyCompilerInstructions, reason));
+
 		if (aLazyCompilerInstructions != null) {
 			System.out.println("** [ci] " + aLazyCompilerInstructions.get().getFilename());
 			cheat.run();

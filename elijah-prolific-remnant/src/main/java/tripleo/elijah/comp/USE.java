@@ -6,6 +6,7 @@ import tripleo.elijah.ci.*;
 import tripleo.elijah.comp.caches.DefaultElijahCache;
 import tripleo.elijah.comp.diagnostic.ExceptionDiagnostic;
 import tripleo.elijah.comp.diagnostic.FileNotFoundDiagnostic;
+import tripleo.elijah.comp.internal.CompilationBus;
 import tripleo.elijah.comp.specs.ElijahCache;
 import tripleo.elijah.comp.specs.ElijahSpec;
 import tripleo.elijah.diagnostic.Diagnostic;
@@ -31,17 +32,21 @@ class USE {
 	};
 	private final Compilation c;
 	private final ErrSink errSink;
+	private final CompilationBus cb;
 
 	@Contract(pure = true)
 	public USE(final Compilation aCompilation) {
 		c = aCompilation;
 		errSink = c.getErrSink();
+		cb = c.get_cb();
 	}
 
 	private final ElijahCache elijahCache = new DefaultElijahCache();
 
 	public void use(final @NotNull CompilerInstructions compilerInstructions, final boolean do_out) throws Exception {
 		// TODO
+
+		System.err.println("4949 "+cb.cs);
 
 		if (compilerInstructions.getFilename() == null)
 			return;

@@ -313,9 +313,12 @@ public class CompilationRunner {
 				final boolean matches2 = Pattern.matches(".+\\.ez$", file_name);
 				if (matches2) {
 					final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(f, c);
-					cb.inst(ilci, Instergram.EZ, () -> {cci_accept(new Maybe<>(ilci, null));});
+					final Maybe<ILazyCompilerInstructions> m3 = new Maybe<>(ilci, null);
+					cb.inst(ilci, Instergram.EZ, () -> {cci_accept(m3);});
 				} else {
-					// errSink.reportError("9996 Not an .ez file "+file_name);
+					if (!DebugFlags.lgSep07) {
+						errSink.reportError("9996 Not an .ez file "+file_name);
+					}
 					if (f.isDirectory()) {
 						final List<CompilerInstructions> ezs = searchEzFiles(f, errSink, io, c);
 
