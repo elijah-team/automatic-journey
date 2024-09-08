@@ -3,6 +3,7 @@ package tripleo.elijah_prolific.comp_signals;
 import org.apache.commons.lang3.tuple.*;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.i.*;
+import tripleo.elijah.comp.internal.EDR_CompilationRunner;
 
 import java.util.*;
 
@@ -20,7 +21,7 @@ public class CSS2_doFindCIs implements CSS2_Signal {
 
 			// var crap = compilation.getStartup().getCompilationRunner();
 			// crap.then(cr1 -> {
-			final CompilationRunner.CR_State st1 = new CompilationRunner.CR_State(compilation.getStartup());
+			final CR_State st1 = new EDR_CompilationRunner.EDR_CR_State(compilation.getStartup());
 
 			cb.add(new __CSS2_doFindCIs__CB_Process(), Triple.of(args2, cb, st1));
 			// });
@@ -28,13 +29,13 @@ public class CSS2_doFindCIs implements CSS2_Signal {
 	}
 
 	private static class CB_FindCIs implements ICompilationBus.CB_Action {
-		private final CompilationRunner.CR_Action a;
-		private final CompilationRunner.CR_State st1;
-		private final CompilationRunner cr;
+		private final ICompilationRunner.CR_Action       a;
+		private final CR_State st1;
+		private final EDR_CompilationRunner              cr;
 
-		public CB_FindCIs(String[] args2, CompilationRunner.CR_State st1) {
-			this.st1 = st1;
-			cr = st1.ca().getCompilation().get__cr();
+		public CB_FindCIs(String[] args2, CR_State aCRState) {
+			this.st1 = aCRState;
+			cr = aCRState.ca().getCompilation().get__cr();
 			a = cr.new CR_FindCIs(args2);
 		}
 
@@ -45,10 +46,10 @@ public class CSS2_doFindCIs implements CSS2_Signal {
 
 		@Override
 		public void execute() {
-			st1.cur = this;
+			st1.setCur(this);
 			a.attach(cr);
 			a.execute(st1);
-			st1.cur = null;
+			st1.setCur(null);
 		}
 
 		@Override
@@ -58,16 +59,16 @@ public class CSS2_doFindCIs implements CSS2_Signal {
 	}
 
 	private static class CB_AlmostComplete implements ICompilationBus.CB_Action {
-		private CompilationRunner.CR_Action a;
-		private final CompilationRunner.CR_State st;
-		private CompilationRunner cr;
+		private       ICompilationRunner.CR_Action       a;
+		private final CR_State st;
+		private       EDR_CompilationRunner              cr;
 
-		public CB_AlmostComplete(CompilationRunner.CR_State aCRState) {
+		public CB_AlmostComplete(CR_State aCRState) {
 			st = aCRState;
 			var crp = aCRState.ca().getStartup().getCompilationRunner();
 			crp.then(cr1 -> {
 				// cr = aCRState.ca().getCompilation().__cr;
-				cr = cr1;
+				cr = (EDR_CompilationRunner) cr1;
 				a = cr.new CR_AlmostComplete();
 			});
 		}
@@ -93,9 +94,9 @@ public class CSS2_doFindCIs implements CSS2_Signal {
 		private ICompilationBus.CB_Action a;
 		private ICompilationBus.CB_Action b;
 
-		public void adviseObject(final String[] aArgs2, final CompilationRunner.CR_State aSt1) {
-			a = new CB_FindCIs(aArgs2, aSt1);
-			b = new CB_AlmostComplete(aSt1);
+		public void adviseObject(final String[] argumentArray, final CR_State aCRState) {
+			a = new CB_FindCIs(argumentArray, aCRState);
+			b = new CB_AlmostComplete(aCRState);
 		}
 
 		@Override
@@ -109,7 +110,7 @@ public class CSS2_doFindCIs implements CSS2_Signal {
 		@Override
 		public void adviseObject(final Object aPayload) {
 			assert aPayload instanceof Triple;
-			var payloadtriple = (Triple<String[], ICompilationBus, CompilationRunner.CR_State>) aPayload;
+			var payloadtriple = (Triple<String[], ICompilationBus, CR_State>) aPayload;
 			var args2 = payloadtriple.getLeft();
 			var cb = payloadtriple.getMiddle();
 			var st1 = payloadtriple.getRight();

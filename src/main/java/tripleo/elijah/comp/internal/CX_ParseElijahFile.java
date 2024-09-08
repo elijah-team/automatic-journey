@@ -18,7 +18,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-public class CX_ParseElijahFile {
+class CX_ParseElijahFile {
 
 	public static Operation<OS_Module> parseAndCache(final ElijahSpec aSpec, final ElijahCache aElijahCache,
 	                                                 final String absolutePath, final Compilation compilation) {

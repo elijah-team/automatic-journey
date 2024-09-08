@@ -4,7 +4,9 @@ import org.jdeferred2.DoneCallback;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.i.ICompilationBus;
+import tripleo.elijah.comp.i.ICompilationRunner;
 import tripleo.elijah.comp.internal.EDR_CompilationAccess;
+import tripleo.elijah.comp.internal.EDR_CompilationRunner;
 import tripleo.elijah.comp.internal.EDR_ProcessRecord;
 import tripleo.elijah_fluffy.util.Eventual;
 import tripleo.elijah_fluffy.util.EventualExtract;
@@ -13,7 +15,7 @@ public class ProlificStartup2 {
     private final Compilation                  _compilation;
     private final Eventual<EDR_ProcessRecord>  _p_ProcessRecord     = new Eventual<>();
     private final Eventual<ICompilationAccess> _p_CompilationAccess = new Eventual<>();
-    private final Eventual<CompilationRunner>  _p_CompilationRunner = new Eventual<>();
+    private final Eventual<ICompilationRunner> _p_CompilationRunner = new Eventual<>();
     private final Eventual<ICompilationBus>    _p_CompilationBus    = new Eventual<>();
     private final Eventual<PipelineLogic>      _p_PipelineLogic     = new Eventual<>();
     @SuppressWarnings("FieldCanBeLocal")
@@ -21,9 +23,9 @@ public class ProlificStartup2 {
     private       boolean                      _f_processRecord;
     @SuppressWarnings("FieldCanBeLocal")
     private EDR_CompilationAccess __compilationAccess;
-    private boolean               _f_CompilationAccess;
+    private       boolean                      _f_CompilationAccess;
     @SuppressWarnings("FieldCanBeLocal")
-    private       CompilationRunner            __CompilationRunner;
+    private       ICompilationRunner           __CompilationRunner;
     private       boolean                      _f_CompilationRunner;
     @SuppressWarnings("FieldCanBeLocal")
     private       ICompilationBus              __CompilationBus;
@@ -58,10 +60,10 @@ public class ProlificStartup2 {
         return _p_ProcessRecord;
     }
 
-    public Eventual<CompilationRunner> getCompilationRunner() {
+    public Eventual<ICompilationRunner> getCompilationRunner() {
         if (!_f_CompilationRunner) {
             _f_CompilationRunner = true;
-            __CompilationRunner  = new CompilationRunner(_compilation, EventualExtract.of(getCompilationBus()));
+            __CompilationRunner  = new EDR_CompilationRunner(_compilation, EventualExtract.of(getCompilationBus()));
             _p_CompilationRunner.resolve(__CompilationRunner);
         }
         return _p_CompilationRunner;

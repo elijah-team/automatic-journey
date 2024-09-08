@@ -1,17 +1,16 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.internal;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.DebugFlags;
 import tripleo.elijah.ci.CompilerInstructions;
+import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.caches.DefaultEzCache;
 import tripleo.elijah.comp.diagnostic.TooManyEz_ActuallyNone;
 import tripleo.elijah.comp.diagnostic.TooManyEz_BeSpecific;
 import tripleo.elijah.comp.i.*;
 import tripleo.elijah.comp.i.ICompilationBus.Instergram;
-import tripleo.elijah.comp.internal.CX_ParseEzFile;
-import tripleo.elijah.comp.internal.EDR_ProcessRecord;
-import tripleo.elijah.comp.internal.ILazyCompilerInstructions_;
+import tripleo.elijah.comp.query.QuerySearchEzFiles;
 import tripleo.elijah.comp.specs.EzCache;
 import tripleo.elijah.comp.specs.EzSpec;
 import tripleo.elijah.diagnostic.Diagnostic;
@@ -32,7 +31,7 @@ import java.util.regex.Pattern;
 
 import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
-public class CompilationRunner {
+public class EDR_CompilationRunner implements ICompilationRunner {
 	private final Compilation         compilation;
 	private final ProlificStartup2    _startup;
 	private final ICompilationBus     cb;
@@ -41,7 +40,7 @@ public class CompilationRunner {
 	private final CSS2_CCI_Accept     cciAcceptSignal;
 
 	@Contract(pure = true)
-	public CompilationRunner(final Compilation aCompilation, final ICompilationBus aCb) {
+	public EDR_CompilationRunner(final Compilation aCompilation, final ICompilationBus aCb) {
 		compilation     = aCompilation;
 		cb              = aCb;
 		_startup        = compilation.getStartup();
@@ -50,8 +49,9 @@ public class CompilationRunner {
 		cciAcceptSignal = new CSS2_CCI_Accept();
 	}
 
+	@Override
 	public void start(final CompilerInstructions ci, final boolean do_out) {
-		final CR_State st1 = new CR_State(_startup);
+		final EDR_CR_State st1 = new EDR_CR_State(_startup);
 
 		cb.add(new ICompilationBus.CB_Process() {
 			@Override
@@ -69,7 +69,7 @@ public class CompilationRunner {
 
 					@Override
 					public void execute() {
-						aa.attach(CompilationRunner.this);
+						aa.attach(EDR_CompilationRunner.this);
 						aa.execute(st1);
 					}
 
@@ -108,7 +108,7 @@ public class CompilationRunner {
 
 					@Override
 					public void execute() {
-						aa.attach(CompilationRunner.this);
+						aa.attach(EDR_CompilationRunner.this);
 						aa.execute(st1);
 					}
 
@@ -125,13 +125,13 @@ public class CompilationRunner {
 
 	private void logProgress(final int number, final String text) {
 		switch (number) {
-			case 130:
-				break;
-			default: {
+		case 130:
+			break;
+		default: {
 
-				// noinspection RedundantStringFormatCall
-				System.err.println(String.format("%d %s", number, text));
-			}
+			// noinspection RedundantStringFormatCall
+			System.err.println(String.format("%d %s", number, text));
+		}
 		}
 	}
 
@@ -147,6 +147,7 @@ public class CompilationRunner {
 	 * @param cache
 	 * @return
 	 */
+	@Override
 	public Operation<CompilerInstructions> realParseEzFile(final EzSpec spec, final EzCache cache) {
 		final @NotNull File file = spec.file();
 
@@ -167,6 +168,7 @@ public class CompilationRunner {
 		return cio;
 	}
 
+	@Override
 	public EzCache ezCache() {
 		return ezCache;
 	}
@@ -213,27 +215,38 @@ public class CompilationRunner {
 		return List_of();
 	}
 
-	interface CR_Process {
-		List<ICompilationBus.CB_Action> steps();
+	public static class CR_RunBetterAction implements CR_Action {
+		@Override
+		public void attach(final EDR_CompilationRunner cr) {
+
+		}
+
+		@Override
+		public void execute(final CR_State st) {
+			st.set_rt(RuntimeProcess.StageToRuntime.get(st.ca().getStage(), st.ca(), st.pr()));
+
+			try {
+				st.rt().run_better();
+			} catch (final Exception aE) {
+				throw new RuntimeException(aE); // FIXME
+			}
+		}
+
+		@Override
+		public String name() {
+			return "run better";
+		}
 	}
 
-	public interface CR_Action {
-		void attach(CompilationRunner cr);
-
-		void execute(CR_State st);
-
-		String name();
-	}
-
-	public static class CR_State {
+	public static class EDR_CR_State implements CR_State {
 		@SuppressWarnings("FieldCanBeLocal")
-		private final ProlificStartup2          _startup;
-		public        ICompilationBus.CB_Action cur;
-		ICompilationAccess ca;
-		EDR_ProcessRecord  pr;
-		RuntimeProcesses   rt;
+		private final ProlificStartup2                _startup;
+		private       ICompilationBus.CB_Action       cur;
+		private       ICompilationAccess              ca;
+		private       EDR_ProcessRecord               pr;
+		private       RuntimeProcess.RuntimeProcesses rt;
 
-		public CR_State(final ProlificStartup2 aStartup) {
+		public EDR_CR_State(final ProlificStartup2 aStartup) {
 			_startup = aStartup;
 			var cap = _startup.getCompilationAccess();
 			cap.then(ca1 -> ca = ca1);
@@ -241,17 +254,63 @@ public class CompilationRunner {
 			prp.then(pr1 -> pr = pr1);
 		}
 
+		@Override
 		public ICompilationAccess ca() {
 			return ca;
+		}
+
+		@Override
+		public ProlificStartup2 get_startup() {
+			return _startup;
+		}
+
+		@Override
+		public ICompilationBus.CB_Action getCur() {
+			return cur;
+		}
+
+		@Override
+		public void setCur(ICompilationBus.CB_Action cur) {
+			this.cur = cur;
+		}
+
+		@Override
+		public ICompilationAccess getCa() {
+			return ca;
+		}
+
+		@Override
+		public void setCa(ICompilationAccess ca) {
+			this.ca = ca;
+		}
+
+		@Override
+		public EDR_ProcessRecord pr() {
+			return pr;
+		}
+
+		@Override
+		public void setPr(EDR_ProcessRecord pr) {
+			this.pr = pr;
+		}
+
+		@Override
+		public RuntimeProcess.RuntimeProcesses rt() {
+			return rt;
+		}
+
+		@Override
+		public void set_rt(RuntimeProcess.RuntimeProcesses rt) {
+			this.rt = rt;
 		}
 	}
 
 	public class CR_AlmostComplete implements CR_Action {
 
-		private CompilationRunner cr;
+		private EDR_CompilationRunner cr;
 
 		@Override
-		public void attach(final CompilationRunner cr) {
+		public void attach(final EDR_CompilationRunner cr) {
 			assert cr != null;
 			this.cr = cr;
 		}
@@ -277,7 +336,7 @@ public class CompilationRunner {
 		}
 
 		@Override
-		public void attach(final CompilationRunner cr) {
+		public void attach(final EDR_CompilationRunner cr) {
 
 		}
 
@@ -312,68 +371,49 @@ public class CompilationRunner {
 				final File    f        = new File(file_name);
 				final boolean matches2 = Pattern.matches(".+\\.ez$", file_name);
 				if (matches2) {
-					final ILazyCompilerInstructions ilci = ILazyCompilerInstructions_.of(f, c);
-					final Maybe<ILazyCompilerInstructions> m3 = new Maybe<>(ilci, null);
-					cb.inst(ilci, Instergram.EZ, () -> {cci_accept(m3);});
+					final ILazyCompilerInstructions        ilci = ILazyCompilerInstructions_.of(f, c);
+					final Maybe<ILazyCompilerInstructions> m3   = new Maybe<>(ilci, null);
+					cb.inst(ilci, Instergram.EZ, () -> {
+						cci_accept(m3);
+					});
 				} else {
 					if (!DebugFlags.lgSep07) {
-						errSink.reportError("9996 Not an .ez file "+file_name);
+						errSink.reportError("9996 Not an .ez file " + file_name);
 					}
 					if (f.isDirectory()) {
 						final List<CompilerInstructions> ezs = searchEzFiles(f, errSink, io, c);
 
 						switch (ezs.size()) {
-							case 0:
-								final Diagnostic d_toomany = new TooManyEz_ActuallyNone();
-								final Maybe<ILazyCompilerInstructions> m = new Maybe<>(null, d_toomany);
-								cb.inst(null, Instergram.ZERO, () -> {cci_accept(m);});
-								break;
-							case 1:
-								ez_file = ezs.get(0);
-								final ILazyCompilerInstructions ilci = ILazyCompilerInstructions_.of(ez_file);
-								final CompilerInstructions finalEz_file = ez_file;
-								cb.inst(ilci, Instergram.ONE, () -> {
-									if (!DebugFlags.letsRemove_cci_accept) {
-										cci_accept(new Maybe<>(ilci, null));
-									} else {
-										CSS2_CCI_Next css2_cciNext = new CSS2_CCI_Next();
-										compilation.signal(css2_cciNext, finalEz_file);
-									}
-								});
-								break;
-							default:
-								final Diagnostic d_toomany2 = new TooManyEz_BeSpecific();
-								final Maybe<ILazyCompilerInstructions> m2 = new Maybe<>(null, d_toomany2);
-								cb.inst(null, Instergram.TWO_MANY, () -> cci_accept(m2));
-								break;
+						case 0:
+							final Diagnostic d_toomany = new TooManyEz_ActuallyNone();
+							final Maybe<ILazyCompilerInstructions> m = new Maybe<>(null, d_toomany);
+							cb.inst(null, Instergram.ZERO, () -> {
+								cci_accept(m);
+							});
+							break;
+						case 1:
+							ez_file = ezs.get(0);
+							final ILazyCompilerInstructions ilci = ILazyCompilerInstructions_.of(ez_file);
+							final CompilerInstructions finalEz_file = ez_file;
+							cb.inst(ilci, Instergram.ONE, () -> {
+								if (!DebugFlags.letsRemove_cci_accept) {
+									cci_accept(new Maybe<>(ilci, null));
+								} else {
+									CSS2_CCI_Next css2_cciNext = new CSS2_CCI_Next();
+									compilation.signal(css2_cciNext, finalEz_file);
+								}
+							});
+							break;
+						default:
+							final Diagnostic d_toomany2 = new TooManyEz_BeSpecific();
+							final Maybe<ILazyCompilerInstructions> m2 = new Maybe<>(null, d_toomany2);
+							cb.inst(null, Instergram.TWO_MANY, () -> cci_accept(m2));
+							break;
 						}
 					} else
 						errSink.reportError("9995 Not a directory " + f.getAbsolutePath());
 				}
 			}
-		}
-	}
-
-	private static class CR_RunBetterAction implements CR_Action {
-		@Override
-		public void attach(final CompilationRunner cr) {
-
-		}
-
-		@Override
-		public void execute(final CR_State st) {
-			st.rt = StageToRuntime.get(st.ca().getStage(), st.ca(), st.pr);
-
-			try {
-				st.rt.run_better();
-			} catch (final Exception aE) {
-				throw new RuntimeException(aE); // FIXME
-			}
-		}
-
-		@Override
-		public String name() {
-			return "run better";
 		}
 	}
 
@@ -384,9 +424,9 @@ public class CompilationRunner {
 			final Operation<CompilerInstructions> oci = findStdLib(CompilationAlways.defaultPrelude(),
 					compilation);
 			switch (oci.mode()) {
-				case SUCCESS -> compilation.pushItem(oci.success()); // caught twice!!
-				case FAILURE -> compilation.getErrSink().exception(oci.failure());
-				default -> throw new IllegalStateException("Unexpected value: " + oci.mode());
+			case SUCCESS -> compilation.pushItem(oci.success()); // caught twice!!
+			case FAILURE -> compilation.getErrSink().exception(oci.failure());
+			default -> throw new IllegalStateException("Unexpected value: " + oci.mode());
 			}
 		}
 
@@ -396,7 +436,7 @@ public class CompilationRunner {
 		}
 
 		@Override
-		public void attach(final CompilationRunner cr) {
+		public void attach(final EDR_CompilationRunner cr) {
 
 		}
 	}
@@ -411,7 +451,7 @@ public class CompilationRunner {
 		}
 
 		@Override
-		public void attach(final CompilationRunner cr) {
+		public void attach(final EDR_CompilationRunner cr) {
 
 		}
 

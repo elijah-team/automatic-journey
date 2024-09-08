@@ -17,6 +17,7 @@ import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.i._Inputter2;
 import tripleo.elijah.comp.internal.EDR_CompilationBus;
 import tripleo.elijah.comp.internal.EDR_CIS;
+import tripleo.elijah.comp.internal.EDR_CompilationRunner;
 import tripleo.elijah.comp.internal.EDR_MOD;
 import tripleo.elijah.lang.ClassStatement;
 import tripleo.elijah.lang.OS_Module;
@@ -153,9 +154,9 @@ public interface Compilation {
 
 	void set_cio(CompilerInstructionsObserver a_cio);
 
-	CompilationRunner get__cr();
+	EDR_CompilationRunner get__cr();
 
-	void set__cr(CompilationRunner a__cr);
+	void set__cr(EDR_CompilationRunner a__cr);
 
 	void writeLogs(final @NotNull List<ElLog> aLogs);
 

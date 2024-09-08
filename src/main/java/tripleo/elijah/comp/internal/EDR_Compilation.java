@@ -60,9 +60,9 @@ public class EDR_Compilation implements Compilation {
 	private final ErrSink           errSink;
 	private final IO                io;
 	private                PipelineLogic                pipelineLogic;
-	private                CompilerInstructionsObserver _cio;
-	private                CompilationRunner            __cr;
-	private                CompilerInstructions         rootCI;
+	private CompilerInstructionsObserver _cio;
+	private EDR_CompilationRunner        __cr;
+	private CompilerInstructions         rootCI;
 	private                World                        world;
 
 
@@ -308,7 +308,7 @@ public class EDR_Compilation implements Compilation {
 
 	@Override
 	public void register(Object registerable) {
-		if (registerable instanceof CompilationRunner cr) {
+		if (registerable instanceof EDR_CompilationRunner cr) {
 			this.__cr = cr;
 		}
 	}
@@ -423,12 +423,12 @@ public class EDR_Compilation implements Compilation {
 	}
 
 	@Override
-	public CompilationRunner get__cr() {
+	public EDR_CompilationRunner get__cr() {
 		return __cr;
 	}
 
 	@Override
-	public void set__cr(CompilationRunner a__cr) {
+	public void set__cr(EDR_CompilationRunner a__cr) {
 		__cr = a__cr;
 	}
 

@@ -15,7 +15,7 @@ public enum Stages {
 
 		@Override
 		public RuntimeProcess getProcess(final ICompilationAccess aCa, final EDR_ProcessRecord aPr) {
-			return new EmptyProcess(aCa, aPr);
+			return new RuntimeProcess.EmptyProcess(aCa, aPr);
 		}
 	},
 	D("D") {
@@ -26,7 +26,7 @@ public enum Stages {
 
 		@Override
 		public @NotNull RuntimeProcess getProcess(final ICompilationAccess aCa, final EDR_ProcessRecord aPr) {
-			return new DStageProcess(aCa, aPr);
+			return new RuntimeProcess.DStageProcess(aCa, aPr);
 		}
 	},
 	S("S") {
@@ -48,7 +48,7 @@ public enum Stages {
 
 		@Override
 		public RuntimeProcess getProcess(final ICompilationAccess aCa, final EDR_ProcessRecord aPr) {
-			return new OStageProcess(aCa, aPr);
+			return new RuntimeProcess.OStageProcess(aCa, aPr);
 		}
 	} // Output
 	;
