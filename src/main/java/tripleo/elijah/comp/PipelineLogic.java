@@ -128,7 +128,7 @@ public class PipelineLogic implements AccessBus.AB_ModuleListListener {
 		//
 		aModuleList.process__PL(this::getGenerateFunctions, this);
 
-		dp.finish(dp.generatedClasses);
+		dp.finish(dp.getGeneratedClasses());
 //		dp.generatedClasses.addAll(lgc);
 	}
 
@@ -142,7 +142,7 @@ public class PipelineLogic implements AccessBus.AB_ModuleListListener {
 	}
 
 	public List<GeneratedNode> generatedClassesCopy() {
-		return dp.generatedClasses.copy();
+		return dp.getGeneratedClasses().copy();
 	}
 
 	public EIT_ModuleList mods() {

@@ -72,7 +72,7 @@ public class EIT_ModuleList {
 
 		// assert lgc.size() == epl.size(); //hmm
 
-		final Coder coder = new Coder(plp.deducePhase.codeRegistrar);
+		final Coder coder = new Coder(plp.deducePhase.getCodeRegistrar());
 
 		for (final GeneratedNode generatedNode : lgc) {
 			coder.codeNodes(mod, resolved_nodes, generatedNode);
@@ -153,7 +153,7 @@ public class EIT_ModuleList {
 
 		@Contract(pure = true)
 		public DeducePhase.GeneratedClasses getLgc() {
-			return deducePhase.generatedClasses;
+			return deducePhase.getGeneratedClasses();
 		}
 
 		@Contract(pure = true)

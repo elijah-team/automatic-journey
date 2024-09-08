@@ -1,4 +1,4 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.internal;
 
 import io.activej.eventloop.Eventloop;
 import io.activej.inject.annotation.Inject;
@@ -12,12 +12,13 @@ import java.util.concurrent.CompletableFuture;
 import org.jetbrains.annotations.NotNull;
 import java.util.List;
 
+import tripleo.elijah.comp.Compilation;
 import tripleo.elijah.comp.i.CompilerController;
 import tripleo.elijah_prolific.v.V;
 
 class ProlificCompilationLauncher extends Launcher {
-    private final @NotNull Compilation        compilation;
-    private final @NotNull List<String>       args;
+    private final @NotNull Compilation  compilation;
+    private final @NotNull List<String> args;
     private final @NotNull CompilerController controller;
 
     public ProlificCompilationLauncher(final @NotNull Compilation aCompilation,

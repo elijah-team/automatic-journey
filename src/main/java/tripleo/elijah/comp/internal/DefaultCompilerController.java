@@ -1,5 +1,7 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.internal;
 
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp._CompilerControllerBase;
 import tripleo.elijah.comp.i.CompilerController;
 
 import java.util.List;

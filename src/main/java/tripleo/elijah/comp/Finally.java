@@ -9,10 +9,10 @@ import java.util.List;
 import java.util.Set;
 
 public class Finally {
-	private final Set<Outs>       outputOffs = new HashSet<>();
-	private final List<Input>     inputs     = new ArrayList<>();
-	private final List<Output>    outputs    = new ArrayList<>();
-	private final List<_401bSpec> specs      = new ArrayList<>();
+	private final Set<Outs>           outputOffs = new HashSet<>();
+	private final List<Finally_Input>  inputs  = new ArrayList<>();
+	private final List<Finally_Output> outputs = new ArrayList<>();
+	private final List<_401bSpec>      specs   = new ArrayList<>();
 
 	private       boolean         turnAllOutputOff;
 
@@ -24,8 +24,8 @@ public class Finally {
 		return !turnAllOutputOff && !outputOffs.contains(aOuts);
 	}
 
-	public void addInput(final Nameable aNameable, final Out2 ty) {
-		inputs.add(new Input(aNameable, ty));
+	public void addInput(final Finally_Nameable aNameable, final Out2 ty) {
+		inputs.add(new Finally_Input(aNameable, ty));
 	}
 
 //	public void addInput(final CompilerInput aInp, final Out2 ty) {
@@ -49,7 +49,7 @@ public class Finally {
 	}
 
 	public void addCodeOutput(final EOT_OutputFile.FileNameProvider aFileNameProvider, final EOT_OutputFile aOff) {
-		outputs.add(new Output(aFileNameProvider, aOff));
+		outputs.add(new Finally_Output(aFileNameProvider, aOff));
 	}
 
 	public boolean contains401b(final _401bMatcher aBMatcher) {
@@ -72,10 +72,6 @@ public class Finally {
 		EZ, ELIJAH
 	}
 
-	interface Nameable {
-		String getName();
-	}
-
 	public interface _401bSpec {}
 
 	public interface _401bMatcher {
@@ -91,59 +87,4 @@ public class Finally {
 
 		boolean matches(_401bSpec spec);
 	}
-
-	public class Input {
-
-		private final Nameable nameable;
-		private final Out2     ty;
-
-		public Input(final Nameable aNameable, final Out2 aTy) {
-			nameable = aNameable;
-			ty       = aTy;
-		}
-
-		public Input(final CompilerInput aInp, final Out2 aTy) {
-			nameable = new Nameable() {
-				@Override
-				public String getName() {
-					return aInp.getInp();
-				}
-			};
-			ty       = aTy;
-		}
-
-		public Input(final CompFactory.InputRequest aInp, final Out2 aTy) {
-			nameable = new Nameable() {
-				@Override
-				public String getName() {
-					return aInp.file().toString();
-				}
-			};
-			ty       = aTy;
-		}
-
-		@Override
-		public String toString() {
-			return "Input{" + "name=" + nameable.getName() + ", ty=" + ty + '}';
-		}
-
-		public String name() {
-			return nameable.getName();
-		}
-	}
-
-	class Output {
-		private final EOT_OutputFile.FileNameProvider fileNameProvider;
-		private final EOT_OutputFile                  off;
-
-		public Output(final EOT_OutputFile.FileNameProvider aFileNameProvider, final EOT_OutputFile aOff) {
-			fileNameProvider = aFileNameProvider;
-			off              = aOff;
-		}
-
-		public String name() {
-			return fileNameProvider.getFilename();
-		}
-	}
-
 }

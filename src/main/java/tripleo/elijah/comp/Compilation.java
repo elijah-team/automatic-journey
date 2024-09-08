@@ -8,17 +8,13 @@
  */
 package tripleo.elijah.comp;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 import org.jdeferred2.DoneCallback;
-import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.ci.CompilerInstructions;
-import tripleo.elijah.ci.LibraryStatementPart;
-import tripleo.elijah.comp.functionality.f202.F202;
 import tripleo.elijah.comp.i.CompilerController;
 import tripleo.elijah.comp.internal.CompilationBus;
+import tripleo.elijah.comp.internal.EDR_CIS;
+import tripleo.elijah.comp.internal.EDR_MOD;
 import tripleo.elijah.lang.ClassStatement;
 import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.lang.OS_Package;
@@ -29,349 +25,140 @@ import tripleo.elijah.stages.deduce.FunctionMapHook;
 import tripleo.elijah.stages.deduce.fluffy.i.FluffyComp;
 import tripleo.elijah.stages.gen_fn.GeneratedNode;
 import tripleo.elijah.stages.logging.ElLog;
+import tripleo.elijah.testing.comp.IFunctionMapHook;
 import tripleo.elijah.world.impl.DefaultLivingRepo;
 import tripleo.elijah_fluffy.comp.CM_Prelude;
 import tripleo.elijah_fluffy.comp.CM_Preludes;
 import tripleo.elijah_fluffy.util.Eventual;
-import tripleo.elijah_fluffy.util.EventualExtract;
 import tripleo.elijah_prolific.comp_signals.CSS2_Signal;
 import tripleo.elijah_remnant.startup.ProlificStartup2;
+import tripleo.elijah_remnant.value.ElValue;
 
 import java.io.File;
-import java.util.*;
+import java.util.List;
 
-public abstract class Compilation {
-	private final List<ElLog>                  elLogs;
-	private final Eventual<File>               _m_comp_dir_promise;
-	private final CompilationConfig            cfg;
-	private final Finally                      _f;
-	private final CompFactory                  _con;
-	private final DefaultLivingRepo            _repo;
-	private final EDR_CIS                      _cis;
-	private final EDR_MOD                      mod;
-	private final EDR_USE                      use;
-	private final CompilationBusElValue        __cb;
-	private final Pipeline                     pipelines;
-	private final int                          _compilationNumber;
-	private final ErrSink                      errSink;
-	private final IO                           io;
-	private       PipelineLogic                pipelineLogic;
-	private       CompilerInstructionsObserver _cio;
-	private       CompilationRunner            __cr;
-	private       CompilerInstructions         rootCI;
-	private       World                        world;
+public interface Compilation {
 
-	public Compilation(final @NotNull ErrSink aErrSink, final IO aIO) {
-		errSink            = aErrSink;
-		io                 = aIO;
-		_compilationNumber = new Random().nextInt(Integer.MAX_VALUE);
-		pipelines          = new Pipeline(aErrSink);
-		elLogs             = new LinkedList<>();
-		_m_comp_dir_promise = new Eventual<>();
-		cfg = new CompilationConfig();
-		_f = new Finally();
-		_con = new DefaultCompFactory(this);
-		_repo = new DefaultLivingRepo();
-		_cis = new EDR_CIS();
-		mod = new EDR_MOD();
-		use = new EDR_USE(this);
-		__cb = new CompilationBusElValue();
-	}
-
-	public static ElLog.Verbosity gitlabCIVerbosity() {
+	static ElLog.Verbosity gitlabCIVerbosity() {
 		final boolean gitlab_ci = isGitlab_ci();
 		return gitlab_ci ? ElLog.Verbosity.SILENT : ElLog.Verbosity.VERBOSE;
 	}
 
-	public static boolean isGitlab_ci() {
+	static boolean isGitlab_ci() {
 		return System.getenv("GITLAB_CI") != null;
 	}
 
-	@Contract(pure = true)
-	@Nullable CompilationEnclosure getCompilationEnclosure() {
-		return null; // new CompilationEnclosure();
-	}
+	void testMapHooks(List<IFunctionMapHook> aMapHooks);
 
-	void hasInstructions(final @NotNull List<CompilerInstructions> cis) {
-		assert !cis.isEmpty();
+	ICompilationAccess _access();
 
-		rootCI = cis.get(0);
+	void feedCmdLine(@NotNull List<String> args);
 
-		__cr.start(rootCI, cfg.do_out);
-	}
+	void feedCmdLine(@NotNull List<String> args1, CompilerController ctl);
 
-	public void feedCmdLine(final @NotNull List<String> args) {
-		feedCmdLine(args, new DefaultCompilerController());
-	}
+	String getProjectName();
 
-	private void feedCmdLine(final @NotNull List<String> args1, final CompilerController ctl) {
-		if (args1.isEmpty()) {
-			ctl.printUsage();
-		} else {
-			this.__cb.set(ctl.getCB());
-			final var launcher = new ProlificCompilationLauncher(this, args1, ctl);
-			launcher.launch0();
-		}
-	}
+	CM_Module realParseElijjahFile(String f, @NotNull File file, boolean do_out);
 
-	public String getProjectName() {
-		return rootCI.getName();
-	}
+	void pushItem(CompilerInstructions aci);
 
-	public CM_Module realParseElijjahFile(final String f, final @NotNull File file, final boolean do_out) {
-		CM_Module res = new CM_Module();
-		res.advise(this, use);
-		res.advise(f, file, do_out);
-		res.action();
-		final Operation<OS_Module> osModuleOperation = res.getOperation();
-		return res;
-	}
+	List<ClassStatement> findClass(String string);
 
-	public void pushItem(final CompilerInstructions aci) {
-		_cis.onNext(aci);
-	}
+	void use(@NotNull CompilerInstructions compilerInstructions, boolean do_out) throws Exception;
 
-	public List<ClassStatement> findClass(final String string) {
-		final List<ClassStatement> l = new ArrayList<>();
-		for (final OS_Module module : mod.modules) {
-			if (module.hasClass(string)) {
-				l.add((ClassStatement) module.findClass(string));
-			}
-		}
-		return l;
-	}
+	int errorCount();
 
-	public void use(final @NotNull CompilerInstructions compilerInstructions, final boolean do_out) throws Exception {
-		use.use(compilerInstructions, do_out); // NOTE Rust
-	}
+	ErrSink getErrSink();
 
-	public int errorCount() {
-		return errSink.errorCount();
-	}
+	IO getIO();
 
-	void writeLogs(final @NotNull List<ElLog> aLogs) {
-		final Multimap<String, ElLog> logMap = ArrayListMultimap.create();
-		for (final ElLog deduceLog : aLogs) {
-			logMap.put(deduceLog.getFileName(), deduceLog);
-		}
-		for (final Map.Entry<String, Collection<ElLog>> stringCollectionEntry : logMap.asMap().entrySet()) {
-			final F202 f202 = new F202(getErrSink(), this);
-			f202.processLogs(stringCollectionEntry.getValue());
-		}
-	}
+	void addModule(OS_Module module, String fn);
 
-	public ErrSink getErrSink() {
-		return errSink;
-	}
+	OS_Module fileNameToModule(String fileName);
 
-	public IO getIO() {
-		return io;
-	}
+	boolean getSilence();
 
-	public void addModule(final OS_Module module, final String fn) {
-		mod.addModule(module, fn);
-	}
+	tripleo.elijah.util.Operation2<OS_Module> findPrelude(String prelude_name);
 
-	public OS_Module fileNameToModule(final String fileName) {
-		if (mod.containsKey(fileName)) {
-			return mod.get(fileName);
-		}
-		return null;
-	}
+	void addFunctionMapHook(FunctionMapHook aFunctionMapHook);
 
-	public boolean getSilence() {
-		return cfg.silent;
-	}
+	@NotNull DeducePhase getDeducePhase();
 
-	public tripleo.elijah.util.Operation2<OS_Module> findPrelude(final String prelude_name) {
-		return use.findPrelude(prelude_name);
-	}
+	int nextClassCode();
 
-	public void addFunctionMapHook(final FunctionMapHook aFunctionMapHook) {
-		getDeducePhase().addFunctionMapHook(aFunctionMapHook);
-	}
+	int nextFunctionCode();
 
-	public @NotNull DeducePhase getDeducePhase() {
-		// TODO subscribeDeducePhase??
-		return pipelineLogic.getDp();
-	}
+	OS_Package getPackage(@NotNull Qualident pkg_name);
 
-	public int nextClassCode() {
-		return _repo.nextClassCode();
-	}
+	OS_Package makePackage(Qualident pkg_name);
 
-	public int nextFunctionCode() {
-		return _repo.nextFunctionCode();
-	}
+	int compilationNumber();
 
-	public OS_Package getPackage(final @NotNull Qualident pkg_name) {
-		return _repo.getPackage(pkg_name.toString());
-	}
-
-	public OS_Package makePackage(final Qualident pkg_name) {
-		return _repo.makePackage(pkg_name);
-	}
-
-	public int compilationNumber() {
-		return _compilationNumber;
-	}
-
-	public String getCompilationNumberString() {
-		return String.format("%08x", _compilationNumber);
-	}
+	String getCompilationNumberString();
 
 	@Deprecated
-	public int modules_size() {
-		return mod.size();
-	}
+	int modules_size();
 
-	@NotNull
-	public abstract EOT_OutputTree getOutputTree();
+	@NotNull EOT_OutputTree getOutputTree();
 
-	public abstract @NotNull FluffyComp getFluffy();
+	@NotNull FluffyComp getFluffy();
 
-	public @NotNull List<GeneratedNode> getLGC() {
-		return getDeducePhase().generatedClasses.copy();
-	}
+	ProlificStartup2 getStartup();
 
-	public boolean isPackage(final String aPackageName) {
-		return _repo.isPackage(aPackageName);
-	}
+	ElValue<CompilationBus> get_cb();
 
-	public Pipeline getPipelines() {
-		return pipelines;
-	}
+	@NotNull List<GeneratedNode> getLGC();
 
-	public ModuleBuilder moduleBuilder() {
-		return new ModuleBuilder(this);
-	}
+	boolean isPackage(String aPackageName);
 
-	public Finally reports() {
-		return _f;
-	}
+	Pipeline getPipelines();
 
-	public void signal(@NotNull CSS2_Signal signal, Object payload) {
-		signal.trigger(this, payload);
-	}
+	ModuleBuilder moduleBuilder();
 
-	public void register(Object registerable) {
-		if (registerable instanceof CompilationRunner cr) {
-			this.__cr = cr;
-		}
-	}
+	Finally reports();
 
-	public World world() {
-		if (this.world == null)
-			this.world = new World();
-		return this.world;
-	}
+	void signal(@NotNull CSS2_Signal signal, Object payload);
 
-	public Operation<CM_Prelude> findPrelude2(final @NotNull CM_Preludes aPreludeTag) {
-		final CM_Prelude                                result;
-		final tripleo.elijah.util.Operation2<OS_Module> x  = findPrelude(aPreludeTag.getName());
-		final var                                       _c = this;
-		result = new CM_Prelude() {
-			@Override
-			public OS_Module getModule() {
-				if (x.mode() == tripleo.elijah.util.Mode.SUCCESS) {
-					return x.success();
-				} else {
-					throw null;
-				}
-			}
+	void register(Object registerable);
 
-			@Override
-			public CM_Preludes getTag() {
-				return aPreludeTag;
-			}
+	World world();
 
-			@Override
-			public LibraryStatementPart getLsp() {
-				return null;
-			}
+	Operation<CM_Prelude> findPrelude2(@NotNull CM_Preludes aPreludeTag);
 
-			@Override
-			public Compilation getCompilation() {
-				return _c;
-			}
-		};
-		return Operation.success(result);
-	}
+	Eventual<File> comp_dir_promise();
 
-	public abstract ProlificStartup2 getStartup();
-
-	public Eventual<File> comp_dir_promise() {
-		return _m_comp_dir_promise;
-	}
-
-	public ICompilationAccess _compilationAccess() {
-		final Eventual<ICompilationAccess> e = getStartup().getCompilationAccess();
-		return EventualExtract.of(e);
-	}
+	ICompilationAccess _compilationAccess();
 
 	@SuppressWarnings("UnusedReturnValue")
-	public <T, U> File inputFile(final File aDirectory, final String aFileName,
-	                             final /* BiFunction<Consumer<T>, Consumer<U>, Void> */ _Inputter2<CompilerInstructions> func) {
-		// noinspection unchecked
-		final T[] t = (T[]) new Object[1];
-		// noinspection unchecked
-		final U[]  diag = (U[]) new Object[1];
-		final File f    = new File(aDirectory, aFileName);
-		func.acceptFile(f);
-		// noinspection unchecked
-		func.apply(tt -> t[0] = (T) tt, uu -> diag[0] = (U) uu);
-		return f;
-	}
+	<T, U> File inputFile(File aDirectory, String aFileName, _Inputter2<CompilerInstructions> func);
 
-	public List<ElLog> getElLogs() {
-		return elLogs;
-	}
+	List<ElLog> getElLogs();
 
-	public CompilationConfig getCfg() {
-		return cfg;
-	}
+	CompilationConfig getCfg();
 
-	public EDR_CIS get_cis() {
-		return _cis;
-	}
+	EDR_CIS get_cis();
 
-	public DefaultLivingRepo get_repo() {
-		return _repo;
-	}
+	DefaultLivingRepo get_repo();
 
-	public EDR_MOD getMod() {
-		return mod;
-	}
+	EDR_MOD getMod();
 
-	public PipelineLogic getPipelineLogic() {
-		return pipelineLogic;
-	}
+	PipelineLogic getPipelineLogic();
 
-	public void setPipelineLogic(PipelineLogic aPipelineLogic) {
-		pipelineLogic = aPipelineLogic;
-	}
+	void setPipelineLogic(PipelineLogic aPipelineLogic);
 
-	public CompilerInstructionsObserver get_cio() {
-		return _cio;
-	}
+	CompilerInstructionsObserver get_cio();
 
-	public void set_cio(CompilerInstructionsObserver a_cio) {
-		_cio = a_cio;
-	}
+	void set_cio(CompilerInstructionsObserver a_cio);
 
-	public CompilationRunner get__cr() {
-		return __cr;
-	}
+	CompilationRunner get__cr();
 
-	public void set__cr(CompilationRunner a__cr) {
-		__cr = a__cr;
-	}
+	void set__cr(CompilationRunner a__cr);
 
-	public ElValue<CompilationBus> get_cb() {
-		return this.__cb;
-	}
+	void writeLogs(final @NotNull List<ElLog> aLogs);
 
-	public static class World {
+	void hasInstructions(List<CompilerInstructions> l);
+
+	class World {
 		public void subscribeLgc(DoneCallback<CWS_LGC> consumer) {
 //		lgcsub.
 		}

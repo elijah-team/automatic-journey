@@ -1,8 +1,12 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.internal;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.ICompilationAccess;
+import tripleo.elijah.comp.PipelineLogic;
+import tripleo.elijah.comp.Stages;
 import tripleo.elijah.comp.functionality.f202.F202;
 import tripleo.elijah.stages.deduce.FunctionMapHook;
 import tripleo.elijah.stages.logging.ElLog;
@@ -13,8 +17,8 @@ import java.util.List;
 import java.util.Map;
 
 public class DefaultCompilationAccess implements ICompilationAccess {
-	protected final Compilation compilation;
-	private final ProlificStartup2 _startup;
+	protected final Compilation      compilation;
+	private final   ProlificStartup2 _startup;
 
 	public DefaultCompilationAccess(final Compilation aCompilation, final ProlificStartup2 aStartup) {
 		compilation = aCompilation;
@@ -51,7 +55,7 @@ public class DefaultCompilationAccess implements ICompilationAccess {
 
 	@Override
 	public List<FunctionMapHook> functionMapHooks() {
-		return compilation.getDeducePhase().functionMapHooks;
+		return compilation.getDeducePhase().getFunctionMapHooks();
 	}
 
 	@Override

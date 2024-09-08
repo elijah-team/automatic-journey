@@ -1,8 +1,11 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.internal;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.ci.LibraryStatementPart;
+import tripleo.elijah.comp.CompFactory;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.CompilationEnclosure;
 import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.lang.Qualident;
 import tripleo.elijah.nextgen.inputtree.EIT_ModuleInput;
@@ -43,7 +46,7 @@ class DefaultCompFactory implements CompFactory {
 	@SuppressWarnings("UnnecessaryLocalVariable")
 	@Override
 	public @NotNull WorldModule createWorldModule(final OS_Module m) {
-		final CompilationEnclosure ce = compilation.getCompilationEnclosure();
+		final CompilationEnclosure ce = null;//compilation.getCompilationEnclosure();
 		final WorldModule          R  = new DefaultWorldModule(m, ce);
 		return R;
 	}

@@ -358,11 +358,11 @@ public class DeduceElement3_VariableTableEntry extends DefaultStateful implement
 			// assuming no constructor name or generic parameters based on function syntax
 			ci = new ClassInvocation((ClassStatement) resolvedElement, null);
 			ci = phase.registerClassInvocation(ci);
-			fi = new FunctionInvocation(null, pte, ci, phase.generatePhase);
+			fi = new FunctionInvocation(null, pte, ci, phase.getGeneratePhase());
 			p = new ImmutablePair<ClassInvocation, FunctionInvocation>(ci, fi);
 		} else if (resolvedElement instanceof final FunctionDef functionDef) {
 			final IInvocation invocation = dc.getInvocation((GeneratedFunction) generatedFunction);
-			fi = new FunctionInvocation(functionDef, pte, invocation, phase.generatePhase);
+			fi = new FunctionInvocation(functionDef, pte, invocation, phase.getGeneratePhase());
 			if (functionDef.getParent() instanceof ClassStatement) {
 				final ClassStatement classStatement = (ClassStatement) fi.getFunction().getParent();
 				ci = new ClassInvocation(classStatement, null); // TODO generics

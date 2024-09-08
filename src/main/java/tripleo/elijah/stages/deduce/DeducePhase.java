@@ -47,35 +47,39 @@ import static tripleo.elijah_fluffy.util.Helpers.List_of;
  */
 public class DeducePhase {
 
-	public final ICodeRegistrar codeRegistrar;
-	public final GeneratePhase generatePhase;
-	final PipelineLogic pipelineLogic;
-	final Map<NamespaceStatement, NamespaceInvocation> namespaceInvocationMap = new HashMap<NamespaceStatement, NamespaceInvocation>();
-	private final List<FoundElement> foundElements = new ArrayList<FoundElement>();
-	private final Map<IdentTableEntry, OnType> idte_type_callbacks = new HashMap<IdentTableEntry, OnType>();
-	private final @NotNull ElLog LOG;
-
-	private final List<State> registeredStates = new ArrayList<>();
-	private final Compilation _compilation;
-	private final ExecutorService classGenerator = Executors.newCachedThreadPool();
-	private final List<DeferredMemberFunction> deferredMemberFunctions = new ArrayList<>();
-	private final Multimap<FunctionDef, GeneratedFunction> functionMap = ArrayListMultimap.create();
-	public @NotNull GeneratedClasses generatedClasses = new GeneratedClasses();
+	private final          ICodeRegistrar                               codeRegistrar;
+	private final          GeneratePhase                                generatePhase;
+	private final          PipelineLogic                                pipelineLogic;
+	private final          Map<NamespaceStatement, NamespaceInvocation> namespaceInvocationMap  = new HashMap<NamespaceStatement, NamespaceInvocation>();
+	private final          List<FoundElement>                           foundElements           = new ArrayList<FoundElement>();
+	private final          Map<IdentTableEntry, OnType>                 idte_type_callbacks     = new HashMap<IdentTableEntry, OnType>();
+	private final @NotNull ElLog                                        LOG;
+	private final          List<State>                                  registeredStates        = new ArrayList<>();
+	private final          Compilation                                  _compilation;
+	private final          ExecutorService                              classGenerator          = Executors.newCachedThreadPool();
+	private final          List<DeferredMemberFunction>                 deferredMemberFunctions = new ArrayList<>();
+	private final          Multimap<FunctionDef, GeneratedFunction>     functionMap             = ArrayListMultimap.create();
 	@NotNull
-	public List<FunctionMapHook> functionMapHooks = new ArrayList<FunctionMapHook>();
+	private                GeneratedClasses                             generatedClasses        = new GeneratedClasses();
 	@NotNull
-	Multimap<OS_Element, ResolvedVariables> resolved_variables = ArrayListMultimap.create();
+	private                List<FunctionMapHook>                        functionMapHooks        = new ArrayList<FunctionMapHook>();
 	@NotNull
-	Multimap<ClassStatement, OnClass> onclasses = ArrayListMultimap.create();
+	private
+	Multimap<OS_Element, ResolvedVariables>   resolved_variables      = ArrayListMultimap.create();
+	@NotNull
+	private
+	Multimap<ClassStatement, OnClass>         onclasses               = ArrayListMultimap.create();
 	// Multimap<GeneratedClass, ClassInvocation> generatedClasses1 =
 	// ArrayListMultimap.create();
 	@NotNull
+	private
 	Multimap<ClassStatement, ClassInvocation> classInvocationMultimap = ArrayListMultimap.create();
 	@NotNull
-	List<DeferredMember> deferredMembers = new ArrayList<DeferredMember>();
+	private
+	List<DeferredMember>                      deferredMembers         = new ArrayList<DeferredMember>();
 
 	public DeducePhase(final GeneratePhase aGeneratePhase, final PipelineLogic aPipelineLogic,
-			final ElLog.Verbosity verbosity, final Compilation aCompilation) {
+	                   final ElLog.Verbosity verbosity, final Compilation aCompilation) {
 		generatePhase = aGeneratePhase;
 		pipelineLogic = aPipelineLogic;
 		//
@@ -83,7 +87,7 @@ public class DeducePhase {
 		pipelineLogic.addLog(LOG);
 		//
 		codeRegistrar = new DefaultCodeRegistrar(aCompilation);
-		_compilation = aCompilation;
+		_compilation  = aCompilation;
 		//
 		IStateRunnable.ST.register(this);
 		DeduceElement3_IdentTableEntry.ST.register(this);
@@ -102,7 +106,7 @@ public class DeducePhase {
 	}
 
 	public void registerResolvedVariable(final IdentTableEntry identTableEntry, final OS_Element parent,
-			final String varName) {
+	                                     final String varName) {
 		resolved_variables.put(parent, new ResolvedVariables(identTableEntry, parent, varName));
 	}
 
@@ -123,14 +127,11 @@ public class DeducePhase {
 		pipelineLogic.addLog(aLog);
 	}
 
-//	public List<ElLog> deduceLogs = new ArrayList<ElLog>();
-
 	public void addDeferredMember(final DeferredMemberFunction aDeferredMemberFunction) {
 		deferredMemberFunctions.add(aDeferredMemberFunction);
 	}
 
 	public ClassInvocation registerClassInvocation(final ClassStatement aParent) {
-		@Nullable
 		ClassInvocation ci = new ClassInvocation(aParent, null);
 		ci = registerClassInvocation(ci);
 		return ci;
@@ -142,10 +143,9 @@ public class DeducePhase {
 		ClassInvocation Result = null;
 
 		// 1. select which to return
-		final ClassStatement c = aClassInvocation.getKlass();
+		final ClassStatement              c   = aClassInvocation.getKlass();
 		final Collection<ClassInvocation> cis = classInvocationMultimap.get(c);
-		for (@NotNull
-		final ClassInvocation ci : cis) {
+		for (@NotNull final ClassInvocation ci : cis) {
 			// don't lose information
 			if (ci.getConstructorName() != null)
 				if (!(ci.getConstructorName().equals(aClassInvocation.getConstructorName())))
@@ -159,14 +159,13 @@ public class DeducePhase {
 		}
 
 		if (Result == null) {
-			put = true;
+			put    = true;
 			Result = aClassInvocation;
 		}
 
 		// 2. Check and see if already done
 		final Collection<ClassInvocation> cls = classInvocationMultimap.get(Result.getKlass());
-		for (@NotNull
-		final ClassInvocation ci : cls) {
+		for (@NotNull final ClassInvocation ci : cls) {
 			if (equivalentGenericPart(ci, Result)) {
 				return ci;
 			}
@@ -177,13 +176,13 @@ public class DeducePhase {
 		}
 
 		// 3. Generate new GeneratedClass
-		final @NotNull WorkList wl = new WorkList();
+		final @NotNull WorkList  wl  = new WorkList();
 		final @NotNull OS_Module mod = Result.getKlass().getContext().module();
 		wl.addJob(
 				new WlGenerateClass(generatePhase.getGenerateFunctions(mod), Result, generatedClasses, codeRegistrar)); // TODO
-																														// why
-																														// add
-																														// now?
+		// why
+		// add
+		// now?
 		generatePhase.wm.addJobs(wl);
 		generatePhase.wm.drain(); // TODO find a better place to put this
 
@@ -192,7 +191,7 @@ public class DeducePhase {
 	}
 
 	public boolean equivalentGenericPart(@NotNull final ClassInvocation first, @NotNull final ClassInvocation second) {
-		final Map<TypeName, OS_Type> firstGenericPart = first.genericPart;
+		final Map<TypeName, OS_Type> firstGenericPart  = first.genericPart;
 		final Map<TypeName, OS_Type> secondGenericPart = second.genericPart;
 		if (secondGenericPart == null && (firstGenericPart == null || firstGenericPart.size() == 0))
 			return true;
@@ -235,7 +234,7 @@ public class DeducePhase {
 	}
 
 	public @NotNull DeduceTypes2 deduceModule(@NotNull final OS_Module m, @NotNull final Iterable<GeneratedNode> lgf,
-			final ElLog.Verbosity verbosity) {
+	                                          final ElLog.Verbosity verbosity) {
 		final @NotNull DeduceTypes2 deduceTypes2 = new DeduceTypes2(m, this, verbosity);
 		LOG.err("196 DeduceTypes " + deduceTypes2.getFileName());
 		{
@@ -256,18 +255,17 @@ public class DeducePhase {
 	}
 
 	public @NotNull Promise<ClassDefinition, Diagnostic, Void> generateClass(final GenerateFunctions gf,
-			final ClassInvocation ci) {
-		@Nullable
-		final WlGenerateClass gen = new WlGenerateClass(gf, ci, generatedClasses, codeRegistrar);
-		final ClassDefinition[] cds = new ClassDefinition[1];
+	                                                                         final ClassInvocation ci) {
+		@Nullable final WlGenerateClass                         gen = new WlGenerateClass(gf, ci, generatedClasses, codeRegistrar);
+		final ClassDefinition[]                                 cds = new ClassDefinition[1];
 		final DeferredObject<ClassDefinition, Diagnostic, Void> ret = new DeferredObject<>();
 
 		classGenerator.submit(new Runnable() {
 			@Override
 			public void run() {
 				gen.run(null);
-				final ClassDefinition cd = new ClassDefinition(ci);
-				final GeneratedClass genclass = gen.getResult();
+				final ClassDefinition cd       = new ClassDefinition(ci);
+				final GeneratedClass  genclass = gen.getResult();
 				if (genclass != null) {
 					cd.setNode(genclass);
 					cds[0] = cd;
@@ -307,19 +305,17 @@ public class DeducePhase {
 	 * @param verbosity
 	 */
 	public void deduceModule(@NotNull final OS_Module m, @NotNull final Iterable<GeneratedNode> lgc,
-			final boolean _unused, final ElLog.Verbosity verbosity) {
+	                         final boolean _unused, final ElLog.Verbosity verbosity) {
 		final @NotNull List<GeneratedNode> lgf = new ArrayList<GeneratedNode>();
 
-		for (@NotNull
-		final GeneratedNode lgci : lgc) {
+		for (@NotNull final GeneratedNode lgci : lgc) {
 			if (lgci.module() != m)
 				continue;
 
 			if (lgci instanceof GeneratedClass) {
 				final @NotNull Collection<GeneratedFunction> generatedFunctions = ((GeneratedClass) lgci).functionMap
 						.values();
-				for (@NotNull
-				final GeneratedFunction generatedFunction : generatedFunctions) {
+				for (@NotNull final GeneratedFunction generatedFunction : generatedFunctions) {
 //					generatedFunction.setClass(lgci); // TODO delete when done
 					assert generatedFunction.getGenClass() == lgci;
 				}
@@ -327,8 +323,7 @@ public class DeducePhase {
 			} else if (lgci instanceof GeneratedNamespace) {
 				final @NotNull Collection<GeneratedFunction> generatedFunctions = ((GeneratedNamespace) lgci).functionMap
 						.values();
-				for (@NotNull
-				final GeneratedFunction generatedFunction : generatedFunctions) {
+				for (@NotNull final GeneratedFunction generatedFunction : generatedFunctions) {
 					generatedFunction.setClass(lgci);
 				}
 				lgf.addAll(generatedFunctions);
@@ -339,7 +334,7 @@ public class DeducePhase {
 	}
 
 	public void forFunction(final DeduceTypes2 deduceTypes2, @NotNull final FunctionInvocation fi,
-			@NotNull final ForFunction forFunction) {
+	                        @NotNull final ForFunction forFunction) {
 //		LOG.err("272 forFunction\n\t"+fi.getFunction()+"\n\t"+fi.pte);
 		fi.generateDeferred().promise().then(new DoneCallback<BaseGeneratedFunction>() {
 			@Override
@@ -363,17 +358,13 @@ public class DeducePhase {
 		// TODO all GeneratedFunction nodes have a genClass member
 		for (final GeneratedNode generatedNode : lgc22) {
 			if (generatedNode instanceof final @NotNull GeneratedClass generatedClass) {
-				@NotNull
-				final Collection<GeneratedFunction> functions = generatedClass.functionMap.values();
-				for (@NotNull
-				final GeneratedFunction generatedFunction : functions) {
+				@NotNull final Collection<GeneratedFunction> functions = generatedClass.functionMap.values();
+				for (@NotNull final GeneratedFunction generatedFunction : functions) {
 					generatedFunction.setParent(generatedClass);
 				}
 			} else if (generatedNode instanceof final @NotNull GeneratedNamespace generatedNamespace) {
-				@NotNull
-				final Collection<GeneratedFunction> functions = generatedNamespace.functionMap.values();
-				for (@NotNull
-				final GeneratedFunction generatedFunction : functions) {
+				@NotNull final Collection<GeneratedFunction> functions = generatedNamespace.functionMap.values();
+				for (@NotNull final GeneratedFunction generatedFunction : functions) {
 					generatedFunction.setParent(generatedNamespace);
 				}
 			}
@@ -388,7 +379,7 @@ public class DeducePhase {
 		 * DeferredObject<GeneratedClass, Void, Void> deferredObject =
 		 * (DeferredObject<GeneratedClass, Void, Void>) ci.promise();
 		 * deferredObject.then(new DoneCallback<GeneratedClass>() {
-		 * 
+		 *
 		 * @Override public void onDone(GeneratedClass result) { assert result ==
 		 * generatedClass; } }); // deferredObject.resolve(generatedClass); } } } }
 		 */
@@ -398,19 +389,15 @@ public class DeducePhase {
 				if (generatedNode instanceof final @NotNull GeneratedClass generatedClass) {
 					if (generatedClass.getKlass() == classStatement) {
 						final Collection<OnClass> ks = onclasses.get(classStatement);
-						for (@NotNull
-						final OnClass k : ks) {
+						for (@NotNull final OnClass k : ks) {
 							k.classFound(generatedClass);
 						}
 					} else {
-						@NotNull
-						final Collection<GeneratedClass> cmv = generatedClass.classMap.values();
-						for (@NotNull
-						final GeneratedClass aClass : cmv) {
+						@NotNull final Collection<GeneratedClass> cmv = generatedClass.classMap.values();
+						for (@NotNull final GeneratedClass aClass : cmv) {
 							if (aClass.getKlass() == classStatement) {
 								final Collection<OnClass> ks = onclasses.get(classStatement);
-								for (@NotNull
-								final OnClass k : ks) {
+								for (@NotNull final OnClass k : ks) {
 									k.classFound(generatedClass);
 								}
 							}
@@ -439,8 +426,7 @@ public class DeducePhase {
 		 * (Triplet triplet : forFunctions) { // Collection<GeneratedFunction> x =
 		 * functionMap.get(fi); triplet.forFunction.finish(); } }
 		 */
-		for (@NotNull
-		final FoundElement foundElement : foundElements) {
+		for (@NotNull final FoundElement foundElement : foundElements) {
 			// TODO As we are using this, didntFind will never fail because
 			// we call doFoundElement manually in resolveIdentIA
 			// As the code matures, maybe this will change and the interface
@@ -452,8 +438,7 @@ public class DeducePhase {
 		for (final GeneratedNode generatedNode : lgc22) {
 			if (generatedNode instanceof final @NotNull GeneratedContainer generatedContainer) {
 				final Collection<ResolvedVariables> x = resolved_variables.get(generatedContainer.getElement());
-				for (@NotNull
-				final ResolvedVariables resolvedVariables : x) {
+				for (@NotNull final ResolvedVariables resolvedVariables : x) {
 					final GeneratedContainer.VarTableEntry variable = generatedContainer
 							.getVariable(resolvedVariables.varName);
 					assert variable != null;
@@ -464,22 +449,20 @@ public class DeducePhase {
 				}
 			}
 		}
-		@NotNull
-		final List<GeneratedClass> gcs = new ArrayList<GeneratedClass>();
-		boolean all_resolve_var_table_entries = false;
+		@NotNull final List<GeneratedClass> gcs                           = new ArrayList<GeneratedClass>();
+		boolean                             all_resolve_var_table_entries = false;
 		while (!all_resolve_var_table_entries) {
 			if (lgc22.size() == 0)
 				break;
 			for (final GeneratedNode generatedNode : lgc22.copy()) {
 				if (generatedNode instanceof final @NotNull GeneratedClass generatedClass) {
 					all_resolve_var_table_entries = generatedClass.resolve_var_table_entries(this); // TODO use a while
-																									// loop to get all
-																									// classes
+					// loop to get all
+					// classes
 				}
 			}
 		}
-		for (@NotNull
-		final DeferredMember deferredMember : deferredMembers) {
+		for (@NotNull final DeferredMember deferredMember : deferredMembers) {
 			if (deferredMember.getParent() instanceof final @NotNull NamespaceStatement parent) {
 				final NamespaceInvocation nsi = registerNamespaceInvocation(parent);
 				nsi.resolveDeferred().done(new DoneCallback<GeneratedNamespace>() {
@@ -489,7 +472,7 @@ public class DeducePhase {
 								.getVariable(deferredMember.getVariableStatement().getName());
 						assert v != null;
 						// TODO varType, potentialTypes and _resolved: which?
-						final OS_Type varType = v.varType;
+						final OS_Type          varType = v.varType;
 						final @NotNull GenType genType = new GenType();
 						genType.set(varType);
 
@@ -506,7 +489,7 @@ public class DeducePhase {
 						/*
 						 * if (genType.resolved == null) { // HACK need to resolve, but this shouldn't
 						 * be here try {
-						 * 
+						 *
 						 * @NotNull OS_Type rt = DeduceTypes2.resolve_type(null, varType,
 						 * varType.getTypeName().getContext()); genType.set(rt); } catch (ResolveError
 						 * aResolveError) { aResolveError.printStackTrace(); } }
@@ -548,8 +531,7 @@ public class DeducePhase {
 		sanityChecks();
 		for (final Map.@NotNull Entry<FunctionDef, Collection<GeneratedFunction>> entry : functionMap.asMap()
 				.entrySet()) {
-			for (@NotNull
-			final FunctionMapHook functionMapHook : functionMapHooks) {
+			for (@NotNull final FunctionMapHook functionMapHook : functionMapHooks) {
 				if (functionMapHook.matches(entry.getKey())) {
 					functionMapHook.apply(entry.getValue());
 				}
@@ -561,8 +543,7 @@ public class DeducePhase {
 		if (namespaceInvocationMap.containsKey(aNamespaceStatement))
 			return namespaceInvocationMap.get(aNamespaceStatement);
 
-		@NotNull
-		final NamespaceInvocation nsi = new NamespaceInvocation(aNamespaceStatement);
+		@NotNull final NamespaceInvocation nsi = new NamespaceInvocation(aNamespaceStatement);
 		namespaceInvocationMap.put(aNamespaceStatement, nsi);
 		return nsi;
 	}
@@ -590,10 +571,8 @@ public class DeducePhase {
 	}
 
 	private void sanityChecks(@NotNull final Collection<GeneratedFunction> aGeneratedFunctions) {
-		for (@NotNull
-		final GeneratedFunction generatedFunction : aGeneratedFunctions) {
-			for (@NotNull
-			final IdentTableEntry identTableEntry : generatedFunction.idte_list) {
+		for (@NotNull final GeneratedFunction generatedFunction : aGeneratedFunctions) {
+			for (@NotNull final IdentTableEntry identTableEntry : generatedFunction.idte_list) {
 				switch (identTableEntry.getStatus()) {
 				case UNKNOWN:
 					assert identTableEntry.getResolvedElement() == null;
@@ -610,8 +589,7 @@ public class DeducePhase {
 					LOG.err(String.format("255 UNCHECKED idte %s in %s", identTableEntry, generatedFunction));
 					break;
 				}
-				for (@NotNull
-				final TypeTableEntry pot_tte : identTableEntry.potentialTypes()) {
+				for (@NotNull final TypeTableEntry pot_tte : identTableEntry.potentialTypes()) {
 					if (pot_tte.getAttached() == null) {
 						LOG.err(String.format("267 null potential attached in %s in %s in %s", pot_tte, identTableEntry,
 								generatedFunction));
@@ -621,18 +599,82 @@ public class DeducePhase {
 		}
 	}
 
+	public ICodeRegistrar getCodeRegistrar() {
+		return codeRegistrar;
+	}
+
+	public GeneratePhase getGeneratePhase() {
+		return generatePhase;
+	}
+
+	public PipelineLogic getPipelineLogic() {
+		return pipelineLogic;
+	}
+
+	public Map<NamespaceStatement, NamespaceInvocation> getNamespaceInvocationMap() {
+		return namespaceInvocationMap;
+	}
+
+	public @NotNull GeneratedClasses getGeneratedClasses() {
+		return generatedClasses;
+	}
+
+	public void setGeneratedClasses(@NotNull GeneratedClasses generatedClasses) {
+		this.generatedClasses = generatedClasses;
+	}
+
+	public @NotNull List<FunctionMapHook> getFunctionMapHooks() {
+		return functionMapHooks;
+	}
+
+	public void setFunctionMapHooks(@NotNull List<FunctionMapHook> functionMapHooks) {
+		this.functionMapHooks = functionMapHooks;
+	}
+
+	public @NotNull Multimap<OS_Element, ResolvedVariables> getResolved_variables() {
+		return resolved_variables;
+	}
+
+	public void setResolved_variables(@NotNull Multimap<OS_Element, ResolvedVariables> resolved_variables) {
+		this.resolved_variables = resolved_variables;
+	}
+
+	public @NotNull Multimap<ClassStatement, OnClass> getOnclasses() {
+		return onclasses;
+	}
+
+	public void setOnclasses(@NotNull Multimap<ClassStatement, OnClass> onclasses) {
+		this.onclasses = onclasses;
+	}
+
+	public @NotNull Multimap<ClassStatement, ClassInvocation> getClassInvocationMultimap() {
+		return classInvocationMultimap;
+	}
+
+	public void setClassInvocationMultimap(@NotNull Multimap<ClassStatement, ClassInvocation> classInvocationMultimap) {
+		this.classInvocationMultimap = classInvocationMultimap;
+	}
+
+	public @NotNull List<DeferredMember> getDeferredMembers() {
+		return deferredMembers;
+	}
+
+	public void setDeferredMembers(@NotNull List<DeferredMember> deferredMembers) {
+		this.deferredMembers = deferredMembers;
+	}
+
 	static class ResolvedVariables {
 		final IdentTableEntry identTableEntry;
-		final OS_Element parent; // README tripleo.elijah.lang._CommonNC, but that's package-private
-		final String varName;
+		final OS_Element      parent; // README tripleo.elijah.lang._CommonNC, but that's package-private
+		final String          varName;
 
 		public ResolvedVariables(final IdentTableEntry aIdentTableEntry, final OS_Element aParent,
-				final String aVarName) {
+		                         final String aVarName) {
 			assert aParent instanceof ClassStatement || aParent instanceof NamespaceStatement;
 
 			identTableEntry = aIdentTableEntry;
-			parent = aParent;
-			varName = aVarName;
+			parent          = aParent;
+			varName         = aVarName;
 		}
 	}
 

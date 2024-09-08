@@ -1,8 +1,8 @@
 package tripleo.elijah.comp;
 
-class CompilationConfig {
+public class CompilationConfig {
 	public    boolean do_out;
-	public    Stages  stage  = Stages.O; // Output
-	protected boolean silent = false;
+	public Stages  stage  = Stages.O; // Output
+	public boolean silent = false;
 	boolean showTree = false;
 }

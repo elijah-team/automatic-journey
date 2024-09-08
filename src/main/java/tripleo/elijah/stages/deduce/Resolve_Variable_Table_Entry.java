@@ -260,19 +260,19 @@ class Resolve_Variable_Table_Entry {
 			@NotNull
 			final WorkList wl = new WorkList();
 			@NotNull
-			final GenerateFunctions gen = phase.generatePhase.getGenerateFunctions(mod1);
+			final GenerateFunctions gen = phase.getGeneratePhase().getGenerateFunctions(mod1);
 			@NotNull
 			final NamespaceInvocation modi = new NamespaceInvocation(mod_ns);
 			final @Nullable ProcTableEntry pte = findProcTableEntry(generatedFunction, aPotentialExpression);
 			assert pte != null;
 			callable_pte = pte;
 			@NotNull
-			final FunctionInvocation fi = new FunctionInvocation(fd1, pte, modi, phase.generatePhase);
-			wl.addJob(new WlGenerateNamespace(gen, modi, phase.generatedClasses, phase.codeRegistrar)); // TODO hope
+			final FunctionInvocation fi = new FunctionInvocation(fd1, pte, modi, phase.getGeneratePhase());
+			wl.addJob(new WlGenerateNamespace(gen, modi, phase.getGeneratedClasses(), phase.getCodeRegistrar())); // TODO hope
 																										// this works
 																										// (for more
 																										// than one)
-			final @Nullable WlGenerateFunction wlgf = new WlGenerateFunction(gen, fi, phase.codeRegistrar);
+			final @Nullable WlGenerateFunction wlgf = new WlGenerateFunction(gen, fi, phase.getCodeRegistrar());
 			wl.addJob(wlgf);
 			wm.addJobs(wl);
 			wm.drain(); // TODO here?

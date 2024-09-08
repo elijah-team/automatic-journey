@@ -81,7 +81,7 @@ public class TestGenFunction {
                 final @NotNull DeducePhase   dp             = c.getPipelineLogic().getDp();
                 gfm.generateFromEntryPoints(m.entryPoints, dp);
 
-                final DeducePhase.@NotNull GeneratedClasses lgc = dp.generatedClasses; //new ArrayList<>();
+                final DeducePhase.@NotNull GeneratedClasses lgc = dp.getGeneratedClasses(); //new ArrayList<>();
 
                 /*
                 List<GeneratedNode> lgf = new ArrayList<>();
@@ -213,7 +213,7 @@ public class TestGenFunction {
                 });
 
                 dp.deduceModule(m, lgc, false, Compilation.gitlabCIVerbosity());
-                dp.finish(dp.generatedClasses);
+                dp.finish(dp.getGeneratedClasses());
 
                 Assert.assertEquals("Not all hooks ran", 4, ran_hooks.size());
                 Assert.assertEquals(108, c.errorCount());

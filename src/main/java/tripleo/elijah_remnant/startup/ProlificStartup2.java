@@ -3,6 +3,7 @@ package tripleo.elijah_remnant.startup;
 import org.jdeferred2.DoneCallback;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.i.ICompilationBus;
+import tripleo.elijah.comp.internal.DefaultCompilationAccess;
 import tripleo.elijah.comp.internal.ProcessRecord;
 import tripleo.elijah_fluffy.util.Eventual;
 import tripleo.elijah_fluffy.util.EventualExtract;
@@ -16,10 +17,10 @@ public class ProlificStartup2 {
     private final Eventual<PipelineLogic>      _p_PipelineLogic     = new Eventual<>();
     @SuppressWarnings("FieldCanBeLocal")
     private       ProcessRecord                __processRecord;
-    private       boolean                      _f_processRecord;
+    private boolean                  _f_processRecord;
     @SuppressWarnings("FieldCanBeLocal")
-    private       DefaultCompilationAccess     __compilationAccess;
-    private       boolean                      _f_CompilationAccess;
+    private DefaultCompilationAccess __compilationAccess;
+    private boolean                  _f_CompilationAccess;
     @SuppressWarnings("FieldCanBeLocal")
     private       CompilationRunner            __CompilationRunner;
     private       boolean                      _f_CompilationRunner;

@@ -17,8 +17,8 @@ public class Zero_FuncExprType implements IZero {
 		final @NotNull GenerateFunctions genf = aDeduceTypes2
 				.getGenerateFunctions(funcExprType.getElement().getContext().module());
 		final FunctionInvocation fi = new FunctionInvocation((BaseFunctionDef) funcExprType.getElement(), null, null,
-				aDeduceTypes2._phase().generatePhase);
-		final WlGenerateFunction gen = new WlGenerateFunction(genf, fi, aDeduceTypes2._phase().codeRegistrar);
+				aDeduceTypes2._phase().getGeneratePhase());
+		final WlGenerateFunction gen = new WlGenerateFunction(genf, fi, aDeduceTypes2._phase().getCodeRegistrar());
 		gen.run(null);
 		return gen.getResult();
 	}

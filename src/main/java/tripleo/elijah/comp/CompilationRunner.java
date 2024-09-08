@@ -50,7 +50,7 @@ public class CompilationRunner {
 		cciAcceptSignal = new CSS2_CCI_Accept();
 	}
 
-	void start(final CompilerInstructions ci, final boolean do_out) {
+	public void start(final CompilerInstructions ci, final boolean do_out) {
 		final CR_State st1 = new CR_State(_startup);
 
 		cb.add(new ICompilationBus.CB_Process() {

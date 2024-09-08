@@ -383,7 +383,7 @@ class Resolve_Ident_IA2 {
 					final int y = 2;
 					// assert false;
 				}
-				fi = new FunctionInvocation((BaseFunctionDef) el, pte, invocation, phase.generatePhase);
+				fi = new FunctionInvocation((BaseFunctionDef) el, pte, invocation, phase.getGeneratePhase());
 				pte.setFunctionInvocation(fi);
 			}
 

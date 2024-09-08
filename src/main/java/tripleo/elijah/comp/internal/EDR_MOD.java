@@ -1,4 +1,4 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.internal;
 
 import tripleo.elijah.lang.OS_Module;
 
@@ -7,8 +7,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-class EDR_MOD {
-	final         List<OS_Module>        modules = new ArrayList<OS_Module>();
+public class EDR_MOD {
+	public final  List<OS_Module>        modules = new ArrayList<OS_Module>();
 	private final Map<String, OS_Module> fn2m    = new HashMap<String, OS_Module>();
 
 	public void addModule(final OS_Module module, final String fn) {

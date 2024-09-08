@@ -106,7 +106,7 @@ public class DeducePipeline implements PipelineMember, AccessBus.AB_ModuleListLi
 			@NotNull
 			final List<GeneratedNode> resolved_nodes = new ArrayList<GeneratedNode>();
 
-			final Coder coder = new Coder(deducePhase.codeRegistrar);
+			final Coder coder = new Coder(deducePhase.getCodeRegistrar());
 
 			lgc.stream().forEach(generatedNode -> coder.codeNodes(mod, resolved_nodes, generatedNode));
 
@@ -127,7 +127,7 @@ public class DeducePipeline implements PipelineMember, AccessBus.AB_ModuleListLi
 //			}
 //		}
 
-			return deducePhase.generatedClasses; // NOTE .clone/immutable, etc
+			return deducePhase.getGeneratedClasses(); // NOTE .clone/immutable, etc
 		}
 	}
 }

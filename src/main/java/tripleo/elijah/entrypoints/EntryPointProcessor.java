@@ -68,10 +68,10 @@ public interface EntryPointProcessor {
 			final ICodeRegistrar cr = codeRegistrar;
 
 			final @NotNull WlGenerateClass job = new WlGenerateClass(generateFunctions, ci,
-					deducePhase.generatedClasses, cr);
+					deducePhase.getGeneratedClasses(), cr);
 			wl.addJob(job);
 
-			final @NotNull FunctionInvocation fi = new FunctionInvocation(f, null, ci, deducePhase.generatePhase);
+			final @NotNull FunctionInvocation fi = new FunctionInvocation(f, null, ci, deducePhase.getGeneratePhase());
 //				fi.setPhase(phase);
 			final @NotNull WlGenerateFunction job1 = new WlGenerateFunction(generateFunctions, fi, cr);
 			wl.addJob(job1);
@@ -99,13 +99,13 @@ public interface EntryPointProcessor {
 			@NotNull
 			final ClassInvocation ci = deducePhase.registerClassInvocation((ClassStatement) afep.getParent());
 
-			final WlGenerateClass job = new WlGenerateClass(generateFunctions, ci, deducePhase.generatedClasses,
-					deducePhase.codeRegistrar);
+			final WlGenerateClass job = new WlGenerateClass(generateFunctions, ci, deducePhase.getGeneratedClasses(),
+					deducePhase.getCodeRegistrar());
 			wl.addJob(job);
 
-			final @NotNull FunctionInvocation fi = new FunctionInvocation(f, null, ci, deducePhase.generatePhase);
+			final @NotNull FunctionInvocation fi = new FunctionInvocation(f, null, ci, deducePhase.getGeneratePhase());
 //				fi.setPhase(phase);
-			final WlGenerateFunction job1 = new WlGenerateFunction(generateFunctions, fi, deducePhase.codeRegistrar);
+			final WlGenerateFunction job1 = new WlGenerateFunction(generateFunctions, fi, deducePhase.getCodeRegistrar());
 			wl.addJob(job1);
 		}
 	}

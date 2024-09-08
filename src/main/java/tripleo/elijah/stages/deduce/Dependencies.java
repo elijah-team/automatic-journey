@@ -61,11 +61,11 @@ class Dependencies {
 		if (genType.getResolvedn() != null) {
 			@NotNull
 			final OS_Module mod = genType.getResolvedn().getContext().module();
-			final @NotNull GenerateFunctions gf = deduceTypes2.phase.generatePhase.getGenerateFunctions(mod);
+			final @NotNull GenerateFunctions gf = deduceTypes2.phase.getGeneratePhase().getGenerateFunctions(mod);
 			final NamespaceInvocation ni = deduceTypes2.phase.registerNamespaceInvocation(genType.getResolvedn());
 			@NotNull
-			final WlGenerateNamespace gen = new WlGenerateNamespace(gf, ni, deduceTypes2.phase.generatedClasses,
-					deduceTypes2.phase.codeRegistrar);
+			final WlGenerateNamespace gen = new WlGenerateNamespace(gf, ni, deduceTypes2.phase.getGeneratedClasses(),
+					deduceTypes2.phase.getCodeRegistrar());
 
 			assert genType.getCi() == null || genType.getCi() == ni;
 			genType.setCi(ni);
@@ -87,7 +87,7 @@ class Dependencies {
 
 			final ClassStatement c = genType.getResolved().getClassOf();
 			final @NotNull OS_Module mod = c.getContext().module();
-			final @NotNull GenerateFunctions gf = deduceTypes2.phase.generatePhase.getGenerateFunctions(mod);
+			final @NotNull GenerateFunctions gf = deduceTypes2.phase.getGeneratePhase().getGenerateFunctions(mod);
 			@Nullable
 			ClassInvocation ci;
 			if (genType.getCi() == null) {
@@ -143,11 +143,11 @@ class Dependencies {
 				});
 			}
 			final @NotNull GenerateFunctions gf = deduceTypes2.getGenerateFunctions(mod);
-			gen = new WlGenerateDefaultCtor(gf, aDependentFunction, deduceTypes2._phase().codeRegistrar);
+			gen = new WlGenerateDefaultCtor(gf, aDependentFunction, deduceTypes2._phase().getCodeRegistrar());
 		} else {
 			mod = function.getContext().module();
 			final @NotNull GenerateFunctions gf = deduceTypes2.getGenerateFunctions(mod);
-			gen = new WlGenerateFunction(gf, aDependentFunction, deduceTypes2._phase().codeRegistrar);
+			gen = new WlGenerateFunction(gf, aDependentFunction, deduceTypes2._phase().getCodeRegistrar());
 		}
 		wl.addJob(gen);
 		final List<BaseGeneratedFunction> coll = new ArrayList<>();

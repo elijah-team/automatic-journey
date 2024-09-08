@@ -1,4 +1,4 @@
-package tripleo.elijah.comp;
+package tripleo.elijah_remnant.value;
 
 import java.util.function.Consumer;
 
@@ -10,4 +10,5 @@ public interface ElValue<T> {
 	T value();
 
 	void whenSet(Consumer<T> consumer);
+	void set(T t);
 }

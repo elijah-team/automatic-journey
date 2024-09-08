@@ -123,7 +123,7 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 									final FunctionDef fun = (FunctionDef) best;
 
 									final FunctionInvocation fi2 = new FunctionInvocation(fun, null, ci,
-											deduceTypes2._phase().generatePhase); // TODO pte??
+											deduceTypes2._phase().getGeneratePhase()); // TODO pte??
 
 									principal.setFunctionInvocation(fi2); // TODO pte above
 
@@ -178,10 +178,10 @@ public class DeduceElement3_ProcTableEntry implements IDeduceElement3 {
 				// assuming no constructor name or generic parameters based on function syntax
 				ci = new ClassInvocation((ClassStatement) resolvedElement, null);
 				ci = phase.registerClassInvocation(ci);
-				fi = new FunctionInvocation(null, pte, ci, phase.generatePhase);
+				fi = new FunctionInvocation(null, pte, ci, phase.getGeneratePhase());
 			} else if (resolvedElement instanceof final FunctionDef functionDef) {
 				final IInvocation invocation = dc.getInvocation((GeneratedFunction) generatedFunction);
-				fi = new FunctionInvocation(functionDef, pte, invocation, phase.generatePhase);
+				fi = new FunctionInvocation(functionDef, pte, invocation, phase.getGeneratePhase());
 				if (functionDef.getParent() instanceof ClassStatement) {
 					final ClassStatement classStatement = (ClassStatement) fi.getFunction().getParent();
 					ci = new ClassInvocation(classStatement, null); // TODO generics

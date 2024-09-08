@@ -68,13 +68,13 @@ public class FunctionInvocation {
 		if (fd == ConstructorDef.defaultVirtualCtor) {
 			@NotNull
 			final WlGenerateDefaultCtor wlgdc = new WlGenerateDefaultCtor(generatePhase.getGenerateFunctions(module),
-					this, aPhase.codeRegistrar);
+					this, aPhase.getCodeRegistrar());
 			wlgdc.run(null);
 //			GeneratedFunction gf = wlgdc.getResult();
 		} else {
 			@NotNull
 			final WlGenerateFunction wlgf = new WlGenerateFunction(generatePhase.getGenerateFunctions(module), this,
-					aPhase.codeRegistrar);
+					aPhase.getCodeRegistrar());
 			wlgf.run(null);
 			final GeneratedFunction gf = wlgf.getResult();
 			if (gf.getGenClass() == null) {
@@ -82,7 +82,7 @@ public class FunctionInvocation {
 //					namespaceInvocation = aPhase.registerNamespaceInvocation(namespaceInvocation.getNamespace());
 					@NotNull
 					final WlGenerateNamespace wlgn = new WlGenerateNamespace(generatePhase.getGenerateFunctions(module),
-							namespaceInvocation, aPhase.generatedClasses, aPhase.codeRegistrar);
+							namespaceInvocation, aPhase.getGeneratedClasses(), aPhase.getCodeRegistrar());
 					wlgn.run(null);
 					final int y = 2;
 				}
@@ -155,7 +155,7 @@ public class FunctionInvocation {
 	public WlGenerateFunction generateFunction(final @NotNull DeduceTypes2 deduceTypes2,
 			final @NotNull OS_Module aModule) {
 		return new WlGenerateFunction(deduceTypes2.getGenerateFunctions(aModule), this,
-				deduceTypes2._phase().codeRegistrar);
+				deduceTypes2._phase().getCodeRegistrar());
 	}
 }
 

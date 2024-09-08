@@ -1,4 +1,4 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.internal;
 
 import io.reactivex.rxjava3.annotations.NonNull;
 import io.reactivex.rxjava3.core.Observer;
@@ -7,6 +7,7 @@ import io.reactivex.rxjava3.subjects.ReplaySubject;
 import io.reactivex.rxjava3.subjects.Subject;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.ci.CompilerInstructions;
+import tripleo.elijah.comp.CompilerInstructionsObserver;
 
 public class EDR_CIS implements Observer<CompilerInstructions> {
 	private final Subject<CompilerInstructions> compilerInstructionsSubject = ReplaySubject.create();

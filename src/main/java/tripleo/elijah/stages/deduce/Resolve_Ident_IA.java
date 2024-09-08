@@ -348,9 +348,9 @@ public class Resolve_Ident_IA {
 				final @NotNull GenerateFunctions generateFunctions = dc.getGenerateFunctions(module);
 				final WorkJob j;
 				if (fi.getFunction() == ConstructorDef.defaultVirtualCtor)
-					j = new WlGenerateDefaultCtor(generateFunctions, fi, phase.codeRegistrar);
+					j = new WlGenerateDefaultCtor(generateFunctions, fi, phase.getCodeRegistrar());
 				else
-					j = new WlGenerateCtor(generateFunctions, fi, null, phase.codeRegistrar);
+					j = new WlGenerateCtor(generateFunctions, fi, null, phase.getCodeRegistrar());
 				dc.addJobs(j);
 //				generatedFunction.addDependentType(genType);
 //				generatedFunction.addDependentFunction(fi);
@@ -398,10 +398,10 @@ public class Resolve_Ident_IA {
 				// assuming no constructor name or generic parameters based on function syntax
 				ci = new ClassInvocation((ClassStatement) resolvedElement, null);
 				ci = phase.registerClassInvocation(ci);
-				fi = new FunctionInvocation(null, pte, ci, phase.generatePhase);
+				fi = new FunctionInvocation(null, pte, ci, phase.getGeneratePhase());
 			} else if (resolvedElement instanceof final FunctionDef functionDef) {
 				final IInvocation invocation = dc.getInvocation((GeneratedFunction) generatedFunction);
-				fi = new FunctionInvocation(functionDef, pte, invocation, phase.generatePhase);
+				fi = new FunctionInvocation(functionDef, pte, invocation, phase.getGeneratePhase());
 				if (functionDef.getParent() instanceof ClassStatement) {
 					final ClassStatement classStatement = (ClassStatement) fi.getFunction().getParent();
 					ci = new ClassInvocation(classStatement, null); // TODO generics
@@ -447,7 +447,7 @@ public class Resolve_Ident_IA {
 		}
 		assert ((ClassStatement) el).getGenericPart().size() == 0;
 		@NotNull
-		final FunctionInvocation fi = new FunctionInvocation(selected_constructor, pte, ci, phase.generatePhase);
+		final FunctionInvocation fi = new FunctionInvocation(selected_constructor, pte, ci, phase.getGeneratePhase());
 //		fi.setClassInvocation(ci);
 		pte.setFunctionInvocation(fi);
 		if (fi.getFunction() instanceof ConstructorDef) {
@@ -652,7 +652,7 @@ public class Resolve_Ident_IA {
 				if (invocation != null) {
 					@NotNull
 					final FunctionInvocation fi = new FunctionInvocation((BaseFunctionDef) el, null, invocation,
-							phase.generatePhase);
+							phase.getGeneratePhase());
 					generatedFunction.addDependentFunction(fi); // README program fails if this is included
 				}
 			}

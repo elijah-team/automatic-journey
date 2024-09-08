@@ -1,12 +1,12 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.internal;
 
-import tripleo.elijah.comp.internal.CompilationBus;
+import tripleo.elijah_remnant.value.ElValue;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-class CompilationBusElValue implements ElValue<CompilationBus>, ElValue_SettableA<CompilationBus> {
+class CompilationBusElValue implements ElValue<CompilationBus> {
 	private boolean                        isSet;
 	private       CompilationBus                 value;
 	private final List<Consumer<CompilationBus>> consumers = new ArrayList<>();

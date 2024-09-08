@@ -2,6 +2,7 @@ package tripleo.elijah.comp;
 
 import org.jdeferred2.DoneCallback;
 import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.internal.EDR_USE;
 import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.util.Mode;
 import tripleo.elijah_fluffy.util.Eventual;

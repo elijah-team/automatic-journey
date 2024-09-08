@@ -1,12 +1,12 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.internal;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.ci.*;
+import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.caches.DefaultElijahCache;
 import tripleo.elijah.comp.diagnostic.ExceptionDiagnostic;
 import tripleo.elijah.comp.diagnostic.FileNotFoundDiagnostic;
-import tripleo.elijah.comp.internal.CompilationBus;
 import tripleo.elijah.comp.specs.ElijahCache;
 import tripleo.elijah.comp.specs.ElijahSpec;
 import tripleo.elijah.diagnostic.Diagnostic;
@@ -15,6 +15,7 @@ import tripleo.elijah.lang.StringExpression;
 import tripleo.elijah.util.Mode;
 import tripleo.elijah.util.Operation2;
 import tripleo.elijah_fluffy.util.Helpers;
+import tripleo.elijah_remnant.value.ElValue;
 
 import java.io.File;
 import java.io.FilenameFilter;
@@ -24,13 +25,13 @@ import java.util.Optional;
 import java.util.regex.Pattern;
 
 @SuppressWarnings("UnnecessaryLocalVariable")
-class EDR_USE {
-	private static final FilenameFilter accept_source_files = (directory, file_name) -> {
+public class EDR_USE {
+	private static final FilenameFilter          accept_source_files = (directory, file_name) -> {
 		final boolean matches = Pattern.matches(".+\\.elijah$", file_name)
 				|| Pattern.matches(".+\\.elijjah$", file_name);
 		return matches;
 	};
-	private final Compilation             c;
+	private final        Compilation             c;
 	private final ErrSink                 errSink;
 	private final ElValue<CompilationBus> cb;
 	private final ElijahCache             elijahCache = new DefaultElijahCache();

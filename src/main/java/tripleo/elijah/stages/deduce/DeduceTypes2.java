@@ -126,16 +126,16 @@ public class DeduceTypes2 {
 		 */
 
 		@NotNull
-		List<GeneratedNode> generatedClasses = (phase.generatedClasses.copy());
+		List<GeneratedNode> generatedClasses = (phase.getGeneratedClasses().copy());
 		// TODO consider using reactive here
 		int size;
 		do {
 			size             = df_helper(generatedClasses, new dfhi_functions());
-			generatedClasses = phase.generatedClasses.copy();
+			generatedClasses = phase.getGeneratedClasses().copy();
 		} while (size > 0);
 		do {
 			size             = df_helper(generatedClasses, new dfhi_constructors());
-			generatedClasses = phase.generatedClasses.copy();
+			generatedClasses = phase.getGeneratedClasses().copy();
 		} while (size > 0);
 	}
 
@@ -437,7 +437,7 @@ public class DeduceTypes2 {
 	                                         @NotNull final IInvocation aInvocation,
 	                                         @NotNull final DeducePhase aDeducePhase) {
 		@NotNull final FunctionInvocation fi = new FunctionInvocation(aFunctionDef, aPte, aInvocation,
-				aDeducePhase.generatePhase
+				aDeducePhase.getGeneratePhase()
 		);
 		// TODO register here
 		return fi;
@@ -840,7 +840,7 @@ public class DeduceTypes2 {
 	}
 
 	public @NotNull GenerateFunctions getGenerateFunctions(@NotNull final OS_Module aModule) {
-		return phase.generatePhase.getGenerateFunctions(aModule);
+		return phase.getGeneratePhase().getGenerateFunctions(aModule);
 	}
 
 	public void resolve_ident_table_entry(@NotNull final IdentTableEntry ite,
@@ -1331,13 +1331,13 @@ public class DeduceTypes2 {
 		if (genType.getNode() == null) {
 			if (genType.getCi() instanceof ClassInvocation) {
 				final WlGenerateClass gen = new WlGenerateClass(getGenerateFunctions(module),
-						(ClassInvocation) genType.getCi(), phase.generatedClasses, phase.codeRegistrar
+						(ClassInvocation) genType.getCi(), phase.getGeneratedClasses(), phase.getCodeRegistrar()
 				);
 				gen.run(null);
 				genType.setNode(gen.getResult());
 			} else if (genType.getCi() instanceof NamespaceInvocation) {
 				final WlGenerateNamespace gen = new WlGenerateNamespace(getGenerateFunctions(module),
-						(NamespaceInvocation) genType.getCi(), phase.generatedClasses, phase.codeRegistrar
+						(NamespaceInvocation) genType.getCi(), phase.getGeneratedClasses(), phase.getCodeRegistrar()
 				);
 				gen.run(null);
 				genType.setNode(gen.getResult());
@@ -3266,13 +3266,13 @@ public class DeduceTypes2 {
 				case 1:
 					assert fi.pte.getArgs().size() == 0;
 					// default ctor
-					wl.addJob(new WlGenerateDefaultCtor(phase.generatePhase.getGenerateFunctions(module), fi,
-							phase.codeRegistrar
+					wl.addJob(new WlGenerateDefaultCtor(phase.getGeneratePhase().getGenerateFunctions(module), fi,
+							phase.getCodeRegistrar()
 					));
 					break;
 				case 2:
-					wl.addJob(new WlGenerateCtor(phase.generatePhase.getGenerateFunctions(module), fi, fd2.getNameNode(),
-							phase.codeRegistrar
+					wl.addJob(new WlGenerateCtor(phase.getGeneratePhase().getGenerateFunctions(module), fi, fd2.getNameNode(),
+							phase.getCodeRegistrar()
 					));
 					break;
 				case 3:
@@ -3282,13 +3282,13 @@ public class DeduceTypes2 {
 					final @NotNull IdentExpression constructorName1 = constructorName != null
 							? IdentExpression.forString(constructorName)
 							: null;
-					wl.addJob(new WlGenerateCtor(phase.generatePhase.getGenerateFunctions(module), fi, constructorName1,
-							phase.codeRegistrar
+					wl.addJob(new WlGenerateCtor(phase.getGeneratePhase().getGenerateFunctions(module), fi, constructorName1,
+							phase.getCodeRegistrar()
 					));
 					break;
 				case 4:
-					wl.addJob(new WlGenerateFunction(phase.generatePhase.getGenerateFunctions(module), fi,
-							phase.codeRegistrar
+					wl.addJob(new WlGenerateFunction(phase.getGeneratePhase().getGenerateFunctions(module), fi,
+							phase.getCodeRegistrar()
 					));
 					break;
 				default:
@@ -3306,11 +3306,11 @@ public class DeduceTypes2 {
 
 			final NamespaceInvocation nsi = phase.registerNamespaceInvocation(aParent);
 
-			wl.addJob(new WlGenerateNamespace(phase.generatePhase.getGenerateFunctions(module1), nsi,
-					phase.generatedClasses, phase.codeRegistrar
+			wl.addJob(new WlGenerateNamespace(phase.getGeneratePhase().getGenerateFunctions(module1), nsi,
+					phase.getGeneratedClasses(), phase.getCodeRegistrar()
 			));
 			wl.addJob(
-					new WlGenerateFunction(phase.generatePhase.getGenerateFunctions(module1), fi, phase.codeRegistrar));
+					new WlGenerateFunction(phase.getGeneratePhase().getGenerateFunctions(module1), fi, phase.getCodeRegistrar()));
 
 			wm.addJobs(wl);
 		}
