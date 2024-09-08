@@ -1,6 +1,6 @@
 package tripleo.elijah_prolific.deduce;
 
-import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.lang.Context;
 import tripleo.elijah.lang.OS_Element;
 import tripleo.elijah.stages.deduce.DeduceTypes2;

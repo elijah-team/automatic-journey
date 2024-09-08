@@ -1,6 +1,6 @@
 package tripleo.elijah_durable_prolific.deduce;
 
-import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.stages.deduce.*;
 
 public record DCC(

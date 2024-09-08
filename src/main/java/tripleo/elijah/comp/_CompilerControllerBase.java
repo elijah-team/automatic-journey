@@ -2,6 +2,7 @@ package tripleo.elijah.comp;
 
 import org.apache.commons.lang3.tuple.Pair;
 import tripleo.elijah.comp.i.CompilerController;
+import tripleo.elijah.comp.i.OptionsProcessor;
 import tripleo.elijah.comp.internal.CompilationBus;
 import tripleo.elijah_prolific.comp_signals.CSS2_doFindCIs;
 
@@ -20,7 +21,7 @@ public abstract class _CompilerControllerBase implements CompilerController {
 
 	@Override
 	public void processOptions() {
-		final OptionsProcessor op = new ApacheOptionsProcessor();
+		final OptionsProcessor             op  = new ApacheOptionsProcessor();
 		final CompilerInstructionsObserver cio = new CompilerInstructionsObserver(c, c.get_cis());
 
 		var cbp = c.getStartup().getCompilationBus();

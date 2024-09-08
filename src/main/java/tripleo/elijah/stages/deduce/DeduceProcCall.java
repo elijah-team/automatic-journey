@@ -10,7 +10,7 @@
 package tripleo.elijah.stages.deduce;
 
 import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
@@ -27,7 +27,7 @@ public class DeduceProcCall {
 	private DeduceTypes2 deduceTypes2;
 	private Context context;
 	private BaseGeneratedFunction generatedFunction;
-	private ErrSink errSink;
+	private ErrSink               errSink;
 
 	@Contract(pure = true)
 	public DeduceProcCall(final @NotNull ProcTableEntry aProcTableEntry) {

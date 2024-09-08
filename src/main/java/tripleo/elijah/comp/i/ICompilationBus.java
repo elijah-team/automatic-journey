@@ -1,8 +1,5 @@
 package tripleo.elijah.comp.i;
 
-import tripleo.elijah.comp.CompilationChange;
-import tripleo.elijah.comp.ILazyCompilerInstructions;
-
 import java.util.List;
 
 public interface ICompilationBus {

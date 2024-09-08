@@ -11,6 +11,8 @@ package tripleo.elijah.comp;
 import com.google.common.base.Preconditions;
 import org.jdeferred2.DoneCallback;
 import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.i.ErrSink;
+import tripleo.elijah.comp.i.PipelineMember;
 import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.nextgen.inputtree.EIT_ModuleInput;
 import tripleo.elijah.nextgen.inputtree.EIT_ModuleList;

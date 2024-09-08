@@ -1,4 +1,4 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.i;
 
 import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.ci.LibraryStatementPart;

@@ -18,7 +18,7 @@ import org.junit.Assert;
 import org.junit.ClassRule;
 import org.junit.Test;
 import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.comp.IO;
 import tripleo.elijah.comp.StdErrSink;
 import tripleo.elijah.factory.comp.CompilationFactory;

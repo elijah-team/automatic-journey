@@ -2,6 +2,7 @@ package tripleo.elijah.comp;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.internal.ProcessRecord;
 import tripleo.elijah_fluffy.util.NotImplementedException;
 

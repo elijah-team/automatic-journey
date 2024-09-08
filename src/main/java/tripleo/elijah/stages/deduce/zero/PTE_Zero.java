@@ -3,7 +3,7 @@ package tripleo.elijah.stages.deduce.zero;
 import org.jdeferred2.*;
 import org.jdeferred2.impl.*;
 import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.diagnostic.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.*;

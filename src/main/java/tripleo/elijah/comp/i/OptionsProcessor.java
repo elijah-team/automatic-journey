@@ -1,7 +1,7 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.i;
 
 import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.comp.i.ICompilationBus;
+import tripleo.elijah.comp.Compilation;
 
 import java.util.List;
 

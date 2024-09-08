@@ -14,7 +14,7 @@ package tripleo.elijah.lang.types;
 
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.deduce.ClassInvocation;
 import tripleo.elijah.stages.deduce.ClassInvocationMake;

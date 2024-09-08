@@ -1,8 +1,11 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.i;
 
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.ci.CompilerInstructions;
+import tripleo.elijah.comp.CX_ParseEzFile;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.Operation;
 
 import java.io.File;
 import java.util.Objects;

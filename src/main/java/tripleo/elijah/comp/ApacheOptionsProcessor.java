@@ -6,7 +6,8 @@ import org.apache.commons.cli.DefaultParser;
 import org.apache.commons.cli.Options;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.comp.i.ICompilationBus;
+import tripleo.elijah.comp.i.*;
+import tripleo.elijah.comp.i.CompilationChange;
 
 import java.util.List;
 
@@ -30,17 +31,17 @@ public class ApacheOptionsProcessor implements OptionsProcessor {
 		cmd = clp.parse(options, args.toArray(new String[args.size()]));
 
 		if (cmd.hasOption("s")) {
-			cb.option(new CC_SetStage(cmd.getOptionValue('s')));
+			cb.option(new CompilationChange.CC_SetStage(cmd.getOptionValue('s')));
 		}
 		if (cmd.hasOption("showtree")) {
-			cb.option(new CC_SetShowTree(true));
+			cb.option(new CompilationChange.CC_SetShowTree(true));
 		}
 		if (cmd.hasOption("out")) {
-			cb.option(new CC_SetDoOut(true));
+			cb.option(new CompilationChange.CC_SetDoOut(true));
 		}
 
 		if (Compilation.isGitlab_ci() || cmd.hasOption("silent")) {
-			cb.option(new CC_SetSilent(true));
+			cb.option(new CompilationChange.CC_SetSilent(true));
 		}
 
 		return cmd.getArgs();

@@ -12,6 +12,7 @@ import com.google.common.base.Preconditions;
 import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.DebugFlags;
+import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.internal.ProcessRecord;
 import tripleo.vendor.mal.stepA_mal;
 import tripleo.vendor.mal.types;

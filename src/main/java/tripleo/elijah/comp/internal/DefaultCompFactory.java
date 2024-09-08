@@ -3,7 +3,7 @@ package tripleo.elijah.comp.internal;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.ci.LibraryStatementPart;
-import tripleo.elijah.comp.CompFactory;
+import tripleo.elijah.comp.i.CompFactory;
 import tripleo.elijah.comp.Compilation;
 import tripleo.elijah.comp.CompilationEnclosure;
 import tripleo.elijah.lang.OS_Module;

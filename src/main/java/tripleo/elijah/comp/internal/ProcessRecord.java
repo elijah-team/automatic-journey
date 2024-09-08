@@ -2,6 +2,8 @@ package tripleo.elijah.comp.internal;
 
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.ICompilationAccess;
+import tripleo.elijah.comp.i.PipelineMember;
 
 public class ProcessRecord {
 	public final AccessBus ab;

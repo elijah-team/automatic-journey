@@ -14,7 +14,7 @@ import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
 
-class CX_ParseEzFile {
+public class CX_ParseEzFile {
 	public static Operation<CompilerInstructions> parseAndCache(final EzSpec aSpec, final EzCache aEzCache,
 	                                                            final String absolutePath) {
 		final Operation<CompilerInstructions> cio = parseEzFile_(aSpec);

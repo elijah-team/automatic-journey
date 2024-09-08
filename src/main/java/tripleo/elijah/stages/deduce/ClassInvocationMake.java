@@ -1,7 +1,7 @@
 package tripleo.elijah.stages.deduce;
 
 import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.lang.types.*;
 import tripleo.elijah.stages.gen_fn.*;

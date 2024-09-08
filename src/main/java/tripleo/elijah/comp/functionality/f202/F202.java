@@ -10,7 +10,7 @@ package tripleo.elijah.comp.functionality.f202;
 
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.comp.ErrSink;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.stages.logging.ElLog;
 import tripleo.elijah.stages.logging.LogEntry;
 import tripleo.elijah_prolific.v.V;

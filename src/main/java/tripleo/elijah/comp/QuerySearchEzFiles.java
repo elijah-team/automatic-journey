@@ -2,6 +2,7 @@ package tripleo.elijah.comp;
 
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.ci.CompilerInstructions;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.comp.specs.EzSpec;
 import tripleo.elijah.util.Operation2;
 
@@ -22,8 +23,8 @@ class QuerySearchEzFiles {
 		}
 	};
 	private final Compilation c;
-	private final ErrSink errSink;
-	private final IO io;
+	private final ErrSink     errSink;
+	private final IO          io;
 	private final CompilationRunner cr;
 
 	public QuerySearchEzFiles(final Compilation aC, final ErrSink aErrSink, final IO aIo, final CompilationRunner aCr) {

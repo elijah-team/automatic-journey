@@ -2,6 +2,7 @@ package tripleo.elijah_remnant.startup;
 
 import org.jdeferred2.DoneCallback;
 import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.i.ICompilationBus;
 import tripleo.elijah.comp.internal.DefaultCompilationAccess;
 import tripleo.elijah.comp.internal.ProcessRecord;

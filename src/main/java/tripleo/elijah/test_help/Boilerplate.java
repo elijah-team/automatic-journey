@@ -2,6 +2,7 @@ package tripleo.elijah.test_help;
 
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.internal.EDR_Compilation;
 import tripleo.elijah.comp.internal.ProcessRecord;
 import tripleo.elijah.contexts.ModuleContext;
@@ -15,9 +16,9 @@ import tripleo.elijah.stages.gen_generic.OutputFileFactoryParams;
 import tripleo.elijah.stages.logging.ElLog;
 
 public class Boilerplate {
-	public Compilation comp;
+	public Compilation        comp;
 	public ICompilationAccess aca;
-	public ProcessRecord pr;
+	public ProcessRecord      pr;
 	public PipelineLogic pipelineLogic;
 	public GenerateFiles generateFiles;
 	OS_Module module;

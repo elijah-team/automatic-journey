@@ -1,11 +1,10 @@
 package tripleo.elijah.comp.internal;
 
-import net.bytebuddy.utility.nullability.NeverNull;
 import org.apache.commons.lang3.tuple.Pair;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.comp.CompilationChange;
-import tripleo.elijah.comp.ILazyCompilerInstructions;
+import tripleo.elijah.comp.i.CompilationChange;
+import tripleo.elijah.comp.i.ILazyCompilerInstructions;
 import tripleo.elijah.comp.i.ICompilationBus;
 import tripleo.elijah_prolific.comp_signals.CSS2_Advisable;
 

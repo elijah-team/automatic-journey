@@ -3,6 +3,7 @@ package tripleo.elijah.nextgen.inputtree;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.ci.*;
 import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.gen_generic.*;
@@ -28,8 +29,8 @@ public class EIT_ModuleInput implements EIT_Input {
 	}
 
 	public void doGenerate(final List<GeneratedNode> nodes, final ErrSink aErrSink, final ElLog.Verbosity verbosity,
-			final PipelineLogic pipelineLogic, final WorkManager wm,
-			final @NotNull Consumer<GenerateResult> resultConsumer) {
+	                       final PipelineLogic pipelineLogic, final WorkManager wm,
+	                       final @NotNull Consumer<GenerateResult> resultConsumer) {
 		// 0. get lang
 		final String lang = langOfModule();
 

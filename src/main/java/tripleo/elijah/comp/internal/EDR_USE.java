@@ -7,6 +7,7 @@ import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.caches.DefaultElijahCache;
 import tripleo.elijah.comp.diagnostic.ExceptionDiagnostic;
 import tripleo.elijah.comp.diagnostic.FileNotFoundDiagnostic;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.comp.specs.ElijahCache;
 import tripleo.elijah.comp.specs.ElijahSpec;
 import tripleo.elijah.diagnostic.Diagnostic;
@@ -31,7 +32,7 @@ public class EDR_USE {
 				|| Pattern.matches(".+\\.elijjah$", file_name);
 		return matches;
 	};
-	private final        Compilation             c;
+	private final Compilation             c;
 	private final ErrSink                 errSink;
 	private final ElValue<CompilationBus> cb;
 	private final ElijahCache             elijahCache = new DefaultElijahCache();

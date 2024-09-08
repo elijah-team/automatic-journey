@@ -14,6 +14,8 @@ import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
 import tripleo.elijah.DebugFlags;
 import tripleo.elijah.comp.functionality.f203.F203;
+import tripleo.elijah.comp.i.ErrSink;
+import tripleo.elijah.comp.i.PipelineMember;
 import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.nextgen.outputstatement.*;
 import tripleo.elijah.nextgen.outputtree.EOT_OutputFile;

@@ -8,6 +8,9 @@
  */
 package tripleo.elijah.comp;
 
+import tripleo.elijah.comp.i.ErrSink;
+import tripleo.elijah.comp.i.PipelineMember;
+
 import java.util.ArrayList;
 import java.util.List;
 
@@ -16,7 +19,7 @@ import java.util.List;
  */
 public class Pipeline {
 	private final List<PipelineMember> pls = new ArrayList<>();
-	private final ErrSink errSink;
+	private final ErrSink              errSink;
 
 	public Pipeline(final ErrSink aErrSink) {
 		errSink = aErrSink;

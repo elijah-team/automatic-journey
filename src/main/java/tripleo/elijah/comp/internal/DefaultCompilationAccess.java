@@ -4,7 +4,7 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.comp.ICompilationAccess;
+import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.PipelineLogic;
 import tripleo.elijah.comp.Stages;
 import tripleo.elijah.comp.functionality.f202.F202;

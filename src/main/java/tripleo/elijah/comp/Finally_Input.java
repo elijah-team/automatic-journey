@@ -1,5 +1,7 @@
 package tripleo.elijah.comp;
 
+import tripleo.elijah.comp.i.CompFactory;
+
 public class Finally_Input {
 	private final Finally_Nameable nameable;
 	private final Finally.Out2     ty;

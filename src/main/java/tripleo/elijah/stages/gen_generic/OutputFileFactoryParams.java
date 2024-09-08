@@ -2,12 +2,13 @@ package tripleo.elijah.stages.gen_generic;
 
 import org.jetbrains.annotations.*;
 import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.logging.*;
 
 public class OutputFileFactoryParams {
-	private final OS_Module mod;
-	private final ErrSink errSink;
+	private final OS_Module       mod;
+	private final ErrSink         errSink;
 	private final ElLog.Verbosity verbosity;
 	private final PipelineLogic pipelineLogic;
 

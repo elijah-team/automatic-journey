@@ -1,13 +1,14 @@
 package tripleo.elijah.comp;
 
+import tripleo.elijah.comp.i.ILazyCompilerInstructions;
 import tripleo.elijah.stages.deduce.post_bytecode.Maybe;
 
 import java.io.File;
 
 public class CompilerInput {
-	private final String inp;
+	private final String                     inp;
 	private Maybe<ILazyCompilerInstructions> accept_ci;
-	private File dir_carrier;
+	private File                             dir_carrier;
 	private Ty ty;
 	private String hash;
 
