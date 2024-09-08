@@ -10,10 +10,10 @@ import java.util.*;
 
 public class FluffyCompImpl implements FluffyComp {
 
-	private final CompilationImpl _comp;
+	private final EDR_Compilation              _comp;
 	private final Map<OS_Module, FluffyModule> fluffyModuleMap = new HashMap<>();
 
-	public FluffyCompImpl(final CompilationImpl aComp) {
+	public FluffyCompImpl(final EDR_Compilation aComp) {
 		_comp = aComp;
 	}
 

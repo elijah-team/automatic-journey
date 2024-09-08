@@ -3,7 +3,6 @@ package tripleo.elijah.nextgen.inputtree;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.ci.*;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.i.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.gen_generic.*;
@@ -53,7 +52,7 @@ public class EIT_ModuleInput implements EIT_Input {
 	private String langOfModule() {
 		final LibraryStatementPart lsp = module.getLsp();
 		final CompilerInstructions ci = lsp.getInstructions();
-		final String lang = ci.genLang() == null ? Compilation.CompilationAlways.defaultPrelude() : ci.genLang();
+		final String lang = ci.genLang() == null ? CompilationAlways.defaultPrelude() : ci.genLang();
 		// DEFAULT(compiler-default), SPECIFIED(gen-clause: codePoint), INHERITED(cp) //
 		// CodePoint??
 		return lang;

@@ -381,7 +381,7 @@ public class CompilationRunner {
 
 		@Override
 		public void execute(final CR_State st) {
-			final Operation<CompilerInstructions> oci = findStdLib(Compilation.CompilationAlways.defaultPrelude(),
+			final Operation<CompilerInstructions> oci = findStdLib(CompilationAlways.defaultPrelude(),
 					compilation);
 			switch (oci.mode()) {
 				case SUCCESS -> compilation.pushItem(oci.success()); // caught twice!!

@@ -16,10 +16,10 @@ public class CM_Module {
 	private       File                 file;
 	private       boolean              doOut;
 	private       Exception            exception;
-	private       Operation<OS_Module> operation;
-	private       USE                  use1;
+	private Operation<OS_Module> operation;
+	private EDR_USE              use1;
 
-	public void advise(final Compilation aCompilation, final USE aUse) {
+	public void advise(final Compilation aCompilation, final EDR_USE aUse) {
 		compilation = aCompilation;
 		this.use1   = aUse;
 	}

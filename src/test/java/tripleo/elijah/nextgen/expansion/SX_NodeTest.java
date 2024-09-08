@@ -3,7 +3,7 @@ package tripleo.elijah.nextgen.expansion;
 import junit.framework.TestCase;
 import tripleo.elijah.comp.AccessBus;
 import tripleo.elijah.comp.Compilation;
-import tripleo.elijah.comp.Compilation.CompilationAlways;
+import tripleo.elijah.comp.CompilationAlways;
 import tripleo.elijah.comp.PipelineLogic;
 import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.lang.OS_Module;

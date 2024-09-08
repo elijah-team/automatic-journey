@@ -2,8 +2,7 @@ package tripleo.elijah.test_help;
 
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.*;
-import tripleo.elijah.comp.i.*;
-import tripleo.elijah.comp.internal.CompilationImpl;
+import tripleo.elijah.comp.internal.EDR_Compilation;
 import tripleo.elijah.comp.internal.ProcessRecord;
 import tripleo.elijah.contexts.ModuleContext;
 import tripleo.elijah.factory.comp.CompilationFactory;
@@ -25,7 +24,7 @@ public class Boilerplate {
 
 	public void get() {
 		comp = CompilationFactory.mkCompilation();
-		aca = ((CompilationImpl) comp)._access();
+		aca = ((EDR_Compilation) comp)._access();
 		pr = new ProcessRecord(aca);
 
 //		final RuntimeProcesses rt = StageToRuntime.get(ca.getStage(), ca, pr);
@@ -39,7 +38,7 @@ public class Boilerplate {
 	}
 
 	public void getGenerateFiles(final @NotNull OS_Module mod) {
-		generateFiles = OutputFileFactory.create(Compilation.CompilationAlways.defaultPrelude(),
+		generateFiles = OutputFileFactory.create(CompilationAlways.defaultPrelude(),
 				new OutputFileFactoryParams(mod, comp.getErrSink(), aca.testSilence(), pipelineLogic));
 	}
 
@@ -61,7 +60,7 @@ public class Boilerplate {
 	public DeduceTypes2 simpleDeduceModule3(final OS_Module aMod) {
 		final ElLog.Verbosity verbosity = Compilation.gitlabCIVerbosity();
 		@NotNull
-		final String s = Compilation.CompilationAlways.defaultPrelude();
+		final String s = CompilationAlways.defaultPrelude();
 		return simpleDeduceModule2(aMod, s, verbosity);
 	}
 

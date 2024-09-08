@@ -23,21 +23,17 @@ import tripleo.elijah.lang.ClassStatement;
 import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.lang.OS_Package;
 import tripleo.elijah.lang.Qualident;
-import tripleo.elijah.nextgen.inputtree.EIT_ModuleInput;
 import tripleo.elijah.nextgen.outputtree.EOT_OutputTree;
 import tripleo.elijah.stages.deduce.DeducePhase;
 import tripleo.elijah.stages.deduce.FunctionMapHook;
 import tripleo.elijah.stages.deduce.fluffy.i.FluffyComp;
 import tripleo.elijah.stages.gen_fn.GeneratedNode;
 import tripleo.elijah.stages.logging.ElLog;
-import tripleo.elijah.world.i.WorldModule;
 import tripleo.elijah.world.impl.DefaultLivingRepo;
-import tripleo.elijah.world.impl.DefaultWorldModule;
 import tripleo.elijah_fluffy.comp.CM_Prelude;
 import tripleo.elijah_fluffy.comp.CM_Preludes;
 import tripleo.elijah_fluffy.util.Eventual;
 import tripleo.elijah_fluffy.util.EventualExtract;
-import tripleo.elijah_fluffy.util.Helpers;
 import tripleo.elijah_prolific.comp_signals.CSS2_Signal;
 import tripleo.elijah_remnant.startup.ProlificStartup2;
 
@@ -45,31 +41,41 @@ import java.io.File;
 import java.util.*;
 
 public abstract class Compilation {
-	private final List<ElLog>                  elLogs              = new LinkedList<>();
-	private final CompilationConfig            cfg                 = new CompilationConfig();
-	private final EDR_CIS                      _cis                = new EDR_CIS();
-	private final DefaultLivingRepo            _repo               = new DefaultLivingRepo();
-	private final EDR_MOD                      mod                 = new EDR_MOD();
+	private final List<ElLog>                  elLogs;
+	private final Eventual<File>               _m_comp_dir_promise;
+	private final CompilationConfig            cfg;
+	private final Finally                      _f;
+	private final CompFactory                  _con;
+	private final DefaultLivingRepo            _repo;
+	private final EDR_CIS                      _cis;
+	private final EDR_MOD                      mod;
+	private final EDR_USE                      use;
+	private final CompilationBusElValue        __cb;
 	private final Pipeline                     pipelines;
 	private final int                          _compilationNumber;
 	private final ErrSink                      errSink;
 	private final IO                           io;
-	private final USE                          use                 = new USE(this);
-	private final CompFactory                  _con                = new DefaultCompFactory();
-	private final Eventual<File>               _m_comp_dir_promise = new Eventual<>();
-	private final Finally                      _f                  = new Finally();
 	private       PipelineLogic                pipelineLogic;
 	private       CompilerInstructionsObserver _cio;
 	private       CompilationRunner            __cr;
 	private       CompilerInstructions         rootCI;
 	private       World                        world;
-	private CompilationBus __cb;
 
 	public Compilation(final @NotNull ErrSink aErrSink, final IO aIO) {
 		errSink            = aErrSink;
 		io                 = aIO;
 		_compilationNumber = new Random().nextInt(Integer.MAX_VALUE);
 		pipelines          = new Pipeline(aErrSink);
+		elLogs             = new LinkedList<>();
+		_m_comp_dir_promise = new Eventual<>();
+		cfg = new CompilationConfig();
+		_f = new Finally();
+		_con = new DefaultCompFactory(this);
+		_repo = new DefaultLivingRepo();
+		_cis = new EDR_CIS();
+		mod = new EDR_MOD();
+		use = new EDR_USE(this);
+		__cb = new CompilationBusElValue();
 	}
 
 	public static ElLog.Verbosity gitlabCIVerbosity() {
@@ -82,7 +88,7 @@ public abstract class Compilation {
 	}
 
 	@Contract(pure = true)
-	private @Nullable CompilationEnclosure getCompilationEnclosure() {
+	@Nullable CompilationEnclosure getCompilationEnclosure() {
 		return null; // new CompilationEnclosure();
 	}
 
@@ -102,7 +108,7 @@ public abstract class Compilation {
 		if (args1.isEmpty()) {
 			ctl.printUsage();
 		} else {
-			this.__cb = ctl.getCB();
+			this.__cb.set(ctl.getCB());
 			final var launcher = new ProlificCompilationLauncher(this, args1, ctl);
 			launcher.launch0();
 		}
@@ -361,63 +367,13 @@ public abstract class Compilation {
 		__cr = a__cr;
 	}
 
-	public CompilationBus get_cb() {
+	public ElValue<CompilationBus> get_cb() {
 		return this.__cb;
-	}
-
-	static class CompilationConfig {
-		public    boolean do_out;
-		public    Stages  stage  = Stages.O; // Output
-		protected boolean silent = false;
-		boolean showTree = false;
-	}
-
-	public static class CompilationAlways {
-		public static boolean     VOODOO          = false;
-		public static CM_Preludes _defaultPrelude = CM_Preludes.C;
-
-		/**
-		 * Return the unquoted name
-		 */
-		@NotNull
-		public static String defaultPrelude() {
-			return _defaultPrelude.getName();
-		}
 	}
 
 	public static class World {
 		public void subscribeLgc(DoneCallback<CWS_LGC> consumer) {
 //		lgcsub.
-		}
-	}
-
-	private class DefaultCompFactory implements CompFactory {
-		@Override
-		public @NotNull EIT_ModuleInput createModuleInput(final OS_Module aModule) {
-			return new EIT_ModuleInput(aModule, Compilation.this);
-		}
-
-		@Override
-		public @NotNull Qualident createQualident(final @NotNull List<String> sl) {
-			var R = new Qualident();
-			for (String s : sl) {
-				R.append(Helpers.string_to_ident(s));
-			}
-			return R;
-		}
-
-		@Override
-		public @NotNull InputRequest createInputRequest(final File aFile, final boolean aDo_out,
-		                                                final @Nullable LibraryStatementPart aLsp) {
-			return new InputRequest(aFile, aDo_out, aLsp);
-		}
-
-		@Override
-		public @NotNull WorldModule createWorldModule(final OS_Module m) {
-			CompilationEnclosure ce = getCompilationEnclosure();
-			final WorldModule    R  = new DefaultWorldModule(m, ce);
-
-			return R;
 		}
 	}
 }

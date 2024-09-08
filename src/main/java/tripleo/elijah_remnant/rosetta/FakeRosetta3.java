@@ -18,8 +18,8 @@ public class FakeRosetta3 {
 	}
 
 	@SuppressWarnings("UnusedReturnValue")
-	public static Eventual<DeduceTypes2> mkDeduceTypes2(final OS_Module mod, final DeducePhase phase,
-			final DoneCallback<? super DeduceTypes2> cb) {
+	public static @NotNull Eventual<DeduceTypes2> mkDeduceTypes2(final OS_Module mod, final DeducePhase phase,
+	                                                             final DoneCallback<? super DeduceTypes2> cb) {
 		FakeRosetta3$.called.add(Pair.of(cb, false));
 
 		final Eventual<DeduceTypes2> e = _getDeduceTypes2Eventual(mod, phase);

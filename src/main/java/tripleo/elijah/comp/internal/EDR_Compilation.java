@@ -24,12 +24,12 @@ import tripleo.elijah_remnant.startup.ProlificStartup2;
 
 import java.util.List;
 
-public class CompilationImpl extends Compilation {
+public class EDR_Compilation extends Compilation {
 	private final @NotNull FluffyCompImpl _fluffyComp;
 	private final ProlificStartup2 _startup;
 	private final @NotNull EOT_OutputTree _output_tree;
 
-	public CompilationImpl(final ErrSink aEee, final IO aIo) {
+	public EDR_Compilation(final ErrSink aEee, final IO aIo) {
 		super(aEee, aIo);
 		_fluffyComp = new FluffyCompImpl(this);
 		_startup = new ProlificStartup2(this);
