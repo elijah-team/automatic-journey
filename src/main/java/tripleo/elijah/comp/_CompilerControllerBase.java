@@ -2,16 +2,17 @@ package tripleo.elijah.comp;
 
 import org.apache.commons.lang3.tuple.Pair;
 import tripleo.elijah.comp.i.CompilerController;
+import tripleo.elijah.comp.i.ICompilationBus;
 import tripleo.elijah.comp.i.OptionsProcessor;
-import tripleo.elijah.comp.internal.CompilationBus;
+import tripleo.elijah.comp.internal.EDR_CompilationBus;
 import tripleo.elijah_prolific.comp_signals.CSS2_doFindCIs;
 
 import java.util.List;
 
 public abstract class _CompilerControllerBase implements CompilerController {
-	protected String[] args2;
-	protected CompilationBus cb;
-	protected Compilation c;
+	protected String[]           args2;
+	protected EDR_CompilationBus cb;
+	protected Compilation        c;
 	protected List<String> args;
 
 	@Override
@@ -25,7 +26,7 @@ public abstract class _CompilerControllerBase implements CompilerController {
 		final CompilerInstructionsObserver cio = new CompilerInstructionsObserver(c, c.get_cis());
 
 		var cbp = c.getStartup().getCompilationBus();
-		cb = new CompilationBus(c);
+		cb = new EDR_CompilationBus(c);
 		cbp.resolve(cb);
 
 		try {
@@ -49,7 +50,7 @@ public abstract class _CompilerControllerBase implements CompilerController {
 	}
 
 	@Override
-	public CompilationBus getCB() {
+	public ICompilationBus getCB() {
 		return this.cb;
 	}
 }
