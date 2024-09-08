@@ -15,7 +15,7 @@ import tripleo.elijah.comp.i.CompilerController;
 import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.i._Inputter2;
-import tripleo.elijah.comp.internal.CompilationBus;
+import tripleo.elijah.comp.internal.EDR_CompilationBus;
 import tripleo.elijah.comp.internal.EDR_CIS;
 import tripleo.elijah.comp.internal.EDR_MOD;
 import tripleo.elijah.lang.ClassStatement;
@@ -108,7 +108,7 @@ public interface Compilation {
 
 	ProlificStartup2 getStartup();
 
-	ElValue<CompilationBus> get_cb();
+	ElValue<EDR_CompilationBus> get_cb();
 
 	@NotNull List<GeneratedNode> getLGC();
 

@@ -9,7 +9,9 @@ import tripleo.elijah.comp.diagnostic.TooManyEz_ActuallyNone;
 import tripleo.elijah.comp.diagnostic.TooManyEz_BeSpecific;
 import tripleo.elijah.comp.i.*;
 import tripleo.elijah.comp.i.ICompilationBus.Instergram;
-import tripleo.elijah.comp.internal.ProcessRecord;
+import tripleo.elijah.comp.internal.CX_ParseEzFile;
+import tripleo.elijah.comp.internal.EDR_ProcessRecord;
+import tripleo.elijah.comp.internal.ILazyCompilerInstructions_;
 import tripleo.elijah.comp.specs.EzCache;
 import tripleo.elijah.comp.specs.EzSpec;
 import tripleo.elijah.diagnostic.Diagnostic;
@@ -228,7 +230,7 @@ public class CompilationRunner {
 		private final ProlificStartup2          _startup;
 		public        ICompilationBus.CB_Action cur;
 		ICompilationAccess ca;
-		ProcessRecord      pr;
+		EDR_ProcessRecord  pr;
 		RuntimeProcesses   rt;
 
 		public CR_State(final ProlificStartup2 aStartup) {
@@ -310,7 +312,7 @@ public class CompilationRunner {
 				final File    f        = new File(file_name);
 				final boolean matches2 = Pattern.matches(".+\\.ez$", file_name);
 				if (matches2) {
-					final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(f, c);
+					final ILazyCompilerInstructions ilci = ILazyCompilerInstructions_.of(f, c);
 					final Maybe<ILazyCompilerInstructions> m3 = new Maybe<>(ilci, null);
 					cb.inst(ilci, Instergram.EZ, () -> {cci_accept(m3);});
 				} else {
@@ -328,7 +330,7 @@ public class CompilationRunner {
 								break;
 							case 1:
 								ez_file = ezs.get(0);
-								final ILazyCompilerInstructions ilci = ILazyCompilerInstructions.of(ez_file);
+								final ILazyCompilerInstructions ilci = ILazyCompilerInstructions_.of(ez_file);
 								final CompilerInstructions finalEz_file = ez_file;
 								cb.inst(ilci, Instergram.ONE, () -> {
 									if (!DebugFlags.letsRemove_cci_accept) {

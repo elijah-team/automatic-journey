@@ -13,7 +13,7 @@ import org.jetbrains.annotations.Contract;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.DebugFlags;
 import tripleo.elijah.comp.i.ICompilationAccess;
-import tripleo.elijah.comp.internal.ProcessRecord;
+import tripleo.elijah.comp.internal.EDR_ProcessRecord;
 import tripleo.vendor.mal.stepA_mal;
 import tripleo.vendor.mal.types;
 
@@ -29,7 +29,7 @@ class StageToRuntime {
 	@Contract("_, _, _ -> new")
 	@NotNull
 	public static RuntimeProcesses get(final @NotNull Stages stage, final @NotNull ICompilationAccess ca,
-			final @NotNull ProcessRecord aPr) {
+			final @NotNull EDR_ProcessRecord aPr) {
 		final RuntimeProcesses r = new RuntimeProcesses(ca, aPr);
 
 		r.add(stage.getProcess(ca, aPr));
@@ -40,10 +40,10 @@ class StageToRuntime {
 
 class RuntimeProcesses {
 	private final ICompilationAccess ca;
-	private final ProcessRecord pr;
-	private RuntimeProcess process;
+	private final EDR_ProcessRecord  pr;
+	private       RuntimeProcess     process;
 
-	public RuntimeProcesses(final @NotNull ICompilationAccess aca, final @NotNull ProcessRecord aPr) {
+	public RuntimeProcesses(final @NotNull ICompilationAccess aca, final @NotNull EDR_ProcessRecord aPr) {
 		ca = aca;
 		pr = aPr;
 	}
@@ -87,7 +87,7 @@ class RuntimeProcesses {
 }
 
 final class EmptyProcess implements RuntimeProcess {
-	public EmptyProcess(final ICompilationAccess ignoredACompilationAccess, final ProcessRecord ignoredAPr) {
+	public EmptyProcess(final ICompilationAccess ignoredACompilationAccess, final EDR_ProcessRecord ignoredAPr) {
 	}
 
 	@Override
@@ -105,10 +105,10 @@ final class EmptyProcess implements RuntimeProcess {
 
 class DStageProcess implements RuntimeProcess {
 	private final ICompilationAccess ca;
-	private final ProcessRecord pr;
+	private final EDR_ProcessRecord  pr;
 
 	@Contract(pure = true)
-	public DStageProcess(final ICompilationAccess aCa, final ProcessRecord aPr) {
+	public DStageProcess(final ICompilationAccess aCa, final EDR_ProcessRecord aPr) {
 		ca = aCa;
 		pr = aPr;
 	}
@@ -129,11 +129,11 @@ class DStageProcess implements RuntimeProcess {
 }
 
 class OStageProcess implements RuntimeProcess {
-	final stepA_mal.MalEnv2 env;
-	private final ProcessRecord pr;
+	final         stepA_mal.MalEnv2  env;
+	private final EDR_ProcessRecord  pr;
 	private final ICompilationAccess ca;
 
-	OStageProcess(final ICompilationAccess aCa, final ProcessRecord aPr) {
+	OStageProcess(final ICompilationAccess aCa, final EDR_ProcessRecord aPr) {
 		ca = aCa;
 		pr = aPr;
 
@@ -202,7 +202,7 @@ class OStageProcess implements RuntimeProcess {
 				final String pipelineName = pipelineSymbol.getName();
 
 				// 1. observe side effect
-				final ProcessRecord.PipelinePlugin pipelinePlugin = ab.getPipelinePlugin(pipelineName);
+				final EDR_ProcessRecord.PipelinePlugin pipelinePlugin = ab.getPipelinePlugin(pipelineName);
 				if (pipelinePlugin == null)
 					return types.False;
 

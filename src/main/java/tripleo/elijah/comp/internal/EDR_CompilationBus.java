@@ -11,11 +11,11 @@ import tripleo.elijah_prolific.comp_signals.CSS2_Advisable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompilationBus implements ICompilationBus {
+public class EDR_CompilationBus implements ICompilationBus {
 	private final Compilation                                           c;
 	public final  List<Pair< ILazyCompilerInstructions ,  Instergram >> cs = new ArrayList<>();
 
-	public CompilationBus(final Compilation aC) {
+	public EDR_CompilationBus(final Compilation aC) {
 		c = aC;
 	}
 

@@ -16,10 +16,10 @@ import tripleo.elijah_fluffy.util.Helpers;
 import java.io.File;
 import java.util.List;
 
-class DefaultCompFactory implements CompFactory {
+class EDR_CompFactory implements CompFactory {
 	private final Compilation compilation;
 
-	public DefaultCompFactory(Compilation compilation) {
+	public EDR_CompFactory(Compilation compilation) {
 		this.compilation = compilation;
 	}
 

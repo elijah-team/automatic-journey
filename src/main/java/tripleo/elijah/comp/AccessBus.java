@@ -4,7 +4,7 @@ import org.jdeferred2.DoneCallback;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.comp.i.PipelineMember;
-import tripleo.elijah.comp.internal.ProcessRecord;
+import tripleo.elijah.comp.internal.EDR_ProcessRecord;
 import tripleo.elijah.lang.OS_Module;
 import tripleo.elijah.nextgen.inputtree.EIT_ModuleList;
 import tripleo.elijah.nextgen.outputtree.EOT_OutputTree;
@@ -33,9 +33,9 @@ public class AccessBus {
 	private final Eventual<GenerateResult> generateResultPromise = new Eventual<>();
 	private final Eventual<PipelineLogic> pipeLineLogicPromise = new Eventual<>();
 	private final Eventual<List<GeneratedNode>> lgcPromise = new Eventual<>();
-	private final Eventual<EIT_ModuleList> moduleListPromise = new Eventual<>();
-	private final Map<String, ProcessRecord.PipelinePlugin> pipelinePlugins = new HashMap<>();
-	private PipelineLogic ____pl;
+	private final Eventual<EIT_ModuleList>                      moduleListPromise = new Eventual<>();
+	private final Map<String, EDR_ProcessRecord.PipelinePlugin> pipelinePlugins   = new HashMap<>();
+	private PipelineLogic                                       ____pl;
 
 	public AccessBus(final Compilation aC) {
 		_c = aC;
@@ -151,11 +151,11 @@ public class AccessBus {
 		return EventualExtract.of(ep);
 	}
 
-	public void addPipelinePlugin(final ProcessRecord.PipelinePlugin aPlugin) {
+	public void addPipelinePlugin(final EDR_ProcessRecord.PipelinePlugin aPlugin) {
 		pipelinePlugins.put(aPlugin.name(), aPlugin);
 	}
 
-	public ProcessRecord.PipelinePlugin getPipelinePlugin(final String aPipelineName) {
+	public EDR_ProcessRecord.PipelinePlugin getPipelinePlugin(final String aPipelineName) {
 		if (!(pipelinePlugins.containsKey(aPipelineName)))
 			return null;
 

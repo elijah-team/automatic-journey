@@ -1,9 +1,11 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.internal;
 
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.ci.CompilerInstructions;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.Operation;
 import tripleo.elijah.comp.specs.EzCache;
 import tripleo.elijah.comp.specs.EzSpec;
 import tripleo.elijah.util.Mode;

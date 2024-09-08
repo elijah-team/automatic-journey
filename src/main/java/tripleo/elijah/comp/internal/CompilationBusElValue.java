@@ -6,10 +6,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.function.Consumer;
 
-class CompilationBusElValue implements ElValue<CompilationBus> {
-	private boolean                        isSet;
-	private       CompilationBus                 value;
-	private final List<Consumer<CompilationBus>> consumers = new ArrayList<>();
+class CompilationBusElValue implements ElValue<EDR_CompilationBus> {
+	private       boolean                            isSet;
+	private       EDR_CompilationBus                 value;
+	private final List<Consumer<EDR_CompilationBus>> consumers = new ArrayList<>();
 
 	@Override
 	public boolean isSet() {
@@ -22,7 +22,7 @@ class CompilationBusElValue implements ElValue<CompilationBus> {
 	}
 
 	@Override
-	public CompilationBus value() {
+	public EDR_CompilationBus value() {
 		//noinspection RedundantIfStatement
 		if (false) {
 			assert isSet();
@@ -31,16 +31,16 @@ class CompilationBusElValue implements ElValue<CompilationBus> {
 	}
 
 	@Override
-	public void whenSet(Consumer<CompilationBus> consumer) {
+	public void whenSet(Consumer<EDR_CompilationBus> consumer) {
 		this.consumers.add(consumer);
 	}
 
 	@Override
-	public void set(CompilationBus compilationBus) {
+	public void set(EDR_CompilationBus compilationBus) {
 		this.isSet = true;
 		this.value = compilationBus;
 
-		for (final Consumer<CompilationBus> consumer : this.consumers) {
+		for (final Consumer<EDR_CompilationBus> consumer : this.consumers) {
 			consumer.accept(this.value);
 		}
 	}

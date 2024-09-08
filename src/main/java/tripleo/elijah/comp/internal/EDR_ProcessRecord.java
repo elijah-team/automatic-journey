@@ -5,10 +5,10 @@ import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.i.PipelineMember;
 
-public class ProcessRecord {
+public class EDR_ProcessRecord {
 	public final AccessBus ab;
 
-	public ProcessRecord(final @NotNull ICompilationAccess ca0) {
+	public EDR_ProcessRecord(final @NotNull ICompilationAccess ca0) {
 		ab = new AccessBus(ca0.getCompilation());
 
 		ab.addPipelinePlugin(new GeneratePipelinePlugin());

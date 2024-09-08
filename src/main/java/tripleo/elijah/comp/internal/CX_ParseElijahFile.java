@@ -1,8 +1,11 @@
-package tripleo.elijah.comp;
+package tripleo.elijah.comp.internal;
 
 import antlr.RecognitionException;
 import antlr.TokenStreamException;
 import tripleo.elijah.Out;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.IO;
+import tripleo.elijah.comp.Operation;
 import tripleo.elijah.comp.specs.ElijahCache;
 import tripleo.elijah.comp.specs.ElijahSpec;
 import tripleo.elijah.lang.OS_Module;
@@ -18,7 +21,7 @@ import java.io.InputStream;
 public class CX_ParseElijahFile {
 
 	public static Operation<OS_Module> parseAndCache(final ElijahSpec aSpec, final ElijahCache aElijahCache,
-			final String absolutePath, final Compilation compilation) {
+	                                                 final String absolutePath, final Compilation compilation) {
 		final Operation<OS_Module> calm;
 		try {
 			calm = parseElijahFile_(aSpec, compilation, new File(absolutePath), compilation);

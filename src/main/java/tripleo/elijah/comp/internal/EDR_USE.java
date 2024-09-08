@@ -33,9 +33,9 @@ public class EDR_USE {
 		return matches;
 	};
 	private final Compilation             c;
-	private final ErrSink                 errSink;
-	private final ElValue<CompilationBus> cb;
-	private final ElijahCache             elijahCache = new DefaultElijahCache();
+	private final ErrSink                     errSink;
+	private final ElValue<EDR_CompilationBus> cb;
+	private final ElijahCache                 elijahCache = new DefaultElijahCache();
 
 	@Contract(pure = true)
 	public EDR_USE(final Compilation aCompilation) {
@@ -47,7 +47,7 @@ public class EDR_USE {
 	public void use(final @NotNull CompilerInstructions compilerInstructions, final boolean do_out) throws Exception {
 		// TODO
 
-		cb.whenSet((CompilationBus cb) -> {
+		cb.whenSet((EDR_CompilationBus cb) -> {
 			System.err.println("4949 " + cb.cs);
 		});
 

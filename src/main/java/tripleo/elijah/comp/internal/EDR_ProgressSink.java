@@ -3,7 +3,7 @@ package tripleo.elijah.comp.internal;
 import tripleo.elijah.comp.i.IProgressSink;
 import tripleo.elijah.comp.i.ProgressSinkComponent;
 
-public class DefaultProgressSink implements IProgressSink {
+public class EDR_ProgressSink implements IProgressSink {
 	@Override
 	public void note(final int code, final ProgressSinkComponent component, final int type, final Object[] params) {
 //		component.note(code, type, params);

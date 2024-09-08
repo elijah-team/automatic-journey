@@ -4,7 +4,7 @@ import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.internal.EDR_Compilation;
-import tripleo.elijah.comp.internal.ProcessRecord;
+import tripleo.elijah.comp.internal.EDR_ProcessRecord;
 import tripleo.elijah.contexts.ModuleContext;
 import tripleo.elijah.factory.comp.CompilationFactory;
 import tripleo.elijah.lang.OS_Module;
@@ -18,15 +18,15 @@ import tripleo.elijah.stages.logging.ElLog;
 public class Boilerplate {
 	public Compilation        comp;
 	public ICompilationAccess aca;
-	public ProcessRecord      pr;
-	public PipelineLogic pipelineLogic;
+	public EDR_ProcessRecord  pr;
+	public PipelineLogic      pipelineLogic;
 	public GenerateFiles generateFiles;
 	OS_Module module;
 
 	public void get() {
 		comp = CompilationFactory.mkCompilation();
 		aca = ((EDR_Compilation) comp)._access();
-		pr = new ProcessRecord(aca);
+		pr = new EDR_ProcessRecord(aca);
 
 //		final RuntimeProcesses rt = StageToRuntime.get(ca.getStage(), ca, pr);
 

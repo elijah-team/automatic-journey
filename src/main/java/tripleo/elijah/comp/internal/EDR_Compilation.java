@@ -76,7 +76,7 @@ public class EDR_Compilation implements Compilation {
 		_m_comp_dir_promise = new Eventual<>();
 		cfg                 = new CompilationConfig();
 		_f                  = new Finally();
-		_con                = new DefaultCompFactory(this);
+		_con                = new EDR_CompFactory(this);
 		_repo               = new DefaultLivingRepo();
 		_cis                = new EDR_CIS();
 		mod                 = new EDR_MOD();
@@ -107,7 +107,7 @@ public class EDR_Compilation implements Compilation {
 	}
 
 	@Override
-	public ElValue<CompilationBus> get_cb() {
+	public ElValue<EDR_CompilationBus> get_cb() {
 		return null;
 	}
 
@@ -119,7 +119,7 @@ public class EDR_Compilation implements Compilation {
 
 	@Override
 	public void feedCmdLine(final @NotNull List<String> args) {
-		feedCmdLine(args, new DefaultCompilerController());
+		feedCmdLine(args, new EDR_CompilerController());
 	}
 
 	@Override
@@ -127,7 +127,7 @@ public class EDR_Compilation implements Compilation {
 		if (args1.isEmpty()) {
 			ctl.printUsage();
 		} else {
-			this.__cb.set(ctl.getCB());
+			this.__cb.set((EDR_CompilationBus) ctl.getCB());
 			final var launcher = new ProlificCompilationLauncher(this, args1, ctl);
 			launcher.launch0();
 		}

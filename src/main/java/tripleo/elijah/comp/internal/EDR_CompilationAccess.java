@@ -16,11 +16,11 @@ import java.util.Collection;
 import java.util.List;
 import java.util.Map;
 
-public class DefaultCompilationAccess implements ICompilationAccess {
+public class EDR_CompilationAccess implements ICompilationAccess {
 	protected final Compilation      compilation;
 	private final   ProlificStartup2 _startup;
 
-	public DefaultCompilationAccess(final Compilation aCompilation, final ProlificStartup2 aStartup) {
+	public EDR_CompilationAccess(final Compilation aCompilation, final ProlificStartup2 aStartup) {
 		compilation = aCompilation;
 		_startup = aStartup;
 	}
