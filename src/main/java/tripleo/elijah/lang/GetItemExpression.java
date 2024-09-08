@@ -12,8 +12,8 @@ import antlr.*;
 
 /**
  * @author Tripleo
- *         <p>
- *         Created Apr 16, 2020 at 7:58:36 AM
+ * <p>
+ * Created Apr 16, 2020 at 7:58:36 AM
  */
 public class GetItemExpression extends AbstractExpression { // TODO binary?
 

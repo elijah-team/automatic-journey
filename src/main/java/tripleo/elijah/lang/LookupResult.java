@@ -7,8 +7,8 @@ import tripleo.elijah.contexts.*;
 
 /**
  * @author Tripleo
- *         <p>
- *         Created Mar 26, 2020 at 9:16:07 PM
+ * <p>
+ * Created Mar 26, 2020 at 9:16:07 PM
  */
 public class LookupResult {
 

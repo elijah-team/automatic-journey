@@ -224,10 +224,10 @@ public class DeduceTypes2 {
 	 *
 	 * @param aGeneratedClasses assumed to be a list of {@link GeneratedContainerNC}
 	 * @param dfhi              specifies what to select for:<br>
-	 *                          {@link dfhi_functions} will select all functions
-	 *                          from {@code functionMap}, and <br>
-	 *                          {@link dfhi_constructors} will select all
-	 *                          constructors from {@code constructors}.
+	 *                  {@link dfhi_functions} will select all functions
+	 *                  from {@code functionMap}, and <br>
+	 *                  {@link dfhi_constructors} will select all
+	 *                  constructors from {@code constructors}.
 	 * @param <T>               generic parameter taken from {@code dfhi}
 	 * @return the number of deduced functions or constructors, or 0
 	 */

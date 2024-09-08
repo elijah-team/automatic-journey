@@ -15,8 +15,8 @@ import tripleo.elijah_fluffy.util.*;
 
 /**
  * @author Tripleo(sb)
- *         <p>
- *         Created Apr 2, 2019 at 11:08:12 AM
+ * <p>
+ * Created Apr 2, 2019 at 11:08:12 AM
  */
 public class NamespaceStatement extends _CommonNC
 		implements Documentable, ModuleItem, ClassItem, StatementItem, FunctionItem, OS_Container, OS_Element2 {

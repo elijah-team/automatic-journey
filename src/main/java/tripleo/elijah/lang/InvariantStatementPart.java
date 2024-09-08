@@ -12,8 +12,8 @@ import antlr.*;
 
 /**
  * @author Tripleo
- *         <p>
- *         Created Apr 19, 2020 at 00:32:00 AM
+ * <p>
+ * Created Apr 19, 2020 at 00:32:00 AM
  */
 public class InvariantStatementPart {
 	private final Token name;

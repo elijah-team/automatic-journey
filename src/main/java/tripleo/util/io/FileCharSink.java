@@ -9,7 +9,7 @@ import java.io.OutputStream;
 /**
  * @author Tripleo(sb)
  *
- *         Created Dec 9, 2019 at 3:23:57 PM
+ * Created Dec 9, 2019 at 3:23:57 PM
  */
 public class FileCharSink implements CharSink {
 

@@ -9,8 +9,8 @@ import java.util.*;
 
 /**
  * @author Tripleo
- *         <p>
- *         Created Mar 29, 2020 at 7:00:10 PM
+ * <p>
+ * Created Mar 29, 2020 at 7:00:10 PM
  */
 public class NameTable {
 

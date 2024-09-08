@@ -19,8 +19,8 @@ import static tripleo.elijah.contexts.ClassInfo.ClassInfoType.*;
 
 /**
  * @author Tripleo
- *         <p>
- *         Created Mar 26, 2020 at 6:04:02 AM
+ * <p>
+ * Created Mar 26, 2020 at 6:04:02 AM
  */
 public class ClassContext extends Context {
 

@@ -19,8 +19,8 @@ import java.util.function.*;
 
 /**
  * @author Tripleo(sb)
- *         <p>
- *         Created Dec 9, 2019 at 3:30:44 PM
+ * <p>
+ * Created Dec 9, 2019 at 3:30:44 PM
  */
 public class LookupResultList {
 

@@ -16,8 +16,8 @@ import java.util.*;
 
 /**
  * @author Tripleo
- *         <p>
- *         Created Mar 30, 2020 at 7:41:52 AM
+ * <p>
+ * Created Mar 30, 2020 at 7:41:52 AM
  */
 public class FuncExpr extends BaseFunctionDef implements IExpression, OS_Element {
 

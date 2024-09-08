@@ -14,7 +14,7 @@ import tripleo.elijah.lang2.*;
 /**
  * @author Tripleo
  * <p>
- *         Created Apr 18, 2020 at 2:43:00 AM
+ * Created Apr 18, 2020 at 2:43:00 AM
  */
 public class TypeCheckExpression extends AbstractExpression implements IExpression {
 	private final IExpression checking;

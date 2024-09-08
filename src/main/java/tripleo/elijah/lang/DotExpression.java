@@ -6,7 +6,7 @@ package tripleo.elijah.lang;
 /**
  * @author Tripleo(envy)
  *
- *         Created Mar 27, 2020 at 12:59:41 AM
+ * Created Mar 27, 2020 at 12:59:41 AM
  */
 public class DotExpression extends BasicBinaryExpression {
 

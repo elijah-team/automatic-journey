@@ -377,7 +377,7 @@ class Resolve_Variable_Table_Entry {
 	 * Sets the invocation ({@code genType#ci}) and the node for a GenType
 	 *
 	 * @param aGenType the GenType to modify. must be set to a nonGenericTypeName
-	 *                 that is non-null and generic
+	 *         that is non-null and generic
 	 */
 	public void genCIForGenType(final GenType aGenType) {
 		assert aGenType.getNonGenericTypeName() != null;// && ((NormalTypeName)
@@ -407,7 +407,7 @@ class Resolve_Variable_Table_Entry {
 	 * Sets the node for a GenType, given an invocation
 	 *
 	 * @param aGenType the GenType to modify. must be set to a nonGenericTypeName
-	 *                 that is non-null and generic
+	 *         that is non-null and generic
 	 */
 	public void genNodeForGenType(final GenType aGenType, final IInvocation invocation) {
 		assert aGenType.getNonGenericTypeName() != null;

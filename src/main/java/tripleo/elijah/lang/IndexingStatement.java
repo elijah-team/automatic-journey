@@ -12,8 +12,8 @@ import antlr.*;
 
 /**
  * @author Tripleo
- *         <p>
- *         Created Apr 15, 2020 at 4:59:21 AM
+ * <p>
+ * Created Apr 15, 2020 at 4:59:21 AM
  */
 public class IndexingStatement {
 
