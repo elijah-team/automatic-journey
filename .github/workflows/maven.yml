@@ -5,13 +5,10 @@ name: Java CI with Maven
 
 on:
   push:
-    branches: [ "pr-radical-paradox-002" ]
-  pull_request:
-    branches: [ "pr-radical-paradox-002" ]
+#  pull_request:
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     steps:
@@ -20,7 +17,8 @@ jobs:
         uses: actions/setup-java@v4
         with:
           java-version: '17'
-          distribution: 'temurin'
+          distribution: 'temurin' # azul??
           cache: maven
       - name: Build with Maven
-        run: mvn -B package --file elijah-prolific-remnant/pom.xml
+        # -B,--batch-mode                        Run in non-interactive (batch) mode (disables output color)
+        run: mvn -B package --file pom.xml

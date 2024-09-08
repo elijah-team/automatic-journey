@@ -8,7 +8,7 @@ jobs:
 
     strategy:
      matrix:
-       java-version: [ 17, 19 ]
+       java-version: [ 17, 21 ]
 
     steps:
       - name: Checkout source repository
@@ -23,4 +23,4 @@ jobs:
           java-version: ${{ matrix.java-version }}
 
       - name: Run tests
-        run: cd elijah-prolific-remnant && ./bld download compile test
+        run: ./bld download compile test
