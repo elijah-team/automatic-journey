@@ -30,7 +30,7 @@ class ProlificCompilationLauncher extends Launcher {
     }
 
     @Inject
-    CustomService customService;
+    CompilationControllerActiveJService customService;
 
     @Override
     protected Module getModule() {
@@ -38,7 +38,7 @@ class ProlificCompilationLauncher extends Launcher {
     }
 
     @Inject
-    private class CustomService implements Service {
+    private class CompilationControllerActiveJService implements Service {
         @Override
         public CompletableFuture<?> start() {
             logProgress("|SERVICE STARTING|");

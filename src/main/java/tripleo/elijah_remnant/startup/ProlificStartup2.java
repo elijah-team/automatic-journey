@@ -4,24 +4,24 @@ import org.jdeferred2.DoneCallback;
 import tripleo.elijah.comp.*;
 import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.i.ICompilationBus;
-import tripleo.elijah.comp.internal.DefaultCompilationAccess;
-import tripleo.elijah.comp.internal.ProcessRecord;
+import tripleo.elijah.comp.internal.EDR_CompilationAccess;
+import tripleo.elijah.comp.internal.EDR_ProcessRecord;
 import tripleo.elijah_fluffy.util.Eventual;
 import tripleo.elijah_fluffy.util.EventualExtract;
 
 public class ProlificStartup2 {
     private final Compilation                  _compilation;
-    private final Eventual<ProcessRecord>      _p_ProcessRecord     = new Eventual<>();
+    private final Eventual<EDR_ProcessRecord>  _p_ProcessRecord     = new Eventual<>();
     private final Eventual<ICompilationAccess> _p_CompilationAccess = new Eventual<>();
     private final Eventual<CompilationRunner>  _p_CompilationRunner = new Eventual<>();
     private final Eventual<ICompilationBus>    _p_CompilationBus    = new Eventual<>();
     private final Eventual<PipelineLogic>      _p_PipelineLogic     = new Eventual<>();
     @SuppressWarnings("FieldCanBeLocal")
-    private       ProcessRecord                __processRecord;
-    private boolean                  _f_processRecord;
+    private       EDR_ProcessRecord            __processRecord;
+    private       boolean                      _f_processRecord;
     @SuppressWarnings("FieldCanBeLocal")
-    private DefaultCompilationAccess __compilationAccess;
-    private boolean                  _f_CompilationAccess;
+    private EDR_CompilationAccess __compilationAccess;
+    private boolean               _f_CompilationAccess;
     @SuppressWarnings("FieldCanBeLocal")
     private       CompilationRunner            __CompilationRunner;
     private       boolean                      _f_CompilationRunner;
@@ -39,7 +39,7 @@ public class ProlificStartup2 {
     public Eventual<ICompilationAccess> getCompilationAccess() {
         if (!_f_CompilationAccess) {
             _f_CompilationAccess = true;
-            __compilationAccess  = new DefaultCompilationAccess(getCompilation(), this);
+            __compilationAccess  = new EDR_CompilationAccess(getCompilation(), this);
             _p_CompilationAccess.resolve(__compilationAccess);
         }
         return _p_CompilationAccess;
@@ -49,10 +49,10 @@ public class ProlificStartup2 {
         return _compilation;
     }
 
-    public Eventual<ProcessRecord> getProcessRecord() {
+    public Eventual<EDR_ProcessRecord> getProcessRecord() {
         if (!_f_processRecord) {
             _f_processRecord = true;
-            __processRecord  = new ProcessRecord(__compilationAccess);
+            __processRecord  = new EDR_ProcessRecord(__compilationAccess);
             _p_ProcessRecord.resolve(__processRecord);
         }
         return _p_ProcessRecord;
