@@ -9,7 +9,7 @@ public class EDR_ProgressSink implements IProgressSink {
 //		component.note(code, type, params);
 		if (component.isPrintErr(code, type)) {
 			final String s = component.printErr(code, type, params);
-			System.err.println(s);
+			System.err.println("[240914 0012] " + s);
 		}
 	}
 }

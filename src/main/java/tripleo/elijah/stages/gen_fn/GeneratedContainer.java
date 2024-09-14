@@ -14,6 +14,7 @@ import org.jdeferred2.impl.*;
 import org.jetbrains.annotations.*;
 import tripleo.elijah.lang.*;
 import tripleo.elijah.lang.types.*;
+import tripleo.elijah.stages.logging.ElLog;
 
 import java.util.*;
 
@@ -54,9 +55,10 @@ public interface GeneratedContainer extends GeneratedNode {
 			potentialTypes.addAll(aPotentialTypes);
 		}
 
-		public void resolve(@NotNull final GeneratedNode aResolvedType) {
-			System.out.printf("** [GeneratedContainer 56] resolving VarTableEntry %s to %s%n", nameToken,
+		public void resolve(@NotNull final GeneratedNode aResolvedType, final @NotNull ElLog aLOG) {
+			var s = String.format("** [GeneratedContainer 56] resolving VarTableEntry %s to %s%n", nameToken,
 					aResolvedType.identityString());
+			aLOG.info(s);
 			_resolvedType = aResolvedType;
 		}
 

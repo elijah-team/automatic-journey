@@ -87,7 +87,7 @@ public class TestIdentNormal {
 				d2.resolveIdentIA2_(ctx2, null, ss/* identIA */, generatedFunction, new FoundElement(pl.getDp()) {
 					@Override
 					public void foundElement(final OS_Element e) {
-						System.out.println(e);
+						System.out.println("[240914 0090] " + e);
 					}
 
 					@Override

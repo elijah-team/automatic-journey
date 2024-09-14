@@ -108,7 +108,7 @@ public class EDR_Compilation implements Compilation {
 
 	@Override
 	public ElValue<EDR_CompilationBus> get_cb() {
-		return null;
+        return this.__cb;
 	}
 
 	@Override

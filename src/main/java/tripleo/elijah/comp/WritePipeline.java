@@ -12,7 +12,6 @@ import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 import org.jetbrains.annotations.NotNull;
 import org.jetbrains.annotations.Nullable;
-import tripleo.elijah.DebugFlags;
 import tripleo.elijah.comp.functionality.f203.F203;
 import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.comp.i.PipelineMember;
@@ -24,8 +23,11 @@ import tripleo.elijah.stages.gen_generic.GenerateResult;
 import tripleo.elijah.stages.gen_generic.GenerateResultItem;
 import tripleo.elijah.stages.generate.ElSystem;
 import tripleo.elijah.stages.generate.OutputStrategy;
+import tripleo.elijah_fluffy.util.Eventual;
 import tripleo.elijah_fluffy.util.Helpers;
+import tripleo.elijah_fluffy.util.Ok;
 import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
+import tripleo.elijah_prolific.comp_signals.CSS2_Signal;
 import tripleo.elijah_prolific.v.V;
 import tripleo.util.buffer.Buffer;
 import tripleo.util.buffer.DefaultBuffer;
@@ -38,6 +40,7 @@ import java.nio.file.FileSystems;
 import java.nio.file.Path;
 import java.util.*;
 import java.util.function.Consumer;
+import java.util.function.Function;
 import java.util.function.Supplier;
 import java.util.stream.Collectors;
 
@@ -45,127 +48,124 @@ import java.util.stream.Collectors;
  * Created 8/21/21 10:19 PM
  */
 public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResultListener {
-	final OutputStrategy os;
-	final ElSystem sys;
-	private final Compilation c;
-	private final File file_prefix;
-	private GenerateResult gr;
+    final         OutputStrategy os;
+    final         ElSystem       sys;
+    private final Compilation    c;
+    private       GenerateResult gr;
 
-	public WritePipeline(@NotNull final AccessBus ab) {
-		c = ab.getCompilation();
+    public WritePipeline(@NotNull final AccessBus ab) {
+        c = ab.getCompilation();
 
-		file_prefix = new File("COMP", c.getCompilationNumberString());
+        os = new OutputStrategy();
+        os.per(OutputStrategy.Per.PER_CLASS); // TODO this needs to be configured per lsp
 
-		os = new OutputStrategy();
-		os.per(OutputStrategy.Per.PER_CLASS); // TODO this needs to be configured per lsp
+        sys         = new ElSystem();
+        sys.verbose = false; // TODO flag? ie CompilationOptions
+        sys.setCompilation(c);
+        sys.setOutputStrategy(os);
 
-		sys = new ElSystem();
-		sys.verbose = false; // TODO flag? ie CompilationOptions
-		sys.setCompilation(c);
-		sys.setOutputStrategy(os);
+        ab.subscribe_GenerateResult(this);
+    }
 
-		ab.subscribe_GenerateResult(this);
-	}
+    @Override
+    public void run() throws Exception {
+        if (gr == null) {
+            SimplePrintLoggerToRemoveSoon.ilf("9889-0060 - gr is null in WritePipeline");
+            return;
+        }
+        sys.generateOutputs(gr);
 
-	@Override
-	public void run() throws Exception {
-		if (gr == null) {
-			SimplePrintLoggerToRemoveSoon.ilf("9889-0060 - gr is null in WritePipeline");
-			return;
-		}
-		sys.generateOutputs(gr);
+        write_files();
+        // TODO flag?
+        write_buffers();
+    }
 
-		write_files();
-		// TODO flag?
-		write_buffers();
-	}
+    public void write_files() throws IOException {
+        final Multimap<String, Buffer> mb = ArrayListMultimap.create();
 
-	public void write_files() throws IOException {
-		final Multimap<String, Buffer> mb = ArrayListMultimap.create();
+        for (final GenerateResultItem ab : gr.results()) {
+            mb.put(ab.output, ab.buffer);
+        }
 
-		for (final GenerateResultItem ab : gr.results()) {
-			mb.put(ab.output, ab.buffer);
-		}
+        final Map<String, OS_Module> modmap = new HashMap<>();
+        for (final GenerateResultItem ab : gr.results()) {
+            modmap.put(ab.output, ab.node.module());
+        }
 
-		final Map<String, OS_Module> modmap = new HashMap<>();
-		for (final GenerateResultItem ab : gr.results()) {
-			modmap.put(ab.output, ab.node.module());
-		}
 
-		final List<EOT_OutputFile> leof = new ArrayList<>();
+        final _WriterPayload writerPayload = new _WriterPayload(mb, null);
+        c.getOutputTree().addAll(writerPayload.getList(modmap::get));
+        c.signal(new CSS2_Signal() {
+            @Override
+            public void trigger(final Compilation compilation, final Object payload) {
+                assert payload == writerPayload;
+                writerPayload.getActivator().resolve(Ok.instance());
+            }
+        }, writerPayload);
+    }
 
-		for (final String s : mb.keySet()) {
-			final Collection<Buffer> vs = mb.get(s);
+    public void write_buffers() throws FileNotFoundException {
+        final File        file      = new File(choose_dir_name1(), "buffers.txt");
+        final PrintStream db_stream = new PrintStream(file);
+        PipelineLogic.debug_buffers(gr, db_stream);
+        V.gri(gr);
+    }
 
-			final EOT_OutputFile eof = EOT_OutputFile.bufferSetToOutputFile(s, vs, c, modmap.get(s));
-			leof.add(eof);
-		}
+    private @NotNull File choose_dir_name() {
+        final File fn00 = choose_dir_name1();
+        final File fn01 = new File(fn00, "code");
+        return fn01;
+    }
 
-		c.getOutputTree().set(leof);
+    private @NotNull File choose_dir_name1() {
+        final File fn00 = new F203(c.getErrSink(), c).chooseDirectory();
+        return fn00;
+    }
 
-		final File fn1 = choose_dir_name();
+    private void __rest(final @NotNull Multimap<String, Buffer> mb,
+                        final @NotNull File aFile_prefix,
+                        final List<EOT_OutputFile> leof) throws IOException {
+        aFile_prefix.mkdirs();
+        final String prefix = aFile_prefix.toString();
 
-		__rest(mb, fn1, leof);
-	}
+        // TODO flag?
+        write_inputs(aFile_prefix);
 
-	public void write_buffers() throws FileNotFoundException {
-		file_prefix.mkdirs();
-
-		final PrintStream db_stream = new PrintStream(new File(file_prefix, "buffers.txt"));
-		PipelineLogic.debug_buffers(gr, db_stream);
-		V.gri(gr);
-	}
-
-	private @NotNull File choose_dir_name() {
-		final File fn00 = new F203(c.getErrSink(), c).chooseDirectory();
-		final File fn01 = new File(fn00, "code");
-
-		return fn01;
-	}
-
-	private void __rest(final @NotNull Multimap<String, Buffer> mb,
-	                    final @NotNull File aFile_prefix,
-	                    final List<EOT_OutputFile> leof) throws IOException {
-		aFile_prefix.mkdirs();
-		final String prefix = aFile_prefix.toString();
-
-		// TODO flag?
-		write_inputs(aFile_prefix);
-
-		for (final Map.Entry<String, Collection<Buffer>> entry : mb.asMap().entrySet()) {
-			final String key = entry.getKey();
-			final Path path = FileSystems.getDefault().getPath(prefix, key);
+        for (final Map.Entry<String, Collection<Buffer>> entry : mb.asMap().entrySet()) {
+            final String key  = entry.getKey();
+            final Path   path = FileSystems.getDefault().getPath(prefix, key);
 //			BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
 
-			path.getParent().toFile().mkdirs();
+            path.getParent().toFile().mkdirs();
 
-			// TODO functionality
-			if (true||DebugFlags.lgJan25) {
-				System.out.println("201 Writing path: " + path);
-			}
-			c.reports().add401b(new Finally._401bSpec(){});;
-			final CharSink x = c.getIO().openWrite(path);
+            // TODO functionality
+            if (true) {
+                System.out.println("201 Writing path: " + path);
+            }
+            c.reports().add401b(new Finally._401bSpec() {
+            });
+            final CharSink x = c.getIO().openWrite(path);
 
-			final EG_SingleStatement beginning = new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline" + ".beginning"));
-			final EG_Statement middle = new GE_BuffersStatement(entry);
-			final EG_SingleStatement ending = new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline.ending"));
-			final EX_Explanation explanation = EX_Explanation.withMessage("write output file");
+            final EG_SingleStatement beginning   = new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline" + ".beginning"));
+            final EG_Statement       middle      = new GE_BuffersStatement(entry);
+            final EG_SingleStatement ending      = new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline.ending"));
+            final EX_Explanation     explanation = EX_Explanation.withMessage("write output file");
 
-			final EG_CompoundStatement seq = new EG_CompoundStatement(beginning, ending, middle, false, explanation);
+            final EG_CompoundStatement seq = new EG_CompoundStatement(beginning, ending, middle, false, explanation);
 
 //			for (final @NotNull Buffer buffer : entry.getValue()) {
 //				x.accept(buffer.getText());
 //			}
-			x.accept(seq.getText());
-			((FileCharSink) x).close();
+            x.accept(seq.getText());
+            ((FileCharSink) x).close();
 
-			final @NotNull EOT_OutputTree cot = c.getOutputTree();
-			cot._putSeq(key, path, seq);
-		}
-	}
+            final @NotNull EOT_OutputTree cot = c.getOutputTree();
+            cot._putSeq(key, path, seq);
+        }
+    }
 
-	private void write_inputs(final File file_prefix) throws IOException {
-		final DefaultBuffer buf = new DefaultBuffer("");
+    private void write_inputs(final File file_prefix) throws IOException {
+        final DefaultBuffer buf = new DefaultBuffer("");
 //			FileBackedBuffer buf = new FileBackedBuffer(fn1);
 //			for (OS_Module module : modules) {
 //				final String fn = module.getFileName();
@@ -179,42 +179,41 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 //				append_hash(buf, fn);
 //			}
 
-		final List<File> recordedreads = c.getIO().recordedreads;
-		final List<String> recordedread_filenames = recordedreads.stream().map(file -> file.toString())
-				.collect(Collectors.toList());
+        final List<File> recordedreads = c.getIO().recordedreads;
+        final List<String> recordedread_filenames = recordedreads.stream().map(file -> file.toString())
+                .collect(Collectors.toList());
 
-		for (final @NotNull File file : recordedreads) {
-			final String fn = file.toString();
+        for (final @NotNull File file : recordedreads) {
+            final String fn = file.toString();
 
-			append_hash(buf, fn, c.getErrSink());
-		}
+            append_hash(buf, fn, c.getErrSink());
+        }
 
-		final File fn1 = new File(file_prefix, "inputs.txt");
-		final String s = buf.getText();
-		try (final Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fn1, true)))) {
-			w.write(s);
-		}
-	}
+        final File   fn1 = new File(file_prefix, "inputs.txt");
+        final String s   = buf.getText();
+        try (final Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fn1, true)))) {
+            w.write(s);
+        }
+    }
 
-	private void append_hash(final TextBuffer aBuf, final String aFilename, final ErrSink errSink) throws IOException {
-		@Nullable
-		final String hh = Helpers.getHashForFilename(aFilename, errSink);
-		if (hh != null) {
-			aBuf.append(hh);
-			aBuf.append(" ");
-			aBuf.append_ln(aFilename);
-		}
-	}
+    private void append_hash(final TextBuffer aBuf, final String aFilename, final ErrSink errSink) throws IOException {
+        @Nullable final String hh = Helpers.getHashForFilename(aFilename, errSink);
+        if (hh != null) {
+            aBuf.append(hh);
+            aBuf.append(" ");
+            aBuf.append_ln(aFilename);
+        }
+    }
 
-	@Override
-	public void gr_slot(final GenerateResult gr) {
-		this.gr = gr;
-	}
+    @Override
+    public void gr_slot(final GenerateResult gr) {
+        this.gr = gr;
+    }
 
-	public Consumer<Supplier<GenerateResult>> consumer() {
-		return new Consumer<Supplier<GenerateResult>>() {
-			@Override
-			public void accept(final Supplier<GenerateResult> aGenerateResultSupplier) {
+    public Consumer<Supplier<GenerateResult>> consumer() {
+        return new Consumer<Supplier<GenerateResult>>() {
+            @Override
+            public void accept(final Supplier<GenerateResult> aGenerateResultSupplier) {
 //				if (grs != null) {
 //					tripleo.elijah.util.Stupidity.println_err2("234 grs not null "+grs.getClass().getName());
 //					return;
@@ -223,10 +222,58 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 //				assert false;
 //				grs = aGenerateResultSupplier;
 //				//final GenerateResult gr = aGenerateResultSupplier.get();
-				final int y = 2;
-			}
-		};
-	}
+                final int y = 2;
+            }
+        };
+    }
+
+    public class _WriterPayload {
+        private final Multimap<String, Buffer> _g_mb;
+        private final List<EOT_OutputFile>     _g_leof;
+        private final Eventual<Ok>             activatorPromise = new Eventual<>();
+        private final Eventual<Ok>             resultPromise    = new Eventual<>();
+
+        public _WriterPayload(final Multimap<String, Buffer> aMb, final List<EOT_OutputFile> aLeof) {
+            _g_mb   = aMb;
+            _g_leof = aLeof;
+
+            this.activatorPromise.then(Sok -> action());
+            this.activatorPromise.onFail(Sfail -> {
+                // FIXME Don't even know if this is possible
+                c.getErrSink().reportError("Activation of WritePipeline ignored.");
+            });
+        }
+
+        public Eventual<Ok> getActivator() {
+            return this.activatorPromise; // technically latch, also resettable?? (see activej...)
+        }
+
+        public Eventual<Ok> getResult() {
+            return this.resultPromise;
+        }
+
+        private void action() {
+            final File fn1 = choose_dir_name();
+            try {
+                __rest(_g_mb, fn1, _g_leof);
+            } catch (IOException aE) {
+                throw new RuntimeException(aE);
+            }
+        }
+
+        public List<EOT_OutputFile> getList(Function<String, OS_Module> q) {
+            final List<EOT_OutputFile> leof = new ArrayList<>();
+
+            for (final String s : _g_mb.keySet()) {
+                final Collection<Buffer> vs = _g_mb.get(s);
+
+                final EOT_OutputFile eof = EOT_OutputFile.bufferSetToOutputFile(s, vs, c, q.apply(s));
+                leof.add(eof);
+            }
+
+            return leof;
+        }
+    }
 
 }
 

@@ -1979,7 +1979,7 @@ public class GenerateFunctions {
 	}
 
 	public @NotNull GeneratedClass generateClass(@NotNull final ClassStatement klass) {
-		final GeneratedClass gc = new GeneratedClass(klass, module);
+		final GeneratedClass gc = new GeneratedClass(klass, module, LOG);
 		AccessNotation an = null;
 
 		for (final ClassItem item : klass.getItems()) {

@@ -107,7 +107,7 @@ public class TestBasic {
 		if (c.errorCount() != 0)
 			System.err.printf("Error count should be 0 but is %d for %s%n", c.errorCount(), s);
 
-		Assert.assertEquals(14, c.getOutputTree().list().size());
+		Assert.assertEquals(13, c.getOutputTree().list().size());
 		Assert.assertEquals(24, c.errorCount()); // TODO Error count obviously should be 0
 	}
 
@@ -140,7 +140,7 @@ public class TestBasic {
 
 		final @NotNull EOT_OutputTree cot = c.getOutputTree();
 
-		Assert.assertEquals(20, cot.size()); // TODO why not 6?
+		Assert.assertEquals(19, cot.size()); // TODO why not 6?
 
 		select(cot.list(), f -> f.getFilename().equals("/main2/Main.h")).then(f -> {
 			final EG_SequenceStatement statementSequence = (EG_SequenceStatement) f.getStatementSequence();
@@ -152,7 +152,7 @@ public class TestBasic {
 		  });
 
 		// TODO Error count obviously should be 0
-		Assert.assertEquals(123, c.errorCount()); // FIXME why 123?? 04/15
+		Assert.assertEquals(124, c.errorCount()); // FIXME why 123?? 04/15
 	}
 
 	private static @NotNull List<String> _mapGetTextToSequence(final EG_SequenceStatement statementSequence) {

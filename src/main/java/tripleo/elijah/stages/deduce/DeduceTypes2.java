@@ -496,7 +496,7 @@ public class DeduceTypes2 {
 				final GenType genType = makeGenTypeFromOSType(vt, generatedClass.ci.genericPart);
 				if (genType != null) {
 					if (genType.getNode() != null) {
-						entry.resolve(genType.getNode());
+						entry.resolve(genType.getNode(), LOG);
 					} else {
 						NotImplementedException.raise();
 					}
@@ -2863,7 +2863,7 @@ public class DeduceTypes2 {
 			deduceTypes2 = aDeduceTypes2;
 		}
 
-		public ElLog getLOG() {
+		public ElLog LOG() {
 			return deduceTypes2.LOG;
 		}
 

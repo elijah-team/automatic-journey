@@ -30,7 +30,7 @@ public class WorkManagerTest {
 
 		workManager.drain();
 
-		System.err.println(sink);
+		System.err.println("[240914 0033] " + sink);
 	}
 
 	static class AppendChar implements WorkJob {

@@ -3,7 +3,7 @@
 /out/
 /output/
 /COMP-*/
-/.idea
+xx/.idea
 /jcef-bundle/
 /elijah-prolific-remnant.iml
 /ll.c
@@ -18,3 +18,4 @@
 /lib/standalone/
 /lib/test/
 /bin/
+/IG-*

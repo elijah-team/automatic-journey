@@ -17,7 +17,7 @@ import java.util.List;
 public class EOT_OutputTree {
 	private List<EOT_OutputFile> list;
 
-	public void set(final List<EOT_OutputFile> aOutputFileList) {
+    public void addAll(final List<EOT_OutputFile> aOutputFileList) {
 		if (list == null) {
 			list = new ArrayList<>();
 		}
@@ -25,7 +25,7 @@ public class EOT_OutputTree {
 	}
 
 	public void _putSeq(final String aKey, final Path aPath, final EG_Statement aStatement) {
-		if (true||DebugFlags.lgSep07) {System.err.printf("[_putSeq] %s %s {{%s}}%n", aKey, aPath, aStatement.getExplanation().getText());}
+		// if (true||DebugFlags.lgSep07) {System.err.printf("[_putSeq] %s %s {{%s}}%n", aKey, aPath, aStatement.getExplanation().getText());}
 		V.asv(V.e._putSeq, aKey);
 	}
 

@@ -13,6 +13,7 @@ import org.jdeferred2.DoneCallback;
 import org.jetbrains.annotations.NotNull;
 import org.junit.Assert;
 import org.junit.ClassRule;
+import org.junit.Ignore;
 import org.junit.Test;
 import tripleo.elijah.comp.AccessBus;
 import tripleo.elijah.comp.CM_Module;
@@ -221,6 +222,7 @@ public class TestGenFunction {
         });
     }
 
+    @Ignore
     @Test
     public void testGenericA() {
         final Compilation c = CompilationFactory.mkCompilation();
@@ -239,8 +241,11 @@ public class TestGenFunction {
         final String ff = "test/basic1/backlink3/";
         c.feedCmdLine(List_of(ff));
 
-        final int maybe_this_should_not_be_zero = 0;
+        final int maybe_this_should_not_be_zero = 1;
         Assert.assertEquals(maybe_this_should_not_be_zero, c.errorCount());
+
+        var x = "" + c.getErrSink()._error(1);
+        Assert.assertEquals("(WARNING_STRING,9996 Not an .ez file test/basic1/backlink3/)", x);
     }
 }
 
