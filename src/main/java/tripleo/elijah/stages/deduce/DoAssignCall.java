@@ -22,6 +22,7 @@ import tripleo.elijah.lang.types.OS_UnknownType;
 import tripleo.elijah.lang.types.OS_UserType;
 import tripleo.elijah.lang2.BuiltInTypes;
 import tripleo.elijah.stages.deduce.declarations.DeferredMemberFunction;
+import tripleo.elijah.stages.deduce.post_bytecode.DeduceElement3_VariableTableEntry;
 import tripleo.elijah.stages.gen_fn.*;
 import tripleo.elijah.stages.instructions.*;
 import tripleo.elijah.stages.logging.ElLog;
@@ -400,9 +401,13 @@ public class DoAssignCall {
 	}
 
 	private void do_assign_call_args_ident(@NotNull final BaseGeneratedFunction generatedFunction,
-			@NotNull final Context ctx, @NotNull final VariableTableEntry vte, final int aInstructionIndex,
-			@NotNull final ProcTableEntry aPte, final int aI, @NotNull final TypeTableEntry aTte,
-			@NotNull final IdentExpression aExpression) {
+										   @NotNull final Context ctx,
+										   @NotNull final VariableTableEntry vte,
+										   final int aInstructionIndex,
+										   @NotNull final ProcTableEntry aPte,
+										   final int aI,
+										   @NotNull final TypeTableEntry aTte,
+										   @NotNull final IdentExpression aExpression) {
 		final String e_text = aExpression.getText();
 		final @Nullable InstructionArgument vte_ia = generatedFunction.vte_lookup(e_text);
 //		LOG.info("10000 "+vte_ia);
@@ -455,65 +460,18 @@ public class DoAssignCall {
 					case 0:
 						// README moved up here to elimiate work
 						if (p.isResolved()) {
-							System.out.printf("890-1 Already resolved type: vte1.type = %s, gf = %s %n", vte1.type,
+							var s = String.format("890-1 Already resolved type: vte1.type = %s, gf = %s %n", vte1.type,
 									generatedFunction);
+							LOG.info(s);
 							break;
 						}
 						final LookupResultList lrl = ctx.lookup(e_text);
 						@Nullable
 						final OS_Element best = lrl.chooseBest(null);
 						if (best instanceof @NotNull final FormalArgListItem fali) {
-							final @NotNull OS_Type osType = new OS_UserType(fali.typeName());
-							if (!osType.equals(vte.type.getAttached())) {
-								@NotNull
-								final TypeTableEntry tte1 = generatedFunction.newTypeTableEntry(
-										TypeTableEntry.Type.SPECIFIED, osType, fali.getNameToken(), vte1);
-								/*
-								 * if (p.isResolved()) System.out.
-								 * printf("890 Already resolved type: vte1.type = %s, gf = %s, tte1 = %s %n",
-								 * vte1.type, generatedFunction, tte1); else
-								 */
-								{
-									final @Nullable OS_Type attached = tte1.getAttached();
-									switch (attached.getType()) {
-									case USER:
-										vte1.type.setAttached(attached); // !!
-										break;
-									case USER_CLASS:
-										final GenType gt = vte1.genType;
-										gt.setResolved(attached);
-										vte1.resolveType(gt);
-										break;
-									default:
-										errSink.reportWarning("2853 Unexpected value: " + attached.getType());
-//												throw new IllegalStateException("Unexpected value: " + attached.getType());
-									}
-								}
-							}
-//								vte.type = tte1;
-//								tte.attached = tte1.attached;
-//								vte.setStatus(BaseTableEntry.Status.KNOWN, best);
+							DeduceElement3_VariableTableEntry.Q.action_FormalArgListItem(fali, vte, generatedFunction, vte1, errSink);
 						} else if (best instanceof final @NotNull VariableStatement vs) {
-							//
-							assert vs.getName().equals(e_text);
-							//
-							@Nullable
-							final InstructionArgument vte2_ia = generatedFunction.vte_lookup(vs.getName());
-							@NotNull
-							final VariableTableEntry vte2 = generatedFunction.getVarTableEntry(to_int(vte2_ia));
-							if (p.isResolved())
-								System.out.printf("915 Already resolved type: vte2.type = %s, gf = %s %n", vte1.type,
-										generatedFunction);
-							else {
-								final GenType gt = vte1.genType;
-								final OS_Type attached = vte2.type.getAttached();
-								gt.setResolved(attached);
-								vte1.resolveType(gt);
-							}
-//								vte.type = vte2.type;
-//								tte.attached = vte.type.attached;
-							vte.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(best));
-							vte2.setStatus(BaseTableEntry.Status.KNOWN, new GenericElementHolder(best)); // TODO ??
+							DeduceElement3_VariableTableEntry.Q.action_VariableStatement(vs, e_text, generatedFunction, vte1, p, LOG, vte, best);
 						} else {
 							final int y = 2;
 							LOG.err("543 " + best.getClass().getName());
@@ -539,6 +497,7 @@ public class DoAssignCall {
 						break;
 					}
 				}
+
 			};
 			dc.onFinish(runnable);
 		} else {
