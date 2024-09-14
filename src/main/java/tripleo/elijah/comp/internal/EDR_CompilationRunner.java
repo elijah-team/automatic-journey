@@ -130,7 +130,7 @@ public class EDR_CompilationRunner implements ICompilationRunner {
 		default: {
 
 			// noinspection RedundantStringFormatCall
-			System.err.println(String.format("%d %s", number, text));
+			System.err.println(String.format("[240914-0133] %d %s", number, text));
 		}
 		}
 	}

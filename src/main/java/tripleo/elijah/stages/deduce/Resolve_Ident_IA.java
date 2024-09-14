@@ -54,7 +54,7 @@ public class Resolve_Ident_IA {
 		foundElement = aFoundElement;
 		errSink = aErrSink;
 		//
-		LOG = dc.getLOG();
+        LOG = dc.LOG();
 	}
 
 	public void action() throws ResolveError {

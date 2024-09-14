@@ -1,19 +1,31 @@
 package tripleo.elijah_prolific.v;
 
-import tripleo.elijah.stages.gen_generic.*;
-import com.google.gson.*;
-import com.google.gson.annotations.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.nextgen.inputtree.*;
-import tripleo.elijah.nextgen.outputstatement.*;
-import tripleo.elijah.nextgen.outputtree.*;
-import tripleo.elijah.stages.gen_generic.*;
+import com.google.common.io.Files;
+import com.google.gson.FieldNamingPolicy;
+import com.google.gson.Gson;
+import com.google.gson.GsonBuilder;
+import com.google.gson.annotations.Expose;
+import org.apache.commons.lang3.tuple.Pair;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.StdErrSink;
+import tripleo.elijah.comp.functionality.f203.F203;
+import tripleo.elijah.nextgen.inputtree.EIT_Input;
+import tripleo.elijah.nextgen.outputstatement.EG_SequenceFactory;
+import tripleo.elijah.nextgen.outputstatement.EG_SingleStatement;
+import tripleo.elijah.nextgen.outputstatement.EG_Statement;
+import tripleo.elijah.nextgen.outputstatement.EG_StatementUtils;
+import tripleo.elijah.nextgen.outputtree.EOT_OutputFile;
+import tripleo.elijah.nextgen.outputtree.EOT_OutputType;
+import tripleo.elijah.stages.gen_generic.GenerateResult;
+import tripleo.elijah.stages.gen_generic.GenerateResultItem;
 
-import java.io.*;
-import java.util.*;
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.io.IOException;
+import java.io.PrintStream;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.function.Supplier;
 
 import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
@@ -25,24 +37,24 @@ public class V {
 		final String x = "{{V.asv}} " + aE + " " + aKey;
 		addLog(x);
 		addJsonLog("asv", "" + aE, List_of(aKey));
-		//System.err.println("[debug] "+x);
+		// System.err.println("[debug] "+x);
 	}
 
 	public static void gri(final GenerateResult gr) {
 		final PrintStream stream = System.out;
 
 		for (GenerateResultItem ab : gr.results()) {
-			//stream.println(ab.counter);
+			// stream.println(ab.counter);
 			final String ty = "" + ab.ty;
-			//stream.println(ty);
+			// stream.println(ty);
 			final String ou = ab.output;
-			stream.println(ou);
+			// stream.println("\"[240914 0051] \"+"+ou);
 			final String ns = ab.node.identityString();
-			//stream.println(ns);
+			// stream.println(ns);
 
-			//noinspection unused
+			// noinspection unused
 			final String bt = ab.buffer.getText();
-			//stream.println(bt);
+			// stream.println(bt);
 
 			final String x = "{{V.gr}} " + ty + " " + ou + " " + ns;
 			addLog(x);
@@ -63,6 +75,45 @@ public class V {
 	}
 
 	private static void finishJsonLog(final Compilation c) {
+		final Gson gson = getGson();
+
+		final String jsonString = gson.toJson(jsonLogs);
+		// noinspection unused
+		// final String jsonString1  = gson.toJson(logs);
+
+		final List<EIT_Input> inputs = List_of();
+		// final EOT_OutputFile  off    = convertLogsAndInputsToOutputFile(c, inputs, logs);
+		// c.getOutputTree().add(off);
+
+		final EG_Statement   seq2 = new EG_SingleStatement(jsonString);
+		final String         fn   = "error-report.json";
+		final EOT_OutputFile off2 = new EOT_OutputFile(c, inputs, fn, EOT_OutputType.ERROR_REPORT, seq2);
+		c.getOutputTree().add(off2);
+
+		c.comp_dir_promise().resolve(new Supplier<File>() {
+			@Override
+			public File get() {
+				// noinspection UnnecessaryLocalVariable
+				File f = new F203(c.getErrSink(), c).chooseDirectory();
+				return f;
+			}
+		}.get());
+		c.comp_dir_promise().then(f -> {
+			try {
+				Files.write(jsonString.getBytes(), new File(f, fn));
+				// Files.write(off.getStatementSequence().getText().getBytes(), new File(f, off.getFilename()));
+
+				final List<Pair<StdErrSink.Desc, Object>> err = c.getErrSink()._errors();
+				Files.write((gson.toJson(err)).getBytes(), new File(f, "stdErrSink.json"));
+			} catch (IOException aE) {
+				throw new RuntimeException(aE);
+			}
+		});
+
+		// System.err.println("[240914 0088] error-report.json"+jsonString);
+	}
+
+	private static @NotNull Gson getGson() {
 		final Gson gson = new GsonBuilder()
 				//.registerTypeAdapter(_JsonLog.class, new _JsonLog_TypeAdapter())
 				.enableComplexMapKeySerialization()
@@ -72,18 +123,7 @@ public class V {
 				.setPrettyPrinting()
 				.setVersion(1.0)
 				.create();
-		final String jsonString = gson.toJson(jsonLogs);
-		//noinspection unused
-		//final String jsonString1  = gson.toJson(logs);
-
-
-		final List<EIT_Input>                     inputs          = List_of();
-		final EOT_OutputFile                      off             = convertLogsAndInputsToOutputFile(c, inputs, logs);
-		c.getOutputTree().add(off);
-
-		final EG_Statement   seq2 = new EG_SingleStatement(jsonString);
-		final EOT_OutputFile off2 = new EOT_OutputFile(c, inputs, "error-report.json", EOT_OutputType.ERROR_REPORT, seq2);
-		c.getOutputTree().add(off2);
+		return gson;
 	}
 
 	@NotNull
@@ -93,8 +133,8 @@ public class V {
 		final List<EG_Statement>                  sts             = EG_StatementUtils.mapStringListToSingleStatementList(aLogs);
 		final EG_SequenceFactory._SequenceBuilder sequenceBuilder = EG_SequenceFactory.newSequence().addParts(sts);
 		final EG_Statement                        seq             = sequenceBuilder.build();
-		//noinspection UnnecessaryLocalVariable
-		final EOT_OutputFile                      off             = new EOT_OutputFile(c, inputs, "error-report.txt", EOT_OutputType.ERROR_REPORT, seq);
+		// noinspection UnnecessaryLocalVariable
+		final EOT_OutputFile off = new EOT_OutputFile(c, inputs, "error-report.txt", EOT_OutputType.ERROR_REPORT, seq);
 		return off;
 	}
 
@@ -110,7 +150,7 @@ public class V {
 	public record _JsonLog(@Expose String headCode, @Expose String second, @Expose List<String> stringList) {
 	}
 
-	//public static class _JsonLog_TypeAdapter implements JsonSerializer<_JsonLog_TypeAdapter>, JsonDeserializer<_JsonLog> {
+	// public static class _JsonLog_TypeAdapter implements JsonSerializer<_JsonLog_TypeAdapter>, JsonDeserializer<_JsonLog> {
 	//	@Override
 	//	public _JsonLog deserialize(final JsonElement json, final Type typeOfT, final JsonDeserializationContext context) throws JsonParseException {
 	//		JsonObject jsonObject = json.getAsJsonObject();

@@ -65,7 +65,7 @@ class ProlificCompilationLauncher extends Launcher {
     }
 
     private static void logProgress(final String x) {
-        System.out.println(x);
+        System.out.println("[240914 0068] ProlificCompilationLauncher::logProgress " + x);
     }
 
     public void launch0() {

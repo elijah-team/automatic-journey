@@ -9,8 +9,8 @@
     <url>http://github.com/elijah-team/prolific-remnant/</url>
 
     <properties>
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
         <jacoco.version>0.8.6</jacoco.version>
         <downloadSources>true</downloadSources>
         <guava.version>33.1.0-jre</guava.version>
@@ -400,8 +400,8 @@
 
 
                 <configuration>
-                    <source>16</source>
-                    <target>16</target>
+                    <source>17</source>
+                    <target>17</target>
                 </configuration>
             </plugin>
         </plugins>
