@@ -27,7 +27,7 @@ public class WorkManager {
 	private final List<WorkList> jobs     = new ArrayList<>();
 	private final Set<WorkJob>   doneJobs = new HashSet<>();
 
-	private static Eventloop createEventloop() {
+	public static Eventloop createEventloop() {
 		//noinspection UnnecessaryLocalVariable
 		Eventloop eventLoop = Eventloop.builder()
 		                               .withCurrentThread()

@@ -20,6 +20,7 @@ public class WorkManagerTest {
 		final List<String> sink = new ArrayList<>();
 
 		final WorkManager workManager = new WorkManager();
+		workManager.createEventloop();
 
 		final WorkList wl = new WorkList();
 		wl.addJob(new AppendChar("A", 0, sink));
