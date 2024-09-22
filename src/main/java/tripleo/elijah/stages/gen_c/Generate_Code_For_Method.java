@@ -541,7 +541,7 @@ public class Generate_Code_For_Method {
 
 		final GeneratedNode res = vte.resolvedType();
 		if (res instanceof GeneratedClass) {
-			final String z = GenerateC.GetTypeName.forGenClass((GeneratedClass) res);
+			final String z = GetTypeName.forGenClass((GeneratedClass) res);
 			final String s = String.format("%s* %s;", z, target_name);
 			return Operation2.success(new EG_SingleStatement(s, null));
 		}
@@ -549,7 +549,7 @@ public class Generate_Code_For_Method {
 		if (x != null) {
 			switch (x.getType()) {
 			case USER_CLASS:
-				final String z = GenerateC.GetTypeName.forOSType(x, LOG);
+				final String z = GetTypeName.forOSType(x, LOG);
 				final String s = String.format("%s* %s;", z, target_name);
 				return Operation2.success(new EG_SingleStatement(s, null));
 			case USER:
@@ -559,7 +559,7 @@ public class Generate_Code_For_Method {
 					if (((NormalTypeName) typeName).getName().equals("Any"))
 						z2 = "void *"; // TODO Technically this is wrong
 					else
-						z2 = GenerateC.GetTypeName.forTypeName(typeName, gc.errSink);
+						z2 = GetTypeName.forTypeName(typeName, gc.errSink);
 					final String s1 = String.format("%s %s;", z2, target_name);
 					return Operation2.success(new EG_SingleStatement(s1, null));
 				}
@@ -732,7 +732,7 @@ public class Generate_Code_For_Method {
 		final CClassDecl decl = new CClassDecl(x);
 		decl.evaluatePrimitive();
 
-		final String class_name = GenerateC.GetTypeName.forGenClass(x);
+		final String class_name = GetTypeName.forGenClass(x);
 		final int class_code = x.getCode();
 
 		assert gf.cd != null;
@@ -864,7 +864,7 @@ public class Generate_Code_For_Method {
 			final List<String> args_list = gf.vte_list.stream().filter(input -> input.vtt == VariableTableType.ARG)
 
 					// rule=vte:args_at
-					.map(input -> String.format("%s va%s", GenerateC.GetTypeName.forVTE(input), input.getName()))
+					.map(input -> String.format("%s va%s", GetTypeName.forVTE(input), input.getName()))
 					.collect(Collectors.toList());
 			final EG_Statement args = new EG_DottedStatement(", ", args_list, new EX_Rule(rule));
 
@@ -907,7 +907,7 @@ public class Generate_Code_For_Method {
 				final GeneratedClass st = (GeneratedClass) parent;
 
 				@NotNull
-				final C_HeaderString chs = C_HeaderString.forClass(st, () -> GenerateC.GetTypeName.forGenClass(st),
+				final C_HeaderString chs = C_HeaderString.forClass(st, () -> GetTypeName.forGenClass(st),
 						return_type, name, args_string, LOG);
 
 				result = chs.getResult();
@@ -916,7 +916,7 @@ public class Generate_Code_For_Method {
 
 				@NotNull
 				final C_HeaderString chs = C_HeaderString.forNamespace(st,
-						() -> GenerateC.GetTypeName.forGenNamespace(st), return_type, name, args_string, LOG);
+                                                                       () -> GetTypeName.forGenNamespace(st), return_type, name, args_string, LOG);
 				result = chs.getResult();
 			} else {
 				@NotNull
