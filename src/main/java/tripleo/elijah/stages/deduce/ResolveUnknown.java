@@ -8,49 +8,50 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.diagnostic.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.diagnostic.Diagnostic;
+import tripleo.elijah.diagnostic.Locatable;
 
-import java.io.*;
-import java.util.*;
+import java.io.PrintStream;
+import java.util.List;
 
 /**
  * Created 9/9/21 6:25 AM
  */
 public class ResolveUnknown implements Diagnostic {
-	@Override
-	public @NotNull String code() {
-		return "E1003";
-	}
+    @Override
+    public @NotNull String code() {
+        return "E1003";
+    }
 
-	@Override
-	public @NotNull Severity severity() {
-		return Severity.ERROR;
-	}
+    @Override
+    public @NotNull Severity severity() {
+        return Severity.ERROR;
+    }
 
-	@Override
-	public @NotNull Locatable primary() {
-		return null;
-	}
+    @Override
+    public @NotNull Locatable primary() {
+        return null;
+    }
 
-	@Override
-	public @NotNull List<Locatable> secondary() {
-		return null;
-	}
+    @Override
+    public @NotNull List<Locatable> secondary() {
+        return null;
+    }
 
-	@Override
-	public void report(@NotNull final PrintStream stream) {
-		stream.printf("---[%s]---: %s%n", code(), message());
-		// linecache.print(primary);
-		for (final Locatable sec : secondary()) {
-			// linecache.print(sec)
-		}
-		stream.flush();
-	}
+    @Override
+    public void report(@NotNull final PrintStream stream) {
+        stream.printf("---[%s]---: %s%n", code(), message());
+        // linecache.print(primary);
+        for (final Locatable sec : secondary()) {
+            // linecache.print(sec)
+        }
+        stream.flush();
+    }
 
-	private @NotNull String message() {
-		return "Can't resolve variable";
-	}
+    private @NotNull String message() {
+        return "Can't resolve variable";
+    }
 }
 
 //

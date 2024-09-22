@@ -9,13 +9,13 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.gen_fn.GeneratedFunction;
 
 /**
  * Created 11/27/21 3:31 PM
  */
 public interface FunctionMapDeferred {
-	void onNotify(GeneratedFunction aGeneratedFunction);
+    void onNotify(GeneratedFunction aGeneratedFunction);
 }
 
 //

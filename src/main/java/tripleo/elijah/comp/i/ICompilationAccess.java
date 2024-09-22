@@ -10,21 +10,21 @@ import tripleo.elijah_remnant.startup.ProlificStartup2;
 import java.util.List;
 
 public interface ICompilationAccess {
-	void setPipelineLogic(final PipelineLogic pl);
+    void setPipelineLogic(final PipelineLogic pl);
 
-//	void addPipeline(final PipelineMember pl);
+    //	void addPipeline(final PipelineMember pl);
 
-	ElLog.Verbosity testSilence();
+    ElLog.Verbosity testSilence();
 
-	Compilation getCompilation();
+    Compilation getCompilation();
 
-	void writeLogs();
+    void writeLogs();
 
-	List<FunctionMapHook> functionMapHooks();
+    List<FunctionMapHook> functionMapHooks();
 
-//	Pipeline pipelines();
+    //	Pipeline pipelines();
 
-	Stages getStage();
+    Stages getStage();
 
-	ProlificStartup2 getStartup();
+    ProlificStartup2 getStartup();
 }

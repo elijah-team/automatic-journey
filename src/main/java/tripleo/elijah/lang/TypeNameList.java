@@ -9,40 +9,41 @@
  */
 package tripleo.elijah.lang;
 
-import com.google.common.base.*;
-import com.google.common.collect.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah_fluffy.util.*;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah_fluffy.util.Helpers;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class TypeNameList {
 
-	final List<TypeName> p = new ArrayList<TypeName>();
+    final List<TypeName> p = new ArrayList<TypeName>();
 
-	public void add(final TypeName tn) {
-		p.add(tn);
-	}
+    public void add(final TypeName tn) {
+        p.add(tn);
+    }
 
-	public TypeName get(final int index) {
-		return p.get(index);
-	}
+    public TypeName get(final int index) {
+        return p.get(index);
+    }
 
-	public int size() {
-		return p.size();
-	}
+    public int size() {
+        return p.size();
+    }
 
-	@Override
-	public String toString() {
-		return Helpers.String_join(", ", Collections2.transform(p, new Function<TypeName, String>() {
-			@Nullable
-			@Override
-			public String apply(@Nullable final TypeName input) {
-				assert input != null;
-				return input.toString();
-			}
-		}));
-	}
+    @Override
+    public String toString() {
+        return Helpers.String_join(", ", Collections2.transform(p, new Function<TypeName, String>() {
+            @Nullable
+            @Override
+            public String apply(@Nullable final TypeName input) {
+                assert input != null;
+                return input.toString();
+            }
+        }));
+    }
 }
 
 //

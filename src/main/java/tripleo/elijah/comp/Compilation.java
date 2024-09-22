@@ -15,8 +15,8 @@ import tripleo.elijah.comp.i.CompilerController;
 import tripleo.elijah.comp.i.ErrSink;
 import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.i._Inputter2;
-import tripleo.elijah.comp.internal.EDR_CompilationBus;
 import tripleo.elijah.comp.internal.EDR_CIS;
+import tripleo.elijah.comp.internal.EDR_CompilationBus;
 import tripleo.elijah.comp.internal.EDR_CompilationRunner;
 import tripleo.elijah.comp.internal.EDR_MOD;
 import tripleo.elijah.lang.ClassStatement;
@@ -43,130 +43,134 @@ import java.util.List;
 
 public interface Compilation {
 
-	static ElLog.Verbosity gitlabCIVerbosity() {
-		final boolean gitlab_ci = isGitlab_ci();
-		return gitlab_ci ? ElLog.Verbosity.SILENT : ElLog.Verbosity.VERBOSE;
-	}
+    static ElLog.Verbosity gitlabCIVerbosity() {
+        final boolean gitlab_ci = isGitlab_ci();
+        return gitlab_ci ? ElLog.Verbosity.SILENT : ElLog.Verbosity.VERBOSE;
+    }
 
-	static boolean isGitlab_ci() {
-		return System.getenv("GITLAB_CI") != null;
-	}
+    static boolean isGitlab_ci() {
+        return System.getenv("GITLAB_CI") != null;
+    }
 
-	void testMapHooks(List<IFunctionMapHook> aMapHooks);
+    void testMapHooks(List<IFunctionMapHook> aMapHooks);
 
-	ICompilationAccess _access();
+    ICompilationAccess _access();
 
-	void feedCmdLine(@NotNull List<String> args);
+    void feedCmdLine(@NotNull List<String> args);
 
-	void feedCmdLine(@NotNull List<String> args1, CompilerController ctl);
+    void feedCmdLine(@NotNull List<String> args1, CompilerController ctl);
 
-	String getProjectName();
+    String getProjectName();
 
-	CM_Module realParseElijjahFile(String f, @NotNull File file, boolean do_out);
+    CM_Module realParseElijjahFile(String f, @NotNull File file, boolean do_out);
 
-	void pushItem(CompilerInstructions aci);
+    void pushItem(CompilerInstructions aci);
 
-	List<ClassStatement> findClass(String string);
+    List<ClassStatement> findClass(String string);
 
-	void use(@NotNull CompilerInstructions compilerInstructions, boolean do_out) throws Exception;
+    void use(@NotNull CompilerInstructions compilerInstructions, boolean do_out) throws Exception;
 
-	int errorCount();
+    int errorCount();
 
-	ErrSink getErrSink();
+    ErrSink getErrSink();
 
-	IO getIO();
+    IO getIO();
 
-	void addModule(OS_Module module, String fn);
+    void addModule(OS_Module module, String fn);
 
-	OS_Module fileNameToModule(String fileName);
+    OS_Module fileNameToModule(String fileName);
 
-	boolean getSilence();
+    boolean getSilence();
 
-	tripleo.elijah.util.Operation2<OS_Module> findPrelude(String prelude_name);
+    tripleo.elijah.util.Operation2<OS_Module> findPrelude(String prelude_name);
 
-	void addFunctionMapHook(FunctionMapHook aFunctionMapHook);
+    void addFunctionMapHook(FunctionMapHook aFunctionMapHook);
 
-	@NotNull DeducePhase getDeducePhase();
+    @NotNull
+    DeducePhase getDeducePhase();
 
-	int nextClassCode();
+    int nextClassCode();
 
-	int nextFunctionCode();
+    int nextFunctionCode();
 
-	OS_Package getPackage(@NotNull Qualident pkg_name);
+    OS_Package getPackage(@NotNull Qualident pkg_name);
 
-	OS_Package makePackage(Qualident pkg_name);
+    OS_Package makePackage(Qualident pkg_name);
 
-	int compilationNumber();
+    int compilationNumber();
 
-	String getCompilationNumberString();
+    String getCompilationNumberString();
 
-	@Deprecated
-	int modules_size();
+    @Deprecated
+    int modules_size();
 
-	@NotNull EOT_OutputTree getOutputTree();
+    @NotNull
+    EOT_OutputTree getOutputTree();
 
-	@NotNull FluffyComp getFluffy();
+    @NotNull
+    FluffyComp getFluffy();
 
-	ProlificStartup2 getStartup();
+    ProlificStartup2 getStartup();
 
-	ElValue<EDR_CompilationBus> get_cb();
+    ElValue<EDR_CompilationBus> get_cb();
 
-	@NotNull List<GeneratedNode> getLGC();
+    @NotNull
+    List<GeneratedNode> getLGC();
 
-	boolean isPackage(String aPackageName);
+    boolean isPackage(String aPackageName);
 
-	Pipeline getPipelines();
+    Pipeline getPipelines();
 
-	ModuleBuilder moduleBuilder();
+    ModuleBuilder moduleBuilder();
 
-	Finally reports();
+    Finally reports();
 
-	void signal(@NotNull CSS2_Signal signal, Object payload);
+    void signal(@NotNull CSS2_Signal signal, Object payload);
 
-	void register(Object registerable);
+    void register(Object registerable);
 
-	World world();
+    World world();
 
-	Operation<CM_Prelude> findPrelude2(@NotNull CM_Preludes aPreludeTag);
+    Operation<CM_Prelude> findPrelude2(@NotNull CM_Preludes aPreludeTag);
 
-	Eventual<File> comp_dir_promise();
+    Eventual<File> comp_dir_promise();
 
-	ICompilationAccess _compilationAccess();
+    ICompilationAccess _compilationAccess();
 
-	@SuppressWarnings("UnusedReturnValue")
-	<T, U> File inputFile(File aDirectory, String aFileName, _Inputter2<CompilerInstructions> func);
+    @SuppressWarnings("UnusedReturnValue")
+    <T, U> File inputFile(File aDirectory, String aFileName, _Inputter2<CompilerInstructions> func);
 
-	List<ElLog> getElLogs();
+    List<ElLog> getElLogs();
 
-	CompilationConfig getCfg();
+    CompilationConfig getCfg();
 
-	EDR_CIS get_cis();
+    EDR_CIS get_cis();
 
-	DefaultLivingRepo get_repo();
+    DefaultLivingRepo get_repo();
 
-	EDR_MOD getMod();
+    EDR_MOD getMod();
 
-	PipelineLogic getPipelineLogic();
+    PipelineLogic getPipelineLogic();
 
-	void setPipelineLogic(PipelineLogic aPipelineLogic);
+    void setPipelineLogic(PipelineLogic aPipelineLogic);
 
-	CompilerInstructionsObserver get_cio();
+    CompilerInstructionsObserver get_cio();
 
-	void set_cio(CompilerInstructionsObserver a_cio);
+    void set_cio(CompilerInstructionsObserver a_cio);
 
-	EDR_CompilationRunner get__cr();
+    EDR_CompilationRunner get__cr();
 
-	void set__cr(EDR_CompilationRunner a__cr);
+    void set__cr(EDR_CompilationRunner a__cr);
 
-	void writeLogs(final @NotNull List<ElLog> aLogs);
+    void writeLogs(final @NotNull List<ElLog> aLogs);
 
-	void hasInstructions(List<CompilerInstructions> l);
+    void hasInstructions(List<CompilerInstructions> l);
 
-	class World {
-		public void subscribeLgc(DoneCallback<CWS_LGC> consumer) {
-//		lgcsub.
-		}
-	}
+    class World {
+        public void subscribeLgc(DoneCallback<CWS_LGC> consumer) {
+            //		lgcsub.
+        }
+    }
 }
 
 //

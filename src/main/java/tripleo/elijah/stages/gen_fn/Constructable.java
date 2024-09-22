@@ -9,19 +9,19 @@
 
 package tripleo.elijah.stages.gen_fn;
 
-import org.jdeferred2.*;
+import org.jdeferred2.Promise;
 
 /**
  * Created 4/13/21 11:43 AM
  */
 public interface Constructable {
-	void setConstructable(ProcTableEntry aPte);
+    void setConstructable(ProcTableEntry aPte);
 
-	void resolveTypeToClass(GeneratedNode aNode);
+    void resolveTypeToClass(GeneratedNode aNode);
 
-	void setGenType(GenType aGenType);
+    void setGenType(GenType aGenType);
 
-	Promise<ProcTableEntry, Void, Void> constructablePromise();
+    Promise<ProcTableEntry, Void, Void> constructablePromise();
 }
 
 //

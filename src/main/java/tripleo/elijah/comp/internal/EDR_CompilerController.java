@@ -7,9 +7,9 @@ import tripleo.elijah.comp.i.CompilerController;
 import java.util.List;
 
 public class EDR_CompilerController extends _CompilerControllerBase implements CompilerController {
-	@Override
-	public void setInputs(Compilation aCompilation, List<String> aArgumentList) {
-		c = aCompilation;
-		args = aArgumentList;
-	}
+    @Override
+    public void setInputs(Compilation aCompilation, List<String> aArgumentList) {
+        c = aCompilation;
+        args = aArgumentList;
+    }
 }

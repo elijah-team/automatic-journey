@@ -1,18 +1,19 @@
 package tripleo.elijah.stages.gen_generic;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.nextgen.model.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.work.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.nextgen.model.SM_Node;
+import tripleo.elijah.stages.gen_fn.GeneratedNode;
+import tripleo.elijah.work.WorkManager;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
 public interface GenerateFiles extends CodeGenerator {
 
-	GenerateResult generateCode(final @NotNull Collection<GeneratedNode> aNodeCollection,
-			final @NotNull WorkManager aWorkManager);
+    GenerateResult generateCode(
+            final @NotNull Collection<GeneratedNode> aNodeCollection, final @NotNull WorkManager aWorkManager);
 
-	void forNode(final SM_Node aNode);
+    void forNode(final SM_Node aNode);
 
-	GenerateResult resultsFromNodes(List<GeneratedNode> aNodes, WorkManager aWm);
+    GenerateResult resultsFromNodes(List<GeneratedNode> aNodes, WorkManager aWm);
 }

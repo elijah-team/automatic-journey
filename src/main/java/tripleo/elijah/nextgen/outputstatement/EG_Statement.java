@@ -8,7 +8,7 @@ package tripleo.elijah.nextgen.outputstatement;
  * @author Tripleo Nova
  */
 public interface EG_Statement {
-	String getText();
+    String getText();
 
-	EX_Explanation getExplanation();
+    EX_Explanation getExplanation();
 }

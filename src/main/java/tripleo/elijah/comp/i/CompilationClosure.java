@@ -4,9 +4,9 @@ import tripleo.elijah.comp.Compilation;
 import tripleo.elijah.comp.IO;
 
 public interface CompilationClosure {
-	ErrSink errSink();
+    ErrSink errSink();
 
-	Compilation getCompilation();
+    Compilation getCompilation();
 
-	IO io();
+    IO io();
 }

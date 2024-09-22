@@ -8,144 +8,146 @@
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.diagnostic.*;
-import tripleo.elijah.lang2.*;
-import tripleo.elijah.stages.deduce.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.diagnostic.Locatable;
+import tripleo.elijah.lang2.ElElementVisitor;
+import tripleo.elijah.stages.deduce.DeduceTypeWatcher;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 
 // Referenced classes of package pak:
 //			TypeRef, IExpression
 
 public class VariableStatement implements OS_Element, @NotNull Locatable {
 
-	private final VariableSequence _parent;
-	public DeduceTypeWatcher dtw;
-	@Nullable
-	List<AnnotationClause> annotations = null;
-	private TypeName typeName = new VariableTypeName();
-	private IExpression initialValue = IExpression.UNASSIGNED;
-	private IdentExpression name;
-	private TypeModifiers typeModifiers;
+    private final VariableSequence _parent;
+    public DeduceTypeWatcher dtw;
 
-	public VariableStatement(final VariableSequence aSequence) {
-		_parent = aSequence;
-	}
+    @Nullable
+    List<AnnotationClause> annotations = null;
 
-	public String getName() {
-		return name.getText();
-	}
+    private TypeName typeName = new VariableTypeName();
+    private IExpression initialValue = IExpression.UNASSIGNED;
+    private IdentExpression name;
+    private TypeModifiers typeModifiers;
 
-	public void setName(final IdentExpression s) {
-		name = s;
-	}
+    public VariableStatement(final VariableSequence aSequence) {
+        _parent = aSequence;
+    }
 
-	public IdentExpression getNameToken() {
-		return name;
-	}
+    public String getName() {
+        return name.getText();
+    }
 
-	public void initial(@NotNull final IExpression aExpr) {
-		initialValue = aExpr;
-	}
+    public void setName(final IdentExpression s) {
+        name = s;
+    }
 
-	public void set(final TypeModifiers y) {
-		typeModifiers = y;
-	}
+    public IdentExpression getNameToken() {
+        return name;
+    }
 
-	public TypeModifiers getTypeModifiers() {
-		return typeModifiers;
-	}
+    public void initial(@NotNull final IExpression aExpr) {
+        initialValue = aExpr;
+    }
 
-	@NotNull
-	public TypeName typeName() {
-		return typeName;
-	}
+    public void set(final TypeModifiers y) {
+        typeModifiers = y;
+    }
 
-	public void setTypeName(@NotNull final TypeName tn) {
-		typeName = tn;
-	}
+    public TypeModifiers getTypeModifiers() {
+        return typeModifiers;
+    }
 
-	@NotNull
-	public IExpression initialValue() {
-		return initialValue;
-	}
+    @NotNull
+    public TypeName typeName() {
+        return typeName;
+    }
 
-	@Override
-	public void visitGen(final ElElementVisitor visit) {
-		visit.visitVariableStatement(this);
-	}
+    public void setTypeName(@NotNull final TypeName tn) {
+        typeName = tn;
+    }
 
-	@Override
-	public Context getContext() {
-		return getParent().getContext();
-	}
+    @NotNull
+    public IExpression initialValue() {
+        return initialValue;
+    }
 
-	// region annotations
+    @Override
+    public void visitGen(final ElElementVisitor visit) {
+        visit.visitVariableStatement(this);
+    }
 
-	@Override
-	public OS_Element getParent() {
-		return _parent;
-	}
+    @Override
+    public Context getContext() {
+        return getParent().getContext();
+    }
 
-	public void addAnnotation(final AnnotationClause a) {
-		if (annotations == null)
-			annotations = new ArrayList<AnnotationClause>();
-		annotations.add(a);
-	}
+    // region annotations
 
-	public void walkAnnotations(final AnnotationWalker annotationWalker) {
-		if (_parent.annotations != null) {
-			for (final AnnotationClause annotationClause : _parent.annotations) {
-				for (final AnnotationPart annotationPart : annotationClause.aps) {
-					annotationWalker.annotation(annotationPart);
-				}
-			}
-		}
-		if (annotations == null)
-			return;
-		for (final AnnotationClause annotationClause : annotations) {
-			for (final AnnotationPart annotationPart : annotationClause.aps) {
-				annotationWalker.annotation(annotationPart);
-			}
-		}
-	}
+    @Override
+    public OS_Element getParent() {
+        return _parent;
+    }
 
-	// endregion
+    public void addAnnotation(final AnnotationClause a) {
+        if (annotations == null) annotations = new ArrayList<AnnotationClause>();
+        annotations.add(a);
+    }
 
-	// region Locatable
+    public void walkAnnotations(final AnnotationWalker annotationWalker) {
+        if (_parent.annotations != null) {
+            for (final AnnotationClause annotationClause : _parent.annotations) {
+                for (final AnnotationPart annotationPart : annotationClause.aps) {
+                    annotationWalker.annotation(annotationPart);
+                }
+            }
+        }
+        if (annotations == null) return;
+        for (final AnnotationClause annotationClause : annotations) {
+            for (final AnnotationPart annotationPart : annotationClause.aps) {
+                annotationWalker.annotation(annotationPart);
+            }
+        }
+    }
 
-	@Override
-	public int getLine() {
-		// TODO what about annotations
-		return name.getLine();
-	}
+    // endregion
 
-	@Override
-	public int getColumn() {
-		// TODO what about annotations
-		return name.getColumn();
-	}
+    // region Locatable
 
-	@Override
-	public int getLineEnd() {
-		// TODO what about initialValue
-		return name.getLineEnd();
-	}
+    @Override
+    public int getLine() {
+        // TODO what about annotations
+        return name.getLine();
+    }
 
-	@Override
-	public int getColumnEnd() {
-		// TODO what about initialValue
-		return name.getColumnEnd();
-	}
+    @Override
+    public int getColumn() {
+        // TODO what about annotations
+        return name.getColumn();
+    }
 
-	@Override
-	public File getFile() {
-		return name.getFile();
-	}
+    @Override
+    public int getLineEnd() {
+        // TODO what about initialValue
+        return name.getLineEnd();
+    }
 
-	// endregion
+    @Override
+    public int getColumnEnd() {
+        // TODO what about initialValue
+        return name.getColumnEnd();
+    }
+
+    @Override
+    public File getFile() {
+        return name.getFile();
+    }
+
+    // endregion
 }
 
 //

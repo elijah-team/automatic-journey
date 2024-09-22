@@ -21,123 +21,123 @@ import java.util.*;
  */
 public class FuncExpr extends BaseFunctionDef implements IExpression, OS_Element {
 
-	// private FormalArgList argList = new FormalArgList();
-	private TypeName _returnType;
-	private OS_Type _type;
-	private FuncExprContext _ctx;
-//	private Scope3 scope3;
+    // private FormalArgList argList = new FormalArgList();
+    private TypeName _returnType;
+    private OS_Type _type;
+    private FuncExprContext _ctx;
+    //	private Scope3 scope3;
 
-	public void type(final TypeModifiers modifier) {
-		assert modifier == TypeModifiers.FUNCTION || modifier == TypeModifiers.PROCEDURE;
-	}
+    public void type(final TypeModifiers modifier) {
+        assert modifier == TypeModifiers.FUNCTION || modifier == TypeModifiers.PROCEDURE;
+    }
 
-	public TypeName returnType() {
-		return _returnType;
-	}
+    public TypeName returnType() {
+        return _returnType;
+    }
 
-	public void setReturnType(final TypeName tn) {
-		_returnType = tn;
-	}
+    public void setReturnType(final TypeName tn) {
+        _returnType = tn;
+    }
 
-//	public List<FunctionItem> getItems() {
-//		List<FunctionItem> collection = new ArrayList<FunctionItem>();
-//		for (OS_Element element : scope3.items()) {
-//			if (element instanceof FunctionItem)
-//				collection.add((FunctionItem) element);
-//		}
-//		return collection;
-////		return items;
-//	}
+    //	public List<FunctionItem> getItems() {
+    //		List<FunctionItem> collection = new ArrayList<FunctionItem>();
+    //		for (OS_Element element : scope3.items()) {
+    //			if (element instanceof FunctionItem)
+    //				collection.add((FunctionItem) element);
+    //		}
+    //		return collection;
+    ////		return items;
+    //	}
 
-	@Override
-	public List<FormalArgListItem> getArgs() {
-		return mFal.falis;
-	}
+    @Override
+    public List<FormalArgListItem> getArgs() {
+        return mFal.falis;
+    }
 
-	@Override
-	public OS_Element getParent() {
-//		throw new NotImplementedException();
-		return null; // getContext().getParent().carrier() except if it is an Expression; but
-						// Expression is not an Element
-	}
+    @Override
+    public OS_Element getParent() {
+        //		throw new NotImplementedException();
+        return null; // getContext().getParent().carrier() except if it is an Expression; but
+        // Expression is not an Element
+    }
 
-	// region arglist
+    // region arglist
 
-	@Override
-	public Context getContext() {
-		return _ctx;
-	}
+    @Override
+    public Context getContext() {
+        return _ctx;
+    }
 
-	public void setContext(final FuncExprContext ctx) {
-		_ctx = ctx;
-	}
+    public void setContext(final FuncExprContext ctx) {
+        _ctx = ctx;
+    }
 
-	// endregion
+    // endregion
 
-	@Override
-	public void postConstruct() {
-		// nop
-	}
+    @Override
+    public void postConstruct() {
+        // nop
+    }
 
-	public void setArgList(final FormalArgList argList) {
-		mFal = argList;
-	}
+    public void setArgList(final FormalArgList argList) {
+        mFal = argList;
+    }
 
-	/****** FOR IEXPRESSION ******/
-	@Override
-	public ExpressionKind getKind() {
-		return ExpressionKind.FUNC_EXPR;
-	}
+    /****** FOR IEXPRESSION ******/
+    @Override
+    public ExpressionKind getKind() {
+        return ExpressionKind.FUNC_EXPR;
+    }
 
-	@Override
-	public void setKind(final ExpressionKind aKind) {
-		throw new NotImplementedException();
-	}
+    @Override
+    public void setKind(final ExpressionKind aKind) {
+        throw new NotImplementedException();
+    }
 
-	@Override
-	public IExpression getLeft() {
-		return null;
-	}
+    @Override
+    public IExpression getLeft() {
+        return null;
+    }
 
-	@Override
-	public void setLeft(final IExpression iexpression) {
-		throw new NotImplementedException();
-	}
+    @Override
+    public void setLeft(final IExpression iexpression) {
+        throw new NotImplementedException();
+    }
 
-	@Override
-	public String repr_() {
-		return null;
-	}
+    @Override
+    public String repr_() {
+        return null;
+    }
 
-	@Override
-	public boolean is_simple() {
-		return false;
-	}
+    @Override
+    public boolean is_simple() {
+        return false;
+    }
 
-	@Override
-	public OS_Type getType() {
-		return _type;
-	}
+    @Override
+    public OS_Type getType() {
+        return _type;
+    }
 
-	/************* FOR THE OTHER ONE ******************/
-	@Override
-	public void setType(final OS_Type deducedExpression) {
-		_type = deducedExpression;
-	}
+    /************* FOR THE OTHER ONE ******************/
+    @Override
+    public void setType(final OS_Type deducedExpression) {
+        _type = deducedExpression;
+    }
 
-	@Override
-	public void visitGen(final ElElementVisitor visit) {
-		visit.visitFuncExpr(this);
-	}
+    @Override
+    public void visitGen(final ElElementVisitor visit) {
+        visit.visitFuncExpr(this);
+    }
 
-	public Scope3 getScope() {
-		return scope3;
-	}
+    public Scope3 getScope() {
+        return scope3;
+    }
 
-//	@Override
-//	public void scope(Scope3 sco) {
-//		scope3 = sco;
-//	}
+    //	@Override
+    //	public void scope(Scope3 sco) {
+    //		scope3 = sco;
+    //	}
 
 }
 

@@ -9,36 +9,37 @@
  */
 package tripleo.elijah.work;
 
-import com.google.common.collect.*;
+import com.google.common.collect.ImmutableList;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created 4/26/21 4:24 AM
  */
 public class WorkList {
-	private final List<WorkJob> jobs = new ArrayList<>();
-	private boolean _done;
+    private final List<WorkJob> jobs = new ArrayList<>();
+    private boolean _done;
 
-	public void addJob(final WorkJob aJob) {
-		jobs.add(aJob);
-	}
+    public void addJob(final WorkJob aJob) {
+        jobs.add(aJob);
+    }
 
-	public boolean isDone() {
-		return _done;
-	}
+    public boolean isDone() {
+        return _done;
+    }
 
-	public void setDone() {
-		_done = true;
-	}
+    public void setDone() {
+        _done = true;
+    }
 
-	public boolean isEmpty() {
-		return jobs.size() == 0;
-	}
+    public boolean isEmpty() {
+        return jobs.size() == 0;
+    }
 
-	public ImmutableList<WorkJob> getJobs() {
-		return ImmutableList.copyOf(jobs);
-	}
+    public ImmutableList<WorkJob> getJobs() {
+        return ImmutableList.copyOf(jobs);
+    }
 }
 
 //

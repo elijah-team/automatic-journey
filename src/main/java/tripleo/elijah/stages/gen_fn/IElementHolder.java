@@ -8,13 +8,13 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.OS_Element;
 
 /**
  * Created 6/30/21 2:30 AM
  */
 public interface IElementHolder {
-	OS_Element getElement();
+    OS_Element getElement();
 }
 
 //

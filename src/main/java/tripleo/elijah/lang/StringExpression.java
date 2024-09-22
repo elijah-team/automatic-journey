@@ -8,68 +8,68 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.*;
-import tripleo.elijah_fluffy.util.*;
+import antlr.Token;
+import tripleo.elijah_fluffy.util.Helpers;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 public class StringExpression extends AbstractExpression {
 
-	OS_Type _type;
-	private String repr_;
+    OS_Type _type;
+    private String repr_;
 
-	public StringExpression(final Token g) { // TODO List<Token>
-		set(g.getText());
-	}
+    public StringExpression(final Token g) { // TODO List<Token>
+        set(g.getText());
+    }
 
-	public void set(final String g) {
-		repr_ = g;
-	}
+    public void set(final String g) {
+        repr_ = g;
+    }
 
-	@Override
-	public boolean is_simple() {
-		return true;
-	}
+    @Override
+    public boolean is_simple() {
+        return true;
+    }
 
-	@Override
-	public OS_Type getType() {
-		return _type;
-	}
+    @Override
+    public OS_Type getType() {
+        return _type;
+    }
 
-	@Override
-	public void setType(final OS_Type deducedExpression) {
-		_type = deducedExpression;
-	}
+    @Override
+    public void setType(final OS_Type deducedExpression) {
+        _type = deducedExpression;
+    }
 
-	@Override
-	public IExpression getLeft() {
-//		assert false;
-//		return this;
-		throw new NotImplementedException();
-	}
+    @Override
+    public IExpression getLeft() {
+        //		assert false;
+        //		return this;
+        throw new NotImplementedException();
+    }
 
-	@Override
-	public ExpressionKind getKind() {
-		return ExpressionKind.STRING_LITERAL;
-	}
+    @Override
+    public void setLeft(final IExpression iexpression) {
+        throw new IllegalArgumentException("Should use set()");
+    }
 
-	@Override
-	public String repr_() {
-		return repr_;
-	}
+    @Override
+    public ExpressionKind getKind() {
+        return ExpressionKind.STRING_LITERAL;
+    }
 
-	@Override
-	public void setLeft(final IExpression iexpression) {
-		throw new IllegalArgumentException("Should use set()");
-	}
+    @Override
+    public String repr_() {
+        return repr_;
+    }
 
-	public String getText() {
-		return Helpers.remove_single_quotes_from_string(repr_); // TODO wont work with triple quoted string
-	}
+    public String getText() {
+        return Helpers.remove_single_quotes_from_string(repr_); // TODO wont work with triple quoted string
+    }
 
-	@Override
-	public String toString() {
-		return String.format("<StringExpression %s>", repr_);
-	}
-
+    @Override
+    public String toString() {
+        return String.format("<StringExpression %s>", repr_);
+    }
 }
 
 //

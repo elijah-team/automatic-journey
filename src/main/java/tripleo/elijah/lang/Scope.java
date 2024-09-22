@@ -10,21 +10,21 @@ package tripleo.elijah.lang;
 
 public interface Scope extends Documentable {
 
-	void add(StatementItem aItem);
+    void add(StatementItem aItem);
 
-	void statementWrapper(IExpression aExpr);
+    void statementWrapper(IExpression aExpr);
 
-	StatementClosure statementClosure();
+    StatementClosure statementClosure();
 
-	BlockStatement blockStatement();
+    BlockStatement blockStatement();
 
-	TypeAliasStatement typeAlias();
+    TypeAliasStatement typeAlias();
 
-	InvariantStatement invariantStatement();
+    InvariantStatement invariantStatement();
 
-	OS_Element getParent();
+    OS_Element getParent();
 
-	OS_Element getElement();
+    OS_Element getElement();
 }
 
 //

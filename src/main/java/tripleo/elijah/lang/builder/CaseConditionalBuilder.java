@@ -10,62 +10,62 @@ package tripleo.elijah.lang.builder;
 
 import tripleo.elijah.lang.*;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created 12/23/20 5:50 AM
  */
 public class CaseConditionalBuilder extends ElBuilder {
-	private final List<Part> parts = new ArrayList<Part>();
-	private Context _context;
-	private IExpression expr;
-	private BaseScope baseScope;
+    private final List<Part> parts = new ArrayList<Part>();
+    private Context _context;
+    private IExpression expr;
+    private BaseScope baseScope;
 
-	@Override
-	protected CaseConditional build() {
-		final CaseConditional caseConditional = new CaseConditional(_parent, _context);
-		caseConditional.expr(expr);
-		for (final Part part : parts) {
-			final Scope3 scope3 = new Scope3(caseConditional);
-			for (final ElBuilder item : part.scope.items()) {
-				item.setParent(caseConditional);
-				item.setContext(caseConditional.getContext());
-				final OS_Element built = item.build();
-				scope3.add(built);
-			}
-//			Scope sc = caseConditional.scope(part.expr);
-			caseConditional.addScopeFor(part.expr, scope3);
-		}
-		caseConditional.postConstruct();
-		return caseConditional;
-	}
+    @Override
+    protected CaseConditional build() {
+        final CaseConditional caseConditional = new CaseConditional(_parent, _context);
+        caseConditional.expr(expr);
+        for (final Part part : parts) {
+            final Scope3 scope3 = new Scope3(caseConditional);
+            for (final ElBuilder item : part.scope.items()) {
+                item.setParent(caseConditional);
+                item.setContext(caseConditional.getContext());
+                final OS_Element built = item.build();
+                scope3.add(built);
+            }
+            //			Scope sc = caseConditional.scope(part.expr);
+            caseConditional.addScopeFor(part.expr, scope3);
+        }
+        caseConditional.postConstruct();
+        return caseConditional;
+    }
 
-	@Override
-	protected void setContext(final Context context) {
-		_context = context;
-	}
+    @Override
+    protected void setContext(final Context context) {
+        _context = context;
+    }
 
-	public void expr(final IExpression expr) {
-		this.expr = expr;
-	}
+    public void expr(final IExpression expr) {
+        this.expr = expr;
+    }
 
-	public BaseScope scope(final IExpression expr) {
-		final BaseScope baseScope = new BaseScope() {
-		};
-		final Part p = new Part(expr, baseScope);
-		parts.add(p);
-		return baseScope;
-	}
+    public BaseScope scope(final IExpression expr) {
+        final BaseScope baseScope = new BaseScope() {};
+        final Part p = new Part(expr, baseScope);
+        parts.add(p);
+        return baseScope;
+    }
 
-	class Part {
-		IExpression expr;
-		BaseScope scope;
+    class Part {
+        IExpression expr;
+        BaseScope scope;
 
-		public Part(final IExpression expr, final BaseScope baseScope) {
-			this.expr = expr;
-			this.scope = baseScope;
-		}
-	}
+        public Part(final IExpression expr, final BaseScope baseScope) {
+            this.expr = expr;
+            this.scope = baseScope;
+        }
+    }
 }
 
 //

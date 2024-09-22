@@ -13,7 +13,7 @@ package tripleo.elijah.comp.i;
  * Created 8/21/21 10:10 PM
  */
 public interface PipelineMember {
-	void run() throws Exception;
+    void run() throws Exception;
 }
 
 //

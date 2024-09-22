@@ -15,34 +15,32 @@ package tripleo.elijah.lang;
  */
 public class TypeCastExpression extends AbstractExpression implements IExpression {
 
-	TypeName tn;
+    TypeName tn;
 
-	@Override
-	public boolean is_simple() {
-		return false;
-	}
+    @Override
+    public boolean is_simple() {
+        return false;
+    }
 
-	@Override
-	public OS_Type getType() {
-		return null;
-	}
+    @Override
+    public OS_Type getType() {
+        return null;
+    }
 
-	@Override
-	public void setType(final OS_Type deducedExpression) {
+    @Override
+    public void setType(final OS_Type deducedExpression) {}
 
-	}
+    public TypeName typeName() {
+        return tn;
+    }
 
-	public TypeName typeName() {
-		return tn;
-	}
+    public TypeName getTypeName() {
+        return tn;
+    }
 
-	public TypeName getTypeName() {
-		return tn;
-	}
-
-	public void setTypeName(final TypeName typeName) {
-		tn = typeName;
-	}
+    public void setTypeName(final TypeName typeName) {
+        tn = typeName;
+    }
 }
 
 //

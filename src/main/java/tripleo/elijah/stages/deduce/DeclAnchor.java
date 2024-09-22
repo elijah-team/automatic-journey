@@ -9,33 +9,38 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.OS_Element;
 
 /**
  * Created 1/3/22 10:31 PM
  */
 public class DeclAnchor {
-	final AnchorType anchorType;
-	final OS_Element element;
-	private IInvocation invocation;
+    final AnchorType anchorType;
+    final OS_Element element;
+    private IInvocation invocation;
 
-	public DeclAnchor(final OS_Element aElement, final AnchorType aAnchorType) {
-		anchorType = aAnchorType;
-		element = aElement;
-	}
+    public DeclAnchor(final OS_Element aElement, final AnchorType aAnchorType) {
+        anchorType = aAnchorType;
+        element = aElement;
+    }
 
-	public IInvocation getInvocation() {
-		return invocation;
-	}
+    public IInvocation getInvocation() {
+        return invocation;
+    }
 
-	public void setInvocation(final IInvocation aInvocation) {
-		assert aInvocation != null;
-		invocation = aInvocation;
-	}
+    public void setInvocation(final IInvocation aInvocation) {
+        assert aInvocation != null;
+        invocation = aInvocation;
+    }
 
-	public enum AnchorType {
-		MEMBER, INHERITED, FOREIGN /* (esp NS, DT/enum) */, VAR, CLOSURE, PARAMS
-	}
+    public enum AnchorType {
+        MEMBER,
+        INHERITED,
+        FOREIGN /* (esp NS, DT/enum) */,
+        VAR,
+        CLOSURE,
+        PARAMS
+    }
 }
 
 //

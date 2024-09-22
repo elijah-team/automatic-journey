@@ -8,29 +8,28 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah_fluffy.util.*;
+import antlr.Token;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah_fluffy.util.Helpers;
 
 /**
  * Created 3/26/21 4:47 AM
  */
 public class El_Category {
 
-	private final AccessNotation notation;
+    private final AccessNotation notation;
 
-	public El_Category(final AccessNotation aNotation) {
-		notation = aNotation;
-	}
+    public El_Category(final AccessNotation aNotation) {
+        notation = aNotation;
+    }
 
-	@Nullable
-	public String getCategoryName() {
-		final Token category = notation.getCategory();
-		if (category == null)
-			return null;
-		final String x = category.getText();
-		return Helpers.remove_single_quotes_from_string(x);
-	}
+    @Nullable
+    public String getCategoryName() {
+        final Token category = notation.getCategory();
+        if (category == null) return null;
+        final String x = category.getText();
+        return Helpers.remove_single_quotes_from_string(x);
+    }
 }
 
 //

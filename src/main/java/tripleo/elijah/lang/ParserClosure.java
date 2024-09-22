@@ -14,36 +14,35 @@
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.comp.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.comp.Compilation;
 
 public class ParserClosure extends ProgramClosure {
 
-	public final OS_Module module;
+    public final OS_Module module;
 
-	public ParserClosure(final String fn, @NotNull final Compilation compilation) {
-		module = compilation.moduleBuilder().withFileName(fn).addToCompilation().build();
-	}
+    public ParserClosure(final String fn, @NotNull final Compilation compilation) {
+        module = compilation.moduleBuilder().withFileName(fn).addToCompilation().build();
+    }
 
-	public OS_Package defaultPackageName(final @NotNull Qualident aPackageName) {
-//		assert module.packageName == null;
-		module.pushPackageName(aPackageName);
-		return module.parent.makePackage(aPackageName);
-	}
+    public OS_Package defaultPackageName(final @NotNull Qualident aPackageName) {
+        //		assert module.packageName == null;
+        module.pushPackageName(aPackageName);
+        return module.parent.makePackage(aPackageName);
+    }
 
-	public void packageName(final Qualident aPackageName) {
-		// assert module.packageName ==null;
-		module.pushPackageName(aPackageName);
-	}
+    public void packageName(final Qualident aPackageName) {
+        // assert module.packageName ==null;
+        module.pushPackageName(aPackageName);
+    }
 
-	public IndexingStatement indexingStatement() {
-		final IndexingStatement indexingStatement = new IndexingStatement();
-		indexingStatement.setModule(module());
-		return indexingStatement;
-	}
+    public IndexingStatement indexingStatement() {
+        final IndexingStatement indexingStatement = new IndexingStatement();
+        indexingStatement.setModule(module());
+        return indexingStatement;
+    }
 
-	private OS_Module module() {
-		return module;
-	}
-
+    private OS_Module module() {
+        return module;
+    }
 }

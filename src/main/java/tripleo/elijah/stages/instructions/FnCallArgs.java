@@ -8,72 +8,76 @@
  */
 package tripleo.elijah.stages.instructions;
 
-import com.google.common.base.*;
-import com.google.common.collect.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah_fluffy.util.*;
+import com.google.common.base.Function;
+import com.google.common.collect.Collections2;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.stages.deduce.DeduceTypes2;
+import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
+import tripleo.elijah.stages.gen_fn.ProcTableEntry;
+import tripleo.elijah.stages.gen_fn.TypeTableEntry;
+import tripleo.elijah_fluffy.util.Helpers;
 
-import java.util.*;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Created 9/10/20 3:36 PM
  */
 public class FnCallArgs implements InstructionArgument {
-	public final Instruction expression_to_call;
-	private final @NotNull BaseGeneratedFunction gf;
-	private TypeTableEntry _type; // the return type of the function call
+    public final Instruction expression_to_call;
+    private final @NotNull BaseGeneratedFunction gf;
+    private TypeTableEntry _type; // the return type of the function call
 
-	public FnCallArgs(final Instruction expression_to_call, final @NotNull BaseGeneratedFunction generatedFunction) {
-		this.expression_to_call = expression_to_call;
-		this.gf = generatedFunction;
-	}
+    public FnCallArgs(final Instruction expression_to_call, final @NotNull BaseGeneratedFunction generatedFunction) {
+        this.expression_to_call = expression_to_call;
+        this.gf = generatedFunction;
+    }
 
-	@Override
-	public String toString() {
-		final int index = DeduceTypes2.to_int(expression_to_call.args.get(0));
-		final List<InstructionArgument> instructionArguments = getInstructionArguments();
-		/*
-		 * final List<String> collect = instructionArguments .stream()
-		 * .map((instructionArgument -> instructionArgument.toString()))
-		 * .collect(Collectors.toList());
-		 */
-		final Collection<String> collect2 = Collections2.transform(instructionArguments,
-				new Function<InstructionArgument, String>() {
-					@Nullable
-					@Override
-					public String apply(@Nullable final InstructionArgument input) {
-						return input.toString();
-					}
-				});
-		final ProcTableEntry procTableEntry = gf.prte_list.get(index);
-		return String.format("(call %d [%s(%s)] %s)", index, procTableEntry.expression, procTableEntry.args,
-				Helpers.String_join(" ", collect2));
+    @Override
+    public String toString() {
+        final int index = DeduceTypes2.to_int(expression_to_call.args.get(0));
+        final List<InstructionArgument> instructionArguments = getInstructionArguments();
+        /*
+         * final List<String> collect = instructionArguments .stream()
+         * .map((instructionArgument -> instructionArgument.toString()))
+         * .collect(Collectors.toList());
+         */
+        final Collection<String> collect2 =
+                Collections2.transform(instructionArguments, new Function<InstructionArgument, String>() {
+                    @Nullable
+                    @Override
+                    public String apply(@Nullable final InstructionArgument input) {
+                        return input.toString();
+                    }
+                });
+        final ProcTableEntry procTableEntry = gf.prte_list.get(index);
+        return String.format(
+                "(call %d [%s(%s)] %s)",
+                index, procTableEntry.expression, procTableEntry.args, Helpers.String_join(" ", collect2));
+    }
 
-	}
+    @NotNull
+    public List<InstructionArgument> getInstructionArguments() {
+        final List<InstructionArgument> args = this.getArgs();
+        return args.subList(1, args.size());
+    }
 
-	@NotNull
-	public List<InstructionArgument> getInstructionArguments() {
-		final List<InstructionArgument> args = this.getArgs();
-		return args.subList(1, args.size());
-	}
+    private List<InstructionArgument> getArgs() {
+        return expression_to_call.args;
+    }
 
-	private List<InstructionArgument> getArgs() {
-		return expression_to_call.args;
-	}
+    public InstructionArgument getArg(final int i) {
+        return expression_to_call.getArg(i);
+    }
 
-	public InstructionArgument getArg(final int i) {
-		return expression_to_call.getArg(i);
-	}
+    public Instruction getExpression() {
+        return expression_to_call;
+    }
 
-	public Instruction getExpression() {
-		return expression_to_call;
-	}
-
-	public void setType(final TypeTableEntry tte2) {
-		_type = tte2;
-	}
+    public void setType(final TypeTableEntry tte2) {
+        _type = tte2;
+    }
 }
 
 //

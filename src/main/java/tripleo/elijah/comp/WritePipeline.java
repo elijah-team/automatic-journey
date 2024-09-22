@@ -48,10 +48,10 @@ import java.util.stream.Collectors;
  * Created 8/21/21 10:19 PM
  */
 public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResultListener {
-    final         OutputStrategy os;
-    final         ElSystem       sys;
-    private final Compilation    c;
-    private       GenerateResult gr;
+    final OutputStrategy os;
+    final ElSystem sys;
+    private final Compilation c;
+    private GenerateResult gr;
 
     public WritePipeline(@NotNull final AccessBus ab) {
         c = ab.getCompilation();
@@ -59,7 +59,7 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
         os = new OutputStrategy();
         os.per(OutputStrategy.Per.PER_CLASS); // TODO this needs to be configured per lsp
 
-        sys         = new ElSystem();
+        sys = new ElSystem();
         sys.verbose = false; // TODO flag? ie CompilationOptions
         sys.setCompilation(c);
         sys.setOutputStrategy(os);
@@ -92,20 +92,21 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
             modmap.put(ab.output, ab.node.module());
         }
 
-
         final _WriterPayload writerPayload = new _WriterPayload(mb, null);
         c.getOutputTree().addAll(writerPayload.getList(modmap::get));
-        c.signal(new CSS2_Signal() {
-            @Override
-            public void trigger(final Compilation compilation, final Object payload) {
-                assert payload == writerPayload;
-                writerPayload.getActivator().resolve(Ok.instance());
-            }
-        }, writerPayload);
+        c.signal(
+                new CSS2_Signal() {
+                    @Override
+                    public void trigger(final Compilation compilation, final Object payload) {
+                        assert payload == writerPayload;
+                        writerPayload.getActivator().resolve(Ok.instance());
+                    }
+                },
+                writerPayload);
     }
 
     public void write_buffers() throws FileNotFoundException {
-        final File        file      = new File(choose_dir_name1(), "buffers.txt");
+        final File file = new File(choose_dir_name1(), "buffers.txt");
         final PrintStream db_stream = new PrintStream(file);
         PipelineLogic.debug_buffers(gr, db_stream);
         V.gri(gr);
@@ -122,9 +123,11 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
         return fn00;
     }
 
-    private void __rest(final @NotNull Multimap<String, Buffer> mb,
-                        final @NotNull File aFile_prefix,
-                        final List<EOT_OutputFile> leof) throws IOException {
+    private void __rest(
+            final @NotNull Multimap<String, Buffer> mb,
+            final @NotNull File aFile_prefix,
+            final List<EOT_OutputFile> leof)
+            throws IOException {
         aFile_prefix.mkdirs();
         final String prefix = aFile_prefix.toString();
 
@@ -132,9 +135,9 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
         write_inputs(aFile_prefix);
 
         for (final Map.Entry<String, Collection<Buffer>> entry : mb.asMap().entrySet()) {
-            final String key  = entry.getKey();
-            final Path   path = FileSystems.getDefault().getPath(prefix, key);
-//			BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
+            final String key = entry.getKey();
+            final Path path = FileSystems.getDefault().getPath(prefix, key);
+            //			BufferedReader reader = Files.newBufferedReader(path, StandardCharsets.UTF_8);
 
             path.getParent().toFile().mkdirs();
 
@@ -142,20 +145,21 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
             if (true) {
                 System.out.println("201 Writing path: " + path);
             }
-            c.reports().add401b(new Finally._401bSpec() {
-            });
+            c.reports().add401b(new Finally._401bSpec() {});
             final CharSink x = c.getIO().openWrite(path);
 
-            final EG_SingleStatement beginning   = new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline" + ".beginning"));
-            final EG_Statement       middle      = new GE_BuffersStatement(entry);
-            final EG_SingleStatement ending      = new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline.ending"));
-            final EX_Explanation     explanation = EX_Explanation.withMessage("write output file");
+            final EG_SingleStatement beginning =
+                    new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline" + ".beginning"));
+            final EG_Statement middle = new GE_BuffersStatement(entry);
+            final EG_SingleStatement ending =
+                    new EG_SingleStatement("", EX_Explanation.withMessage("WritePipeline.ending"));
+            final EX_Explanation explanation = EX_Explanation.withMessage("write output file");
 
             final EG_CompoundStatement seq = new EG_CompoundStatement(beginning, ending, middle, false, explanation);
 
-//			for (final @NotNull Buffer buffer : entry.getValue()) {
-//				x.accept(buffer.getText());
-//			}
+            //			for (final @NotNull Buffer buffer : entry.getValue()) {
+            //				x.accept(buffer.getText());
+            //			}
             x.accept(seq.getText());
             ((FileCharSink) x).close();
 
@@ -166,22 +170,22 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 
     private void write_inputs(final File file_prefix) throws IOException {
         final DefaultBuffer buf = new DefaultBuffer("");
-//			FileBackedBuffer buf = new FileBackedBuffer(fn1);
-//			for (OS_Module module : modules) {
-//				final String fn = module.getFileName();
-//
-//				append_hash(buf, fn);
-//			}
-//
-//			for (CompilerInstructions ci : cis) {
-//				final String fn = ci.getFilename();
-//
-//				append_hash(buf, fn);
-//			}
+        //			FileBackedBuffer buf = new FileBackedBuffer(fn1);
+        //			for (OS_Module module : modules) {
+        //				final String fn = module.getFileName();
+        //
+        //				append_hash(buf, fn);
+        //			}
+        //
+        //			for (CompilerInstructions ci : cis) {
+        //				final String fn = ci.getFilename();
+        //
+        //				append_hash(buf, fn);
+        //			}
 
         final List<File> recordedreads = c.getIO().recordedreads;
-        final List<String> recordedread_filenames = recordedreads.stream().map(file -> file.toString())
-                .collect(Collectors.toList());
+        final List<String> recordedread_filenames =
+                recordedreads.stream().map(file -> file.toString()).collect(Collectors.toList());
 
         for (final @NotNull File file : recordedreads) {
             final String fn = file.toString();
@@ -189,8 +193,8 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
             append_hash(buf, fn, c.getErrSink());
         }
 
-        final File   fn1 = new File(file_prefix, "inputs.txt");
-        final String s   = buf.getText();
+        final File fn1 = new File(file_prefix, "inputs.txt");
+        final String s = buf.getText();
         try (final Writer w = new BufferedWriter(new OutputStreamWriter(new FileOutputStream(fn1, true)))) {
             w.write(s);
         }
@@ -214,14 +218,14 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
         return new Consumer<Supplier<GenerateResult>>() {
             @Override
             public void accept(final Supplier<GenerateResult> aGenerateResultSupplier) {
-//				if (grs != null) {
-//					tripleo.elijah.util.Stupidity.println_err2("234 grs not null "+grs.getClass().getName());
-//					return;
-//				}
-//
-//				assert false;
-//				grs = aGenerateResultSupplier;
-//				//final GenerateResult gr = aGenerateResultSupplier.get();
+                //				if (grs != null) {
+                //					tripleo.elijah.util.Stupidity.println_err2("234 grs not null "+grs.getClass().getName());
+                //					return;
+                //				}
+                //
+                //				assert false;
+                //				grs = aGenerateResultSupplier;
+                //				//final GenerateResult gr = aGenerateResultSupplier.get();
                 final int y = 2;
             }
         };
@@ -229,12 +233,12 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
 
     public class _WriterPayload {
         private final Multimap<String, Buffer> _g_mb;
-        private final List<EOT_OutputFile>     _g_leof;
-        private final Eventual<Ok>             activatorPromise = new Eventual<>();
-        private final Eventual<Ok>             resultPromise    = new Eventual<>();
+        private final List<EOT_OutputFile> _g_leof;
+        private final Eventual<Ok> activatorPromise = new Eventual<>();
+        private final Eventual<Ok> resultPromise = new Eventual<>();
 
         public _WriterPayload(final Multimap<String, Buffer> aMb, final List<EOT_OutputFile> aLeof) {
-            _g_mb   = aMb;
+            _g_mb = aMb;
             _g_leof = aLeof;
 
             this.activatorPromise.then(Sok -> action());
@@ -274,7 +278,6 @@ public class WritePipeline implements PipelineMember, AccessBus.AB_GenerateResul
             return leof;
         }
     }
-
 }
 
 //

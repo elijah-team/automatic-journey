@@ -13,9 +13,7 @@ package tripleo.elijah.lang;
  *
  * @see {@link OS_Module#add(OS_Element) }
  */
-public interface ModuleItem extends OS_Element {
-
-}
+public interface ModuleItem extends OS_Element {}
 
 //
 //

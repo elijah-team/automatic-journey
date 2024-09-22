@@ -9,7 +9,6 @@
 /**
  * Created Mar 13, 2019 at 11:23:02 AM
  */
-
 package tripleo.elijah.gen.nodes;
 
 import tripleo.elijah.lang.IExpression;
@@ -20,25 +19,24 @@ import tripleo.elijah.lang.IExpression;
  */
 public class ReturnAgnNode {
 
-	public ExpressionNode expr;
-	private LocalAgnTmpNode _latn;
+    public ExpressionNode expr;
+    private LocalAgnTmpNode _latn;
 
-	public ReturnAgnNode(final IExpression expression) {
-		// TODO Auto-generated constructor stub
-		expr = new ExpressionNode(expression);
-	}
+    public ReturnAgnNode(final IExpression expression) {
+        // TODO Auto-generated constructor stub
+        expr = new ExpressionNode(expression);
+    }
 
-	public ReturnAgnNode(final LocalAgnTmpNode latn3) {
-		// TODO might be wrong
-//		throw new NotImplementedException();
-		this._latn = latn3;
-	}
+    public ReturnAgnNode(final LocalAgnTmpNode latn3) {
+        // TODO might be wrong
+        //		throw new NotImplementedException();
+        this._latn = latn3;
+    }
 
-	public IExpressionNode getExpr() {
-		if (expr != null)
-			return expr;
-		return _latn.getRight();// .getExpr();
-	}
+    public IExpressionNode getExpr() {
+        if (expr != null) return expr;
+        return _latn.getRight(); // .getExpr();
+    }
 }
 
 //

@@ -19,6 +19,5 @@ import tripleo.elijah.lang.IExpression;
  */
 public class SwitchNode {
 
-	public IExpression expr;
-
+    public IExpression expr;
 }

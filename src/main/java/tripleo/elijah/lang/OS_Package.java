@@ -8,10 +8,11 @@
  */
 package tripleo.elijah.lang;
 
-import tripleo.elijah.contexts.*;
-import tripleo.elijah.world.*;
+import tripleo.elijah.contexts.PackageContext;
+import tripleo.elijah.world.WorldGlobals;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /*
  * Created on 5/3/2019 at 21:41
@@ -20,50 +21,50 @@ import java.util.*;
  *
  */
 public class OS_Package {
-	public final static OS_Package default_package = WorldGlobals.defaultPackage();
-	final int _code;
-	final Qualident _name;
-	private final List<OS_Element> elements = new ArrayList<OS_Element>();
-	private PackageContext _ctx;
+    public static final OS_Package default_package = WorldGlobals.defaultPackage();
+    final int _code;
+    final Qualident _name;
+    private final List<OS_Element> elements = new ArrayList<OS_Element>();
+    private PackageContext _ctx;
 
-	// TODO packages, elements
+    // TODO packages, elements
 
-	public OS_Package(final Qualident aName, final int aCode) {
-		_code = aCode;
-		_name = aName;
-	}
+    public OS_Package(final Qualident aName, final int aCode) {
+        _code = aCode;
+        _name = aName;
+    }
 
-	public Context getContext() {
-		return _ctx;
-	}
+    public Context getContext() {
+        return _ctx;
+    }
 
-	//
-	// ELEMENTS
-	//
+    //
+    // ELEMENTS
+    //
 
-	public void setContext(final PackageContext cur) {
-		_ctx = cur;
-	}
+    public void setContext(final PackageContext cur) {
+        _ctx = cur;
+    }
 
-	public void addElement(final OS_Element element) {
-		elements.add(element);
-	}
+    public void addElement(final OS_Element element) {
+        elements.add(element);
+    }
 
-	//
-	// NAME
-	//
+    //
+    // NAME
+    //
 
-	public List<OS_Element> getElements() {
-		return elements;
-	}
+    public List<OS_Element> getElements() {
+        return elements;
+    }
 
-	public String getName() {
-		if (_name == null) {
-//			tripleo.elijah.util.Stupidity.println_err2("*** name is null for package");
-			return "";
-		}
-		return _name.toString();
-	}
+    public String getName() {
+        if (_name == null) {
+            //			tripleo.elijah.util.Stupidity.println_err2("*** name is null for package");
+            return "";
+        }
+        return _name.toString();
+    }
 }
 
 //

@@ -12,24 +12,24 @@ import java.util.Objects;
 
 public class ILazyCompilerInstructions_ {
 
-	@Contract(value = "_ -> new", pure = true)
-	public static @NotNull ILazyCompilerInstructions of(final CompilerInstructions aCompilerInstructions) {
-		return () -> aCompilerInstructions;
-	}
+    @Contract(value = "_ -> new", pure = true)
+    public static @NotNull ILazyCompilerInstructions of(final CompilerInstructions aCompilerInstructions) {
+        return () -> aCompilerInstructions;
+    }
 
-	@Contract(value = "_, _ -> new", pure = true)
-	public static @NotNull ILazyCompilerInstructions of(final File aFile, final Compilation c) {
-		return new ILazyCompilerInstructions() {
-			@Override
-			public CompilerInstructions get() {
-				try {
-					final Operation<CompilerInstructions> parsed = CX_ParseEzFile.parseAndCache(aFile, c,
-							c.get__cr().ezCache());
-					return Objects.requireNonNull(parsed).success();
-				} catch (final Exception aE) {
-					throw new RuntimeException(aE); // TODO ugh
-				}
-			}
-		};
-	}
+    @Contract(value = "_, _ -> new", pure = true)
+    public static @NotNull ILazyCompilerInstructions of(final File aFile, final Compilation c) {
+        return new ILazyCompilerInstructions() {
+            @Override
+            public CompilerInstructions get() {
+                try {
+                    final Operation<CompilerInstructions> parsed =
+                            CX_ParseEzFile.parseAndCache(aFile, c, c.get__cr().ezCache());
+                    return Objects.requireNonNull(parsed).success();
+                } catch (final Exception aE) {
+                    throw new RuntimeException(aE); // TODO ugh
+                }
+            }
+        };
+    }
 }

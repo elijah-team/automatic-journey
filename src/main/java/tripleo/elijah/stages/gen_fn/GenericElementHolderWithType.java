@@ -19,37 +19,37 @@ import tripleo.elijah.stages.deduce.DeduceTypes2;
  * Created 11/18/21 8:43 PM
  */
 public class GenericElementHolderWithType implements IElementHolder {
-	private final @NotNull OS_Element   element;
-	private final          OS_Type      type;
-	private final          DeduceTypes2 dt2;
+    private final @NotNull OS_Element element;
+    private final OS_Type type;
+    private final DeduceTypes2 dt2;
 
-	public GenericElementHolderWithType(final @NotNull OS_Element aElement,
-	                                    final OS_Type aType,
-	                                    final DeduceTypes2 aDeduceTypes2) {
-		element = aElement;
-		type    = aType;
-		dt2     = aDeduceTypes2;
-	}
+    public GenericElementHolderWithType(
+            final @NotNull OS_Element aElement, final OS_Type aType, final DeduceTypes2 aDeduceTypes2) {
+        element = aElement;
+        type = aType;
+        dt2 = aDeduceTypes2;
+    }
 
-	@Contract(pure = true)
-	public GenericElementHolderWithType(final OS_Element aEle2, @NotNull final GenType aResult, final DeduceTypes2 aDeduceTypes2) {
-		element = aEle2;
-		type    = aResult.getTypeName(); // TODO may be something stupid
-		dt2     = aDeduceTypes2;
-	}
+    @Contract(pure = true)
+    public GenericElementHolderWithType(
+            final OS_Element aEle2, @NotNull final GenType aResult, final DeduceTypes2 aDeduceTypes2) {
+        element = aEle2;
+        type = aResult.getTypeName(); // TODO may be something stupid
+        dt2 = aDeduceTypes2;
+    }
 
-	@Override
-	public @NotNull OS_Element getElement() {
-		return element;
-	}
+    @Override
+    public @NotNull OS_Element getElement() {
+        return element;
+    }
 
-	public OS_Type getType() {
-		return type;
-	}
+    public OS_Type getType() {
+        return type;
+    }
 
-	public DeduceTypes2 getDeduceTypes2() {
-		return dt2;
-	}
+    public DeduceTypes2 getDeduceTypes2() {
+        return dt2;
+    }
 }
 
 //

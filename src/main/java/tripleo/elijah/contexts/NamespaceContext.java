@@ -12,9 +12,9 @@
 package tripleo.elijah.contexts;
 
 import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * @author Tripleo
@@ -23,51 +23,55 @@ import java.util.*;
  */
 public class NamespaceContext extends Context {
 
-	public final NamespaceStatement carrier;
-	private final Context _parent;
+    public final NamespaceStatement carrier;
+    private final Context _parent;
 
-//	public NamespaceContext(NamespaceStatement namespaceStatement) {
-//		carrier = namespaceStatement;
-//	}
+    //	public NamespaceContext(NamespaceStatement namespaceStatement) {
+    //		carrier = namespaceStatement;
+    //	}
 
-	public NamespaceContext(final Context aParent, final NamespaceStatement ns) {
-		_parent = aParent;
-		carrier = ns;
-	}
+    public NamespaceContext(final Context aParent, final NamespaceStatement ns) {
+        _parent = aParent;
+        carrier = ns;
+    }
 
-	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
-			final List<Context> alreadySearched, final boolean one) {
-		alreadySearched.add(carrier.getContext());
-		for (final ClassItem item : carrier.getItems()) {
-			if (!(item instanceof ClassStatement) && !(item instanceof NamespaceStatement)
-					&& !(item instanceof VariableSequence) && !(item instanceof AliasStatement)
-					&& !(item instanceof FunctionDef) && !(item instanceof PropertyStatement))
-				continue;
-			if (item instanceof OS_Element2) {
-				if (((OS_Element2) item).name().equals(name)) {
-					Result.add(name, level, item, this);
-				}
-			}
-			if (item instanceof VariableSequence) {
-				SimplePrintLoggerToRemoveSoon.println2("[NamespaceContext#lookup] VariableSequence " + item);
-				for (final VariableStatement vs : ((VariableSequence) item).items()) {
-					if (vs.getName().equals(name))
-						Result.add(name, level, vs, this);
-				}
-			}
-		}
-		if (getParent() != null) {
-			final Context context = getParent();
-			if (!alreadySearched.contains(context) || !one)
-				return context.lookup(name, level + 1, Result, alreadySearched, false);
-		}
-		return Result;
+    @Override
+    public LookupResultList lookup(
+            final String name,
+            final int level,
+            final LookupResultList Result,
+            final List<Context> alreadySearched,
+            final boolean one) {
+        alreadySearched.add(carrier.getContext());
+        for (final ClassItem item : carrier.getItems()) {
+            if (!(item instanceof ClassStatement)
+                    && !(item instanceof NamespaceStatement)
+                    && !(item instanceof VariableSequence)
+                    && !(item instanceof AliasStatement)
+                    && !(item instanceof FunctionDef)
+                    && !(item instanceof PropertyStatement)) continue;
+            if (item instanceof OS_Element2) {
+                if (((OS_Element2) item).name().equals(name)) {
+                    Result.add(name, level, item, this);
+                }
+            }
+            if (item instanceof VariableSequence) {
+                SimplePrintLoggerToRemoveSoon.println2("[NamespaceContext#lookup] VariableSequence " + item);
+                for (final VariableStatement vs : ((VariableSequence) item).items()) {
+                    if (vs.getName().equals(name)) Result.add(name, level, vs, this);
+                }
+            }
+        }
+        if (getParent() != null) {
+            final Context context = getParent();
+            if (!alreadySearched.contains(context) || !one)
+                return context.lookup(name, level + 1, Result, alreadySearched, false);
+        }
+        return Result;
+    }
 
-	}
-
-	@Override
-	public Context getParent() {
-		return _parent;
-	}
+    @Override
+    public Context getParent() {
+        return _parent;
+    }
 }

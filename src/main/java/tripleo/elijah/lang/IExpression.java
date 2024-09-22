@@ -15,51 +15,53 @@
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.Contract;
 
 public interface IExpression {
 
-	IExpression UNASSIGNED = new BasicBinaryExpression() {
-		@Override
-		public String toString() {
-			return "<UNASSIGNED expression>";
-		}
-	};
+    IExpression UNASSIGNED = new BasicBinaryExpression() {
+        @Override
+        public String toString() {
+            return "<UNASSIGNED expression>";
+        }
+    };
 
-	static boolean isConstant(final IExpression expression) {
-		return expression instanceof StringExpression || expression instanceof CharLitExpression
-				|| expression instanceof FloatExpression || expression instanceof NumericExpression;
-	}
+    static boolean isConstant(final IExpression expression) {
+        return expression instanceof StringExpression
+                || expression instanceof CharLitExpression
+                || expression instanceof FloatExpression
+                || expression instanceof NumericExpression;
+    }
 
-	@Contract(pure = true)
-	ExpressionKind getKind();
+    @Contract(pure = true)
+    ExpressionKind getKind();
 
-	void setKind(ExpressionKind aKind);
+    void setKind(ExpressionKind aKind);
 
-	IExpression getLeft();
+    IExpression getLeft();
 
-	void setLeft(IExpression iexpression);
+    void setLeft(IExpression iexpression);
 
-	@Deprecated
-	String repr_();
+    @Deprecated
+    String repr_();
 
-//	default boolean is_simple() {
-//		switch(getKind()) {
-//		case STRING_LITERAL:
-//		case CHAR_LITERAL:
-//		case NUMERIC:
-//		case FLOAT:
-//			return true;
-//		default:
-//			return false;
-//		}
-//	}
+    //	default boolean is_simple() {
+    //		switch(getKind()) {
+    //		case STRING_LITERAL:
+    //		case CHAR_LITERAL:
+    //		case NUMERIC:
+    //		case FLOAT:
+    //			return true;
+    //		default:
+    //			return false;
+    //		}
+    //	}
 
-	boolean is_simple();
+    boolean is_simple();
 
-	OS_Type getType();
+    OS_Type getType();
 
-	void setType(OS_Type deducedExpression);
+    void setType(OS_Type deducedExpression);
 }
 
 //

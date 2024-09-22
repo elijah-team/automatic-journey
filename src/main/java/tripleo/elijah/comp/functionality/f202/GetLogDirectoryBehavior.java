@@ -15,7 +15,7 @@ import java.io.File;
  * Created 8/11/21 5:48 AM
  */
 public interface GetLogDirectoryBehavior {
-	File getLogDirectory();
+    File getLogDirectory();
 }
 
 //

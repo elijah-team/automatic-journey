@@ -8,63 +8,63 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import io.reactivex.rxjava3.subjects.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.stages.deduce.*;
+import io.reactivex.rxjava3.subjects.ReplaySubject;
+import io.reactivex.rxjava3.subjects.Subject;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.stages.deduce.FunctionInvocation;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created 6/21/21 11:36 PM
  */
 public abstract class AbstractDependencyTracker implements DependencyTracker {
-	final Subject<GenType> dependentTypesSubject = ReplaySubject
-			.create(2);/*
+    final Subject<GenType> dependentTypesSubject = ReplaySubject.create(2); /*
 						 * new Publisher<GenType>() { List<Subscriber<GenType>> subscribers = new
 						 * ArrayList<>(2);
-						 * 
+						 *
 						 * @Override public void subscribe(final Subscriber<? super GenType>
 						 * aSubscriber) { subscribers.add((Subscriber<GenType>) aSubscriber); } };
 						 */
-	final Subject<FunctionInvocation> dependentFunctionsSubject = ReplaySubject
-			.create(2);/*
+    final Subject<FunctionInvocation> dependentFunctionsSubject = ReplaySubject.create(2); /*
 						 * new Publisher<FunctionInvocation>() { List<Subscriber<FunctionInvocation>>
 						 * subscribers = new ArrayList<>(2);
-						 * 
+						 *
 						 * @Override public void subscribe(final Subscriber<? super FunctionInvocation>
 						 * aSubscriber) { subscribers.add((Subscriber<FunctionInvocation>) aSubscriber);
 						 * } };
 						 */
-	private final List<FunctionInvocation> dependentFunctions = new ArrayList<FunctionInvocation>();
-	private final List<GenType> dependentTypes = new ArrayList<GenType>();
+    private final List<FunctionInvocation> dependentFunctions = new ArrayList<FunctionInvocation>();
+    private final List<GenType> dependentTypes = new ArrayList<GenType>();
 
-	@Override
-	public List<GenType> dependentTypes() {
-		return dependentTypes;
-	}
+    @Override
+    public List<GenType> dependentTypes() {
+        return dependentTypes;
+    }
 
-	@Override
-	public List<FunctionInvocation> dependentFunctions() {
-		return dependentFunctions;
-	}
+    @Override
+    public List<FunctionInvocation> dependentFunctions() {
+        return dependentFunctions;
+    }
 
-	public void addDependentType(@NotNull final GenType aType) {
-//		dependentTypes.add(aType);
-		dependentTypesSubject.onNext(aType);
-	}
+    public void addDependentType(@NotNull final GenType aType) {
+        //		dependentTypes.add(aType);
+        dependentTypesSubject.onNext(aType);
+    }
 
-	public void addDependentFunction(@NotNull final FunctionInvocation aFunction) {
-//		dependentFunctions.add(aFunction);
-		dependentFunctionsSubject.onNext(aFunction);
-	}
+    public void addDependentFunction(@NotNull final FunctionInvocation aFunction) {
+        //		dependentFunctions.add(aFunction);
+        dependentFunctionsSubject.onNext(aFunction);
+    }
 
-	public Subject<GenType> dependentTypesSubject() {
-		return dependentTypesSubject;
-	}
+    public Subject<GenType> dependentTypesSubject() {
+        return dependentTypesSubject;
+    }
 
-	public Subject<FunctionInvocation> dependentFunctionSubject() {
-		return dependentFunctionsSubject;
-	}
+    public Subject<FunctionInvocation> dependentFunctionSubject() {
+        return dependentFunctionsSubject;
+    }
 }
 
 //

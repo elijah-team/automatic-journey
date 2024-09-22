@@ -11,8 +11,7 @@ package tripleo.elijah.lang.builder;
 /**
  * Created 12/23/20 12:03 AM
  */
-public class LoopScope extends BaseScope2 {
-}
+public class LoopScope extends BaseScope2 {}
 
 //
 //

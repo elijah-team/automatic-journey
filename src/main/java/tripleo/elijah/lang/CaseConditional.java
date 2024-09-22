@@ -11,12 +11,16 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.*;
-import tripleo.elijah.contexts.*;
-import tripleo.elijah.lang2.*;
-import tripleo.elijah_fluffy.util.*;
+import antlr.Token;
+import tripleo.elijah.contexts.CaseContext;
+import tripleo.elijah.contexts.SingleIdentContext;
+import tripleo.elijah.lang2.ElElementVisitor;
+import tripleo.elijah_fluffy.util.NotImplementedException;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.LinkedHashMap;
+import java.util.List;
 
 /**
  * @author Tripleo
@@ -25,119 +29,119 @@ import java.util.*;
  */
 public class CaseConditional implements OS_Element, StatementItem, FunctionItem {
 
-	private final OS_Element parent;
-	private final HashMap<IExpression, CaseScope> scopes = new LinkedHashMap<IExpression, CaseScope>();
-	private IExpression expr;
-	private SingleIdentContext _ctx = null;
-	private CaseScope default_case_scope = null;
-	private CaseContext __ctx = null; // TODO look into removing this
+    private final OS_Element parent;
+    private final HashMap<IExpression, CaseScope> scopes = new LinkedHashMap<IExpression, CaseScope>();
+    private IExpression expr;
+    private SingleIdentContext _ctx = null;
+    private CaseScope default_case_scope = null;
+    private CaseContext __ctx = null; // TODO look into removing this
 
-	public CaseConditional(final OS_Element parent, final Context parentContext) {
-		this.parent = parent;
-		this._ctx = new SingleIdentContext(parentContext, this);
-	}
+    public CaseConditional(final OS_Element parent, final Context parentContext) {
+        this.parent = parent;
+        this._ctx = new SingleIdentContext(parentContext, this);
+    }
 
-	public void expr(final IExpression expr) {
-		this.expr = expr;
-	}
+    public void expr(final IExpression expr) {
+        this.expr = expr;
+    }
 
-	@Override
-	public void visitGen(final ElElementVisitor visit) {
-		visit.visitCaseConditional(this);
-	}
+    @Override
+    public void visitGen(final ElElementVisitor visit) {
+        visit.visitCaseConditional(this);
+    }
 
-	@Override
-	public Context getContext() {
-		return _ctx;
-	}
+    @Override
+    public Context getContext() {
+        return _ctx;
+    }
 
-	@Override
-	public OS_Element getParent() {
-		return parent;
-	}
+    public void setContext(final CaseContext ctx) {
+        __ctx = ctx;
+    }
 
-	public void setContext(final CaseContext ctx) {
-		__ctx = ctx;
-	}
+    @Override
+    public OS_Element getParent() {
+        return parent;
+    }
 
-	public HashMap<IExpression, CaseScope> getScopes() {
-		return scopes;
-	}
+    public HashMap<IExpression, CaseScope> getScopes() {
+        return scopes;
+    }
 
-	public void addScopeFor(final IExpression expression, final Scope3 caseScope) {
-		addScopeFor(expression, new CaseScope(expression, caseScope));
-	}
+    public void addScopeFor(final IExpression expression, final Scope3 caseScope) {
+        addScopeFor(expression, new CaseScope(expression, caseScope));
+    }
 
-	private void addScopeFor(final IExpression expression, final CaseScope caseScope) {
-		if (scopes.containsKey(expression))
-			SimplePrintLoggerToRemoveSoon.println_err2("already has an expression" + expression); // TODO put in some
-																									// verify step
-		scopes.put(expression, caseScope);
-	}
+    private void addScopeFor(final IExpression expression, final CaseScope caseScope) {
+        if (scopes.containsKey(expression))
+            SimplePrintLoggerToRemoveSoon.println_err2("already has an expression" + expression); // TODO put in some
+        // verify step
+        scopes.put(expression, caseScope);
+    }
 
-	public void postConstruct() {
-		// nop
-	}
+    public void postConstruct() {
+        // nop
+    }
 
-	public IExpression getExpr() {
-		return expr;
-	}
+    public IExpression getExpr() {
+        return expr;
+    }
 
-	public void scope(final Scope3 sco, final IExpression expr1) {
-		addScopeFor(expr1, new CaseScope(expr1, sco));
-	}
+    public void scope(final Scope3 sco, final IExpression expr1) {
+        addScopeFor(expr1, new CaseScope(expr1, sco));
+    }
 
-	public class CaseScope implements OS_Container, OS_Element {
+    public class CaseScope implements OS_Container, OS_Element {
 
-		private final IExpression expr;
-		private final Scope3 cscope3;
-		private boolean _isDefault = false;
+        private final IExpression expr;
+        private final Scope3 cscope3;
+        private boolean _isDefault = false;
 
-		public CaseScope(final IExpression expression, final Scope3 aScope3) {
-			this.expr = expression;
-			this.cscope3 = aScope3;
-		}
+        public CaseScope(final IExpression expression, final Scope3 aScope3) {
+            this.expr = expression;
+            this.cscope3 = aScope3;
+        }
 
-		@Override
-		public List<OS_Element2> items() {
-			throw new NotImplementedException();
-		}
+        @Override
+        public List<OS_Element2> items() {
+            throw new NotImplementedException();
+        }
 
-		@Override
-		public void add(final OS_Element anElement) {
-			cscope3.add(anElement);
-		}
+        @Override
+        public void add(final OS_Element anElement) {
+            cscope3.add(anElement);
+        }
 
-		public List<OS_Element> getItems() {
-			return cscope3.items();
-		}
+        public List<OS_Element> getItems() {
+            return cscope3.items();
+        }
 
-		@Override
-		public void addDocString(final Token s1) {
-			cscope3.addDocString(s1);
-		}
+        @Override
+        public void addDocString(final Token s1) {
+            cscope3.addDocString(s1);
+        }
 
-		@Override
-		public void visitGen(final ElElementVisitor visit) {
-			visit.visitCaseScope(this);
-		}
+        @Override
+        public void visitGen(final ElElementVisitor visit) {
+            visit.visitCaseScope(this);
+        }
 
-		@Override
-		public Context getContext() {
-			return getParent().getContext();
-		}
+        @Override
+        public Context getContext() {
+            return getParent().getContext();
+        }
 
-		@Override
-		public OS_Element getParent() {
-			return CaseConditional.this;
-		}
+        @Override
+        public OS_Element getParent() {
+            return CaseConditional.this;
+        }
 
-		public void setDefault() {
-			_isDefault = true;
-			default_case_scope = this;
-			_ctx.carrier = (IdentExpression) expr;
-		}
-	}
+        public void setDefault() {
+            _isDefault = true;
+            default_case_scope = this;
+            _ctx.carrier = (IdentExpression) expr;
+        }
+    }
 }
 
 //

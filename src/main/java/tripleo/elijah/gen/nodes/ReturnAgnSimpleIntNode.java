@@ -15,14 +15,14 @@ import tripleo.elijah.lang.NumericExpression;
  */
 public class ReturnAgnSimpleIntNode {
 
-	private final NumericExpression integer;
+    private final NumericExpression integer;
 
-	public ReturnAgnSimpleIntNode(final NumericExpression integer) {
-		// TODO Auto-generated constructor stub
-		this.integer = integer;
-	}
+    public ReturnAgnSimpleIntNode(final NumericExpression integer) {
+        // TODO Auto-generated constructor stub
+        this.integer = integer;
+    }
 
-	public int getValue() {
-		return integer.getValue();
-	}
+    public int getValue() {
+        return integer.getValue();
+    }
 }

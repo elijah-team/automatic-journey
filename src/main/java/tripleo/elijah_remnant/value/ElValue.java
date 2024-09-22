@@ -4,11 +4,13 @@ import java.util.function.Consumer;
 
 // TODO m/ ...
 public interface ElValue<T> {
-	boolean isSet();
-	boolean isClosed();
+    boolean isSet();
 
-	T value();
+    boolean isClosed();
 
-	void whenSet(Consumer<T> consumer);
-	void set(T t);
+    T value();
+
+    void whenSet(Consumer<T> consumer);
+
+    void set(T t);
 }

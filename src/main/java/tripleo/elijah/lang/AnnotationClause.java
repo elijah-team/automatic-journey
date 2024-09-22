@@ -8,17 +8,18 @@
  */
 package tripleo.elijah.lang;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created 8/15/20 6:31 PM
  */
 public class AnnotationClause {
-	final List<AnnotationPart> aps = new ArrayList<AnnotationPart>();
+    final List<AnnotationPart> aps = new ArrayList<AnnotationPart>();
 
-	public void add(final AnnotationPart ap) {
-		aps.add(ap);
-	}
+    public void add(final AnnotationPart ap) {
+        aps.add(ap);
+    }
 }
 
 //

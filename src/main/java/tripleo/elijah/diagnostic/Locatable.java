@@ -9,7 +9,7 @@
 
 package tripleo.elijah.diagnostic;
 
-import java.io.*;
+import java.io.File;
 
 /**
  * Locate a Token or Token range<br>
@@ -21,15 +21,15 @@ import java.io.*;
  * Created 12/26/20 5:32 AM
  */
 public interface Locatable {
-	int getLine();
+    int getLine();
 
-	int getColumn();
+    int getColumn();
 
-	int getLineEnd();
+    int getLineEnd();
 
-	int getColumnEnd();
+    int getColumnEnd();
 
-	File getFile();
+    File getFile();
 }
 
 //

@@ -21,145 +21,149 @@ import java.util.function.Supplier;
 import java.util.stream.Stream;
 
 public class EIT_ModuleList {
-	private final List<OS_Module> mods;
-//	private PipelineLogic __pl;
+    private final List<OS_Module> mods;
+    //	private PipelineLogic __pl;
 
-	@Contract(pure = true)
-	public EIT_ModuleList(final List<OS_Module> aMods) {
-		mods = aMods;
-	}
+    @Contract(pure = true)
+    public EIT_ModuleList(final List<OS_Module> aMods) {
+        mods = aMods;
+    }
 
-	public List<OS_Module> getMods() {
-		return mods;
-	}
+    public List<OS_Module> getMods() {
+        return mods;
+    }
 
-	public void process__PL(final Function<OS_Module, GenerateFunctions> ggf, final PipelineLogic pipelineLogic) {
-		for (final OS_Module mod : mods) {
-			final @NotNull EntryPointList epl = mod.entryPoints;
+    public void process__PL(final Function<OS_Module, GenerateFunctions> ggf, final PipelineLogic pipelineLogic) {
+        for (final OS_Module mod : mods) {
+            final @NotNull EntryPointList epl = mod.entryPoints;
 
-			if (epl.size() == 0) {
-				continue;
-			}
+            if (epl.size() == 0) {
+                continue;
+            }
 
-			final GenerateFunctions gfm = ggf.apply(mod);
+            final GenerateFunctions gfm = ggf.apply(mod);
 
-			final DeducePhase deducePhase = pipelineLogic.getDp();
-			// final DeducePhase.@NotNull GeneratedClasses lgc =
-			// deducePhase.generatedClasses;
+            final DeducePhase deducePhase = pipelineLogic.getDp();
+            // final DeducePhase.@NotNull GeneratedClasses lgc =
+            // deducePhase.generatedClasses;
 
-			final _ProcessParams plp = new _ProcessParams(mod, pipelineLogic, gfm, epl, deducePhase);
+            final _ProcessParams plp = new _ProcessParams(mod, pipelineLogic, gfm, epl, deducePhase);
 
-			__process__PL__each(plp);
-		}
-	}
+            __process__PL__each(plp);
+        }
+    }
 
-	private void __process__PL__each(final @NotNull _ProcessParams plp) {
-		final List<GeneratedNode> resolved_nodes = new ArrayList<GeneratedNode>();
+    private void __process__PL__each(final @NotNull _ProcessParams plp) {
+        final List<GeneratedNode> resolved_nodes = new ArrayList<GeneratedNode>();
 
-		final OS_Module mod = plp.getMod();
-		final DeducePhase.GeneratedClasses lgc = plp.getLgc();
+        final OS_Module mod = plp.getMod();
+        final DeducePhase.GeneratedClasses lgc = plp.getLgc();
 
-		// assert lgc.size() == 0;
+        // assert lgc.size() == 0;
 
-		final int size = lgc.size();
+        final int size = lgc.size();
 
-		if (size != 0) {
-			NotImplementedException.raise();
-			SimplePrintLoggerToRemoveSoon.println_err(String.format("lgc.size() != 0: %d", size));
-		}
+        if (size != 0) {
+            NotImplementedException.raise();
+            SimplePrintLoggerToRemoveSoon.println_err(String.format("lgc.size() != 0: %d", size));
+        }
 
-		plp.generate();
+        plp.generate();
 
-		// assert lgc.size() == epl.size(); //hmm
+        // assert lgc.size() == epl.size(); //hmm
 
-		final Coder coder = new Coder(plp.deducePhase.getCodeRegistrar());
+        final Coder coder = new Coder(plp.deducePhase.getCodeRegistrar());
 
-		for (final GeneratedNode generatedNode : lgc) {
-			coder.codeNodes(mod, resolved_nodes, generatedNode);
-		}
+        for (final GeneratedNode generatedNode : lgc) {
+            coder.codeNodes(mod, resolved_nodes, generatedNode);
+        }
 
-		resolved_nodes.forEach(generatedNode -> coder.codeNode(generatedNode, mod));
+        resolved_nodes.forEach(generatedNode -> coder.codeNode(generatedNode, mod));
 
-		plp.deduceModule();
+        plp.deduceModule();
 
-		PipelineLogic.resolveCheck(lgc);
+        PipelineLogic.resolveCheck(lgc);
 
-//			for (final GeneratedNode gn : lgf) {
-//				if (gn instanceof GeneratedFunction) {
-//					GeneratedFunction gf = (GeneratedFunction) gn;
-//					tripleo.elijah.util.Stupidity.println2("----------------------------------------------------------");
-//					tripleo.elijah.util.Stupidity.println2(gf.name());
-//					tripleo.elijah.util.Stupidity.println2("----------------------------------------------------------");
-//					GeneratedFunction.printTables(gf);
-//					tripleo.elijah.util.Stupidity.println2("----------------------------------------------------------");
-//				}
-//			}
-	}
+        //			for (final GeneratedNode gn : lgf) {
+        //				if (gn instanceof GeneratedFunction) {
+        //					GeneratedFunction gf = (GeneratedFunction) gn;
+        //					tripleo.elijah.util.Stupidity.println2("----------------------------------------------------------");
+        //					tripleo.elijah.util.Stupidity.println2(gf.name());
+        //					tripleo.elijah.util.Stupidity.println2("----------------------------------------------------------");
+        //					GeneratedFunction.printTables(gf);
+        //					tripleo.elijah.util.Stupidity.println2("----------------------------------------------------------");
+        //				}
+        //			}
+    }
 
-//	public void _set_PL(final PipelineLogic aPipelineLogic) {
-//		__pl = aPipelineLogic;
-//	}
+    //	public void _set_PL(final PipelineLogic aPipelineLogic) {
+    //		__pl = aPipelineLogic;
+    //	}
 
-	public Stream<OS_Module> stream() {
-		return mods.stream();
-	}
+    public Stream<OS_Module> stream() {
+        return mods.stream();
+    }
 
-	public void add(final OS_Module m) {
-		mods.add(m);
-	}
+    public void add(final OS_Module m) {
+        mods.add(m);
+    }
 
-	private static class _ProcessParams {
-		private final OS_Module mod;
-		private final PipelineLogic pipelineLogic;
-		private final GenerateFunctions gfm;
-		@NotNull
-		private final EntryPointList epl;
-		private final DeducePhase deducePhase;
-//		@NotNull
-//		private final ElLog.Verbosity                         verbosity;
+    private static class _ProcessParams {
+        private final OS_Module mod;
+        private final PipelineLogic pipelineLogic;
+        private final GenerateFunctions gfm;
 
-		private _ProcessParams(@NotNull final OS_Module aModule, @NotNull final PipelineLogic aPipelineLogic,
-				@NotNull final GenerateFunctions aGenerateFunctions, @NotNull final EntryPointList aEntryPointList,
-				@NotNull final DeducePhase aDeducePhase) {
-			mod = aModule;
-			pipelineLogic = aPipelineLogic;
-			gfm = aGenerateFunctions;
-			epl = aEntryPointList;
-			deducePhase = aDeducePhase;
-//			verbosity = mod.getCompilation().pipelineLogic.getVerbosity();
-		}
+        @NotNull
+        private final EntryPointList epl;
 
-		@Contract(pure = true)
-		public OS_Module getMod() {
-			return mod;
-		}
+        private final DeducePhase deducePhase;
+        //		@NotNull
+        //		private final ElLog.Verbosity                         verbosity;
 
-		public void generate() {
-			epl.generate(gfm, deducePhase, getWorkManagerSupplier());
-		}
+        private _ProcessParams(
+                @NotNull final OS_Module aModule,
+                @NotNull final PipelineLogic aPipelineLogic,
+                @NotNull final GenerateFunctions aGenerateFunctions,
+                @NotNull final EntryPointList aEntryPointList,
+                @NotNull final DeducePhase aDeducePhase) {
+            mod = aModule;
+            pipelineLogic = aPipelineLogic;
+            gfm = aGenerateFunctions;
+            epl = aEntryPointList;
+            deducePhase = aDeducePhase;
+            //			verbosity = mod.getCompilation().pipelineLogic.getVerbosity();
+        }
 
-		@Contract(pure = true)
-		public @NotNull Supplier<WorkManager> getWorkManagerSupplier() {
-			return () -> pipelineLogic.getGeneratePhase().wm;
-		}
+        @Contract(pure = true)
+        public OS_Module getMod() {
+            return mod;
+        }
 
-		public void deduceModule() {
-			deducePhase.deduceModule(mod, getLgc(), getVerbosity());
-		}
+        public void generate() {
+            epl.generate(gfm, deducePhase, getWorkManagerSupplier());
+        }
 
-		//
-		//
-		//
+        @Contract(pure = true)
+        public @NotNull Supplier<WorkManager> getWorkManagerSupplier() {
+            return () -> pipelineLogic.getGeneratePhase().wm;
+        }
 
-		@Contract(pure = true)
-		public DeducePhase.GeneratedClasses getLgc() {
-			return deducePhase.getGeneratedClasses();
-		}
+        public void deduceModule() {
+            deducePhase.deduceModule(mod, getLgc(), getVerbosity());
+        }
 
-		@Contract(pure = true)
-		public ElLog.@NotNull Verbosity getVerbosity() {
-			return pipelineLogic.getVerbosity();
-		}
+        //
+        //
+        //
 
-	}
+        @Contract(pure = true)
+        public DeducePhase.GeneratedClasses getLgc() {
+            return deducePhase.getGeneratedClasses();
+        }
+
+        @Contract(pure = true)
+        public ElLog.@NotNull Verbosity getVerbosity() {
+            return pipelineLogic.getVerbosity();
+        }
+    }
 }

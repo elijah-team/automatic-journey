@@ -10,22 +10,21 @@ package tripleo.elijah.gen;
 
 public class CompilerContext {
 
-	private final String _module;
-	private int _tmp = 0;
+    private final String _module;
+    private int _tmp = 0;
 
-	public CompilerContext(final String aModule) {
-		_module = aModule;
-	}
+    public CompilerContext(final String aModule) {
+        _module = aModule;
+    }
 
-	public String module() {
-		// TODO Auto-generated method stub
-//		NotImplementedException.raise();
-		return _module;
-	}
+    public String module() {
+        // TODO Auto-generated method stub
+        //		NotImplementedException.raise();
+        return _module;
+    }
 
-	public int nextTmp() {
-		// TODO Auto-generated method stub
-		return ++_tmp;
-	}
-
+    public int nextTmp() {
+        // TODO Auto-generated method stub
+        return ++_tmp;
+    }
 }

@@ -5,23 +5,23 @@ import tripleo.elijah.comp.internal.EDR_ProcessRecord;
 import tripleo.elijah_remnant.startup.ProlificStartup2;
 
 public interface CR_State {
-	ICompilationAccess ca();
+    ICompilationAccess ca();
 
-	ProlificStartup2 get_startup();
+    ProlificStartup2 get_startup();
 
-	ICompilationBus.CB_Action getCur();
+    ICompilationBus.CB_Action getCur();
 
-	void setCur(ICompilationBus.CB_Action cur);
+    void setCur(ICompilationBus.CB_Action cur);
 
-	ICompilationAccess getCa();
+    ICompilationAccess getCa();
 
-	void setCa(ICompilationAccess ca);
+    void setCa(ICompilationAccess ca);
 
-	EDR_ProcessRecord pr();
+    EDR_ProcessRecord pr();
 
-	void setPr(EDR_ProcessRecord pr);
+    void setPr(EDR_ProcessRecord pr);
 
-	RuntimeProcess.RuntimeProcesses rt();
+    RuntimeProcess.RuntimeProcesses rt();
 
-	void set_rt(RuntimeProcess.RuntimeProcesses rt);
+    void set_rt(RuntimeProcess.RuntimeProcesses rt);
 }

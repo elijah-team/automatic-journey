@@ -8,23 +8,23 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.lang.OS_Element;
 
 /**
  * Created 6/30/21 2:31 AM
  */
 public class GenericElementHolder implements IElementHolder {
-	private final @NotNull OS_Element element;
+    private final @NotNull OS_Element element;
 
-	public GenericElementHolder(final @NotNull OS_Element aElement) {
-		element = aElement;
-	}
+    public GenericElementHolder(final @NotNull OS_Element aElement) {
+        element = aElement;
+    }
 
-	@Override
-	public @NotNull OS_Element getElement() {
-		return element;
-	}
+    @Override
+    public @NotNull OS_Element getElement() {
+        return element;
+    }
 }
 
 //

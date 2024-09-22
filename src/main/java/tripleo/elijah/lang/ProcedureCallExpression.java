@@ -11,147 +11,146 @@ package tripleo.elijah.lang;
 // TODO is ExpressionList an IExpression?
 public class ProcedureCallExpression implements IExpression {
 
-//	public ProcedureCallExpression(final Token aToken, final ExpressionList aExpressionList, final Token aToken1) {
-//		throw new NotImplementedException();
-//	}
+    //	public ProcedureCallExpression(final Token aToken, final ExpressionList aExpressionList, final Token aToken1) {
+    //		throw new NotImplementedException();
+    //	}
 
-	OS_Type _type;
+    OS_Type _type;
 
-	// region right-side
-	private ExpressionList args = new ExpressionList();
-	private IExpression _left;
+    // region right-side
+    private ExpressionList args = new ExpressionList();
+    private IExpression _left;
 
-	/**
-	 * Make sure you call {@link #identifier} or {@link #setLeft(IExpression)} and
-	 * {@link #setArgs(ExpressionList)}
-	 */
-	public ProcedureCallExpression() {
-	}
+    /**
+     * Make sure you call {@link #identifier} or {@link #setLeft(IExpression)} and
+     * {@link #setArgs(ExpressionList)}
+     */
+    public ProcedureCallExpression() {}
 
-	/**
-	 * Get the argument list
-	 *
-	 * @return the argument list
-	 */
-	public ExpressionList exprList() {
-		return args;
-	}
+    /**
+     * Get the argument list
+     *
+     * @return the argument list
+     */
+    public ExpressionList exprList() {
+        return args;
+    }
 
-	// endregion
+    // endregion
 
-//	@Override
-//	public void visitGen(ICodeGen visit) {
-//		// TODO Auto-generated method stub
-//		NotImplementedException.raise();
-//	}
+    //	@Override
+    //	public void visitGen(ICodeGen visit) {
+    //		// TODO Auto-generated method stub
+    //		NotImplementedException.raise();
+    //	}
 
-	// region kind
+    // region kind
 
-	public ExpressionList getArgs() {
-		return args;
-	}
+    public ExpressionList getArgs() {
+        return args;
+    }
 
-	/**
-	 * change then argument list all at once
-	 *
-	 * @param ael the new value
-	 */
-	public void setArgs(final ExpressionList ael) {
-		args = ael;
-	}
+    /**
+     * change then argument list all at once
+     *
+     * @param ael the new value
+     */
+    public void setArgs(final ExpressionList ael) {
+        args = ael;
+    }
 
-	// endregion
+    // endregion
 
-	// region left-side
+    // region left-side
 
-	@Override
-	public ExpressionKind getKind() {
-		return ExpressionKind.PROCEDURE_CALL;
-	}
+    @Override
+    public ExpressionKind getKind() {
+        return ExpressionKind.PROCEDURE_CALL;
+    }
 
-	@Override
-	public void setKind(final ExpressionKind aIncrement) {
-		throw new IllegalArgumentException();
-	}
+    @Override
+    public void setKind(final ExpressionKind aIncrement) {
+        throw new IllegalArgumentException();
+    }
 
-	@Override
-	public IExpression getLeft() {
-		return _left;
-	}
+    @Override
+    public IExpression getLeft() {
+        return _left;
+    }
 
-	/**
-	 * @see #identifier(Qualident)
-	 */
-	@Override
-	public void setLeft(final IExpression iexpression) {
-		_left = iexpression;
-	}
+    /**
+     * @see #identifier(Qualident)
+     */
+    @Override
+    public void setLeft(final IExpression iexpression) {
+        _left = iexpression;
+    }
 
-	@Override
-	public String repr_() {
-		return toString();
-	}
+    @Override
+    public String repr_() {
+        return toString();
+    }
 
-	// endregion
+    // endregion
 
-	@Override
-	public boolean is_simple() {
-		return false; // TODO is this correct?
-	}
+    @Override
+    public boolean is_simple() {
+        return false; // TODO is this correct?
+    }
 
-	@Override
-	public OS_Type getType() {
-		return _type;
-	}
+    @Override
+    public OS_Type getType() {
+        return _type;
+    }
 
-	/*
-	 * public OS_Element getParent() { return null; }
-	 */
+    /*
+     * public OS_Element getParent() { return null; }
+     */
 
-	// region representation
+    // region representation
 
-	@Override
-	public void setType(final OS_Type deducedExpression) {
-		_type = deducedExpression;
-	}
+    @Override
+    public void setType(final OS_Type deducedExpression) {
+        _type = deducedExpression;
+    }
 
-	@Override
-	public String toString() {
-		return String.format("ProcedureCallExpression{%s %s}", getLeft(), args != null ? args.toString() : "()");
-	}
+    @Override
+    public String toString() {
+        return String.format("ProcedureCallExpression{%s %s}", getLeft(), args != null ? args.toString() : "()");
+    }
 
-	/**
-	 * Set the left hand side of the procedure call expression, ie the method name
-	 *
-	 * @param xyz a method name in Qualident form (might come as DotExpression in
-	 *    future)
-	 */
-	public void identifier(final Qualident xyz) {
-		setLeft(xyz);
-	}
+    /**
+     * Set the left hand side of the procedure call expression, ie the method name
+     *
+     * @param xyz a method name in Qualident form (might come as DotExpression in
+     *    future)
+     */
+    public void identifier(final Qualident xyz) {
+        setLeft(xyz);
+    }
 
-	// endregion
+    // endregion
 
-	// region type (to remove)
+    // region type (to remove)
 
-	/**
-	 * Set the left hand side of the procedure call expression, ie the method name
-	 *
-	 * @param xyz a method name might come as DotExpression or IdentExpression
-	 */
-	public void identifier(final IExpression xyz) {
-		setLeft(xyz);
-	}
+    /**
+     * Set the left hand side of the procedure call expression, ie the method name
+     *
+     * @param xyz a method name might come as DotExpression or IdentExpression
+     */
+    public void identifier(final IExpression xyz) {
+        setLeft(xyz);
+    }
 
-	public String getReturnTypeString() {
-		return "int"; // TODO hardcoded
-	}
+    public String getReturnTypeString() {
+        return "int"; // TODO hardcoded
+    }
 
-	public String printableString() {
-		return String.format("%s%s", getLeft(), args != null ? args.toString() : "()");
-	}
+    public String printableString() {
+        return String.format("%s%s", getLeft(), args != null ? args.toString() : "()");
+    }
 
-	// endregion
+    // endregion
 
 }
 

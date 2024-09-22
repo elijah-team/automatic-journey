@@ -17,21 +17,21 @@ import java.io.File;
  * Created 8/11/21 5:55 AM
  */
 public class DefaultGetLogDirectoryBehavior implements GetLogDirectoryBehavior {
-	private final Compilation c;
+    private final Compilation c;
 
-	public DefaultGetLogDirectoryBehavior(final Compilation aCompilation) {
-		c = aCompilation;
-	}
+    public DefaultGetLogDirectoryBehavior(final Compilation aCompilation) {
+        c = aCompilation;
+    }
 
-	@Override
-	public File getLogDirectory() {
-//		final File file1 = new File("COMP", c.getCompilationNumberString());
-		final File file1 = new F203(c.getErrSink(), c).chooseDirectory();
-		final File file2 = new File(file1, "logs");
-		file2.mkdirs();
+    @Override
+    public File getLogDirectory() {
+        //		final File file1 = new File("COMP", c.getCompilationNumberString());
+        final File file1 = new F203(c.getErrSink(), c).chooseDirectory();
+        final File file2 = new File(file1, "logs");
+        file2.mkdirs();
 
-		return file2;
-	}
+        return file2;
+    }
 }
 
 //

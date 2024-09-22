@@ -12,29 +12,22 @@ package tripleo.elijah.lang2;
  * Created 10/6/20 3:20 PM
  */
 public class SpecialVariables {
-	public static boolean contains(final String name) {
-		if (name.equals("self"))
-			return true;
-		if (name.equals("this"))
-			return true;
-		if (name.equals("Value"))
-			return true; // TODO only special sometimes
-		return name.equals("Result");
-//		tripleo.elijah.util.Stupidity.println_err2("SpecialVariables: test: "+name);
-	}
+    public static boolean contains(final String name) {
+        if (name.equals("self")) return true;
+        if (name.equals("this")) return true;
+        if (name.equals("Value")) return true; // TODO only special sometimes
+        return name.equals("Result");
+        //		tripleo.elijah.util.Stupidity.println_err2("SpecialVariables: test: "+name);
+    }
 
-	public static String get(final String name) {
-		if (name.equals("self"))
-			return "vsc"; // TODO this should be this in Java and C++
-		if (name.equals("this"))
-			return "vsc"; // TODO this should be this in Java and C++
-		if (name.equals("Value"))
-			return "vsv"; // TODO only special sometimes
-		if (name.equals("Result"))
-			return "vsr";
-//		tripleo.elijah.util.Stupidity.println_err2("SpecialVariables: test: "+name);
-		return "<Illegal SpecialValue>";
-	}
+    public static String get(final String name) {
+        if (name.equals("self")) return "vsc"; // TODO this should be this in Java and C++
+        if (name.equals("this")) return "vsc"; // TODO this should be this in Java and C++
+        if (name.equals("Value")) return "vsv"; // TODO only special sometimes
+        if (name.equals("Result")) return "vsr";
+        //		tripleo.elijah.util.Stupidity.println_err2("SpecialVariables: test: "+name);
+        return "<Illegal SpecialValue>";
+    }
 }
 
 //

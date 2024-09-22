@@ -3,51 +3,52 @@ package tripleo.elijah.comp.i;
 import java.util.List;
 
 public interface ICompilationBus {
-	void option(CompilationChange aChange);
+    void option(CompilationChange aChange);
 
-	void inst(ILazyCompilerInstructions aLazyCompilerInstructions, Instergram reason, Runnable cheat);
+    void inst(ILazyCompilerInstructions aLazyCompilerInstructions, Instergram reason, Runnable cheat);
 
-	void add(CB_Action aCBAction);
+    void add(CB_Action aCBAction);
 
-	void add(CB_Process aProcess);
+    void add(CB_Process aProcess);
 
-	void add(CB_Process aCBProcess, Object aPayload);
+    void add(CB_Process aCBProcess, Object aPayload);
 
-	interface CB_Action {
-		String name();
+    enum Instergram {
+        EZ,
+        ZERO,
+        TWO_MANY,
+        ONE
+    }
 
-		void execute();
+    interface CB_Action {
+        String name();
 
-		OutputString[] outputStrings();
+        void execute();
 
-	}
+        OutputString[] outputStrings();
+    }
 
-	interface OutputString {
-		String getText();
-	}
+    interface OutputString {
+        String getText();
+    }
 
-	interface CB_Process {
-//		void execute();
+    interface CB_Process {
+        //		void execute();
 
-		List<CB_Action> steps();
-	}
+        List<CB_Action> steps();
+    }
 
-	class COutputString implements OutputString {
+    class COutputString implements OutputString {
 
-		private final String _text;
+        private final String _text;
 
-		public COutputString(final String aText) {
-			_text = aText;
-		}
+        public COutputString(final String aText) {
+            _text = aText;
+        }
 
-		@Override
-		public String getText() {
-			return _text;
-		}
-	}
-
-	public enum Instergram {
-		EZ, ZERO, TWO_MANY, ONE
-
-	}
+        @Override
+        public String getText() {
+            return _text;
+        }
+    }
 }

@@ -14,7 +14,7 @@ package tripleo.elijah.lang;
  * @see {@link FunctionDef#add(OS_Element)}
  */
 public interface FunctionItem extends OS_Element {
-	// void visitFunctionItem(FunctionItemVisitor five);
+    // void visitFunctionItem(FunctionItemVisitor five);
 }
 
 //

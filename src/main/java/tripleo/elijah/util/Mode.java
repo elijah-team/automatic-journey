@@ -1,5 +1,7 @@
 package tripleo.elijah.util;
 
 public enum Mode {
-	SUCCESS, FAILURE, NOTHING
+    SUCCESS,
+    FAILURE,
+    NOTHING
 }

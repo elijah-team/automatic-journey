@@ -15,5 +15,5 @@ package tripleo.elijah.gen;
  *
  */
 public interface Node {
-	int getCode();
+    int getCode();
 }

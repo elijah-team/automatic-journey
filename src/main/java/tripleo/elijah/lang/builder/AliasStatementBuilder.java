@@ -14,48 +14,48 @@ import tripleo.elijah.lang.*;
  * Created 12/23/20 4:38 AM
  */
 public class AliasStatementBuilder extends ElBuilder {
-	private OS_Element _parent;
-	private Context _context;
-	private Qualident oldElement;
-	private IdentExpression newAlias;
+    private OS_Element _parent;
+    private Context _context;
+    private Qualident oldElement;
+    private IdentExpression newAlias;
 
-	public IdentExpression getIdent() {
-		return newAlias;
-	}
+    public IdentExpression getIdent() {
+        return newAlias;
+    }
 
-	public void setIdent(final IdentExpression newAlias) {
-		this.newAlias = newAlias;
-	}
+    public void setIdent(final IdentExpression newAlias) {
+        this.newAlias = newAlias;
+    }
 
-	public Qualident getBecomes() {
-		return oldElement;
-	}
+    public Qualident getBecomes() {
+        return oldElement;
+    }
 
-	public void setBecomes(final Qualident oldElement) {
-		this.oldElement = oldElement;
-	}
+    public void setBecomes(final Qualident oldElement) {
+        this.oldElement = oldElement;
+    }
 
-	@Override
-	public AliasStatement build() {
-		final AliasStatement aliasStatement = new AliasStatement(_parent);
-		aliasStatement.setName(newAlias);
-		aliasStatement.setExpression(oldElement);
-		// no setContext!!
-		return aliasStatement;
-	}
+    @Override
+    public AliasStatement build() {
+        final AliasStatement aliasStatement = new AliasStatement(_parent);
+        aliasStatement.setName(newAlias);
+        aliasStatement.setExpression(oldElement);
+        // no setContext!!
+        return aliasStatement;
+    }
 
-	@Override
-	protected void setContext(final Context context) {
-		_context = context;
-	}
+    @Override
+    protected void setContext(final Context context) {
+        _context = context;
+    }
 
-	public void setName(final IdentExpression i1) {
-		newAlias = i1;
-	}
+    public void setName(final IdentExpression i1) {
+        newAlias = i1;
+    }
 
-	public void setExpression(final Qualident xy) {
-		oldElement = xy;
-	}
+    public void setExpression(final Qualident xy) {
+        oldElement = xy;
+    }
 }
 
 //

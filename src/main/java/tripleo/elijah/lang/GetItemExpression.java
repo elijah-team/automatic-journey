@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.*;
+import antlr.Token;
 
 /**
  * @author Tripleo
@@ -17,50 +17,49 @@ import antlr.*;
  */
 public class GetItemExpression extends AbstractExpression { // TODO binary?
 
-	public final IExpression index; // TODO what about multidimensional arrays?
-	OS_Type _type;
+    public final IExpression index; // TODO what about multidimensional arrays?
+    OS_Type _type;
 
-	public GetItemExpression(final IExpression ee, final IExpression expr) {
-		this.left = ee;
-		this.index = expr;
-		this._kind = ExpressionKind.GET_ITEM;
-	}
+    public GetItemExpression(final IExpression ee, final IExpression expr) {
+        this.left = ee;
+        this.index = expr;
+        this._kind = ExpressionKind.GET_ITEM;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see tripleo.elijah.lang.IExpression#getKind()
-	 */
-	@Override
-	public ExpressionKind getKind() {
-		return ExpressionKind.GET_ITEM;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see tripleo.elijah.lang.IExpression#getKind()
+     */
+    @Override
+    public ExpressionKind getKind() {
+        return ExpressionKind.GET_ITEM;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see tripleo.elijah.lang.IExpression#is_simple()
-	 */
-	@Override
-	public boolean is_simple() {
-		return false; // TODO is this correct? Let's err on the side of caution
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see tripleo.elijah.lang.IExpression#is_simple()
+     */
+    @Override
+    public boolean is_simple() {
+        return false; // TODO is this correct? Let's err on the side of caution
+    }
 
-	@Override
-	public OS_Type getType() {
-		return _type;
-	}
+    @Override
+    public OS_Type getType() {
+        return _type;
+    }
 
-	@Override
-	public void setType(final OS_Type deducedExpression) {
-		_type = deducedExpression;
-	}
+    @Override
+    public void setType(final OS_Type deducedExpression) {
+        _type = deducedExpression;
+    }
 
-	public void parens(final Token lb, final Token rb) {
-		// TODO implement me later
+    public void parens(final Token lb, final Token rb) {
+        // TODO implement me later
 
-	}
-
+    }
 }
 
 //

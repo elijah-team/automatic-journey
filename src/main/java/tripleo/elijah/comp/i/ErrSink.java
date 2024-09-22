@@ -16,26 +16,28 @@ import java.util.List;
 
 public interface ErrSink {
 
-	void exception(Exception exception);
+    void exception(Exception exception);
 
-	/* @ ensures errorCount() == \old errorCount + 1 */
-	void reportError(String s);
+    /* @ ensures errorCount() == \old errorCount + 1 */
+    void reportError(String s);
 
-	void reportWarning(String s);
+    void reportWarning(String s);
 
-	int errorCount();
+    int errorCount();
 
-	void info(String format);
+    void info(String format);
 
-	void reportDiagnostic(Diagnostic diagnostic);
+    void reportDiagnostic(Diagnostic diagnostic);
 
-	Pair<StdErrSink.Desc, Object> _error(int aI);
+    Pair<StdErrSink.Desc, Object> _error(int aI);
 
-	List<Pair<StdErrSink.Desc, Object>> _errors();
+    List<Pair<StdErrSink.Desc, Object>> _errors();
 
-	enum Errors {
-		ERROR, WARNING, INFO
-	}
+    enum Errors {
+        ERROR,
+        WARNING,
+        INFO
+    }
 }
 
 //

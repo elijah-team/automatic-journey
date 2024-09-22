@@ -13,7 +13,7 @@ package tripleo.elijah.comp.functionality.f202;
  * Created 8/11/21 5:51 AM
  */
 public interface ProgressBehavior {
-	void reportProgress(String a);
+    void reportProgress(String a);
 }
 
 //

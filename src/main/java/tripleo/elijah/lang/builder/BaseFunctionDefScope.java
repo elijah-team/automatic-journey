@@ -8,18 +8,17 @@
  */
 package tripleo.elijah.lang.builder;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.IExpression;
 
 /**
  * Created 12/23/20 3:57 AM
  */
 public abstract class BaseFunctionDefScope extends BaseScope {
-	@Override
-	public abstract void statementWrapper(IExpression expr);
+    @Override
+    public abstract void statementWrapper(IExpression expr);
 
-	@Override
-	public abstract void yield(IExpression expr);
-
+    @Override
+    public abstract void yield(IExpression expr);
 }
 
 //

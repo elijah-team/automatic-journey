@@ -26,18 +26,19 @@ import java.util.*;
  * Created 10/29/20 4:26 AM
  */
 public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
-    public final  Map<ConstructorDef, GeneratedConstructor> constructors                      = new HashMap<ConstructorDef, GeneratedConstructor>();
-    private final OS_Module                                 module;
-    private final ElLog                                     LOG;
-    private final ClassStatement                            klass;
-    public        ClassInvocation                           ci;
-    public        LivingClass                               _living;
-    private       boolean                                   resolve_var_table_entries_already = false;
+    public final Map<ConstructorDef, GeneratedConstructor> constructors =
+            new HashMap<ConstructorDef, GeneratedConstructor>();
+    private final OS_Module module;
+    private final ElLog LOG;
+    private final ClassStatement klass;
+    public ClassInvocation ci;
+    public LivingClass _living;
+    private boolean resolve_var_table_entries_already = false;
 
     public GeneratedClass(final ClassStatement klass, final OS_Module module, final ElLog aLOG) {
-        this.klass  = klass;
+        this.klass = klass;
         this.module = module;
-        LOG         = aLOG;
+        LOG = aLOG;
     }
 
     public boolean isGeneric() {
@@ -56,7 +57,7 @@ public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
         fd.scope(scope3);
         for (final VarTableEntry varTableEntry : varTable) {
             if (varTableEntry.initialValue != IExpression.UNASSIGNED) {
-                final IExpression left  = varTableEntry.nameToken;
+                final IExpression left = varTableEntry.nameToken;
                 final IExpression right = varTableEntry.initialValue;
 
                 final IExpression e = ExpressionBuilder.build(left, ExpressionKind.ASSIGNMENT, right);
@@ -73,16 +74,15 @@ public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
         return false;
     }
 
-    public void addConstructor(final ConstructorDef aConstructorDef,
-                               @NotNull final GeneratedConstructor aGeneratedFunction) {
+    public void addConstructor(
+            final ConstructorDef aConstructorDef, @NotNull final GeneratedConstructor aGeneratedFunction) {
         constructors.put(aConstructorDef, aGeneratedFunction);
     }
 
     public boolean resolve_var_table_entries(final @NotNull DeducePhase aDeducePhase) {
         boolean Result = false;
 
-        if (resolve_var_table_entries_already)
-            return true;
+        if (resolve_var_table_entries_already) return true;
 
         for (final VarTableEntry varTableEntry : varTable) {
             if (varTableEntry.potentialTypes.size() == 0
@@ -91,8 +91,8 @@ public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
                 if (tn != null) {
                     if (tn instanceof final NormalTypeName tn2) {
                         if (!tn.isNull()) {
-                            final LookupResultList lrl  = tn.getContext().lookup(tn2.getName());
-                            OS_Element             best = lrl.chooseBest(null);
+                            final LookupResultList lrl = tn.getContext().lookup(tn2.getName());
+                            OS_Element best = lrl.chooseBest(null);
                             if (best != null) {
                                 if (best instanceof AliasStatement)
                                     best = DeduceLookupUtils._resolveAlias((AliasStatement) best, null);
@@ -107,13 +107,13 @@ public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
                     // must be unknown
                 }
             } else {
-                SimplePrintLoggerToRemoveSoon
-                        .println_err(String.format("108 %s %s", varTableEntry.nameToken, varTableEntry.potentialTypes));
+                SimplePrintLoggerToRemoveSoon.println_err(
+                        String.format("108 %s %s", varTableEntry.nameToken, varTableEntry.potentialTypes));
                 if (varTableEntry.potentialTypes.size() == 1) {
                     final TypeTableEntry potentialType = varTableEntry.potentialTypes.get(0);
                     if (potentialType.resolved() == null) {
                         assert potentialType.getAttached() != null;
-//						assert potentialType.getAttached().getType() == OS_Type.Type.USER_CLASS;
+                        //						assert potentialType.getAttached().getType() == OS_Type.Type.USER_CLASS;
                         //
                         // HACK
                         //
@@ -132,7 +132,8 @@ public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
                         }
                         //
                         if (potentialType.getAttached().getType() == OS_Type.Type.USER_CLASS) {
-                            ClassInvocation xci = new ClassInvocation(potentialType.getAttached().getClassOf(), null);
+                            ClassInvocation xci = new ClassInvocation(
+                                    potentialType.getAttached().getClassOf(), null);
                             {
                                 for (final Map.Entry<TypeName, OS_Type> entry : xci.genericPart.entrySet()) {
                                     if (entry.getKey().equals(varTableEntry.typeName)) {
@@ -141,22 +142,24 @@ public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
                                 }
                             }
                             xci = aDeducePhase.registerClassInvocation(xci);
-                            @NotNull final GenerateFunctions gf = aDeducePhase.getGeneratePhase()
-                                    .getGenerateFunctions(xci.getKlass().getContext().module());
-                            final WlGenerateClass wgc = new WlGenerateClass(gf, xci, aDeducePhase.getGeneratedClasses(),
-                                                                            aDeducePhase.getCodeRegistrar()
-                            );
+                            @NotNull
+                            final GenerateFunctions gf = aDeducePhase
+                                    .getGeneratePhase()
+                                    .getGenerateFunctions(
+                                            xci.getKlass().getContext().module());
+                            final WlGenerateClass wgc = new WlGenerateClass(
+                                    gf, xci, aDeducePhase.getGeneratedClasses(), aDeducePhase.getCodeRegistrar());
                             wgc.run(null); // !
                             potentialType.genType.setCi(xci); // just for completeness
                             potentialType.resolve(wgc.getResult());
                             Result = true;
                         } else {
                             final int y = 2;
-                            SimplePrintLoggerToRemoveSoon.println_err("177 not a USER_CLASS " + potentialType.getAttached());
+                            SimplePrintLoggerToRemoveSoon.println_err(
+                                    "177 not a USER_CLASS " + potentialType.getAttached());
                         }
                     }
-                    if (potentialType.resolved() != null)
-                        varTableEntry.resolve(potentialType.resolved(), LOG);
+                    if (potentialType.resolved() != null) varTableEntry.resolve(potentialType.resolved(), LOG);
                     else {
                         SimplePrintLoggerToRemoveSoon.println_err("114 Can't resolve " + varTableEntry);
                     }
@@ -214,16 +217,19 @@ public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
                     // HACK TIME
                     //
                     if (potentialTypes.size() == 2) {
-                        final ClassStatement resolvedClass1 = potentialTypes.get(0).getResolved().getClassOf();
-                        final ClassStatement resolvedClass2 = potentialTypes.get(1).getResolved().getClassOf();
-                        final OS_Module      prelude        = resolvedClass1.getContext().module().prelude;
+                        final ClassStatement resolvedClass1 =
+                                potentialTypes.get(0).getResolved().getClassOf();
+                        final ClassStatement resolvedClass2 =
+                                potentialTypes.get(1).getResolved().getClassOf();
+                        final OS_Module prelude = resolvedClass1.getContext().module().prelude;
 
                         // TODO might not work when we split up prelude
                         // Thats why I was testing for package name before
                         if (resolvedClass1.getContext().module() == prelude
                                 && resolvedClass2.getContext().module() == prelude) {
                             // Favor String over ConstString
-                            if (resolvedClass1.name().equals("ConstString") && resolvedClass2.name().equals("String")) {
+                            if (resolvedClass1.name().equals("ConstString")
+                                    && resolvedClass2.name().equals("String")) {
                                 potentialTypes.remove(0);
                             } else if (resolvedClass2.name().equals("ConstString")
                                     && resolvedClass1.name().equals("String")) {
@@ -238,14 +244,12 @@ public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
                             if (t.getType() == OS_Type.Type.USER) {
                                 try {
                                     final @NotNull GenType genType = aDeduceTypes2.resolve_type(
-                                            t,
-                                            t.getTypeName().getContext()
-                                    );
+                                            t, t.getTypeName().getContext());
                                     if (genType.getResolved() instanceof OS_GenericTypeNameType) {
                                         final ClassInvocation xxci = ((GeneratedClass) aGeneratedContainer).ci;
-//											xxxci = ci;
-                                        for (final Map.@NotNull Entry<TypeName, OS_Type> entry : xxci.genericPart
-                                                .entrySet()) {
+                                        //											xxxci = ci;
+                                        for (final Map.@NotNull Entry<TypeName, OS_Type> entry :
+                                                xxci.genericPart.entrySet()) {
                                             if (entry.getKey().equals(t.getTypeName())) {
                                                 varTableEntry.varType = entry.getValue();
                                             }
@@ -264,32 +268,34 @@ public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
                 public List<GenType> getPotentialTypes() {
                     final List<GenType> potentialTypes = new ArrayList<>();
                     for (final TypeTableEntry potentialType : varTableEntry.potentialTypes) {
-                        final int              y = 2;
+                        final int y = 2;
                         final @NotNull GenType genType;
                         try {
                             if (potentialType.genType.getTypeName() == null) {
                                 final OS_Type attached = potentialType.getAttached();
-                                if (attached == null)
-                                    continue;
+                                if (attached == null) continue;
 
                                 genType = aDeduceTypes2.resolve_type(attached, aContext);
-                                if (genType.getResolved() == null && genType.getTypeName().getType() == OS_Type.Type.USER_CLASS) {
+                                if (genType.getResolved() == null
+                                        && genType.getTypeName().getType() == OS_Type.Type.USER_CLASS) {
                                     genType.setResolved(genType.getTypeName());
                                     genType.setTypeName(null);
                                 }
                             } else {
-                                if (potentialType.genType.getResolved() == null && potentialType.genType.getResolvedn() == null) {
+                                if (potentialType.genType.getResolved() == null
+                                        && potentialType.genType.getResolvedn() == null) {
                                     final OS_Type attached = potentialType.genType.getTypeName();
 
                                     genType = aDeduceTypes2.resolve_type(attached, aContext);
-                                } else
-                                    genType = potentialType.genType;
+                                } else genType = potentialType.genType;
                             }
                             if (genType.getTypeName() != null) {
                                 final TypeName typeName = genType.getTypeName().getTypeName();
                                 if (typeName instanceof NormalTypeName
-                                        && ((NormalTypeName) typeName).getGenericPart().size() > 0)
-                                    genType.setNonGenericTypeName(typeName);
+                                        && ((NormalTypeName) typeName)
+                                                        .getGenericPart()
+                                                        .size()
+                                                > 0) genType.setNonGenericTypeName(typeName);
                             }
                             genType.genCIForGenType2(aDeduceTypes2);
                             potentialTypes.add(genType);
@@ -300,7 +306,7 @@ public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
                     }
                     //
                     final Set<GenType> set = new HashSet<>(potentialTypes);
-//					final Set<GenType> s = Collections.unmodifiableSet(set);
+                    //					final Set<GenType> s = Collections.unmodifiableSet(set);
                     return new ArrayList<>(set);
                 }
             };
@@ -333,7 +339,7 @@ public class GeneratedClass extends GeneratedContainerNC implements GNCoded {
         for (final Map.Entry<TypeName, OS_Type> entry : aGenericPart.entrySet()) { // TODO Is this guaranteed to be in
             // order?
             final OS_Type value = entry.getValue(); // This can be another ClassInvocation using GenType
-            final String  name  = value.getClassOf().getName();
+            final String name = value.getClassOf().getName();
             ls.add(name); // TODO Could be nested generics
         }
         return Helpers.String_join(", ", ls);

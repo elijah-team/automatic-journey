@@ -8,74 +8,78 @@
  */
 package tripleo.elijah.stages.gen_fn;
 
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_generic.*;
-import tripleo.elijah.work.*;
-import tripleo.elijah_fluffy.util.*;
+import org.jdeferred2.DoneCallback;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.lang.NamespaceStatement;
+import tripleo.elijah.stages.deduce.DeducePhase;
+import tripleo.elijah.stages.deduce.NamespaceInvocation;
+import tripleo.elijah.stages.gen_generic.ICodeRegistrar;
+import tripleo.elijah.work.WorkJob;
+import tripleo.elijah.work.WorkManager;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 /**
  * Created 5/31/21 3:01 AM
  */
 public class WlGenerateNamespace implements WorkJob {
-	private final GenerateFunctions generateFunctions;
-	private final NamespaceStatement namespaceStatement;
-	private final NamespaceInvocation namespaceInvocation;
-	private final DeducePhase.@Nullable GeneratedClasses coll;
-	private final ICodeRegistrar codeRegistrar;
-	private boolean _isDone = false;
-	private GeneratedNamespace Result;
+    private final GenerateFunctions generateFunctions;
+    private final NamespaceStatement namespaceStatement;
+    private final NamespaceInvocation namespaceInvocation;
+    private final DeducePhase.@Nullable GeneratedClasses coll;
+    private final ICodeRegistrar codeRegistrar;
+    private boolean _isDone = false;
+    private GeneratedNamespace Result;
 
-	public WlGenerateNamespace(@NotNull final GenerateFunctions aGenerateFunctions,
-			@NotNull final NamespaceInvocation aNamespaceInvocation, @Nullable final DeducePhase.GeneratedClasses aColl,
-			final ICodeRegistrar aCodeRegistrar) {
-		generateFunctions = aGenerateFunctions;
-		namespaceStatement = aNamespaceInvocation.getNamespace();
-		namespaceInvocation = aNamespaceInvocation;
-		coll = aColl;
-		codeRegistrar = aCodeRegistrar;
-	}
+    public WlGenerateNamespace(
+            @NotNull final GenerateFunctions aGenerateFunctions,
+            @NotNull final NamespaceInvocation aNamespaceInvocation,
+            @Nullable final DeducePhase.GeneratedClasses aColl,
+            final ICodeRegistrar aCodeRegistrar) {
+        generateFunctions = aGenerateFunctions;
+        namespaceStatement = aNamespaceInvocation.getNamespace();
+        namespaceInvocation = aNamespaceInvocation;
+        coll = aColl;
+        codeRegistrar = aCodeRegistrar;
+    }
 
-	@Override
-	public void run(final WorkManager aWorkManager) {
-		final DeferredObject<GeneratedNamespace, Void, Void> resolvePromise = namespaceInvocation.resolveDeferred();
-		switch (resolvePromise.state()) {
-		case PENDING:
-			@NotNull
-			final GeneratedNamespace ns = generateFunctions.generateNamespace(namespaceStatement);
-			codeRegistrar.registerNamespace(ns);
-			if (coll != null)
-				coll.add(ns);
+    @Override
+    public void run(final WorkManager aWorkManager) {
+        final DeferredObject<GeneratedNamespace, Void, Void> resolvePromise = namespaceInvocation.resolveDeferred();
+        switch (resolvePromise.state()) {
+            case PENDING:
+                @NotNull final GeneratedNamespace ns = generateFunctions.generateNamespace(namespaceStatement);
+                codeRegistrar.registerNamespace(ns);
+                if (coll != null) coll.add(ns);
 
-			resolvePromise.resolve(ns);
-			Result = ns;
-			break;
-		case RESOLVED:
-			resolvePromise.then(new DoneCallback<GeneratedNamespace>() {
-				@Override
-				public void onDone(final GeneratedNamespace result) {
-					Result = result;
-				}
-			});
-			break;
-		case REJECTED:
-			throw new NotImplementedException();
-		}
-		_isDone = true;
-//		tripleo.elijah.util.Stupidity.println2(String.format("** GenerateNamespace %s at %s", namespaceInvocation.getNamespace().getName(), this));
-	}
+                resolvePromise.resolve(ns);
+                Result = ns;
+                break;
+            case RESOLVED:
+                resolvePromise.then(new DoneCallback<GeneratedNamespace>() {
+                    @Override
+                    public void onDone(final GeneratedNamespace result) {
+                        Result = result;
+                    }
+                });
+                break;
+            case REJECTED:
+                throw new NotImplementedException();
+        }
+        _isDone = true;
+        //		tripleo.elijah.util.Stupidity.println2(String.format("** GenerateNamespace %s at %s",
+        // namespaceInvocation.getNamespace().getName(), this));
+    }
 
-	@Override
-	public boolean isDone() {
-		return _isDone;
-	}
+    @Override
+    public boolean isDone() {
+        return _isDone;
+    }
 
-	public GeneratedNode getResult() {
-		return Result;
-	}
+    public GeneratedNode getResult() {
+        return Result;
+    }
 }
 
 //

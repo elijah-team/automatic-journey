@@ -11,8 +11,8 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.*;
-import tripleo.elijah_fluffy.util.*;
+import antlr.Token;
+import tripleo.elijah_fluffy.util.Helpers;
 
 /**
  * @author Tripleo(sb)
@@ -20,85 +20,85 @@ import tripleo.elijah_fluffy.util.*;
  */
 public class CharLitExpression implements IExpression {
 
-	private final Token char_lit_raw;
-	OS_Type _type;
+    private final Token char_lit_raw;
+    OS_Type _type;
 
-	public CharLitExpression(final Token c) {
-		char_lit_raw = c;
-	}
+    public CharLitExpression(final Token c) {
+        char_lit_raw = c;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see tripleo.elijah.lang.IExpression#getType()
-	 */
-	@Override
-	public ExpressionKind getKind() {
-		return ExpressionKind.CHAR_LITERAL;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see tripleo.elijah.lang.IExpression#getType()
+     */
+    @Override
+    public ExpressionKind getKind() {
+        return ExpressionKind.CHAR_LITERAL;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see tripleo.elijah.lang.IExpression#set(tripleo.elijah.lang.ExpressionType)
-	 */
-	@Override
-	public void setKind(final ExpressionKind aIncrement) {
-		// TODO Auto-generated method stub
+    /*
+     * (non-Javadoc)
+     *
+     * @see tripleo.elijah.lang.IExpression#set(tripleo.elijah.lang.ExpressionType)
+     */
+    @Override
+    public void setKind(final ExpressionKind aIncrement) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see tripleo.elijah.lang.IExpression#getLeft()
-	 */
-	@Override
-	public IExpression getLeft() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see tripleo.elijah.lang.IExpression#getLeft()
+     */
+    @Override
+    public IExpression getLeft() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see tripleo.elijah.lang.IExpression#setLeft(tripleo.elijah.lang.IExpression)
-	 */
-	@Override
-	public void setLeft(final IExpression iexpression) {
-		// TODO Auto-generated method stub
+    /*
+     * (non-Javadoc)
+     *
+     * @see tripleo.elijah.lang.IExpression#setLeft(tripleo.elijah.lang.IExpression)
+     */
+    @Override
+    public void setLeft(final IExpression iexpression) {
+        // TODO Auto-generated method stub
 
-	}
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see tripleo.elijah.lang.IExpression#repr_()
-	 */
-	@Override
-	public String repr_() {
-		return String.format("<CharLitExpression %s>", char_lit_raw);
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see tripleo.elijah.lang.IExpression#repr_()
+     */
+    @Override
+    public String repr_() {
+        return String.format("<CharLitExpression %s>", char_lit_raw);
+    }
 
-	@Override
-	public boolean is_simple() {
-		return true;
-	}
+    @Override
+    public boolean is_simple() {
+        return true;
+    }
 
-	@Override
-	public OS_Type getType() {
-		return _type;
-	}
+    @Override
+    public OS_Type getType() {
+        return _type;
+    }
 
-	@Override
-	public void setType(final OS_Type deducedExpression) {
-		_type = deducedExpression;
-	}
+    @Override
+    public void setType(final OS_Type deducedExpression) {
+        _type = deducedExpression;
+    }
 
-	@Override
-	public String toString() {
-		return Helpers.remove_single_quotes_from_string(char_lit_raw.getText());
-	}
+    @Override
+    public String toString() {
+        return Helpers.remove_single_quotes_from_string(char_lit_raw.getText());
+    }
 }
 
 //

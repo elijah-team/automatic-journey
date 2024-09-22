@@ -8,21 +8,21 @@
  */
 package tripleo.elijah.stages.gen_c;
 
-import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.stages.gen_generic.DependencyRef;
 
 /**
  * Created 9/13/21 4:01 AM
  */
 public class CDependencyRef implements DependencyRef {
-	private final String headerFile;
+    private final String headerFile;
 
-	public CDependencyRef(final String aHeaderFile) {
-		headerFile = aHeaderFile;
-	}
+    public CDependencyRef(final String aHeaderFile) {
+        headerFile = aHeaderFile;
+    }
 
-	public String getHeaderFile() {
-		return headerFile;
-	}
+    public String getHeaderFile() {
+        return headerFile;
+    }
 }
 
 //
