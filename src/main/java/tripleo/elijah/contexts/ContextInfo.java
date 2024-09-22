@@ -13,8 +13,7 @@ package tripleo.elijah.contexts;
 /**
  * Created 11/29/21 12:26 AM
  */
-public interface ContextInfo {
-}
+public interface ContextInfo {}
 
 //
 // vim:set shiftwidth=4 softtabstop=0 noexpandtab:

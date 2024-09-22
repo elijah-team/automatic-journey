@@ -1,15 +1,15 @@
 package tripleo.elijah.stages.deduce.fluffy.i;
 
-import java.util.*;
+import java.util.List;
 
 public interface FluffyModule {
-	FluffyLsp lsp();
+    FluffyLsp lsp();
 
-	String name();
+    String name();
 
-	List<FluffyMember> members();
+    List<FluffyMember> members();
 
-	void find_multiple_items(FluffyComp aFc);
+    void find_multiple_items(FluffyComp aFc);
 
-	void find_all_entry_points();
+    void find_all_entry_points();
 }

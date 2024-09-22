@@ -16,6 +16,6 @@ package tripleo.elijah.gen.nodes;
  *
  */
 public enum ChoiceOptions {
-	BREAK, FALLTHROUGH
-
+    BREAK,
+    FALLTHROUGH
 }

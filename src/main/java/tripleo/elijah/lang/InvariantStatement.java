@@ -6,5 +6,4 @@ package tripleo.elijah.lang;
  * $$Id$
  *
  */
-public class InvariantStatement {
-}
+public class InvariantStatement {}

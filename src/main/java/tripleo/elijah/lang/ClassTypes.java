@@ -9,7 +9,11 @@
 package tripleo.elijah.lang;
 
 public enum ClassTypes {
-	NORMAL, STRUCTURE, SIGNATURE, ABSTRACT, INTERFACE
+    NORMAL,
+    STRUCTURE,
+    SIGNATURE,
+    ABSTRACT,
+    INTERFACE
 }
 
 //

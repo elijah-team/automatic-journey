@@ -18,22 +18,21 @@ import tripleo.elijah.lang.ExpressionList;
  */
 public class IndexingStatement {
 
-	private final CompilerInstructions parent;
-	private Token name;
-	private ExpressionList exprs;
+    private final CompilerInstructions parent;
+    private Token name;
+    private ExpressionList exprs;
 
-	public IndexingStatement(final CompilerInstructions module) {
-		this.parent = module;
-	}
+    public IndexingStatement(final CompilerInstructions module) {
+        this.parent = module;
+    }
 
-	public void setName(final Token i1) {
-		this.name = i1;
-	}
+    public void setName(final Token i1) {
+        this.name = i1;
+    }
 
-	public void setExprs(final ExpressionList el) {
-		this.exprs = el;
-	}
-
+    public void setExprs(final ExpressionList el) {
+        this.exprs = el;
+    }
 }
 
 //

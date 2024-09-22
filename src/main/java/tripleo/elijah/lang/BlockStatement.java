@@ -13,25 +13,25 @@ package tripleo.elijah.lang;
 
 public class BlockStatement implements /* Statement, */ StatementItem {
 
-	final private Scope parent;
-	private final NormalTypeName tn = new RegularTypeName(); // FIXME
-	private final FormalArgList fal = new FormalArgList();
-	private final StatementClosure scope;
+    private final Scope parent;
+    private final NormalTypeName tn = new RegularTypeName(); // FIXME
+    private final FormalArgList fal = new FormalArgList();
+    private final StatementClosure scope;
 
-	public BlockStatement(final Scope aParent) {
-		parent = aParent;
-		scope = new AbstractStatementClosure(parent);
-	}
+    public BlockStatement(final Scope aParent) {
+        parent = aParent;
+        scope = new AbstractStatementClosure(parent);
+    }
 
-	public StatementClosure scope() {
-		return scope;
-	}
+    public StatementClosure scope() {
+        return scope;
+    }
 
-	public FormalArgList opfal() {
-		return fal;
-	}
+    public FormalArgList opfal() {
+        return fal;
+    }
 
-	public NormalTypeName returnType() {
-		return tn;
-	}
+    public NormalTypeName returnType() {
+        return tn;
+    }
 }

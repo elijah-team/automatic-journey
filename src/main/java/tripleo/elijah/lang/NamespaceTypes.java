@@ -12,22 +12,22 @@
 package tripleo.elijah.lang;
 
 public enum NamespaceTypes {
-	/**
-	 * has a name (IDENT)
-	 */
-	NAMED,
-	/**
-	 * name is underscore
-	 */
-	PRIVATE,
-	/**
-	 * no name specified
-	 */
-	MODULE,
-	/**
-	 * named __package__
-	 */
-	PACKAGE
+    /**
+     * has a name (IDENT)
+     */
+    NAMED,
+    /**
+     * name is underscore
+     */
+    PRIVATE,
+    /**
+     * no name specified
+     */
+    MODULE,
+    /**
+     * named __package__
+     */
+    PACKAGE
 }
 
 //

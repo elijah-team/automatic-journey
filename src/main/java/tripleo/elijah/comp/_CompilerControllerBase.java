@@ -12,47 +12,47 @@ import tripleo.elijah_prolific.comp_signals.CSS2_doFindCIs;
 import java.util.List;
 
 public abstract class _CompilerControllerBase implements CompilerController {
-	protected String[]           args2;
-	protected EDR_CompilationBus cb;
-	protected Compilation        c;
-	protected List<String> args;
+    protected String[] args2;
+    protected EDR_CompilationBus cb;
+    protected Compilation c;
+    protected List<String> args;
 
-	@Override
-	public void printUsage() {
-		System.out.println("Usage: eljc [--showtree] [-sE|O] <directory or .ez file names>");
-	}
+    @Override
+    public void printUsage() {
+        System.out.println("Usage: eljc [--showtree] [-sE|O] <directory or .ez file names>");
+    }
 
-	@Override
-	public void processOptions() {
-		final OptionsProcessor             op  = new ApacheOptionsProcessor();
-		final CompilerInstructionsObserver cio = new CompilerInstructionsObserver(c, c.get_cis());
+    @Override
+    public void processOptions() {
+        final OptionsProcessor op = new ApacheOptionsProcessor();
+        final CompilerInstructionsObserver cio = new CompilerInstructionsObserver(c, c.get_cis());
 
-		var cbp = c.getStartup().getCompilationBus();
-		cb = new EDR_CompilationBus(c);
-		cbp.resolve(cb);
+        var cbp = c.getStartup().getCompilationBus();
+        cb = new EDR_CompilationBus(c);
+        cbp.resolve(cb);
 
-		try {
-			args2 = op.process(c, args, cb);
-		} catch (final Exception e) {
-			c.getErrSink().exception(e);
-			throw new RuntimeException(e);
-		}
-	}
+        try {
+            args2 = op.process(c, args, cb);
+        } catch (final Exception e) {
+            c.getErrSink().exception(e);
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public void runner() {
-		try {
-			ICompilationRunner __cr = new EDR_CompilationRunner(c, cb);
-			c.register(__cr);
-			c.signal(new CSS2_doFindCIs(), Pair.of(args2, cb));
-		} catch (final Exception e) {
-			c.getErrSink().exception(e);
-			throw new RuntimeException(e);
-		}
-	}
+    @Override
+    public void runner() {
+        try {
+            ICompilationRunner __cr = new EDR_CompilationRunner(c, cb);
+            c.register(__cr);
+            c.signal(new CSS2_doFindCIs(), Pair.of(args2, cb));
+        } catch (final Exception e) {
+            c.getErrSink().exception(e);
+            throw new RuntimeException(e);
+        }
+    }
 
-	@Override
-	public ICompilationBus getCB() {
-		return this.cb;
-	}
+    @Override
+    public ICompilationBus getCB() {
+        return this.cb;
+    }
 }

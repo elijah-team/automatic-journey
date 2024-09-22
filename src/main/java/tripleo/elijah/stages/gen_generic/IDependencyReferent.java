@@ -12,8 +12,7 @@ package tripleo.elijah.stages.gen_generic;
 /**
  * Created 9/13/21 7:21 AM
  */
-public interface IDependencyReferent {
-}
+public interface IDependencyReferent {}
 
 //
 //

@@ -1,7 +1,9 @@
 package tripleo.elijah.test_help;
 
 import org.jetbrains.annotations.NotNull;
-import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.CompilationAlways;
+import tripleo.elijah.comp.PipelineLogic;
 import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.internal.EDR_Compilation;
 import tripleo.elijah.comp.internal.EDR_ProcessRecord;
@@ -16,75 +18,74 @@ import tripleo.elijah.stages.gen_generic.OutputFileFactoryParams;
 import tripleo.elijah.stages.logging.ElLog;
 
 public class Boilerplate {
-	public Compilation        comp;
-	public ICompilationAccess aca;
-	public EDR_ProcessRecord  pr;
-	public PipelineLogic      pipelineLogic;
-	public GenerateFiles generateFiles;
-	OS_Module module;
+    public Compilation comp;
+    public ICompilationAccess aca;
+    public EDR_ProcessRecord pr;
+    public PipelineLogic pipelineLogic;
+    public GenerateFiles generateFiles;
+    OS_Module module;
 
-	public void get() {
-		comp = CompilationFactory.mkCompilation();
-		aca = ((EDR_Compilation) comp)._access();
-		pr = new EDR_ProcessRecord(aca);
+    public void get() {
+        comp = CompilationFactory.mkCompilation();
+        aca = comp._access();
+        pr = new EDR_ProcessRecord(aca);
 
-//		final RuntimeProcesses rt = StageToRuntime.get(ca.getStage(), ca, pr);
+        //		final RuntimeProcesses rt = StageToRuntime.get(ca.getStage(), ca, pr);
 
-		pipelineLogic = pr.ab.__getPL(); // FIXME make ab private
-		// getGenerateFiles(mod);
+        pipelineLogic = pr.ab.__getPL(); // FIXME make ab private
+        // getGenerateFiles(mod);
 
-		if (module != null) {
-			module.setParent(comp);
-		}
-	}
+        if (module != null) {
+            module.setParent(comp);
+        }
+    }
 
-	public void getGenerateFiles(final @NotNull OS_Module mod) {
-		generateFiles = OutputFileFactory.create(CompilationAlways.defaultPrelude(),
-				new OutputFileFactoryParams(mod, comp.getErrSink(), aca.testSilence(), pipelineLogic));
-	}
+    public void getGenerateFiles(final @NotNull OS_Module mod) {
+        generateFiles = OutputFileFactory.create(
+                CompilationAlways.defaultPrelude(),
+                new OutputFileFactoryParams(mod, comp.getErrSink(), aca.testSilence(), pipelineLogic));
+    }
 
-	public OS_Module defaultMod() {
-		if (module == null) {
-			module = new OS_Module();
-			module.setContext(new ModuleContext(module));
-			if (comp != null)
-				module.setParent(comp);
-		}
+    public OS_Module defaultMod() {
+        if (module == null) {
+            module = new OS_Module();
+            module.setContext(new ModuleContext(module));
+            if (comp != null) module.setParent(comp);
+        }
 
-		return module;
-	}
+        return module;
+    }
 
-	public BoilerplateModuleBuilder withModBuilder(final OS_Module aMod) {
-		return new BoilerplateModuleBuilder(aMod);
-	}
+    public BoilerplateModuleBuilder withModBuilder(final OS_Module aMod) {
+        return new BoilerplateModuleBuilder(aMod);
+    }
 
-	public DeduceTypes2 simpleDeduceModule3(final OS_Module aMod) {
-		final ElLog.Verbosity verbosity = Compilation.gitlabCIVerbosity();
-		@NotNull
-		final String s = CompilationAlways.defaultPrelude();
-		return simpleDeduceModule2(aMod, s, verbosity);
-	}
+    public DeduceTypes2 simpleDeduceModule3(final OS_Module aMod) {
+        final ElLog.Verbosity verbosity = Compilation.gitlabCIVerbosity();
+        @NotNull final String s = CompilationAlways.defaultPrelude();
+        return simpleDeduceModule2(aMod, s, verbosity);
+    }
 
-	public DeduceTypes2 simpleDeduceModule2(final OS_Module mod, final @NotNull String aS,
-			final ElLog.Verbosity aVerbosity) {
-		final Compilation c = mod.getCompilation();
+    public DeduceTypes2 simpleDeduceModule2(
+            final OS_Module mod, final @NotNull String aS, final ElLog.Verbosity aVerbosity) {
+        final Compilation c = mod.getCompilation();
 
-		mod.prelude = c.findPrelude(aS).success();
+        mod.prelude = c.findPrelude(aS).success();
 
-		return simpleDeduceModule(aVerbosity);
-	}
+        return simpleDeduceModule(aVerbosity);
+    }
 
-	public DeduceTypes2 simpleDeduceModule(final ElLog.Verbosity verbosity) {
-//		final PipelineLogic pl = new PipelineLogic(new AccessBus(module.getCompilation()));
-//		final DeduceTypes2  d  = pl.dp.deduceModule(module, verbosity);
+    public DeduceTypes2 simpleDeduceModule(final ElLog.Verbosity verbosity) {
+        //		final PipelineLogic pl = new PipelineLogic(new AccessBus(module.getCompilation()));
+        //		final DeduceTypes2  d  = pl.dp.deduceModule(module, verbosity);
 
-		final DeduceTypes2 d = getDeducePhase().deduceModule(module, verbosity);
+        final DeduceTypes2 d = getDeducePhase().deduceModule(module, verbosity);
 
-//		d.processWachers();
-		return d;
-	}
+        //		d.processWachers();
+        return d;
+    }
 
-	public DeducePhase getDeducePhase() {
-		return pipelineLogic.getDp();
-	}
+    public DeducePhase getDeducePhase() {
+        return pipelineLogic.getDp();
+    }
 }

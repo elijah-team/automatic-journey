@@ -8,48 +8,54 @@
  */
 package tripleo.elijah.contexts;
 
-import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.lang.CaseConditional;
+import tripleo.elijah.lang.Context;
+import tripleo.elijah.lang.LookupResultList;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Created 9/24/20 6:11 PM
  */
 public class CaseContext extends Context {
-	private final CaseConditional carrier;
-	private final Context _parent;
+    private final CaseConditional carrier;
+    private final Context _parent;
 
-	public CaseContext(final Context aParent, final CaseConditional mc) {
-		this._parent = aParent;
-		this.carrier = mc;
-	}
+    public CaseContext(final Context aParent, final CaseConditional mc) {
+        this._parent = aParent;
+        this.carrier = mc;
+    }
 
-	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
-			final List<Context> alreadySearched, final boolean one) {
-		alreadySearched.add(carrier.getContext());
+    @Override
+    public LookupResultList lookup(
+            final String name,
+            final int level,
+            final LookupResultList Result,
+            final List<Context> alreadySearched,
+            final boolean one) {
+        alreadySearched.add(carrier.getContext());
 
-		/*
-		 * if (carrier.getIterName() != null) { if (name.equals(carrier.getIterName()))
-		 * { // reversed to prevent NPEs IdentExpression ie =
-		 * carrier.getIterNameToken(); Result.add(name, level, ie, this); } }
-		 */
+        /*
+         * if (carrier.getIterName() != null) { if (name.equals(carrier.getIterName()))
+         * { // reversed to prevent NPEs IdentExpression ie =
+         * carrier.getIterNameToken(); Result.add(name, level, ie, this); } }
+         */
 
-		throw new NotImplementedException(); // carrier.singleidentcontext
+        throw new NotImplementedException(); // carrier.singleidentcontext
 
-		/*
-		 * if (carrier.getParent() != null) { final Context context = getParent(); if
-		 * (!alreadySearched.contains(context) || !one) context.lookup(name, level + 1,
-		 * Result, alreadySearched, false); // TODO test this } return Result;
-		 */
+        /*
+         * if (carrier.getParent() != null) { final Context context = getParent(); if
+         * (!alreadySearched.contains(context) || !one) context.lookup(name, level + 1,
+         * Result, alreadySearched, false); // TODO test this } return Result;
+         */
 
-	}
+    }
 
-	@Override
-	public Context getParent() {
-		return _parent;
-	}
+    @Override
+    public Context getParent() {
+        return _parent;
+    }
 }
 
 //

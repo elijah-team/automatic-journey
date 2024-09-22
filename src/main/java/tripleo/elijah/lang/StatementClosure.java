@@ -10,30 +10,30 @@ package tripleo.elijah.lang;
 
 public interface StatementClosure {
 
-	VariableSequence varSeq(Context ctx);
+    VariableSequence varSeq(Context ctx);
 
-	ProcedureCallExpression procedureCallExpression();
+    ProcedureCallExpression procedureCallExpression();
 
-	Loop loop();
+    Loop loop();
 
-//	StatementClosure procCallExpr();
+    //	StatementClosure procCallExpr();
 
-	void constructExpression(IExpression aExpr, ExpressionList aO);
+    void constructExpression(IExpression aExpr, ExpressionList aO);
 
-	void yield(IExpression aExpr);
+    void yield(IExpression aExpr);
 
-	IfConditional ifConditional(OS_Element aParent, Context aCtx);
+    IfConditional ifConditional(OS_Element aParent, Context aCtx);
 
-	BlockStatement blockClosure();
+    BlockStatement blockClosure();
 
-	CaseConditional caseConditional(Context parentContext);
+    CaseConditional caseConditional(Context parentContext);
 
-	MatchConditional matchConditional(Context parentContext);
+    MatchConditional matchConditional(Context parentContext);
 
-	void statementWrapper(IExpression expr);
+    void statementWrapper(IExpression expr);
 
-	// TODO new
-	// IdentList identList();
+    // TODO new
+    // IdentList identList();
 }
 
 //

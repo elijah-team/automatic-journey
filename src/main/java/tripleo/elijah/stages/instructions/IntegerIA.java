@@ -8,8 +8,8 @@
  */
 package tripleo.elijah.stages.instructions;
 
-import org.jdeferred2.*;
-import org.jetbrains.annotations.*;
+import org.jdeferred2.Promise;
+import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.stages.gen_fn.*;
 
 /**
@@ -17,46 +17,46 @@ import tripleo.elijah.stages.gen_fn.*;
  */
 public class IntegerIA implements InstructionArgument, Constructable {
 
-	public final BaseGeneratedFunction gf;
-	private final int index;
+    public final BaseGeneratedFunction gf;
+    private final int index;
 
-	public IntegerIA(final int anIndex, final BaseGeneratedFunction aGeneratedFunction) {
-		index = anIndex;
-		gf = aGeneratedFunction;
-	}
+    public IntegerIA(final int anIndex, final BaseGeneratedFunction aGeneratedFunction) {
+        index = anIndex;
+        gf = aGeneratedFunction;
+    }
 
-	@Override
-	public String toString() {
-		return "IntegerIA{" + "index=" + index + '}';
-	}
+    @Override
+    public String toString() {
+        return "IntegerIA{" + "index=" + index + '}';
+    }
 
-	public int getIndex() {
-		return index;
-	}
+    public int getIndex() {
+        return index;
+    }
 
-	@Override
-	public void setConstructable(final ProcTableEntry aPte) {
-		getEntry().setConstructable(aPte);
-	}
+    @Override
+    public void setConstructable(final ProcTableEntry aPte) {
+        getEntry().setConstructable(aPte);
+    }
 
-	public @NotNull VariableTableEntry getEntry() {
-		return gf.getVarTableEntry(index);
-	}
+    public @NotNull VariableTableEntry getEntry() {
+        return gf.getVarTableEntry(index);
+    }
 
-	@Override
-	public void resolveTypeToClass(final GeneratedNode aNode) {
-		getEntry().resolveTypeToClass(aNode);
-	}
+    @Override
+    public void resolveTypeToClass(final GeneratedNode aNode) {
+        getEntry().resolveTypeToClass(aNode);
+    }
 
-	@Override
-	public void setGenType(final GenType aGenType) {
-		getEntry().setGenType(aGenType);
-	}
+    @Override
+    public void setGenType(final GenType aGenType) {
+        getEntry().setGenType(aGenType);
+    }
 
-	@Override
-	public Promise<ProcTableEntry, Void, Void> constructablePromise() {
-		return getEntry().constructablePromise();
-	}
+    @Override
+    public Promise<ProcTableEntry, Void, Void> constructablePromise() {
+        return getEntry().constructablePromise();
+    }
 }
 
 //

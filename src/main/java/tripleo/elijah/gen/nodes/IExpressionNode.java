@@ -13,23 +13,23 @@ import tripleo.elijah.gen.TypeRef;
 import tripleo.elijah.lang.IExpression;
 
 public interface IExpressionNode {
-//	String getStringPCE(ProcedureCallExpression expr);
+    //	String getStringPCE(ProcedureCallExpression expr);
 
-	IExpression getExpr();
+    IExpression getExpr();
 
-	boolean is_const_expr();
+    boolean is_const_expr();
 
-	boolean is_underscore();
+    boolean is_underscore();
 
-	boolean is_var_ref();
+    boolean is_var_ref();
 
-	boolean is_simple();
+    boolean is_simple();
 
-	String genText(CompilerContext cctx);
+    String genText(CompilerContext cctx);
 
-	String genType();
+    String genType();
 
-	String genText();
+    String genText();
 
-	TypeRef getType();
+    TypeRef getType();
 }

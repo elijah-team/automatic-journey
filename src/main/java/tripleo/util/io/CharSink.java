@@ -16,9 +16,9 @@ package tripleo.util.io;
  *
  */
 public interface CharSink {
-	void accept(char char1);
+    void accept(char char1);
 
-	void accept(String string1);
+    void accept(String string1);
 }
 
 //

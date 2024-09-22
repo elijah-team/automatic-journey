@@ -8,45 +8,47 @@
  */
 package tripleo.elijah.lang.types;
 
-import tripleo.elijah.contexts.*;
-import tripleo.elijah.lang.*;
+import tripleo.elijah.contexts.ClassContext;
+import tripleo.elijah.lang.OS_Element;
+import tripleo.elijah.lang.OS_Type;
+import tripleo.elijah.lang.TypeName;
 
-import java.text.*;
+import java.text.MessageFormat;
 
 /**
  * Created 7/8/21 6:00 AM
  */
 public class OS_GenericTypeNameType extends __Abstract_OS_Type {
 
-	private final ClassContext.OS_TypeNameElement genericTypename;
+    private final ClassContext.OS_TypeNameElement genericTypename;
 
-	public OS_GenericTypeNameType(final ClassContext.OS_TypeNameElement aGenericTypename) {
-		genericTypename = aGenericTypename;
-	}
+    public OS_GenericTypeNameType(final ClassContext.OS_TypeNameElement aGenericTypename) {
+        genericTypename = aGenericTypename;
+    }
 
-	@Override
-	public OS_Element getElement() {
-		return genericTypename;
-	}
+    @Override
+    public OS_Element getElement() {
+        return genericTypename;
+    }
 
-	@Override
-	public Type getType() {
-		return Type.GENERIC_TYPENAME;
-	}
+    @Override
+    public Type getType() {
+        return Type.GENERIC_TYPENAME;
+    }
 
-	@Override
-	public String asString() {
-		return MessageFormat.format("<OS_GenericTypeNameType {0}>", genericTypename);
-	}
+    @Override
+    public String asString() {
+        return MessageFormat.format("<OS_GenericTypeNameType {0}>", genericTypename);
+    }
 
-	public TypeName getRealTypeName() {
-		return genericTypename.getTypeName();
-	}
+    public TypeName getRealTypeName() {
+        return genericTypename.getTypeName();
+    }
 
-	protected boolean _isEqual(final OS_Type aType) {
-		return aType.getType() == Type.GENERIC_TYPENAME
-				&& genericTypename.equals(((OS_GenericTypeNameType) aType).genericTypename);
-	}
+    protected boolean _isEqual(final OS_Type aType) {
+        return aType.getType() == Type.GENERIC_TYPENAME
+                && genericTypename.equals(((OS_GenericTypeNameType) aType).genericTypename);
+    }
 }
 
 //

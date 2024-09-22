@@ -8,13 +8,13 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.gen_fn.GeneratedClass;
 
 /**
  * Created 3/17/21 9:26 PM
  */
 public interface OnClass {
-	void classFound(GeneratedClass aGeneratedNode);
+    void classFound(GeneratedClass aGeneratedNode);
 }
 
 //

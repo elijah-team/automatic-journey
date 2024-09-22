@@ -8,15 +8,17 @@
  */
 package tripleo.elijah.work;
 
-import io.activej.csp.consumer.*;
-import io.activej.csp.supplier.*;
-import io.activej.eventloop.*;
-import io.activej.promise.*;
-import io.activej.reactor.*;
-import org.jetbrains.annotations.*;
-import org.pcollections.*;
+import io.activej.csp.consumer.ChannelConsumer;
+import io.activej.csp.supplier.ChannelSuppliers;
+import io.activej.eventloop.Eventloop;
+import io.activej.promise.Promise;
+import org.jetbrains.annotations.Nullable;
+import org.pcollections.TreePVector;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static io.activej.common.exception.FatalErrorHandlers.rethrow;
 
@@ -24,57 +26,55 @@ import static io.activej.common.exception.FatalErrorHandlers.rethrow;
  * Created 4/26/21 4:22 AM
  */
 public class WorkManager {
-	private final List<WorkList> jobs     = new ArrayList<>();
-	private final Set<WorkJob>   doneJobs = new HashSet<>();
+    private final List<WorkList> jobs = new ArrayList<>();
+    private final Set<WorkJob> doneJobs = new HashSet<>();
 
-	public static Eventloop createEventloop() {
-		//noinspection UnnecessaryLocalVariable
-		Eventloop eventLoop = Eventloop.builder()
-		                               .withCurrentThread()
-		                               .withFatalErrorHandler(rethrow())
-		                               .build();
-		return eventLoop;
-	}
+    public static Eventloop createEventloop() {
+        //noinspection UnnecessaryLocalVariable
+        Eventloop eventLoop = Eventloop.builder()
+                .withCurrentThread()
+                .withFatalErrorHandler(rethrow())
+                .build();
+        return eventLoop;
+    }
 
-	public void addJobs(final WorkList aList) {
-		jobs.add(aList);
-	}
+    public void addJobs(final WorkList aList) {
+        jobs.add(aList);
+    }
 
-	public void drain() {
-		final var _c = this;
+    public void drain() {
+        final var _c = this;
 
-		TreePVector<WorkList> jobs1 = TreePVector.empty();
-		for (WorkList workList : jobs) {
-			if (workList.isDone()) continue;
-			jobs1 = jobs1.plus(workList);
-		}
+        TreePVector<WorkList> jobs1 = TreePVector.empty();
+        for (WorkList workList : jobs) {
+            if (workList.isDone()) continue;
+            jobs1 = jobs1.plus(workList);
+        }
 
-		for (WorkList jobList : jobs1) {
-			for (WorkJob job : jobList.getJobs()) {
-				if (job.isDone()) continue;
+        for (WorkList jobList : jobs1) {
+            for (WorkJob job : jobList.getJobs()) {
+                if (job.isDone()) continue;
 
-				ChannelSuppliers.ofValue(job)
-				                .streamTo(new ChannelConsumer<>() {
-					                          @Override
-					                          public Promise<Void> accept(@Nullable final WorkJob w) {
-						                          if (w != null) {
-							                          if (!_c.doneJobs.contains(w)) {
-								                          w.run(_c);
-								                          if (w.isDone()) _c.doneJobs.add(w);
-							                          }
-						                          }
-						                          return Promise.of(null);
-					                          }
+                ChannelSuppliers.ofValue(job).streamTo(new ChannelConsumer<>() {
+                    @Override
+                    public Promise<Void> accept(@Nullable final WorkJob w) {
+                        if (w != null) {
+                            if (!_c.doneJobs.contains(w)) {
+                                w.run(_c);
+                                if (w.isDone()) _c.doneJobs.add(w);
+                            }
+                        }
+                        return Promise.of(null);
+                    }
 
-					                          @Override
-					                          public void closeEx(final Exception e) {
-												  assert false;
-					                          }
-				                          }
-				                );
-			}
-		}
-	}
+                    @Override
+                    public void closeEx(final Exception e) {
+                        assert false;
+                    }
+                });
+            }
+        }
+    }
 }
 
 //

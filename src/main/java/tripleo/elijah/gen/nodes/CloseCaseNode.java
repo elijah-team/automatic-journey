@@ -26,25 +26,25 @@ import tripleo.elijah_fluffy.util.NotImplementedException;
  */
 public class CloseCaseNode {
 
-//	public CloseCaseNode(CaseHdrNode csn, ChoiceOptions break1) {
-//		// TODO Auto-generated constructor stub
-//	}
+    //	public CloseCaseNode(CaseHdrNode csn, ChoiceOptions break1) {
+    //		// TODO Auto-generated constructor stub
+    //	}
 
-	public CaseChoiceNode hdr_node;
+    public CaseChoiceNode hdr_node;
 
-	public CloseCaseNode(final CaseChoiceNode csn, final ChoiceOptions break1) {
-		// TODO Auto-generated constructor stub
-		hdr_node = csn;
-	}
+    public CloseCaseNode(final CaseChoiceNode csn, final ChoiceOptions break1) {
+        // TODO Auto-generated constructor stub
+        hdr_node = csn;
+    }
 
-//	public CloseCaseNode(CaseDefaultNode csn2, ChoiceOptions break1) {
-//		// TODO Auto-generated constructor stub
-//		NotImplementedException.raise();
-////		hdr_node=csn2;
-//	}
+    //	public CloseCaseNode(CaseDefaultNode csn2, ChoiceOptions break1) {
+    //		// TODO Auto-generated constructor stub
+    //		NotImplementedException.raise();
+    ////		hdr_node=csn2;
+    //	}
 
-	public CloseCaseNode(final CaseChoiceNode csn2, final ChoiceOptions aBreak, final boolean b) {
-		assert b; // means default
-		NotImplementedException.raise();
-	}
+    public CloseCaseNode(final CaseChoiceNode csn2, final ChoiceOptions aBreak, final boolean b) {
+        assert b; // means default
+        NotImplementedException.raise();
+    }
 }

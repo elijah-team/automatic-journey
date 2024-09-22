@@ -3,7 +3,7 @@
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.Contract;
 
 /**
  * @author Tripleo
@@ -12,14 +12,13 @@ import org.jetbrains.annotations.*;
  */
 public interface OS_Element2 {
 
-	/**
-	 * The name of the element TODO Should this be a {@link IdentExpression}?
-	 *
-	 * @return a String
-	 */
-	@Contract(pure = true)
-	String name();
-
+    /**
+     * The name of the element TODO Should this be a {@link IdentExpression}?
+     *
+     * @return a String
+     */
+    @Contract(pure = true)
+    String name();
 }
 
 //

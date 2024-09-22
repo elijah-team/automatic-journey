@@ -5,18 +5,17 @@ import tripleo.elijah.lang.IExpression;
 
 public interface LibraryStatementPart {
 
-	String getName();
+    String getName();
 
-	void setName(Token i1);
+    void setName(Token i1);
 
-	String getDirName();
+    String getDirName();
 
-	void setDirName(Token dirName);
+    void setDirName(Token dirName);
 
-	void addDirective(Token token, IExpression iExpression);
+    void addDirective(Token token, IExpression iExpression);
 
-	CompilerInstructions getInstructions();
+    CompilerInstructions getInstructions();
 
-	void setInstructions(CompilerInstructions instructions);
-
+    void setInstructions(CompilerInstructions instructions);
 }

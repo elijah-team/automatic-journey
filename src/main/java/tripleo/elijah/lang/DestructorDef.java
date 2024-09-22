@@ -8,8 +8,8 @@
  */
 package tripleo.elijah.lang;
 
-import tripleo.elijah.contexts.*;
-import tripleo.elijah.lang2.*;
+import tripleo.elijah.contexts.FunctionContext;
+import tripleo.elijah.lang2.ElElementVisitor;
 
 /**
  * @author Tripleo
@@ -18,31 +18,30 @@ import tripleo.elijah.lang2.*;
  */
 public class DestructorDef extends BaseFunctionDef {
 
-	private final ClassStatement parent;
+    private final ClassStatement parent;
 
-	public DestructorDef(final ClassStatement aClassStatement, final Context context) {
-		parent = aClassStatement;
-		if (aClassStatement instanceof OS_Container) {
-			((OS_Container) parent).add(this);
-		} else {
-			throw new IllegalStateException("adding DestructorDef to " + aClassStatement.getClass().getName());
-		}
-		_a.setContext(new FunctionContext(context, this));
-		setSpecies(Species.DTOR);
-	}
+    public DestructorDef(final ClassStatement aClassStatement, final Context context) {
+        parent = aClassStatement;
+        if (aClassStatement instanceof OS_Container) {
+            ((OS_Container) parent).add(this);
+        } else {
+            throw new IllegalStateException(
+                    "adding DestructorDef to " + aClassStatement.getClass().getName());
+        }
+        _a.setContext(new FunctionContext(context, this));
+        setSpecies(Species.DTOR);
+    }
 
-	@Override
-	public void visitGen(final ElElementVisitor visit) {
-		visit.visitDestructor(this);
-	}
+    @Override
+    public void visitGen(final ElElementVisitor visit) {
+        visit.visitDestructor(this);
+    }
 
-	@Override
-	public OS_Element getParent() {
-		return null;
-	}
+    @Override
+    public OS_Element getParent() {
+        return null;
+    }
 
-	@Override
-	public void postConstruct() {
-
-	}
+    @Override
+    public void postConstruct() {}
 }

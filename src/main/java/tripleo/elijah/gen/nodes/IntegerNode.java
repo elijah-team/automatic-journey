@@ -20,56 +20,56 @@ import tripleo.elijah.lang.NumericExpression;
  *
  */
 public class IntegerNode implements IExpressionNode {
-	private final IExpression _expr;
-	private final TypeRef _type;
+    private final IExpression _expr;
+    private final TypeRef _type;
 
-	public IntegerNode(final NumericExpression aInteger, final TypeRef aTypeRef) {
-		_expr = aInteger;
-		_type = aTypeRef;
-	}
+    public IntegerNode(final NumericExpression aInteger, final TypeRef aTypeRef) {
+        _expr = aInteger;
+        _type = aTypeRef;
+    }
 
-	@Override
-	public IExpression getExpr() {
-		return _expr;
-	}
+    @Override
+    public IExpression getExpr() {
+        return _expr;
+    }
 
-	@Override
-	public boolean is_const_expr() {
-		return true;
-	}
+    @Override
+    public boolean is_const_expr() {
+        return true;
+    }
 
-	@Override
-	public boolean is_underscore() {
-		return false;
-	}
+    @Override
+    public boolean is_underscore() {
+        return false;
+    }
 
-	@Override
-	public boolean is_var_ref() {
-		return false;
-	}
+    @Override
+    public boolean is_var_ref() {
+        return false;
+    }
 
-	@Override
-	public boolean is_simple() {
-		return true;
-	}
+    @Override
+    public boolean is_simple() {
+        return true;
+    }
 
-	@Override
-	public String genText(final CompilerContext cctx) {
-		return Integer.toString(((NumericExpression) _expr).getValue());
-	}
+    @Override
+    public String genText(final CompilerContext cctx) {
+        return Integer.toString(((NumericExpression) _expr).getValue());
+    }
 
-	@Override
-	public String genType() {
-		return "u64"; // TODO hardcoded
-	}
+    @Override
+    public String genType() {
+        return "u64"; // TODO hardcoded
+    }
 
-	@Override
-	public String genText() {
-		return Integer.toString(((NumericExpression) _expr).getValue());
-	}
+    @Override
+    public String genText() {
+        return Integer.toString(((NumericExpression) _expr).getValue());
+    }
 
-	@Override
-	public TypeRef getType() {
-		return _type;
-	}
+    @Override
+    public TypeRef getType() {
+        return _type;
+    }
 }

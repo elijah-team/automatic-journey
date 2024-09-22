@@ -8,31 +8,33 @@
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 // Referenced classes of package pak2:
 //			FormalArgListItem
 
 public class FormalArgList {
 
-	public final List<FormalArgListItem> falis = new ArrayList<FormalArgListItem>();
+    public final List<FormalArgListItem> falis = new ArrayList<FormalArgListItem>();
 
-	public FormalArgListItem next() {
-		final @NotNull FormalArgListItem fali = new FormalArgListItem();
-		falis.add(fali);
-		return fali;
-	}
+    public FormalArgListItem next() {
+        final @NotNull FormalArgListItem fali = new FormalArgListItem();
+        falis.add(fali);
+        return fali;
+    }
 
-	@Override
-	public String toString() {
-		return falis.toString();
-	}
+    @Override
+    public String toString() {
+        return falis.toString();
+    }
 
-	public Collection<FormalArgListItem> items() {
-		return falis;
-	}
+    public Collection<FormalArgListItem> items() {
+        return falis;
+    }
 }
 
 //

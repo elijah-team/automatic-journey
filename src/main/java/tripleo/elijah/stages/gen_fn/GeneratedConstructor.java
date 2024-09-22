@@ -21,69 +21,64 @@ import tripleo.elijah.stages.deduce.NamespaceInvocation;
  * Created 6/27/21 9:45 AM
  */
 public class GeneratedConstructor extends BaseGeneratedFunction {
-	public final @Nullable ConstructorDef cd;
+    public final @Nullable ConstructorDef cd;
 
-	public GeneratedConstructor(final @Nullable ConstructorDef aConstructorDef) {
-		cd = aConstructorDef;
-	}
+    public GeneratedConstructor(final @Nullable ConstructorDef aConstructorDef) {
+        cd = aConstructorDef;
+    }
 
-	public void setFunctionInvocation(final FunctionInvocation fi) {
-		final GenType genType = new GenType();
+    public void setFunctionInvocation(final FunctionInvocation fi) {
+        final GenType genType = new GenType();
 
-		// TODO will fail on namespace constructors; next line too
-		if (genType.getCi() instanceof final ClassInvocation classInvocation) {
-//			throw new IllegalStateException("34 Needs class invocation");
+        // TODO will fail on namespace constructors; next line too
+        if (genType.getCi() instanceof final ClassInvocation classInvocation) {
+            //			throw new IllegalStateException("34 Needs class invocation");
 
-			genType.setCi(classInvocation);
-			genType.setResolved(classInvocation.getKlass().getOS_Type());
-		} else if (genType.getCi() instanceof final NamespaceInvocation namespaceInvocation) {
+            genType.setCi(classInvocation);
+            genType.setResolved(classInvocation.getKlass().getOS_Type());
+        } else if (genType.getCi() instanceof final NamespaceInvocation namespaceInvocation) {
 
-			genType.setCi(namespaceInvocation);
-			genType.setResolved(namespaceInvocation.getNamespace().getOS_Type());
-		}
+            genType.setCi(namespaceInvocation);
+            genType.setResolved(namespaceInvocation.getNamespace().getOS_Type());
+        }
 
-		genType.setNode(this);
+        genType.setNode(this);
 
-		resolveTypeDeferred(genType);
-	}
+        resolveTypeDeferred(genType);
+    }
 
-	//
-	// region toString
-	//
+    //
+    // region toString
+    //
 
-	@Override
-	public String toString() {
-		return String.format("<GeneratedConstructor %s>", cd);
-	}
+    @Override
+    public String toString() {
+        return String.format("<GeneratedConstructor %s>", cd);
+    }
 
-	public String name() {
-		if (cd == null)
-			throw new IllegalArgumentException("null cd");
-		return cd.name();
-	}
+    public String name() {
+        if (cd == null) throw new IllegalArgumentException("null cd");
+        return cd.name();
+    }
 
-	// endregion
+    // endregion
 
-	@Override
-	public String identityString() {
-		return String.valueOf(cd);
-	}
+    @Override
+    public String identityString() {
+        return String.valueOf(cd);
+    }
 
-	@Override
-	public @NotNull BaseFunctionDef getFD() {
-		if (cd == null)
-			throw new IllegalStateException("No function");
-		return cd;
-	}
+    @Override
+    public @NotNull BaseFunctionDef getFD() {
+        if (cd == null) throw new IllegalStateException("No function");
+        return cd;
+    }
 
-	@Override
-	public VariableTableEntry getSelf() {
-		if (getFD().getParent() instanceof ClassStatement)
-			return getVarTableEntry(0);
-		else
-			return null;
-	}
-
+    @Override
+    public VariableTableEntry getSelf() {
+        if (getFD().getParent() instanceof ClassStatement) return getVarTableEntry(0);
+        else return null;
+    }
 }
 
 //

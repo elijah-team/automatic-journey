@@ -8,18 +8,19 @@
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang2.*;
+import org.jetbrains.annotations.Contract;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.lang2.ElElementVisitor;
 
 public interface OS_Element {
-	void visitGen(ElElementVisitor visit);
+    void visitGen(ElElementVisitor visit);
 
-	@Contract(pure = true)
-	Context getContext();
+    @Contract(pure = true)
+    Context getContext();
 
-	@Contract(pure = true)
-	@Nullable
-	OS_Element getParent();
+    @Contract(pure = true)
+    @Nullable
+    OS_Element getParent();
 }
 
 //

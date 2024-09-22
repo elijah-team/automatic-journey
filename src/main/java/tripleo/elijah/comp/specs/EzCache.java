@@ -5,7 +5,7 @@ import tripleo.elijah.ci.CompilerInstructions;
 import java.util.Optional;
 
 public interface EzCache {
-	Optional<CompilerInstructions> get(String aAbsolutePath);
+    Optional<CompilerInstructions> get(String aAbsolutePath);
 
-	void put(EzSpec aSpec, String aAbsolutePath, CompilerInstructions aR);
+    void put(EzSpec aSpec, String aAbsolutePath, CompilerInstructions aR);
 }

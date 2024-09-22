@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.*;
+import antlr.Token;
 
 /**
  * @author Tripleo
@@ -17,8 +17,7 @@ import antlr.*;
  */
 public interface Documentable {
 
-	void addDocString(Token s1);
-
+    void addDocString(Token s1);
 }
 
 //

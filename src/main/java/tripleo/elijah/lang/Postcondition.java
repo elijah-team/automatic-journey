@@ -12,16 +12,16 @@ package tripleo.elijah.lang;
  * Created 12/22/20 11:47 PM
  */
 public class Postcondition {
-	private IdentExpression id;
-	private IExpression expr;
+    private IdentExpression id;
+    private IExpression expr;
 
-	public void id(final IdentExpression id) {
-		this.id = id;
-	}
+    public void id(final IdentExpression id) {
+        this.id = id;
+    }
 
-	public void expr(final IExpression expr) {
-		this.expr = expr;
-	}
+    public void expr(final IExpression expr) {
+        this.expr = expr;
+    }
 }
 
 //

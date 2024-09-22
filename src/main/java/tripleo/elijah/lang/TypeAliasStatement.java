@@ -11,8 +11,8 @@
  */
 package tripleo.elijah.lang;
 
-import tripleo.elijah.lang2.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.lang2.ElElementVisitor;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 /**
  * @author Tripleo(sb)
@@ -20,41 +20,41 @@ import tripleo.elijah_fluffy.util.*;
  */
 public class TypeAliasStatement implements OS_Element {
 
-	private final OS_Element parent;
-	private IdentExpression x;
-	private Qualident y;
+    private final OS_Element parent;
+    private IdentExpression x;
+    private Qualident y;
 
-	public TypeAliasStatement(final OS_Element aParent) {
-		this.parent = aParent;
-	}
+    public TypeAliasStatement(final OS_Element aParent) {
+        this.parent = aParent;
+    }
 
-	public void make(final IdentExpression x, final Qualident y) {
-		this.x = x;
-		this.y = y;
-	}
+    public void make(final IdentExpression x, final Qualident y) {
+        this.x = x;
+        this.y = y;
+    }
 
-	public void setIdent(final IdentExpression aToken) {
-		x = aToken;
-	}
+    public void setIdent(final IdentExpression aToken) {
+        x = aToken;
+    }
 
-	public void setBecomes(final Qualident qq) {
-		y = qq;
-	}
+    public void setBecomes(final Qualident qq) {
+        y = qq;
+    }
 
-	@Override
-	public void visitGen(final ElElementVisitor visit) {
-		visit.visitTypeAlias(this);
-	}
+    @Override
+    public void visitGen(final ElElementVisitor visit) {
+        visit.visitTypeAlias(this);
+    }
 
-	@Override
-	public Context getContext() {
-		throw new NotImplementedException();
-	}
+    @Override
+    public Context getContext() {
+        throw new NotImplementedException();
+    }
 
-	@Override
-	public OS_Element getParent() {
-		return parent;
-	}
+    @Override
+    public OS_Element getParent() {
+        return parent;
+    }
 }
 
 //

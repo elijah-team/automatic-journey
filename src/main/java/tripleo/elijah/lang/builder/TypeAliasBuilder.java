@@ -14,42 +14,42 @@ import tripleo.elijah.lang.*;
  * Created 12/22/20 10:22 PM
  */
 public class TypeAliasBuilder extends ElBuilder {
-	private OS_Element _parent;
-	private Context _context;
-	private Qualident oldElement;
-	private IdentExpression newAlias;
+    private OS_Element _parent;
+    private Context _context;
+    private Qualident oldElement;
+    private IdentExpression newAlias;
 
-	public IdentExpression getIdent() {
-		return newAlias;
-	}
+    public IdentExpression getIdent() {
+        return newAlias;
+    }
 
-	public void setIdent(final IdentExpression newAlias) {
-		this.newAlias = newAlias;
-	}
+    public void setIdent(final IdentExpression newAlias) {
+        this.newAlias = newAlias;
+    }
 
-	public Qualident getBecomes() {
-		return oldElement;
-	}
+    public Qualident getBecomes() {
+        return oldElement;
+    }
 
-	public void setBecomes(final Qualident oldElement) {
-		this.oldElement = oldElement;
-	}
+    public void setBecomes(final Qualident oldElement) {
+        this.oldElement = oldElement;
+    }
 
-	@Override
-	public TypeAliasStatement build() {
-		final TypeAliasStatement typeAliasStatement = new TypeAliasStatement(_parent);
-		typeAliasStatement.make(newAlias, oldElement);
-		return typeAliasStatement;
-	}
+    @Override
+    public TypeAliasStatement build() {
+        final TypeAliasStatement typeAliasStatement = new TypeAliasStatement(_parent);
+        typeAliasStatement.make(newAlias, oldElement);
+        return typeAliasStatement;
+    }
 
-	@Override
-	public void setContext(final Context context) {
-		_context = context;
-		// TODO this is a very important potential bug
-		// where ident's may not be getting the right context
-		// because of non-use of Parser.cur in the Builders
-		newAlias.setContext(context);
-	}
+    @Override
+    public void setContext(final Context context) {
+        _context = context;
+        // TODO this is a very important potential bug
+        // where ident's may not be getting the right context
+        // because of non-use of Parser.cur in the Builders
+        newAlias.setContext(context);
+    }
 }
 
 //

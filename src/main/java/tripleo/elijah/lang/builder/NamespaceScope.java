@@ -8,52 +8,56 @@
  */
 package tripleo.elijah.lang.builder;
 
-import antlr.*;
-import tripleo.elijah.lang.*;
+import antlr.Token;
+import tripleo.elijah.lang.AccessNotation;
+import tripleo.elijah.lang.Documentable;
+import tripleo.elijah.lang.InvariantStatement;
+import tripleo.elijah.lang.OS_Element;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created 12/23/20 2:47 AM
  */
 public class NamespaceScope extends ClassOrNamespaceScope implements Documentable {
-	private final List<Token> _docstrings = new ArrayList<Token>();
+    private final List<Token> _docstrings = new ArrayList<Token>();
 
-//	public Iterable<OS_Element> items() {
-//		return _items;
-//	}
-//
-//	public void add(OS_Element item) {
-//		_items.add(item);
-//	}
+    //	public Iterable<OS_Element> items() {
+    //		return _items;
+    //	}
+    //
+    //	public void add(OS_Element item) {
+    //		_items.add(item);
+    //	}
 
-	private final List<OS_Element> _items = new ArrayList<OS_Element>();
+    private final List<OS_Element> _items = new ArrayList<OS_Element>();
 
-	@Override
-	public void addDocString(final Token s1) {
-		_docstrings.add(s1);
-	}
+    @Override
+    public void addDocString(final Token s1) {
+        _docstrings.add(s1);
+    }
 
-	public void addAccess(final AccessNotation acs) {
-		// _items.add(acs);
-	}
+    public void addAccess(final AccessNotation acs) {
+        // _items.add(acs);
+    }
 
-	public TypeAliasBuilder typeAlias() {
-		return new TypeAliasBuilder();
-	}
+    public TypeAliasBuilder typeAlias() {
+        return new TypeAliasBuilder();
+    }
 
-	public FunctionDefBuilder funcDef() {
-		return new FunctionDefBuilder();
-	}
+    public FunctionDefBuilder funcDef() {
+        return new FunctionDefBuilder();
+    }
 
-	public InvariantStatement invariantStatement() {
-		return new InvariantStatement();
-	}
+    public InvariantStatement invariantStatement() {
+        return new InvariantStatement();
+    }
 
-//	@Override
-//	public Iterable<ElBuilder> items() {
-//		return bs;
-//	}
+    //	@Override
+    //	public Iterable<ElBuilder> items() {
+    //		return bs;
+    //	}
 }
 
 //

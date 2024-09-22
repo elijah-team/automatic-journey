@@ -19,43 +19,43 @@ import tripleo.elijah.gen.Node;
 
 public class CaseHdrNode implements Node {
 
-	private IExpressionNode expr;
+    private IExpressionNode expr;
 
-	public CaseHdrNode(final VariableReferenceNode3 varref) {
-		this.expr = varref;
-	}
+    public CaseHdrNode(final VariableReferenceNode3 varref) {
+        this.expr = varref;
+    }
 
-	public IExpressionNode getExpr() {
-		return expr;
-	}
+    public IExpressionNode getExpr() {
+        return expr;
+    }
 
-	public void setExpr(final ExpressionNode expr) {
-		this.expr = expr;
-	}
+    public void setExpr(final ExpressionNode expr) {
+        this.expr = expr;
+    }
 
-	public @NotNull String simpleGenText() {
-		if (expr instanceof VariableReferenceNode3) {
-			return expr.genText();
-		}
-		// TODO mark for deletion
-//		if (expr.getExpr() instanceof VariableReference) {
-//			return ((VariableReference) expr.getExpr()).getName();
-//		}
-//		if (expr/*.getExpr()*/ instanceof VariableReferenceNode2) {
-//			return expr.genText();
-//		}
-		throw new IllegalStateException("no implementation");
-	}
+    public @NotNull String simpleGenText() {
+        if (expr instanceof VariableReferenceNode3) {
+            return expr.genText();
+        }
+        // TODO mark for deletion
+        //		if (expr.getExpr() instanceof VariableReference) {
+        //			return ((VariableReference) expr.getExpr()).getName();
+        //		}
+        //		if (expr/*.getExpr()*/ instanceof VariableReferenceNode2) {
+        //			return expr.genText();
+        //		}
+        throw new IllegalStateException("no implementation");
+    }
 
-	/**
-	 * do not call
-	 *
-	 * @return
-	 */
-	@Override
-	public int getCode() {
-		return -1;
-	}
+    /**
+     * do not call
+     *
+     * @return
+     */
+    @Override
+    public int getCode() {
+        return -1;
+    }
 }
 
 //

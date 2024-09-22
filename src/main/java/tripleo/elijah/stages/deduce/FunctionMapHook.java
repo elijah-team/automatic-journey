@@ -8,14 +8,12 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import tripleo.elijah.testing.comp.*;
+import tripleo.elijah.testing.comp.IFunctionMapHook;
 
 /**
  * Created 6/8/21 1:31 AM
  */
-public interface FunctionMapHook extends IFunctionMapHook {
-
-}
+public interface FunctionMapHook extends IFunctionMapHook {}
 
 //
 //

@@ -8,118 +8,120 @@
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang2.*;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.lang2.ElElementVisitor;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class VariableSequence implements StatementItem, FunctionItem, ClassItem {
 
-	final List<VariableStatement> stmts;
-	@Nullable
-	List<AnnotationClause> annotations = null;
-	private Context _ctx;
+    final List<VariableStatement> stmts;
 
-	private OS_Element parent;
-	private AccessNotation access_note;
+    @Nullable
+    List<AnnotationClause> annotations = null;
 
-	private TypeModifiers def;
-	private El_Category category;
+    private Context _ctx;
 
-	@Deprecated
-	public VariableSequence() {
-		stmts = new ArrayList<VariableStatement>();
-	}
+    private OS_Element parent;
+    private AccessNotation access_note;
 
-	public VariableSequence(final Context aContext) {
-		stmts = new ArrayList<VariableStatement>();
-		_ctx = aContext;
-	}
+    private TypeModifiers def;
+    private El_Category category;
 
-	public VariableStatement next() {
-		final VariableStatement st = new VariableStatement(this);
-		st.set(def);
-		stmts.add(st);
-		return st;
-	}
+    @Deprecated
+    public VariableSequence() {
+        stmts = new ArrayList<VariableStatement>();
+    }
 
-	public Collection<VariableStatement> items() {
-		return stmts;
-	}
+    public VariableSequence(final Context aContext) {
+        stmts = new ArrayList<VariableStatement>();
+        _ctx = aContext;
+    }
 
-	@Override
-	public String toString() {
-		final List<String> r = new ArrayList<String>();
-		for (final VariableStatement stmt : stmts) {
-			r.add(stmt.getName());
-		}
-		return r.toString();
-//		return (stmts.stream().map(n -> n.getName()).collect(Collectors.toList())).toString();
-	}
+    public VariableStatement next() {
+        final VariableStatement st = new VariableStatement(this);
+        st.set(def);
+        stmts.add(st);
+        return st;
+    }
 
-	@Override
-	public void visitGen(final ElElementVisitor visit) {
-		visit.visitVariableSequence(this);
-	}
+    public Collection<VariableStatement> items() {
+        return stmts;
+    }
 
-	@Override
-	public Context getContext() {
-		return _ctx;
-	}
+    @Override
+    public String toString() {
+        final List<String> r = new ArrayList<String>();
+        for (final VariableStatement stmt : stmts) {
+            r.add(stmt.getName());
+        }
+        return r.toString();
+        //		return (stmts.stream().map(n -> n.getName()).collect(Collectors.toList())).toString();
+    }
 
-	public void setContext(final Context ctx) {
-		_ctx = ctx;
-	}
+    @Override
+    public void visitGen(final ElElementVisitor visit) {
+        visit.visitVariableSequence(this);
+    }
 
-	@Override
-	public OS_Element getParent() {
-		return this.parent;
-	}
+    @Override
+    public Context getContext() {
+        return _ctx;
+    }
 
-	public void setParent(final OS_Element parent) {
-		this.parent = parent;
-	}
+    public void setContext(final Context ctx) {
+        _ctx = ctx;
+    }
 
-	// region ClassItem
+    @Override
+    public OS_Element getParent() {
+        return this.parent;
+    }
 
-	public void addAnnotation(final AnnotationClause a) {
-		if (annotations == null)
-			annotations = new ArrayList<AnnotationClause>();
-		annotations.add(a);
-	}
+    public void setParent(final OS_Element parent) {
+        this.parent = parent;
+    }
 
-	public void defaultModifiers(final TypeModifiers aModifiers) {
-		def = aModifiers;
-	}
+    // region ClassItem
 
-	@Override
-	public El_Category getCategory() {
-		return category;
-	}
+    public void addAnnotation(final AnnotationClause a) {
+        if (annotations == null) annotations = new ArrayList<AnnotationClause>();
+        annotations.add(a);
+    }
 
-	@Override
-	public void setCategory(final El_Category aCategory) {
-		category = aCategory;
-	}
+    public void defaultModifiers(final TypeModifiers aModifiers) {
+        def = aModifiers;
+    }
 
-	@Override
-	public AccessNotation getAccess() {
-		return access_note;
-	}
+    @Override
+    public El_Category getCategory() {
+        return category;
+    }
 
-	@Override
-	public void setAccess(final AccessNotation aNotation) {
-		access_note = aNotation;
-	}
+    @Override
+    public void setCategory(final El_Category aCategory) {
+        category = aCategory;
+    }
 
-	// endregion
+    @Override
+    public AccessNotation getAccess() {
+        return access_note;
+    }
 
-	public void setTypeName(final TypeName aTypeName) {
-		for (final VariableStatement vs : stmts) {
-			vs.setTypeName(aTypeName);
-		}
-	}
+    @Override
+    public void setAccess(final AccessNotation aNotation) {
+        access_note = aNotation;
+    }
 
+    // endregion
+
+    public void setTypeName(final TypeName aTypeName) {
+        for (final VariableStatement vs : stmts) {
+            vs.setTypeName(aTypeName);
+        }
+    }
 }
 
 //

@@ -10,7 +10,9 @@
 
 package tripleo.elijah.stages.gen_generic;
 
-import tripleo.elijah.stages.gen_fn.*;
+import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
+import tripleo.elijah.stages.gen_fn.GeneratedClass;
+import tripleo.elijah.stages.gen_fn.GeneratedNamespace;
 
 /**
  * Move this to Mir or Lir layer ASAP
@@ -18,11 +20,11 @@ import tripleo.elijah.stages.gen_fn.*;
  * Created 11/28/21 4:45 PM
  */
 public interface ICodeRegistrar {
-	void registerNamespace(GeneratedNamespace aNamespace);
+    void registerNamespace(GeneratedNamespace aNamespace);
 
-	void registerClass(GeneratedClass aClass);
+    void registerClass(GeneratedClass aClass);
 
-	void registerFunction(BaseGeneratedFunction aFunction);
+    void registerFunction(BaseGeneratedFunction aFunction);
 }
 
 //

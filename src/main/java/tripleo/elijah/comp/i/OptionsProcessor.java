@@ -5,7 +5,7 @@ import tripleo.elijah.comp.Compilation;
 
 import java.util.List;
 
-//@FunctionalInterface
+// @FunctionalInterface
 public interface OptionsProcessor {
-	String[] process(@NotNull Compilation c, @NotNull List<String> args, @NotNull ICompilationBus cb) throws Exception;
+    String[] process(@NotNull Compilation c, @NotNull List<String> args, @NotNull ICompilationBus cb) throws Exception;
 }

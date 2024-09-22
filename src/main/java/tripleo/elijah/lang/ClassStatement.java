@@ -8,235 +8,239 @@
  */
 package tripleo.elijah.lang;
 
-import com.google.common.base.*;
-import com.google.common.collect.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.contexts.*;
-import tripleo.elijah.lang.types.*;
-import tripleo.elijah.lang2.*;
-import tripleo.elijah_fluffy.util.*;
+import com.google.common.base.Function;
+import com.google.common.base.Predicate;
+import com.google.common.collect.Collections2;
+import com.google.common.collect.ImmutableList;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.contexts.ClassContext;
+import tripleo.elijah.lang.types.OS_UserClassType;
+import tripleo.elijah.lang2.ElElementVisitor;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 /**
  * Represents a "class"
  * <p>
  * items -> ClassItems docstrings variables
  */
-public class ClassStatement extends _CommonNC/* ProgramClosure */ implements ClassItem, ModuleItem, StatementItem,
-		FunctionItem, OS_Element, OS_Element2, Documentable, OS_Container {
+public class ClassStatement extends _CommonNC /* ProgramClosure */
+        implements ClassItem,
+                ModuleItem,
+                StatementItem,
+                FunctionItem,
+                OS_Element,
+                OS_Element2,
+                Documentable,
+                OS_Container {
 
-	static final List<TypeName> emptyTypeNameList = ImmutableList.of();
-	private final OS_Element parent;
-	ClassInheritance _inh = new ClassInheritance(); // remove final for ClassBuilder
-	private ClassTypes _type;
-	private TypeNameList genericPart;
-	private OS_UserClassType osType;
+    static final List<TypeName> emptyTypeNameList = ImmutableList.of();
+    private final OS_Element parent;
+    ClassInheritance _inh = new ClassInheritance(); // remove final for ClassBuilder
+    private ClassTypes _type;
+    private TypeNameList genericPart;
+    private OS_UserClassType osType;
 
-	public ClassStatement(final OS_Element parentElement, final Context parentContext) {
-		parent = parentElement; // setParent
+    public ClassStatement(final OS_Element parentElement, final Context parentContext) {
+        parent = parentElement; // setParent
 
-		@NotNull
-		final ElObjectType x = DecideElObjectType.getElObjectType(parentElement);
-		switch (x) {
-		case MODULE:
-			final OS_Module module = (OS_Module) parentElement;
-			//
-			this.setPackageName(module.pullPackageName());
-			_packageName.addElement(this);
-			module.add(this);
-			break;
-		case FUNCTION:
-			// do nothing
-			break;
-		default:
-			// we kind of fail the switch test here because OS_Container is not an
-			// OS_Element,
-			// so we have to test explicitly, messing up the pretty flow we had.
-			// hey sh*t happens.
-			if (parentElement instanceof OS_Container) {
-				((OS_Container) parentElement).add(this);
-			} else {
-				throw new IllegalStateException(String.format("Cant add ClassStatement to %s", parentElement));
-			}
-		}
+        @NotNull final ElObjectType x = DecideElObjectType.getElObjectType(parentElement);
+        switch (x) {
+            case MODULE:
+                final OS_Module module = (OS_Module) parentElement;
+                //
+                this.setPackageName(module.pullPackageName());
+                _packageName.addElement(this);
+                module.add(this);
+                break;
+            case FUNCTION:
+                // do nothing
+                break;
+            default:
+                // we kind of fail the switch test here because OS_Container is not an
+                // OS_Element,
+                // so we have to test explicitly, messing up the pretty flow we had.
+                // hey sh*t happens.
+                if (parentElement instanceof OS_Container) {
+                    ((OS_Container) parentElement).add(this);
+                } else {
+                    throw new IllegalStateException(String.format("Cant add ClassStatement to %s", parentElement));
+                }
+        }
 
-		setContext(new ClassContext(parentContext, this));
-	}
+        setContext(new ClassContext(parentContext, this));
+    }
 
-	@Override
-	public void visitGen(final ElElementVisitor visit) {
-		visit.addClass(this); // TODO visitClass
-	}
+    @Override
+    public void visitGen(final ElElementVisitor visit) {
+        visit.addClass(this); // TODO visitClass
+    }
 
-	@Override // OS_Element
-	public ClassContext getContext() {
-		return (ClassContext) _a._context;
-	}
+    @Override // OS_Element
+    public ClassContext getContext() {
+        return (ClassContext) _a._context;
+    }
 
-	@Override
-	public OS_Element getParent() {
-		return parent;
-	}
+    public void setContext(final ClassContext ctx) {
+        _a.setContext(ctx);
+    }
 
-	public void setContext(final ClassContext ctx) {
-		_a.setContext(ctx);
-	}
+    @Override
+    public OS_Element getParent() {
+        return parent;
+    }
 
-	@Override
-	public String toString() {
-		final String package_name;
-		if (getPackageName() != null && getPackageName()._name != null) {
-			final Qualident package_name_q = getPackageName()._name;
-			package_name = package_name_q.toString();
-		} else
-			package_name = "`'";
-		return String.format("<Class %d %s %s>", _a.getCode(), package_name, getName());
-	}
+    @Override
+    public String toString() {
+        final String package_name;
+        if (getPackageName() != null && getPackageName()._name != null) {
+            final Qualident package_name_q = getPackageName()._name;
+            package_name = package_name_q.toString();
+        } else package_name = "`'";
+        return String.format("<Class %d %s %s>", _a.getCode(), package_name, getName());
+    }
 
-	public ConstructorDef addCtor(final IdentExpression aConstructorName) {
-		return new ConstructorDef(aConstructorName, this, getContext());
-	}
+    public ConstructorDef addCtor(final IdentExpression aConstructorName) {
+        return new ConstructorDef(aConstructorName, this, getContext());
+    }
 
-	public DestructorDef addDtor() {
-		return new DestructorDef(this, getContext());
-	}
+    public DestructorDef addDtor() {
+        return new DestructorDef(this, getContext());
+    }
 
-	public Collection<ClassItem> findFunction(final String name) {
-		return Collections2.filter(items, new Predicate<ClassItem>() {
-			@Override
-			public boolean apply(@Nullable final ClassItem item) {
-				if (item instanceof FunctionDef && !(item instanceof ConstructorDef))
-					return ((FunctionDef) item).name().equals(name);
-				return false;
-			}
-		});
-	}
+    public Collection<ClassItem> findFunction(final String name) {
+        return Collections2.filter(items, new Predicate<ClassItem>() {
+            @Override
+            public boolean apply(@Nullable final ClassItem item) {
+                if (item instanceof FunctionDef && !(item instanceof ConstructorDef))
+                    return ((FunctionDef) item).name().equals(name);
+                return false;
+            }
+        });
+    }
 
-	public ClassTypes getType() {
-		return _type;
-	}
+    public ClassTypes getType() {
+        return _type;
+    }
 
-	public void setType(final ClassTypes aType) {
-		_type = aType;
-	}
+    public void setType(final ClassTypes aType) {
+        _type = aType;
+    }
 
-	public void postConstruct() {
-		assert nameToken != null;
-		int destructor_count = 0;
-		for (final ClassItem item : items) {
-			if (item instanceof DestructorDef)
-				destructor_count++;
-		}
-		assert destructor_count == 0 || destructor_count == 1;
-	}
+    public void postConstruct() {
+        assert nameToken != null;
+        int destructor_count = 0;
+        for (final ClassItem item : items) {
+            if (item instanceof DestructorDef) destructor_count++;
+        }
+        assert destructor_count == 0 || destructor_count == 1;
+    }
 
-	public IdentExpression getNameNode() {
-		return nameToken;
-	}
+    public IdentExpression getNameNode() {
+        return nameToken;
+    }
 
-	// region inheritance
+    // region inheritance
 
-	public void setInheritance(final ClassInheritance inh) {
-		_inh = inh;
-	}
+    public void setInheritance(final ClassInheritance inh) {
+        _inh = inh;
+    }
 
-	public ClassInheritance classInheritance() {
-		return _inh;
-	}
+    public ClassInheritance classInheritance() {
+        return _inh;
+    }
 
-	public @NotNull Iterable<AnnotationPart> annotationIterable() {
-		final List<AnnotationPart> aps = new ArrayList<AnnotationPart>();
-		if (annotations == null)
-			return aps;
-		for (final AnnotationClause annotationClause : annotations) {
-			aps.addAll(annotationClause.aps);
-		}
-		return aps;
-	}
+    public @NotNull Iterable<AnnotationPart> annotationIterable() {
+        final List<AnnotationPart> aps = new ArrayList<AnnotationPart>();
+        if (annotations == null) return aps;
+        for (final AnnotationClause annotationClause : annotations) {
+            aps.addAll(annotationClause.aps);
+        }
+        return aps;
+    }
 
-	// endregion
+    // endregion
 
-	// region annotations
+    // region annotations
 
-	public FunctionDef funcDef() {
-		return new FunctionDef(this, getContext());
-	}
+    public FunctionDef funcDef() {
+        return new FunctionDef(this, getContext());
+    }
 
-	// endregion
+    // endregion
 
-	// region called from parser
+    // region called from parser
 
-	public DefFunctionDef defFuncDef() {
-		return new DefFunctionDef(this, getContext());
-	}
+    public DefFunctionDef defFuncDef() {
+        return new DefFunctionDef(this, getContext());
+    }
 
-	public PropertyStatement prop() {
-		final PropertyStatement propertyStatement = new PropertyStatement(this, getContext());
-		add(propertyStatement);
-		return propertyStatement;
-	}
+    public PropertyStatement prop() {
+        final PropertyStatement propertyStatement = new PropertyStatement(this, getContext());
+        add(propertyStatement);
+        return propertyStatement;
+    }
 
-	@Override // OS_Container
-	public void add(final OS_Element anElement) {
-		if (!(anElement instanceof ClassItem))
-			throw new IllegalStateException(String.format("Cant add %s to ClassStatement", anElement));
-		items.add((ClassItem) anElement);
-	}
+    @Override // OS_Container
+    public void add(final OS_Element anElement) {
+        if (!(anElement instanceof ClassItem))
+            throw new IllegalStateException(String.format("Cant add %s to ClassStatement", anElement));
+        items.add((ClassItem) anElement);
+    }
 
-	public @org.jetbrains.annotations.Nullable TypeAliasStatement typeAlias() {
-		NotImplementedException.raise();
-		return null;
-	}
+    public @org.jetbrains.annotations.Nullable TypeAliasStatement typeAlias() {
+        NotImplementedException.raise();
+        return null;
+    }
 
-	public InvariantStatement invariantStatement() {
-		NotImplementedException.raise();
-		return null;
-	}
+    public InvariantStatement invariantStatement() {
+        NotImplementedException.raise();
+        return null;
+    }
 
-	public ProgramClosure XXX() {
-		return new ProgramClosure() {
-		};
-	}
+    public ProgramClosure XXX() {
+        return new ProgramClosure() {};
+    }
 
-	public StatementClosure statementClosure() {
-		return new AbstractStatementClosure(this);
-	}
+    public StatementClosure statementClosure() {
+        return new AbstractStatementClosure(this);
+    }
 
-	// endregion
+    // endregion
 
-	public @NotNull List<TypeName> getGenericPart() {
-		if (genericPart == null)
-			return emptyTypeNameList;
-		else
-			return genericPart.p;
-	}
+    public @NotNull List<TypeName> getGenericPart() {
+        if (genericPart == null) return emptyTypeNameList;
+        else return genericPart.p;
+    }
 
-	public void setGenericPart(final TypeNameList genericPart) {
-		this.genericPart = genericPart;
-	}
+    public void setGenericPart(final TypeNameList genericPart) {
+        this.genericPart = genericPart;
+    }
 
-	public Collection<ConstructorDef> getConstructors() {
-		final Collection<ClassItem> x = Collections2.filter(items, new Predicate<ClassItem>() {
-			@Override
-			public boolean apply(@Nullable final ClassItem input) {
-				return input instanceof ConstructorDef;
-			}
-		});
-		return Collections2.transform(x, new Function<ClassItem, ConstructorDef>() {
-			@Nullable
-			@Override
-			public ConstructorDef apply(@Nullable final ClassItem input) {
-				return (ConstructorDef) input;
-			}
-		});
-	}
+    public Collection<ConstructorDef> getConstructors() {
+        final Collection<ClassItem> x = Collections2.filter(items, new Predicate<ClassItem>() {
+            @Override
+            public boolean apply(@Nullable final ClassItem input) {
+                return input instanceof ConstructorDef;
+            }
+        });
+        return Collections2.transform(x, new Function<ClassItem, ConstructorDef>() {
+            @Nullable
+            @Override
+            public ConstructorDef apply(@Nullable final ClassItem input) {
+                return (ConstructorDef) input;
+            }
+        });
+    }
 
-	public OS_Type getOS_Type() {
-		if (osType == null)
-			osType = new OS_UserClassType(this);
-		return osType;
-	}
+    public OS_Type getOS_Type() {
+        if (osType == null) osType = new OS_UserClassType(this);
+        return osType;
+    }
 }
 
 //

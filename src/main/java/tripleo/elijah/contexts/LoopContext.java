@@ -12,9 +12,9 @@
 package tripleo.elijah.contexts;
 
 import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * @author Tripleo
@@ -23,61 +23,63 @@ import java.util.*;
  */
 public class LoopContext extends Context {
 
-	private final Loop carrier;
-	private final Context _parent;
+    private final Loop carrier;
+    private final Context _parent;
 
-	public LoopContext(final Context cur, final Loop loop) {
-		carrier = loop;
-		_parent = cur;
-	}
+    public LoopContext(final Context cur, final Loop loop) {
+        carrier = loop;
+        _parent = cur;
+    }
 
-	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
-			final List<Context> alreadySearched, final boolean one) {
-		alreadySearched.add(carrier.getContext());
+    @Override
+    public LookupResultList lookup(
+            final String name,
+            final int level,
+            final LookupResultList Result,
+            final List<Context> alreadySearched,
+            final boolean one) {
+        alreadySearched.add(carrier.getContext());
 
-		if (carrier.getIterNameToken() != null) {
-			if (carrier.getIterName() != null) {
-				if (name.equals(carrier.getIterName())) { // reversed to prevent NPEs
-					final IdentExpression ie = carrier.getIterNameToken();
-					Result.add(name, level, ie, this);
-				}
-			}
-		}
+        if (carrier.getIterNameToken() != null) {
+            if (carrier.getIterName() != null) {
+                if (name.equals(carrier.getIterName())) { // reversed to prevent NPEs
+                    final IdentExpression ie = carrier.getIterNameToken();
+                    Result.add(name, level, ie, this);
+                }
+            }
+        }
 
-		for (final StatementItem item : carrier.getItems()) {
-			if (!(item instanceof ClassStatement) && !(item instanceof NamespaceStatement)
-					&& !(item instanceof FunctionDef) && !(item instanceof VariableSequence)
-					&& !(item instanceof AliasStatement))
-				continue;
-			if (item instanceof OS_Element2) {
-				if (((OS_Element2) item).name().equals(name)) {
-					Result.add(name, level, (OS_Element) item, this);
-				}
-			}
-			if (item instanceof VariableSequence) {
-				SimplePrintLoggerToRemoveSoon.println2("1102 " + item);
-				for (final VariableStatement vs : ((VariableSequence) item).items()) {
-					if (vs.getName().equals(name))
-						Result.add(name, level, vs, this);
-				}
-			}
-		}
+        for (final StatementItem item : carrier.getItems()) {
+            if (!(item instanceof ClassStatement)
+                    && !(item instanceof NamespaceStatement)
+                    && !(item instanceof FunctionDef)
+                    && !(item instanceof VariableSequence)
+                    && !(item instanceof AliasStatement)) continue;
+            if (item instanceof OS_Element2) {
+                if (((OS_Element2) item).name().equals(name)) {
+                    Result.add(name, level, (OS_Element) item, this);
+                }
+            }
+            if (item instanceof VariableSequence) {
+                SimplePrintLoggerToRemoveSoon.println2("1102 " + item);
+                for (final VariableStatement vs : ((VariableSequence) item).items()) {
+                    if (vs.getName().equals(name)) Result.add(name, level, vs, this);
+                }
+            }
+        }
 
-		if (carrier.getParent() != null) {
-			final Context context = getParent();
-			if (!alreadySearched.contains(context) || !one)
-				context.lookup(name, level + 1, Result, alreadySearched, false); // TODO test this
-		}
-		return Result;
+        if (carrier.getParent() != null) {
+            final Context context = getParent();
+            if (!alreadySearched.contains(context) || !one)
+                context.lookup(name, level + 1, Result, alreadySearched, false); // TODO test this
+        }
+        return Result;
+    }
 
-	}
-
-	@Override
-	public Context getParent() {
-		return _parent;
-	}
-
+    @Override
+    public Context getParent() {
+        return _parent;
+    }
 }
 
 //

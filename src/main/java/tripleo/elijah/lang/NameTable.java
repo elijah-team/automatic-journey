@@ -3,9 +3,10 @@
  */
 package tripleo.elijah.lang;
 
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * @author Tripleo
@@ -14,29 +15,28 @@ import java.util.*;
  */
 public class NameTable {
 
-	final Map<String, TypedElement> members = new HashMap<String, TypedElement>();
+    final Map<String, TypedElement> members = new HashMap<String, TypedElement>();
 
-	public void add(final OS_Element element, final String name, final OS_Type dtype) {
-//		element.setType(dtype);
-		members.put(name, new TypedElement(element, dtype));
-		SimplePrintLoggerToRemoveSoon.println_err2("[NameTable#add] " + members);
-	}
+    public void add(final OS_Element element, final String name, final OS_Type dtype) {
+        //		element.setType(dtype);
+        members.put(name, new TypedElement(element, dtype));
+        SimplePrintLoggerToRemoveSoon.println_err2("[NameTable#add] " + members);
+    }
 
-	class TypedElement {
-		final OS_Element element;
-		final OS_Type type;
+    class TypedElement {
+        final OS_Element element;
+        final OS_Type type;
 
-		public TypedElement(final OS_Element element2, final OS_Type dtype) {
-			this.element = element2;
-			this.type = dtype;
-		}
+        public TypedElement(final OS_Element element2, final OS_Type dtype) {
+            this.element = element2;
+            this.type = dtype;
+        }
 
-		@Override
-		public String toString() {
-			return "TypedElement{" + "element=" + element + ", type=" + type + '}';
-		}
-	}
-
+        @Override
+        public String toString() {
+            return "TypedElement{" + "element=" + element + ", type=" + type + '}';
+        }
+    }
 }
 
 //

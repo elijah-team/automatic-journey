@@ -7,6 +7,5 @@ package tripleo.elijah.stages.deduce.fluffy.i;
  */
 public interface FluffyMember {
 
-	FluffyMember parent();
-
+    FluffyMember parent();
 }

@@ -8,40 +8,41 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jdeferred2.*;
-import org.jdeferred2.impl.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.stages.gen_fn.*;
+import org.jdeferred2.Promise;
+import org.jdeferred2.impl.DeferredObject;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.lang.NamespaceStatement;
+import tripleo.elijah.stages.gen_fn.GeneratedNamespace;
 
 /**
  * Created 5/31/21 12:00 PM
  */
 public class NamespaceInvocation implements IInvocation {
 
-	private final DeferredObject<GeneratedNamespace, Void, Void> resolveDeferred = new DeferredObject<GeneratedNamespace, Void, Void>();
-	private final NamespaceStatement namespaceStatement;
+    private final DeferredObject<GeneratedNamespace, Void, Void> resolveDeferred =
+            new DeferredObject<GeneratedNamespace, Void, Void>();
+    private final NamespaceStatement namespaceStatement;
 
-	public NamespaceInvocation(final NamespaceStatement aNamespaceStatement) {
-		namespaceStatement = aNamespaceStatement;
-	}
+    public NamespaceInvocation(final NamespaceStatement aNamespaceStatement) {
+        namespaceStatement = aNamespaceStatement;
+    }
 
-	public @NotNull DeferredObject<GeneratedNamespace, Void, Void> resolveDeferred() {
-		return resolveDeferred;
-	}
+    public @NotNull DeferredObject<GeneratedNamespace, Void, Void> resolveDeferred() {
+        return resolveDeferred;
+    }
 
-	public @NotNull Promise<GeneratedNamespace, Void, Void> resolvePromise() {
-		return resolveDeferred.promise();
-	}
+    public @NotNull Promise<GeneratedNamespace, Void, Void> resolvePromise() {
+        return resolveDeferred.promise();
+    }
 
-	public NamespaceStatement getNamespace() {
-		return namespaceStatement;
-	}
+    public NamespaceStatement getNamespace() {
+        return namespaceStatement;
+    }
 
-	@Override
-	public void setForFunctionInvocation(@NotNull final FunctionInvocation aFunctionInvocation) {
-		aFunctionInvocation.setNamespaceInvocation(this);
-	}
+    @Override
+    public void setForFunctionInvocation(@NotNull final FunctionInvocation aFunctionInvocation) {
+        aFunctionInvocation.setNamespaceInvocation(this);
+    }
 }
 
 //

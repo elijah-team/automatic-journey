@@ -14,136 +14,132 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.*;
-import org.jetbrains.annotations.*;
-import tripleo.elijah.diagnostic.*;
-import tripleo.elijah_fluffy.util.*;
+import antlr.Token;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.diagnostic.Locatable;
+import tripleo.elijah_fluffy.util.NotImplementedException;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.io.*;
+import java.io.File;
 
 public class NumericExpression implements IExpression, Locatable {
 
-	final int carrier;
-	OS_Type _type;
-	private Token n;
+    final int carrier;
+    OS_Type _type;
+    private Token n;
 
-	public NumericExpression(final int aCarrier) {
-		carrier = aCarrier;
-	}
+    public NumericExpression(final int aCarrier) {
+        carrier = aCarrier;
+    }
 
-	public NumericExpression(final @NotNull Token n) {
-		this.n = n;
-		carrier = Integer.parseInt(n.getText());
-	}
+    public NumericExpression(final @NotNull Token n) {
+        this.n = n;
+        carrier = Integer.parseInt(n.getText());
+    }
 
-	@Override // IExpression
-	public ExpressionKind getKind() {
-		return ExpressionKind.NUMERIC; // TODO
-	}
+    @Override // IExpression
+    public ExpressionKind getKind() {
+        return ExpressionKind.NUMERIC; // TODO
+    }
 
-	// region kind
+    // region kind
 
-	@Override // IExpression
-	public void setKind(final ExpressionKind aType) {
-		// log and ignore
-		SimplePrintLoggerToRemoveSoon
-				.println_err2("Trying to set ExpressionType of NumericExpression to " + aType.toString());
-	}
+    @Override // IExpression
+    public void setKind(final ExpressionKind aType) {
+        // log and ignore
+        SimplePrintLoggerToRemoveSoon.println_err2(
+                "Trying to set ExpressionType of NumericExpression to " + aType.toString());
+    }
 
-	@Override
-	public IExpression getLeft() {
-		return this;
-	}
+    @Override
+    public IExpression getLeft() {
+        return this;
+    }
 
-	// endregion
+    // endregion
 
-	// region representation
+    // region representation
 
-	@Override
-	public void setLeft(final IExpression aLeft) {
-		throw new NotImplementedException(); // TODO
-	}
+    @Override
+    public void setLeft(final IExpression aLeft) {
+        throw new NotImplementedException(); // TODO
+    }
 
-	@Override
-	public String repr_() {
-		return toString();
-	}
+    @Override
+    public String repr_() {
+        return toString();
+    }
 
-	// endregion
+    // endregion
 
-	@Override
-	public String toString() {
-		return String.format("NumericExpression (%d)", carrier);
-	}
+    @Override
+    public String toString() {
+        return String.format("NumericExpression (%d)", carrier);
+    }
 
-	// region type
+    // region type
 
-	@Override
-	public boolean is_simple() {
-		return true;
-	}
+    @Override
+    public boolean is_simple() {
+        return true;
+    }
 
-	@Override // IExpression
-	public OS_Type getType() {
-		return _type;
-	}
+    @Override // IExpression
+    public OS_Type getType() {
+        return _type;
+    }
 
-	@Override // IExpression
-	public void setType(final OS_Type deducedExpression) {
-		_type = deducedExpression;
-	}
+    @Override // IExpression
+    public void setType(final OS_Type deducedExpression) {
+        _type = deducedExpression;
+    }
 
-	// endregion
+    // endregion
 
-	public int getValue() {
-		return carrier;
-	}
+    public int getValue() {
+        return carrier;
+    }
 
-	// region Locatable
+    // region Locatable
 
-	@Override
-	public int getLine() {
-		if (token() != null)
-			return token().getLine();
-		return 0;
-	}
+    @Override
+    public int getLine() {
+        if (token() != null) return token().getLine();
+        return 0;
+    }
 
-	private Token token() {
-		return n;
-	}
+    private Token token() {
+        return n;
+    }
 
-	@Override
-	public int getColumn() {
-		if (token() != null)
-			return token().getColumn();
-		return 0;
-	}
+    @Override
+    public int getColumn() {
+        if (token() != null) return token().getColumn();
+        return 0;
+    }
 
-	@Override
-	public int getLineEnd() {
-		if (token() != null)
-			return token().getLine();
-		return 0;
-	}
+    @Override
+    public int getLineEnd() {
+        if (token() != null) return token().getLine();
+        return 0;
+    }
 
-	@Override
-	public int getColumnEnd() {
-		if (token() != null)
-			return token().getColumn();
-		return 0;
-	}
+    @Override
+    public int getColumnEnd() {
+        if (token() != null) return token().getColumn();
+        return 0;
+    }
 
-	@Override
-	public File getFile() {
-		if (token() != null) {
-			final String filename = token().getFilename();
-			if (filename != null)
-				return new File(filename);
-		}
-		return null;
-	}
+    @Override
+    public File getFile() {
+        if (token() != null) {
+            final String filename = token().getFilename();
+            if (filename != null) return new File(filename);
+        }
+        return null;
+    }
 
-	// endregion
+    // endregion
 }
 
 //

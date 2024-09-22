@@ -17,9 +17,7 @@ package tripleo.elijah.lang;
 /**
  * @author Tripleo
  */
-public interface StatementItem {
-
-}
+public interface StatementItem {}
 
 //
 //

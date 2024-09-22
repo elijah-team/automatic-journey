@@ -21,50 +21,50 @@ import java.util.List;
 
 public class IO {
 
-	// exists, delete, isType ....
+    // exists, delete, isType ....
 
-	public final List<File> recordedreads = new ArrayList<File>();
-	final List<File> recordedwrites = new ArrayList<File>();
+    public final List<File> recordedreads = new ArrayList<File>();
+    final List<File> recordedwrites = new ArrayList<File>();
 
-	public boolean recordedRead(final File file) {
-		return recordedreads.contains(file);
-	}
+    public boolean recordedRead(final File file) {
+        return recordedreads.contains(file);
+    }
 
-	public boolean recordedWrite(final File file) {
-		return recordedwrites.contains(file);
-	}
+    public boolean recordedWrite(final File file) {
+        return recordedwrites.contains(file);
+    }
 
-	public CharSource openRead(final Path p) {
-		record(FileOption.READ, p);
-		return null;
-	}
+    public CharSource openRead(final Path p) {
+        record(FileOption.READ, p);
+        return null;
+    }
 
-	private void record(final FileOption read, @NotNull final Path p) {
-		record(read, p.toFile());
-	}
+    private void record(final FileOption read, @NotNull final Path p) {
+        record(read, p.toFile());
+    }
 
-	private void record(@NotNull final FileOption read, @NotNull final File file) {
-		switch (read) {
-		case WRITE:
-			recordedwrites.add(file);
-			break;
-		case READ:
-			recordedreads.add(file);
-			break;
-		default:
-			throw new IllegalStateException("Cant be here");
-		}
-	}
+    private void record(@NotNull final FileOption read, @NotNull final File file) {
+        switch (read) {
+            case WRITE:
+                recordedwrites.add(file);
+                break;
+            case READ:
+                recordedreads.add(file);
+                break;
+            default:
+                throw new IllegalStateException("Cant be here");
+        }
+    }
 
-	public CharSink openWrite(final Path p) throws IOException {
-		record(FileOption.WRITE, p);
-		return new FileCharSink(Files.newOutputStream(p));
-	}
+    public CharSink openWrite(final Path p) throws IOException {
+        record(FileOption.WRITE, p);
+        return new FileCharSink(Files.newOutputStream(p));
+    }
 
-	public InputStream readFile(final File f) throws FileNotFoundException {
-		record(FileOption.READ, f);
-		return new FileInputStream(f);
-	}
+    public InputStream readFile(final File f) throws FileNotFoundException {
+        record(FileOption.READ, f);
+        return new FileInputStream(f);
+    }
 }
 
 //

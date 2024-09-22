@@ -1,9 +1,9 @@
 package tripleo.elijah.world.i;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.ClassStatement;
 
 public interface LivingClass {
-	ClassStatement getElement();
+    ClassStatement getElement();
 
-	int getCode();
+    int getCode();
 }

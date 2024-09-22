@@ -1,16 +1,16 @@
 package tripleo.elijah_fluffy.comp;
 
-import tripleo.elijah.ci.*;
-import tripleo.elijah.comp.*;
-import tripleo.elijah.lang.*;
+import tripleo.elijah.ci.LibraryStatementPart;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.lang.OS_Module;
 
 public interface CM_Prelude {
-	OS_Module getModule();
+    OS_Module getModule();
 
-	CM_Preludes getTag();
+    CM_Preludes getTag();
 
-	LibraryStatementPart getLsp();
+    LibraryStatementPart getLsp();
 
-	Compilation getCompilation();
-	// ??
+    Compilation getCompilation();
+    // ??
 }

@@ -12,14 +12,12 @@ package tripleo.elijah.stages.gen_c;
  * Created 12/28/20 7:41 AM
  */
 public class Emit {
-	public static boolean emitting = true;
+    public static boolean emitting = true;
 
-	public static String emit(final String s) {
-		if (emitting)
-			return s;
-		else
-			return "";
-	}
+    public static String emit(final String s) {
+        if (emitting) return s;
+        else return "";
+    }
 }
 
 //

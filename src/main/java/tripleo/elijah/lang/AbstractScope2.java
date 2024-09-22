@@ -8,63 +8,63 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.*;
+import antlr.Token;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created 12/27/20 8:50 AM
  */
 public abstract class AbstractScope2 implements Scope {
-	private final OS_Element _Parent;
+    private final OS_Element _Parent;
 
-	private List<String> docstrings;
+    private List<String> docstrings;
 
-	protected AbstractScope2(final OS_Element aParent) {
-		_Parent = aParent;
-	}
+    protected AbstractScope2(final OS_Element aParent) {
+        _Parent = aParent;
+    }
 
-	@Override
-	public void statementWrapper(final IExpression aExpr) {
-		// TODO is getParent.getContext right?
-		add(new StatementWrapper(aExpr, getParent().getContext(), getParent()));
-	}
+    @Override
+    public void statementWrapper(final IExpression aExpr) {
+        // TODO is getParent.getContext right?
+        add(new StatementWrapper(aExpr, getParent().getContext(), getParent()));
+    }
 
-//	@Override
-//	public StatementClosure statementClosure() {
-//	}
+    //	@Override
+    //	public StatementClosure statementClosure() {
+    //	}
 
-	@Override
-	public BlockStatement blockStatement() {
-		return new BlockStatement(this);
-	}
+    @Override
+    public BlockStatement blockStatement() {
+        return new BlockStatement(this);
+    }
 
-	@Override
-	public TypeAliasStatement typeAlias() {
-		return new TypeAliasStatement(getParent());
-	}
+    @Override
+    public TypeAliasStatement typeAlias() {
+        return new TypeAliasStatement(getParent());
+    }
 
-	@Override
-	public InvariantStatement invariantStatement() {
-		return new InvariantStatement();
-	}
+    @Override
+    public InvariantStatement invariantStatement() {
+        return new InvariantStatement();
+    }
 
-	@Override
-	public OS_Element getParent() {
-		return _Parent;
-	}
+    @Override
+    public OS_Element getParent() {
+        return _Parent;
+    }
 
-	@Override
-	public OS_Element getElement() {
-		return _Parent;
-	}
+    @Override
+    public OS_Element getElement() {
+        return _Parent;
+    }
 
-	@Override
-	public void addDocString(final Token s1) {
-		if (docstrings == null)
-			docstrings = new ArrayList<String>();
-		docstrings.add(s1.getText());
-	}
+    @Override
+    public void addDocString(final Token s1) {
+        if (docstrings == null) docstrings = new ArrayList<String>();
+        docstrings.add(s1.getText());
+    }
 }
 
 //

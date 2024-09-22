@@ -10,14 +10,13 @@ package tripleo.elijah.lang;
 
 public interface IBinaryExpression extends IExpression {
 
-	IExpression getRight();
+    IExpression getRight();
 
-	void setRight(IExpression iexpression);
+    void setRight(IExpression iexpression);
 
-	@Deprecated
-	void shift(ExpressionKind aType);
+    @Deprecated
+    void shift(ExpressionKind aType);
 
-	@Deprecated
-	void set(IBinaryExpression aEx); // TODO what is this for?
-
+    @Deprecated
+    void set(IBinaryExpression aEx); // TODO what is this for?
 }

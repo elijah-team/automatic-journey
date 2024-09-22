@@ -8,75 +8,77 @@
  */
 package tripleo.elijah.lang.builder;
 
-import tripleo.elijah.contexts.*;
-import tripleo.elijah.lang.*;
+import tripleo.elijah.contexts.IfConditionalContext;
+import tripleo.elijah.lang.Context;
+import tripleo.elijah.lang.IExpression;
+import tripleo.elijah.lang.IfConditional;
+import tripleo.elijah.lang.Scope3;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created 12/23/20 1:40 AM
  */
 public class IfConditionalBuilder extends ElBuilder {
-	public Doublet base_expr = new Doublet();
-	public Doublet else_part = new Doublet();
-	List<Doublet> doubles = new ArrayList<Doublet>();
-	private Context _context;
+    public Doublet base_expr = new Doublet();
+    public Doublet else_part = new Doublet();
+    List<Doublet> doubles = new ArrayList<Doublet>();
+    private Context _context;
 
-	public Doublet new_expr() {
-		final Doublet doublet = new Doublet();
-		doubles.add(doublet);
-		return doublet;
-	}
+    public Doublet new_expr() {
+        final Doublet doublet = new Doublet();
+        doubles.add(doublet);
+        return doublet;
+    }
 
-	@Override
-	protected IfConditional build() {
-		final IfConditional ifConditional = new IfConditional(_parent);
-		ifConditional.setContext(new IfConditionalContext(_context, ifConditional));
-		ifConditional.expr(base_expr.expr);
-		final Scope3 scope3 = new Scope3(ifConditional);
-		for (final ElBuilder item : base_expr.items) {
-			item.setParent(ifConditional);
-			item.setContext(ifConditional.getContext());
-			scope3.add(item.build());
-		}
-		ifConditional.scope(scope3);
-		for (final Doublet aDouble : doubles) {
-			final IfConditional ifConditional2 = new IfConditional(ifConditional);
-			ifConditional.expr(aDouble.expr);
-			final Scope3 scope31 = new Scope3(ifConditional);
-			for (final ElBuilder item : aDouble.items) {
-				item.setParent(ifConditional2);
-				item.setContext(ifConditional2.getContext());
-				scope31.add(item.build());
-			}
-			ifConditional.scope(scope31);
-		}
+    @Override
+    protected IfConditional build() {
+        final IfConditional ifConditional = new IfConditional(_parent);
+        ifConditional.setContext(new IfConditionalContext(_context, ifConditional));
+        ifConditional.expr(base_expr.expr);
+        final Scope3 scope3 = new Scope3(ifConditional);
+        for (final ElBuilder item : base_expr.items) {
+            item.setParent(ifConditional);
+            item.setContext(ifConditional.getContext());
+            scope3.add(item.build());
+        }
+        ifConditional.scope(scope3);
+        for (final Doublet aDouble : doubles) {
+            final IfConditional ifConditional2 = new IfConditional(ifConditional);
+            ifConditional.expr(aDouble.expr);
+            final Scope3 scope31 = new Scope3(ifConditional);
+            for (final ElBuilder item : aDouble.items) {
+                item.setParent(ifConditional2);
+                item.setContext(ifConditional2.getContext());
+                scope31.add(item.build());
+            }
+            ifConditional.scope(scope31);
+        }
 
-		return ifConditional;
-	}
+        return ifConditional;
+    }
 
-	@Override
-	protected void setContext(final Context context) {
-		_context = context;
-	}
+    @Override
+    protected void setContext(final Context context) {
+        _context = context;
+    }
 
-	public static class IfConditionalScope extends BaseScope2 {
+    public static class IfConditionalScope extends BaseScope2 {}
 
-	}
+    public static class Doublet {
+        IExpression expr;
+        List<ElBuilder> items = new ArrayList<ElBuilder>();
+        IfConditionalScope _scope = new IfConditionalScope();
 
-	public static class Doublet {
-		IExpression expr;
-		List<ElBuilder> items = new ArrayList<ElBuilder>();
-		IfConditionalScope _scope = new IfConditionalScope();
+        public void expr(final IExpression expr) {
+            this.expr = expr;
+        }
 
-		public void expr(final IExpression expr) {
-			this.expr = expr;
-		}
-
-		public BaseScope scope() {
-			return _scope;
-		}
-	}
+        public BaseScope scope() {
+            return _scope;
+        }
+    }
 }
 
 //

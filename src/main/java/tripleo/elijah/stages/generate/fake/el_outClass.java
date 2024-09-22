@@ -1,7 +1,5 @@
 package tripleo.elijah.stages.generate.fake;
 
 public class el_outClass {
-    public el_outClass(final String aMain) {
-
-    }
+    public el_outClass(final String aMain) {}
 }

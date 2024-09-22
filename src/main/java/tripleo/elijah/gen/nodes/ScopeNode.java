@@ -12,11 +12,11 @@ import tripleo.elijah.gen.Node;
 import tripleo.elijah_fluffy.util.NotImplementedException;
 
 public class ScopeNode implements Node {
-	@Override
-	public int getCode() {
-		NotImplementedException.raise();
-		return 0;
-	}
+    @Override
+    public int getCode() {
+        NotImplementedException.raise();
+        return 0;
+    }
 }
 
 //

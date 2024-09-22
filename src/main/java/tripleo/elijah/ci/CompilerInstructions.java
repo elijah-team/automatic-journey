@@ -6,24 +6,23 @@ import java.util.List;
 
 public interface CompilerInstructions {
 
-	IndexingStatement indexingStatement();
+    IndexingStatement indexingStatement();
 
-	void add(GenerateStatement generateStatement);
+    void add(GenerateStatement generateStatement);
 
-	void add(LibraryStatementPartImpl libraryStatementPart);
+    void add(LibraryStatementPartImpl libraryStatementPart);
 
-	String getFilename();
+    String getFilename();
 
-	void setFilename(String filename);
+    void setFilename(String filename);
 
-	String genLang();
+    String genLang();
 
-	String getName();
+    String getName();
 
-	void setName(String name);
+    void setName(String name);
 
-	void setName(Token name);
+    void setName(Token name);
 
-	List<LibraryStatementPart> getLibraryStatementParts();
-
+    List<LibraryStatementPart> getLibraryStatementParts();
 }

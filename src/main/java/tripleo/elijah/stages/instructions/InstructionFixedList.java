@@ -1,21 +1,21 @@
 package tripleo.elijah.stages.instructions;
 
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_fluffy.util.IFixedList;
 
 public class InstructionFixedList implements IFixedList<InstructionArgument> {
-	private final Instruction instruction;
+    private final Instruction instruction;
 
-	public InstructionFixedList(final Instruction aInstruction) {
-		instruction = aInstruction;
-	}
+    public InstructionFixedList(final Instruction aInstruction) {
+        instruction = aInstruction;
+    }
 
-	@Override
-	public int size() {
-		return instruction.getArgsSize();
-	}
+    @Override
+    public int size() {
+        return instruction.getArgsSize();
+    }
 
-	@Override
-	public InstructionArgument get(final int at) {
-		return instruction.getArg(at);
-	}
+    @Override
+    public InstructionArgument get(final int at) {
+        return instruction.getArg(at);
+    }
 }

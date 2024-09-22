@@ -6,35 +6,53 @@ import io.activej.inject.module.Module;
 import io.activej.launcher.Launcher;
 import io.activej.service.Service;
 import io.activej.service.ServiceGraphModule;
-
-import java.util.concurrent.CompletableFuture;
-
 import org.jetbrains.annotations.NotNull;
-import java.util.List;
-
 import tripleo.elijah.comp.Compilation;
 import tripleo.elijah.comp.i.CompilerController;
 import tripleo.elijah_prolific.v.V;
 
+import java.util.List;
+import java.util.concurrent.CompletableFuture;
+
 class ProlificCompilationLauncher extends Launcher {
-    private final @NotNull Compilation  compilation;
+    private final @NotNull Compilation compilation;
     private final @NotNull List<String> args;
     private final @NotNull CompilerController controller;
-
-    public ProlificCompilationLauncher(final @NotNull Compilation aCompilation,
-                                       final @NotNull List<String> aStringList,
-                                       final @NotNull CompilerController aController) {
-        compilation = aCompilation;
-        args        = aStringList;
-        controller  = aController;
-    }
 
     @Inject
     CompilationControllerActiveJService customService;
 
+    public ProlificCompilationLauncher(
+            final @NotNull Compilation aCompilation,
+            final @NotNull List<String> aStringList,
+            final @NotNull CompilerController aController) {
+        compilation = aCompilation;
+        args = aStringList;
+        controller = aController;
+    }
+
+    private static void logProgress(final String x) {
+        System.out.println("[240914 0068] ProlificCompilationLauncher::logProgress " + x);
+    }
+
     @Override
     protected Module getModule() {
         return ServiceGraphModule.create();
+    }
+
+    @Override
+    protected void run() {
+        logProgress("|RUNNING|");
+    }
+
+    public void launch0() {
+        try {
+            Eventloop.builder().withCurrentThread().build();
+            var launcher = this;
+            launcher.launch(new String[0]);
+        } catch (Exception aE) {
+            compilation.getErrSink().exception(aE);
+        }
     }
 
     @Inject
@@ -56,25 +74,6 @@ class ProlificCompilationLauncher extends Launcher {
         public CompletableFuture<?> stop() {
             logProgress("|SERVICE STOPPING|");
             return CompletableFuture.completedFuture(null);
-        }
-    }
-
-    @Override
-    protected void run() {
-        logProgress("|RUNNING|");
-    }
-
-    private static void logProgress(final String x) {
-        System.out.println("[240914 0068] ProlificCompilationLauncher::logProgress " + x);
-    }
-
-    public void launch0() {
-        try {
-            Eventloop.builder().withCurrentThread().build();
-            var launcher = this;
-            launcher.launch(new String[0]);
-        } catch (Exception aE) {
-            compilation.getErrSink().exception(aE);
         }
     }
 }

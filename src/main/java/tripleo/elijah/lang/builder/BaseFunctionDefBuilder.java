@@ -8,35 +8,38 @@
  */
 package tripleo.elijah.lang.builder;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.AnnotationClause;
+import tripleo.elijah.lang.FormalArgList;
+import tripleo.elijah.lang.FunctionDef;
+import tripleo.elijah.lang.IdentExpression;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created 12/22/20 10:41 PM
  */
 public abstract class BaseFunctionDefBuilder extends ElBuilder {
-	protected List<AnnotationClause> annotations = new ArrayList<AnnotationClause>();
-	protected IdentExpression _name;
-	protected FormalArgList mFal;
-	protected FunctionDef.Species _species = null;
+    protected List<AnnotationClause> annotations = new ArrayList<AnnotationClause>();
+    protected IdentExpression _name;
+    protected FormalArgList mFal;
+    protected FunctionDef.Species _species = null;
 
-	public void addAnnotation(final AnnotationClause a) {
-		annotations.add(a);
-	}
+    public void addAnnotation(final AnnotationClause a) {
+        annotations.add(a);
+    }
 
-	public void setName(final IdentExpression i1) {
-		_name = i1;
-	}
+    public void setName(final IdentExpression i1) {
+        _name = i1;
+    }
 
-	public void fal(final FormalArgList fal) {
-		mFal = fal;
-	}
+    public void fal(final FormalArgList fal) {
+        mFal = fal;
+    }
 
-	public void setSpecies(final FunctionDef.Species aSpecies) {
-		_species = aSpecies;
-	}
-
+    public void setSpecies(final FunctionDef.Species aSpecies) {
+        _species = aSpecies;
+    }
 }
 
 //

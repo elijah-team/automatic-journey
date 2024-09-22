@@ -14,5 +14,4 @@
  */
 package tripleo.elijah.gen;
 
-public interface RefElemenet {
-}
+public interface RefElemenet {}

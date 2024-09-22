@@ -8,65 +8,64 @@
  */
 package tripleo.elijah.lang.types;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
 import tripleo.elijah.lang.*;
-import tripleo.elijah.lang2.*;
+import tripleo.elijah.lang2.BuiltInTypes;
 
 /**
  * Created 4/25/21 4:43 AM
  */
 public class OS_AnyType extends __Abstract_OS_Type {
-	public OS_AnyType() {
-	}
+    public OS_AnyType() {}
 
-	@Override
-	public ClassStatement getClassOf() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public ClassStatement getClassOf() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public OS_Type resolve(final Context ctx) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public OS_Type resolve(final Context ctx) {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public boolean isUnitType() {
-		return false;
-	}
+    @Override
+    public boolean isUnitType() {
+        return false;
+    }
 
-	@Override
-	public BuiltInTypes getBType() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public BuiltInTypes getBType() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public TypeName getTypeName() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public TypeName getTypeName() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	protected boolean _isEqual(final @NotNull OS_Type aType) {
-		return aType.getType() == Type.ANY;
-	}
+    protected boolean _isEqual(final @NotNull OS_Type aType) {
+        return aType.getType() == Type.ANY;
+    }
 
-	@Override
-	public OS_Element getElement() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+    @Override
+    public OS_Element getElement() {
+        // TODO Auto-generated method stub
+        return null;
+    }
 
-	@Override
-	public Type getType() {
-		return Type.ANY;
-	}
+    @Override
+    public Type getType() {
+        return Type.ANY;
+    }
 
-	@Override
-	public String asString() {
-		return "<OS_AnyType>";
-	}
+    @Override
+    public String asString() {
+        return "<OS_AnyType>";
+    }
 }
 
 //

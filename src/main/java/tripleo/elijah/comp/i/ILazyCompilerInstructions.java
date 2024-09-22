@@ -4,5 +4,5 @@ import tripleo.elijah.ci.CompilerInstructions;
 
 public interface ILazyCompilerInstructions {
 
-	CompilerInstructions get();
+    CompilerInstructions get();
 }

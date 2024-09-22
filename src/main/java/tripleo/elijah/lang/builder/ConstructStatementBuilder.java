@@ -8,36 +8,39 @@
  */
 package tripleo.elijah.lang.builder;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.ConstructStatement;
+import tripleo.elijah.lang.Context;
+import tripleo.elijah.lang.ExpressionList;
+import tripleo.elijah.lang.Qualident;
 
 /**
  * Created 12/23/20 2:35 AM
  */
 public class ConstructStatementBuilder extends ElBuilder {
-	private final Qualident q;
-	private final ExpressionList o;
-	private Context _context;
-	private String constructorName = null;
+    private final Qualident q;
+    private final ExpressionList o;
+    private Context _context;
+    private String constructorName = null;
 
-	public ConstructStatementBuilder(final Qualident q, final ExpressionList o) {
-		super();
-		this.q = q;
-		this.o = o;
-	}
+    public ConstructStatementBuilder(final Qualident q, final ExpressionList o) {
+        super();
+        this.q = q;
+        this.o = o;
+    }
 
-	@Override
-	protected ConstructStatement build() {
-		return new ConstructStatement(_parent, _context, q, constructorName, o);
-	}
+    @Override
+    protected ConstructStatement build() {
+        return new ConstructStatement(_parent, _context, q, constructorName, o);
+    }
 
-	@Override
-	protected void setContext(final Context context) {
-		_context = context;
-	}
+    @Override
+    protected void setContext(final Context context) {
+        _context = context;
+    }
 
-	public void setConstructorName(final String aConstructorName) {
-		constructorName = aConstructorName;
-	}
+    public void setConstructorName(final String aConstructorName) {
+        constructorName = aConstructorName;
+    }
 }
 
 //

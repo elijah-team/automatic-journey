@@ -8,48 +8,50 @@
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Curiously, not an expression
  */
 public class ExpressionList implements Iterable<IExpression> {
 
-	private final List<IExpression> exprs = new ArrayList<IExpression>();
+    private final List<IExpression> exprs = new ArrayList<IExpression>();
 
-	public IExpression next(final IExpression aExpr) {
-//		assert aExpr != null;
-		if (aExpr == null)
-			throw new IllegalArgumentException("expression cannot be null");
-		//
-		/* exprs. */
-		add(aExpr);
-		return aExpr;
-	}
+    public IExpression next(final IExpression aExpr) {
+        //		assert aExpr != null;
+        if (aExpr == null) throw new IllegalArgumentException("expression cannot be null");
+        //
+        /* exprs. */
+        add(aExpr);
+        return aExpr;
+    }
 
-	public void add(final IExpression aExpr) {
-		exprs.add(aExpr);
-	}
+    public void add(final IExpression aExpr) {
+        exprs.add(aExpr);
+    }
 
-	@Override
-	public String toString() {
-		return exprs.toString();
-	}
+    @Override
+    public String toString() {
+        return exprs.toString();
+    }
 
-	public Collection<IExpression> expressions() {
-		return exprs;
-	}
+    public Collection<IExpression> expressions() {
+        return exprs;
+    }
 
-	@Override
-	public @NotNull Iterator<IExpression> iterator() {
-		return exprs.iterator();
-	}
+    @Override
+    public @NotNull Iterator<IExpression> iterator() {
+        return exprs.iterator();
+    }
 
-	public int size() {
-		return exprs.size();
-	}
+    public int size() {
+        return exprs.size();
+    }
 }
 
 //

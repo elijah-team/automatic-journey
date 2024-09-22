@@ -12,13 +12,12 @@ import tripleo.elijah.gen.CompilerContext;
  */
 public class LocalAgnNode {
 
-	public LocalAgnNode(final IExpressionNode fncall) {
-		// TODO Auto-generated constructor stub
-	}
+    public LocalAgnNode(final IExpressionNode fncall) {
+        // TODO Auto-generated constructor stub
+    }
 
-	public void GenLocalAgn(final CompilerContext cctx, final GenBuffer gbn) {
-		// TODO Auto-generated method stub
+    public void GenLocalAgn(final CompilerContext cctx, final GenBuffer gbn) {
+        // TODO Auto-generated method stub
 
-	}
-
+    }
 }

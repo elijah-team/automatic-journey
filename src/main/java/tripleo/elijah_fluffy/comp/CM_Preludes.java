@@ -1,53 +1,54 @@
 package tripleo.elijah_fluffy.comp;
 
-import tripleo.elijah.stages.gen_c.*;
-import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.stages.gen_c.GenerateC;
+import tripleo.elijah.stages.gen_generic.GenerateFiles;
+import tripleo.elijah.stages.gen_generic.OutputFileFactoryParams;
 
-import java.util.*;
+import java.util.Objects;
 
 public enum CM_Preludes {
-	C {
-		@Override
-		public GenerateFiles create(final OutputFileFactoryParams aParams) {
-			return new GenerateC(aParams);
-		}
+    C {
+        @Override
+        public GenerateFiles create(final OutputFileFactoryParams aParams) {
+            return new GenerateC(aParams);
+        }
 
-		@Override
-		public String getName() {
-			return "c";
-		}
-	},
-	JAVA {
-		@Override
-		public GenerateFiles create(final OutputFileFactoryParams aParams) {
-			return null;
-		}
+        @Override
+        public String getName() {
+            return "c";
+        }
+    },
+    JAVA {
+        @Override
+        public GenerateFiles create(final OutputFileFactoryParams aParams) {
+            return null;
+        }
 
-		@Override
-		public String getName() {
-			return "java";
-		}
-	};
+        @Override
+        public String getName() {
+            return "java";
+        }
+    };
 
-	public abstract GenerateFiles create(final OutputFileFactoryParams aP);
+    public static _Creator dispatch(final String lang) {
+        for (CM_Preludes cmPreludes : CM_Preludes.values()) {
+            if (Objects.equals(lang, cmPreludes.getName()))
+                return new _Creator() {
+                    @Override
+                    public GenerateFiles create(final OutputFileFactoryParams aParams) {
+                        return cmPreludes.create(aParams);
+                    }
+                };
+        }
+        // throw new NotImplementedException();
+        return null;
+    }
 
-	public interface _Creator {
-		GenerateFiles create(OutputFileFactoryParams aParams);
-	}
+    public abstract GenerateFiles create(final OutputFileFactoryParams aP);
 
-	public static _Creator dispatch(final String lang) {
-		for (CM_Preludes cmPreludes : CM_Preludes.values()) {
-			if (Objects.equals(lang, cmPreludes.getName()))
-				return new _Creator() {
-					@Override
-					public GenerateFiles create(final OutputFileFactoryParams aParams) {
-						return cmPreludes.create(aParams);
-					}
-				};
-		}
-		// throw new NotImplementedException();
-		return null;
-	}
+    public abstract String getName();
 
-	public abstract String getName();
+    public interface _Creator {
+        GenerateFiles create(OutputFileFactoryParams aParams);
+    }
 }

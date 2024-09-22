@@ -22,8 +22,8 @@ import java.util.List;
  * @author tripleo(sb)
  */
 public class StdErrSink implements ErrSink {
-    private       int       _errorCount;
     private final ErrorList errorList = new ErrorList();
+    private int _errorCount;
 
     @Override
     public void exception(final Exception e) {
@@ -68,10 +68,8 @@ public class StdErrSink implements ErrSink {
 
     @Override
     public void reportDiagnostic(final Diagnostic diagnostic) {
-        if (diagnostic.severity() == Diagnostic.Severity.ERROR)
-            _errorCount++;
-        if (CompilationAlways.VOODOO)
-            diagnostic.report(System.err);
+        if (diagnostic.severity() == Diagnostic.Severity.ERROR) _errorCount++;
+        if (CompilationAlways.VOODOO) diagnostic.report(System.err);
         errorList.addDiagnostic(diagnostic);
     }
 
@@ -85,7 +83,12 @@ public class StdErrSink implements ErrSink {
         return errorList.__errors();
     }
 
-    public enum Desc {INFO_STRING, WARNING_STRING, EXCEPTION_STRING, DIAGNOSTIC}
+    public enum Desc {
+        INFO_STRING,
+        WARNING_STRING,
+        EXCEPTION_STRING,
+        DIAGNOSTIC
+    }
 
     public static class ErrorList {
         List<Pair<Desc, Object>> backing = new ArrayList<>();
