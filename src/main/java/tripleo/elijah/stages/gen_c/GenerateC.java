@@ -465,17 +465,19 @@ public class GenerateC implements CodeGenerator, GenerateFiles {
     private void generateCodeForMethod(final @NotNull BaseGeneratedFunction gf,
                                        final GenerateResult gr,
                                        final WorkList aWorkList) {
-        generateCodeForMethod(gern(gf), gr, aWorkList);
+        final GernNode gern = gern(gf);
+        if (gern instanceof GernNodeFunction) {
+            generateCodeForMethod(gern, gr, aWorkList);
+        } else {
+            throw new AssertionError();
+        }
     }
 
     private void generateCodeForMethod(final @NotNull GernNode gn,
                                        final GenerateResult gr,
                                        final WorkList aWorkList) {
         BaseGeneratedFunction gf = (BaseGeneratedFunction) gn.carrier();
-        if (gf.getFD() == null)
-            return;
-        final Generate_Code_For_Method gcfm = new Generate_Code_For_Method(this, LOG);
-        gcfm.generateCodeForMethod(gf, gr, aWorkList);
+        gn.generateCodeForMethod(gf, gr, aWorkList, this, LOG);
     }
 
     private void generateCodeForConstructor(final GeneratedConstructor gf, final GenerateResult gr,
