@@ -27,11 +27,9 @@ class GernNodeFunction extends AbstractGernNode {
 
         Preconditions.checkNotNull((gf));
 
-        // nice catch, idea
-        if (gf.getFD() == null)
-            return false;
-
-        return true;
+        // NOTE defensive
+        // noinspection ConstantValue
+        return gf.getFD() != null;
     }
 
     @Override
@@ -51,9 +49,7 @@ class GernNodeFunction extends AbstractGernNode {
             return;
         }
 
-        final GeneratedFunction        gf   = asFunction();
         final Generate_Code_For_Method gcfm = new Generate_Code_For_Method(aGenerateC, LOG);
-
-        gcfm.generateCodeForMethod(gf, gr, aWorkList);
+        gcfm.generateCodeForMethod(this, gr, aWorkList);
     }
 }

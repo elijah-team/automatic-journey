@@ -63,7 +63,12 @@ public class Generate_Code_For_Method {
 		LOG = aLog; // use log from GenerateC
 	}
 
-	void generateCodeForMethod(final BaseGeneratedFunction gf, final GenerateResult gr, final WorkList aWorkList) {
+	void generateCodeForMethod(final GernNodeFunction gn, final GenerateResult gr, final WorkList aWorkList) {
+		final GeneratedFunction gf = gn.asFunction();
+		if (gf == null) {
+			throw new AssertionError();
+		}
+
 		final Generate_Method_Header gmh = new Generate_Method_Header(gf, gc, LOG);
 
 		tos.put_string_ln(String.format("%s {", gmh.header_string));
@@ -718,8 +723,11 @@ public class Generate_Code_For_Method {
 		LOG.err("8886 y is null (No typename specified)");
 	}
 
-	void generateCodeForConstructor(final @NotNull GeneratedConstructor gf, final GenerateResult gr,
-			final WorkList aWorkList) {
+	void generateCodeForConstructor(final GernNodeConstructor gn,
+									final GenerateResult gr,
+									final WorkList aWorkList) {
+		final @NotNull GeneratedConstructor gf = gn.asConstructor();
+
 		// TODO this code is only correct for classes and not meant for namespaces
 		final GeneratedClass x = (GeneratedClass) gf.getGenClass();
 		switch (x.getKlass().getType()) {

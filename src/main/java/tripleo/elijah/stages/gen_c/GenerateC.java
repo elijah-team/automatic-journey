@@ -482,10 +482,12 @@ public class GenerateC implements CodeGenerator, GenerateFiles {
 
     private void generateCodeForConstructor(final GeneratedConstructor gf, final GenerateResult gr,
                                             final WorkList aWorkList) {
-        if (gf.getFD() == null)
-            return;
-        final Generate_Code_For_Method gcfm = new Generate_Code_For_Method(this, LOG);
-        gcfm.generateCodeForConstructor(gf, gr, aWorkList);
+        final GernNode gern = gern(gf);
+        if (gern instanceof GernNodeConstructor) {
+            generateCodeForMethod(gern, gr, aWorkList);
+        } else {
+            throw new AssertionError();
+        }
     }
 
     String getTypeNameForGenClass(@NotNull final GeneratedNode aGenClass) {
