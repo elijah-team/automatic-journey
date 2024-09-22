@@ -31,10 +31,10 @@ public interface GernNode {
 	}
 
 	default String identityString() {
-		return "mskjdlasnjdnasjkldansjdlkas";
+		throw new RuntimeException("identityString");
 	}
 
 	default void generateCodeForMethod(BaseGeneratedFunction aGf, GenerateResult aGr, WorkList aWorkList, GenerateC aGenerateC, ElLog aLOG) {
-		throw new Error();
+		throw new RuntimeException("generateCodeForMethod");
 	}
 }
