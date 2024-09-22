@@ -15,49 +15,50 @@ import tripleo.elijah.lang.*;
  * Created 9/18/21 4:03 AM
  */
 public class WrappedStatementWrapper extends StatementWrapper {
-	private final Wrapped wrapped;
-	private final VariableStatement vs;
+    private final Wrapped wrapped;
+    private final VariableStatement vs;
 
-	public WrappedStatementWrapper(final IExpression aExpression, final Context aContext, final OS_Element aParent,
-			final VariableStatement aVs) {
-		super(aExpression, aContext, aParent);
-		vs = aVs;
-		wrapped = new Wrapped(aVs, aExpression);
-	}
+    public WrappedStatementWrapper(
+            final IExpression aExpression,
+            final Context aContext,
+            final OS_Element aParent,
+            final VariableStatement aVs) {
+        super(aExpression, aContext, aParent);
+        vs = aVs;
+        wrapped = new Wrapped(aVs, aExpression);
+    }
 
-	public Wrapped getWrapped() {
-		return wrapped;
-	}
+    public Wrapped getWrapped() {
+        return wrapped;
+    }
 
-	public VariableStatement getVariableStatement() {
-		return vs;
-	}
+    public VariableStatement getVariableStatement() {
+        return vs;
+    }
 
-	class Wrapped extends AbstractExpression {
+    class Wrapped extends AbstractExpression {
 
-		private final VariableStatement variableStatement;
-		private final IExpression expression;
+        private final VariableStatement variableStatement;
+        private final IExpression expression;
 
-		public Wrapped(final VariableStatement aVariableStatement, final IExpression aExpression) {
-			variableStatement = aVariableStatement;
-			expression = aExpression;
-		}
+        public Wrapped(final VariableStatement aVariableStatement, final IExpression aExpression) {
+            variableStatement = aVariableStatement;
+            expression = aExpression;
+        }
 
-		@Override
-		public boolean is_simple() {
-			return expression.is_simple();
-		}
+        @Override
+        public boolean is_simple() {
+            return expression.is_simple();
+        }
 
-		@Override
-		public OS_Type getType() {
-			return null;
-		}
+        @Override
+        public OS_Type getType() {
+            return null;
+        }
 
-		@Override
-		public void setType(final OS_Type deducedExpression) {
-
-		}
-	}
+        @Override
+        public void setType(final OS_Type deducedExpression) {}
+    }
 }
 
 //

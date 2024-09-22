@@ -1,14 +1,14 @@
 package tripleo.elijah.stages.deduce.fluffy.i;
 
-import tripleo.elijah.diagnostic.*;
-import tripleo.elijah.nextgen.composable.*;
+import tripleo.elijah.diagnostic.Locatable;
+import tripleo.elijah.nextgen.composable.IComposable;
 
 public interface FluffyVar {
-	String name();
+    String name();
 
-	Locatable nameLocatable();
+    Locatable nameLocatable();
 
-	IComposable nameComposable();
+    IComposable nameComposable();
 
-	FluffyVarTarget target();
+    FluffyVarTarget target();
 }

@@ -13,8 +13,7 @@ package tripleo.elijah.nextgen.composable;
 /**
  * Created 3/4/22 7:16 AM
  */
-public interface IComposable {
-}
+public interface IComposable {}
 
 //
 // vim:set shiftwidth=4 softtabstop=0 noexpandtab:

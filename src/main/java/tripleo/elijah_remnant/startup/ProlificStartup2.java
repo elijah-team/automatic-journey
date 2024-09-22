@@ -1,7 +1,8 @@
 package tripleo.elijah_remnant.startup;
 
 import org.jdeferred2.DoneCallback;
-import tripleo.elijah.comp.*;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.comp.PipelineLogic;
 import tripleo.elijah.comp.i.ICompilationAccess;
 import tripleo.elijah.comp.i.ICompilationBus;
 import tripleo.elijah.comp.i.ICompilationRunner;
@@ -12,27 +13,37 @@ import tripleo.elijah_fluffy.util.Eventual;
 import tripleo.elijah_fluffy.util.EventualExtract;
 
 public class ProlificStartup2 {
-    private final Compilation                  _compilation;
-    private final Eventual<EDR_ProcessRecord>  _p_ProcessRecord     = new Eventual<>();
+    private final Compilation _compilation;
+    private final Eventual<EDR_ProcessRecord> _p_ProcessRecord = new Eventual<>();
     private final Eventual<ICompilationAccess> _p_CompilationAccess = new Eventual<>();
     private final Eventual<ICompilationRunner> _p_CompilationRunner = new Eventual<>();
-    private final Eventual<ICompilationBus>    _p_CompilationBus    = new Eventual<>();
-    private final Eventual<PipelineLogic>      _p_PipelineLogic     = new Eventual<>();
+    private final Eventual<ICompilationBus> _p_CompilationBus = new Eventual<>();
+    private final Eventual<PipelineLogic> _p_PipelineLogic = new Eventual<>();
+
     @SuppressWarnings("FieldCanBeLocal")
-    private       EDR_ProcessRecord            __processRecord;
-    private       boolean                      _f_processRecord;
+    private EDR_ProcessRecord __processRecord;
+
+    private boolean _f_processRecord;
+
     @SuppressWarnings("FieldCanBeLocal")
     private EDR_CompilationAccess __compilationAccess;
-    private       boolean                      _f_CompilationAccess;
+
+    private boolean _f_CompilationAccess;
+
     @SuppressWarnings("FieldCanBeLocal")
-    private       ICompilationRunner           __CompilationRunner;
-    private       boolean                      _f_CompilationRunner;
+    private ICompilationRunner __CompilationRunner;
+
+    private boolean _f_CompilationRunner;
+
     @SuppressWarnings("FieldCanBeLocal")
-    private       ICompilationBus              __CompilationBus;
-    private       boolean                      _f_CompilationBus;
+    private ICompilationBus __CompilationBus;
+
+    private boolean _f_CompilationBus;
+
     @SuppressWarnings("FieldCanBeLocal")
-    private       PipelineLogic                __PipelineLogic;
-    private       boolean                      _f_PipelineLogic;
+    private PipelineLogic __PipelineLogic;
+
+    private boolean _f_PipelineLogic;
 
     public ProlificStartup2(final Compilation aCompilation) {
         _compilation = aCompilation;
@@ -41,7 +52,7 @@ public class ProlificStartup2 {
     public Eventual<ICompilationAccess> getCompilationAccess() {
         if (!_f_CompilationAccess) {
             _f_CompilationAccess = true;
-            __compilationAccess  = new EDR_CompilationAccess(getCompilation(), this);
+            __compilationAccess = new EDR_CompilationAccess(getCompilation(), this);
             _p_CompilationAccess.resolve(__compilationAccess);
         }
         return _p_CompilationAccess;
@@ -54,7 +65,7 @@ public class ProlificStartup2 {
     public Eventual<EDR_ProcessRecord> getProcessRecord() {
         if (!_f_processRecord) {
             _f_processRecord = true;
-            __processRecord  = new EDR_ProcessRecord(__compilationAccess);
+            __processRecord = new EDR_ProcessRecord(__compilationAccess);
             _p_ProcessRecord.resolve(__processRecord);
         }
         return _p_ProcessRecord;
@@ -63,7 +74,7 @@ public class ProlificStartup2 {
     public Eventual<ICompilationRunner> getCompilationRunner() {
         if (!_f_CompilationRunner) {
             _f_CompilationRunner = true;
-            __CompilationRunner  = new EDR_CompilationRunner(_compilation, EventualExtract.of(getCompilationBus()));
+            __CompilationRunner = new EDR_CompilationRunner(_compilation, EventualExtract.of(getCompilationBus()));
             _p_CompilationRunner.resolve(__CompilationRunner);
         }
         return _p_CompilationRunner;
@@ -79,7 +90,7 @@ public class ProlificStartup2 {
             @Override
             public void onDone(final ICompilationBus result) {
                 _f_CompilationBus = true;
-                __CompilationBus  = result;
+                __CompilationBus = result;
             }
         });
         return _p_CompilationBus;

@@ -9,18 +9,19 @@
 
 package tripleo.elijah.lang;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class IdentList {
 
-	// List<OS_Ident> idents=new ArrayList<OS_Ident>();
-	final List<IdentExpression> idents2 = new ArrayList<IdentExpression>();
+    // List<OS_Ident> idents=new ArrayList<OS_Ident>();
+    final List<IdentExpression> idents2 = new ArrayList<IdentExpression>();
 
-//	public void push(String aa){
-//		idents.add(new OS_Ident(aa));
-//	}
+    //	public void push(String aa){
+    //		idents.add(new OS_Ident(aa));
+    //	}
 
-	public void push(final IdentExpression s) {
-		idents2.add(s);
-	}
+    public void push(final IdentExpression s) {
+        idents2.add(s);
+    }
 }

@@ -15,7 +15,7 @@ import tripleo.elijah.stages.logging.ElLog;
  * Created 8/11/21 5:49 AM
  */
 public interface GetLogNameBehavior {
-	String getLogName(ElLog deduceLog);
+    String getLogName(ElLog deduceLog);
 }
 
 //

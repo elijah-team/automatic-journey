@@ -1,4 +1,3 @@
 package tripleo.elijah.nextgen.query;
 
-public class QueryDatabase {
-}
+public class QueryDatabase {}

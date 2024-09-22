@@ -14,6 +14,4 @@
  */
 package tripleo.elijah.lang;
 
-public interface OS_Expression {
-
-}
+public interface OS_Expression {}

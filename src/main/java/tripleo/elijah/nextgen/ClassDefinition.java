@@ -9,64 +9,65 @@
  */
 package tripleo.elijah.nextgen;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
-import tripleo.elijah.nextgen.composable.*;
-import tripleo.elijah.stages.deduce.*;
-import tripleo.elijah.stages.gen_fn.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.lang.ClassStatement;
+import tripleo.elijah.nextgen.composable.IComposable;
+import tripleo.elijah.stages.deduce.ClassInvocation;
+import tripleo.elijah.stages.gen_fn.GeneratedClass;
 
-import java.util.*;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created 3/4/22 7:14 AM
  */
 public class ClassDefinition {
-	final ClassStatement primary;
-	final Set<ClassStatement> extended = new HashSet<ClassStatement>();
-	ClassInvocation invocation;
-	GeneratedClass node;
-	IComposable composable;
+    final ClassStatement primary;
+    final Set<ClassStatement> extended = new HashSet<ClassStatement>();
+    ClassInvocation invocation;
+    GeneratedClass node;
+    IComposable composable;
 
-	public ClassDefinition(final ClassStatement aPrimary) {
-		primary = aPrimary;
-	}
+    public ClassDefinition(final ClassStatement aPrimary) {
+        primary = aPrimary;
+    }
 
-	public ClassDefinition(final @NotNull ClassInvocation aClassInvocation) {
-		primary = aClassInvocation.getKlass();
-		invocation = aClassInvocation;
-	}
+    public ClassDefinition(final @NotNull ClassInvocation aClassInvocation) {
+        primary = aClassInvocation.getKlass();
+        invocation = aClassInvocation;
+    }
 
-	public ClassStatement getPrimary() {
-		return primary;
-	}
+    public ClassStatement getPrimary() {
+        return primary;
+    }
 
-	public Set<ClassStatement> getExtended() {
-		return extended;
-	}
+    public Set<ClassStatement> getExtended() {
+        return extended;
+    }
 
-	public ClassInvocation getInvocation() {
-		return invocation;
-	}
+    public ClassInvocation getInvocation() {
+        return invocation;
+    }
 
-	public void setInvocation(final ClassInvocation aInvocation) {
-		invocation = aInvocation;
-	}
+    public void setInvocation(final ClassInvocation aInvocation) {
+        invocation = aInvocation;
+    }
 
-	public GeneratedClass getNode() {
-		return node;
-	}
+    public GeneratedClass getNode() {
+        return node;
+    }
 
-	public void setNode(final GeneratedClass aNode) {
-		node = aNode;
-	}
+    public void setNode(final GeneratedClass aNode) {
+        node = aNode;
+    }
 
-	public IComposable getComposable() {
-		return composable;
-	}
+    public IComposable getComposable() {
+        return composable;
+    }
 
-	public void setComposable(final IComposable aComposable) {
-		composable = aComposable;
-	}
+    public void setComposable(final IComposable aComposable) {
+        composable = aComposable;
+    }
 }
 
 //

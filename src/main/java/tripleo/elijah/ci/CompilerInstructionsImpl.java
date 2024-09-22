@@ -23,78 +23,76 @@ import java.util.stream.Collectors;
  */
 public class CompilerInstructionsImpl implements CompilerInstructions {
 
-	public List<LibraryStatementPart> lsps = new ArrayList<LibraryStatementPart>();
-	private IndexingStatement _idx;
-	private GenerateStatement gen;
-	private String filename;
-	private String name;
+    public List<LibraryStatementPart> lsps = new ArrayList<LibraryStatementPart>();
+    private IndexingStatement _idx;
+    private GenerateStatement gen;
+    private String filename;
+    private String name;
 
-	@Override
-	public IndexingStatement indexingStatement() {
-		if (_idx == null)
-			_idx = new IndexingStatement(this);
+    @Override
+    public IndexingStatement indexingStatement() {
+        if (_idx == null) _idx = new IndexingStatement(this);
 
-		return _idx;
-	}
+        return _idx;
+    }
 
-	@Override
-	public void add(final GenerateStatement generateStatement) {
-		assert gen == null;
-		gen = generateStatement;
-	}
+    @Override
+    public void add(final GenerateStatement generateStatement) {
+        assert gen == null;
+        gen = generateStatement;
+    }
 
-	@Override
-	public void add(final LibraryStatementPartImpl libraryStatementPart) {
-		libraryStatementPart.setInstructions(this);
-		lsps.add(libraryStatementPart);
-	}
+    @Override
+    public void add(final LibraryStatementPartImpl libraryStatementPart) {
+        libraryStatementPart.setInstructions(this);
+        lsps.add(libraryStatementPart);
+    }
 
-	@Override
-	public String getFilename() {
-		return filename;
-	}
+    @Override
+    public String getFilename() {
+        return filename;
+    }
 
-	@Override
-	public void setFilename(final String filename) {
-		this.filename = filename;
-	}
+    @Override
+    public void setFilename(final String filename) {
+        this.filename = filename;
+    }
 
-	@Override
-	@Nullable
-	public String genLang() {
-		final List<GenerateStatement.Directive> gens = gen.dirs.stream()
-				.filter((final GenerateStatement.Directive input) -> input.getName().equals("gen"))
-				.collect(Collectors.toList());
-		if (gens.size() == 0)
-			return null;
-		final IExpression lang_raw = gens.get(0).getExpression();
-		assert lang_raw instanceof StringExpression;
-		final String text = ((StringExpression) lang_raw).getText();
-		if (text.charAt(0) == '\"') // TODO ugly
-			return Helpers.remove_single_quotes_from_string(text);
-		else
-			return text;
-	}
+    @Override
+    @Nullable
+    public String genLang() {
+        final List<GenerateStatement.Directive> gens = gen.dirs.stream()
+                .filter((final GenerateStatement.Directive input) ->
+                        input.getName().equals("gen"))
+                .collect(Collectors.toList());
+        if (gens.size() == 0) return null;
+        final IExpression lang_raw = gens.get(0).getExpression();
+        assert lang_raw instanceof StringExpression;
+        final String text = ((StringExpression) lang_raw).getText();
+        if (text.charAt(0) == '\"') // TODO ugly
+        return Helpers.remove_single_quotes_from_string(text);
+        else return text;
+    }
 
-	@Override
-	public String getName() {
-		return name;
-	}
+    @Override
+    public String getName() {
+        return name;
+    }
 
-	@Override
-	public void setName(final String name) {
-		this.name = name;
-	}
+    @Override
+    public void setName(final String name) {
+        this.name = name;
+    }
 
-	@Override
-	public void setName(final Token name) {
-		this.name = name.getText();
-	}
+    @Override
+    public void setName(final Token name) {
+        this.name = name.getText();
+    }
 
-	@Override
-	public List<LibraryStatementPart> getLibraryStatementParts() {
-		return lsps;
-	}
+    @Override
+    public List<LibraryStatementPart> getLibraryStatementParts() {
+        return lsps;
+    }
 }
 
 //

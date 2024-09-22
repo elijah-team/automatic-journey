@@ -19,50 +19,46 @@ import java.io.PrintStream;
  * Created 8/11/21 6:04 AM
  */
 public class DefaultProcessLogEntryBehavior implements ProcessLogEntryBehavior {
-	private PrintStream ps;
-	private String s1;
+    private PrintStream ps;
+    private String s1;
 
-	@Override
-	public void processLogEntry(final LogEntry entry) {
-		final String logentry = String.format("[%s] [%tD %tT] %s %s", s1, entry.time, entry.time, entry.level,
-				entry.message);
-		ps.println(logentry);
-	}
+    @Override
+    public void processLogEntry(final LogEntry entry) {
+        final String logentry =
+                String.format("[%s] [%tD %tT] %s %s", s1, entry.time, entry.time, entry.level, entry.message);
+        ps.println(logentry);
+    }
 
-	@Override
-	public void initialize(final File aLogFile, final String aElLogFileName, final ErrSink aErrSink) {
-		try {
-			ps = new PrintStream(aLogFile);
-			s1 = aElLogFileName;
-		} catch (final FileNotFoundException exception) {
-			aErrSink.exception(exception);
-		}
-	}
+    @Override
+    public void initialize(final File aLogFile, final String aElLogFileName, final ErrSink aErrSink) {
+        try {
+            ps = new PrintStream(aLogFile);
+            s1 = aElLogFileName;
+        } catch (final FileNotFoundException exception) {
+            aErrSink.exception(exception);
+        }
+    }
 
-	@Override
-	public void start() {
+    @Override
+    public void start() {}
 
-	}
+    @Override
+    public void finish() {}
 
-	@Override
-	public void finish() {
+    @Override
+    public void processPhase(final String aPhase) {
+        ps.println(aPhase);
+        final StringBuilder sb = new StringBuilder(aPhase.length());
+        for (int i = 0; i < aPhase.length(); i++) {
+            sb.append('=');
+        }
+        ps.println(sb);
+    }
 
-	}
-
-	@Override
-	public void processPhase(final String aPhase) {
-		ps.println(aPhase);
-		final StringBuilder sb = new StringBuilder(aPhase.length());
-		for (int i = 0; i < aPhase.length(); i++) {
-			sb.append('=');
-		}
-		ps.println(sb);
-	}
-
-	@Override
-	public void donePhase() {
-		ps.println();
-	}
+    @Override
+    public void donePhase() {
+        ps.println();
+    }
 }
 
 //

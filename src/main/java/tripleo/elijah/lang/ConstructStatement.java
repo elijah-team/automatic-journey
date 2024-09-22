@@ -8,8 +8,9 @@
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang2.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
+import tripleo.elijah.lang2.ElElementVisitor;
 
 /*
  * Created on Sep 1, 2005 6:47:16 PM
@@ -18,60 +19,63 @@ import tripleo.elijah.lang2.*;
  *
  */
 public class ConstructStatement implements FunctionItem, StatementItem, OS_Element {
-	private final OS_Element parent;
-	private final Context context;
-	private final IExpression _expr;
-	private final ExpressionList _args;
-	private final String constructorName;
-//	private OS_Type _type;
+    private final OS_Element parent;
+    private final Context context;
+    private final IExpression _expr;
+    private final ExpressionList _args;
+    private final String constructorName;
+    //	private OS_Type _type;
 
-	public ConstructStatement(@NotNull final OS_Element aParent, @NotNull final Context aContext,
-			@NotNull final IExpression aExpr, @Nullable final String aConstructorName,
-			@Nullable final ExpressionList aExpressionList) {
-		parent = aParent;
-		context = aContext;
-		_expr = aExpr;
-		constructorName = aConstructorName;
-		_args = aExpressionList;
-	}
+    public ConstructStatement(
+            @NotNull final OS_Element aParent,
+            @NotNull final Context aContext,
+            @NotNull final IExpression aExpr,
+            @Nullable final String aConstructorName,
+            @Nullable final ExpressionList aExpressionList) {
+        parent = aParent;
+        context = aContext;
+        _expr = aExpr;
+        constructorName = aConstructorName;
+        _args = aExpressionList;
+    }
 
-//	@Override
-//	public boolean is_simple() {
-//		return false;
-//	}
-//
-//	@Override
-//	public void setType(final OS_Type deducedExpression) {
-//		_type = deducedExpression;
-//	}
-//
-//	@Override
-//	public OS_Type getType() {
-//		return _type;
-//	}
+    //	@Override
+    //	public boolean is_simple() {
+    //		return false;
+    //	}
+    //
+    //	@Override
+    //	public void setType(final OS_Type deducedExpression) {
+    //		_type = deducedExpression;
+    //	}
+    //
+    //	@Override
+    //	public OS_Type getType() {
+    //		return _type;
+    //	}
 
-	@Override
-	public void visitGen(final ElElementVisitor visit) {
-		visit.visitConstructStatement(this);
-	}
+    @Override
+    public void visitGen(final ElElementVisitor visit) {
+        visit.visitConstructStatement(this);
+    }
 
-	@Override
-	public Context getContext() {
-		return context;
-	}
+    @Override
+    public Context getContext() {
+        return context;
+    }
 
-	@Override
-	public OS_Element getParent() {
-		return parent;
-	}
+    @Override
+    public OS_Element getParent() {
+        return parent;
+    }
 
-	public IExpression getExpr() {
-		return _expr;
-	}
+    public IExpression getExpr() {
+        return _expr;
+    }
 
-	public @Nullable ExpressionList getArgs() {
-		return _args;
-	}
+    public @Nullable ExpressionList getArgs() {
+        return _args;
+    }
 }
 
 //

@@ -12,8 +12,7 @@ package tripleo.elijah.entrypoints;
 /**
  * Created 6/14/21 7:20 AM
  */
-public interface EntryPoint {
-}
+public interface EntryPoint {}
 
 //
 //

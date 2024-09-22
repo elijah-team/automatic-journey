@@ -12,9 +12,9 @@ package tripleo.elijah_fluffy.util;
  * Created 8/15/20 3:52 PM
  */
 public class LogEvent {
-	public static void logEvent(final int number, final String message) {
-		SimplePrintLoggerToRemoveSoon.println_err2(number + " " + message);
-	}
+    public static void logEvent(final int number, final String message) {
+        SimplePrintLoggerToRemoveSoon.println_err2(number + " " + message);
+    }
 }
 
 //

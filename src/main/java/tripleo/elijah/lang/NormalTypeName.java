@@ -11,45 +11,45 @@ package tripleo.elijah.lang;
 // Referenced classes of package pak2:
 //			TypeNameList
 
-import java.util.*;
+import java.util.Collection;
 
 public interface NormalTypeName extends TypeName, Resolvable {
 
-//	@Override
-//	boolean isNull();
+    //	@Override
+    //	boolean isNull();
 
-	boolean getConstant();
+    boolean getConstant();
 
-	void setConstant(boolean flag);
+    void setConstant(boolean flag);
 
-	boolean getReference();
+    boolean getReference();
 
-	void setReference(boolean flag);
+    void setReference(boolean flag);
 
-	boolean getOut();
+    boolean getOut();
 
-	void setOut(boolean flag);
+    void setOut(boolean flag);
 
-	boolean getIn();
+    boolean getIn();
 
-	void setIn(boolean flag);
+    void setIn(boolean flag);
 
-	String getName();
+    String getName();
 
-	void setName(Qualident s);
+    void setName(Qualident s);
 
-	void addGenericPart(TypeNameList tn2);
+    void addGenericPart(TypeNameList tn2);
 
-	void setNullable();
+    void setNullable();
 
-	@Override
-	void setContext(Context cur);
+    @Override
+    void setContext(Context cur);
 
-	Collection<TypeModifiers> getModifiers();
+    Collection<TypeModifiers> getModifiers();
 
-	TypeNameList getGenericPart();
+    TypeNameList getGenericPart();
 
-	Qualident getRealName();
+    Qualident getRealName();
 }
 
 //

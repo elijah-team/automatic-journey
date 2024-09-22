@@ -15,6 +15,4 @@ package tripleo.elijah.gen.nodes;
  * @author Tripleo(sb)
  *
  */
-public class LocalValAgnFnCallNode {
-
-}
+public class LocalValAgnFnCallNode {}

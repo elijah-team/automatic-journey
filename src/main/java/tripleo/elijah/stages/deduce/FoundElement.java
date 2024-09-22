@@ -8,45 +8,43 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import org.jetbrains.annotations.*;
-import tripleo.elijah.lang.*;
+import org.jetbrains.annotations.NotNull;
+import tripleo.elijah.lang.OS_Element;
 
 /**
  * Created 1/12/21 2:10 AM
  */
 public abstract class FoundElement {
-	private boolean _didntFind;
-	private boolean _called;
+    private boolean _didntFind;
+    private boolean _called;
 
-	public FoundElement(@NotNull final DeducePhase aPhase) {
-		aPhase.registerFound(this);
-	}
+    public FoundElement(@NotNull final DeducePhase aPhase) {
+        aPhase.registerFound(this);
+    }
 
-	public void doFoundElement(final OS_Element e) {
-		if (_called)
-			return;
+    public void doFoundElement(final OS_Element e) {
+        if (_called) return;
 
-		_didntFind = false;
-		_called = true;
-		foundElement(e);
-	}
+        _didntFind = false;
+        _called = true;
+        foundElement(e);
+    }
 
-	public abstract void foundElement(OS_Element e);
+    public abstract void foundElement(OS_Element e);
 
-	public void doNoFoundElement() {
-		if (_called)
-			return;
+    public void doNoFoundElement() {
+        if (_called) return;
 
-		_didntFind = true;
-		_called = true;
-		noFoundElement();
-	}
+        _didntFind = true;
+        _called = true;
+        noFoundElement();
+    }
 
-	public abstract void noFoundElement();
+    public abstract void noFoundElement();
 
-	public boolean didntFind() {
-		return _didntFind;
-	}
+    public boolean didntFind() {
+        return _didntFind;
+    }
 }
 
 //

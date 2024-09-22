@@ -8,32 +8,32 @@
  */
 package tripleo.elijah.lang;
 
-import tripleo.elijah.lang2.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.lang2.ElElementVisitor;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 public class YieldExpression /* extends BasicBinaryExpression */ implements OS_Element, StatementItem {
 
-	public YieldExpression(final IExpression aExpr) {
-		// TODO Auto-generated constructor stub
-		throw new NotImplementedException();
-	}
+    public YieldExpression(final IExpression aExpr) {
+        // TODO Auto-generated constructor stub
+        throw new NotImplementedException();
+    }
 
-	@Override
-	public void visitGen(final ElElementVisitor visit) {
-		visit.visitYield(this);
-	}
+    @Override
+    public void visitGen(final ElElementVisitor visit) {
+        visit.visitYield(this);
+    }
 
-	@Override
-	public Context getContext() {
-		throw new NotImplementedException();
-//		return null;
-	}
+    @Override
+    public Context getContext() {
+        throw new NotImplementedException();
+        //		return null;
+    }
 
-	@Override
-	public OS_Element getParent() {
-		throw new NotImplementedException();
-//		return null;
-	}
+    @Override
+    public OS_Element getParent() {
+        throw new NotImplementedException();
+        //		return null;
+    }
 }
 
 //

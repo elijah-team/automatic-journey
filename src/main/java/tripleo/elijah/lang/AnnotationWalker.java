@@ -12,7 +12,7 @@ package tripleo.elijah.lang;
  * Created 12/24/20 7:44 AM
  */
 public interface AnnotationWalker {
-	void annotation(AnnotationPart anno);
+    void annotation(AnnotationPart anno);
 }
 
 //

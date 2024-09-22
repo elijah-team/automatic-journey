@@ -8,17 +8,17 @@ import tripleo.elijah.stages.logging.ElLog;
 import java.util.List;
 
 public class PRC_Instruction {
-	private final Instruction           inst;
-	private final BaseGeneratedFunction gf;
-	private final ElLog                 LOG;
+    private final Instruction inst;
+    private final BaseGeneratedFunction gf;
+    private final ElLog LOG;
 
-	public PRC_Instruction(final Instruction aInst, final @NotNull BaseGeneratedFunction aGf, final ElLog aLOG) {
-		inst = aInst;
-		gf  = aGf;
-		LOG = aLOG;
-	}
+    public PRC_Instruction(final Instruction aInst, final @NotNull BaseGeneratedFunction aGf, final ElLog aLOG) {
+        inst = aInst;
+        gf = aGf;
+        LOG = aLOG;
+    }
 
-	public List<String> getAssignmentValueArgsList() {
-		return GetAssignmentValue.getAssignmentValueArgs(inst, gf, LOG);
-	}
+    public List<String> getAssignmentValueArgsList() {
+        return GetAssignmentValue.getAssignmentValueArgs(inst, gf, LOG);
+    }
 }

@@ -12,8 +12,7 @@ package tripleo.elijah.stages.gen_fn;
 /**
  * Created 4/17/21 7:14 AM
  */
-public interface TableEntryIV {
-}
+public interface TableEntryIV {}
 
 //
 //

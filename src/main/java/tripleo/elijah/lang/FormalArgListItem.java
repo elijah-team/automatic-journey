@@ -8,52 +8,52 @@
  */
 package tripleo.elijah.lang;
 
-import tripleo.elijah.lang2.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.lang2.ElElementVisitor;
+import tripleo.elijah_fluffy.util.NotImplementedException;
 
 public class FormalArgListItem implements OS_Element, OS_Element2 {
 
-	private IdentExpression name;
-	private TypeName tn = null;
+    private IdentExpression name;
+    private TypeName tn = null;
 
-	@Override // OS_Element
-	public void visitGen(final ElElementVisitor visit) {
-		visit.visitFormalArgListItem(this);
-	}
+    @Override // OS_Element
+    public void visitGen(final ElElementVisitor visit) {
+        visit.visitFormalArgListItem(this);
+    }
 
-	@Override // OS_Element
-	public Context getContext() {
-//        throw new NotImplementedException();
-//        return null;
-		return name.getContext();
-	}
+    @Override // OS_Element
+    public Context getContext() {
+        //        throw new NotImplementedException();
+        //        return null;
+        return name.getContext();
+    }
 
-	@Override // OS_Element
-	public OS_Element getParent() {
-		throw new NotImplementedException();
-//        return null;
-	}
+    @Override // OS_Element
+    public OS_Element getParent() {
+        throw new NotImplementedException();
+        //        return null;
+    }
 
-	@Override // OS_Element2
-	public String name() {
-		return name.getText();
-	}
+    @Override // OS_Element2
+    public String name() {
+        return name.getText();
+    }
 
-	public IdentExpression getNameToken() {
-		return name;
-	}
+    public IdentExpression getNameToken() {
+        return name;
+    }
 
-	public void setName(final IdentExpression s) {
-		name = s;
-	}
+    public void setName(final IdentExpression s) {
+        name = s;
+    }
 
-	public void setTypeName(final TypeName tn1) {
-		tn = tn1;
-	}
+    public void setTypeName(final TypeName tn1) {
+        tn = tn1;
+    }
 
-	public TypeName typeName() {
-		return tn;
-	}
+    public TypeName typeName() {
+        return tn;
+    }
 }
 
 //

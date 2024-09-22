@@ -14,137 +14,136 @@
  */
 package tripleo.elijah.lang;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
 
-import java.io.*;
-import java.util.*;
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Objects;
 
-import static tripleo.elijah_fluffy.util.Helpers.*;
+import static tripleo.elijah_fluffy.util.Helpers.List_of;
 
 public class VariableTypeName extends AbstractTypeName implements NormalTypeName {
 
-	private TypeNameList genericPart;
-	private Context _ctx;
-	// private OS_Type _resolved;
-	private OS_Element _resolvedElement;
+    private TypeNameList genericPart;
+    private Context _ctx;
+    // private OS_Type _resolved;
+    private OS_Element _resolvedElement;
 
-	@Override
-	public void addGenericPart(final TypeNameList tn2) {
-		genericPart = tn2;
-	}
+    @Override
+    public void addGenericPart(final TypeNameList tn2) {
+        genericPart = tn2;
+    }
 
-	/*
-	 * (non-Javadoc)
-	 * 
-	 * @see java.lang.Object#toString()
-	 */
-	/* #@ requires pr_name != null; */
-	// pr_name is null when first created
-	@Override
-	public String toString() {
-		final String result;
-		if (pr_name != null) {
-			if (genericPart != null) {
-				result = String.format("%s[%s]", pr_name, genericPart.toString());
-			} else {
-				result = pr_name.toString();
-			}
-		} else {
-			result = "<VariableTypeName null>";
-		}
-		return result;
-	}
+    /*
+     * (non-Javadoc)
+     *
+     * @see java.lang.Object#toString()
+     */
+    /* #@ requires pr_name != null; */
+    // pr_name is null when first created
+    @Override
+    public String toString() {
+        final String result;
+        if (pr_name != null) {
+            if (genericPart != null) {
+                result = String.format("%s[%s]", pr_name, genericPart);
+            } else {
+                result = pr_name.toString();
+            }
+        } else {
+            result = "<VariableTypeName null>";
+        }
+        return result;
+    }
 
-	@Override
-	public Context getContext() {
-		return _ctx;
-	}
+    @Override
+    public Context getContext() {
+        return _ctx;
+    }
 
-	@Override
-	public Type kindOfType() {
-		return Type.NORMAL;
-	}
+    @Override
+    public void setContext(final Context ctx) {
+        _ctx = ctx;
+    }
 
-	@Override
-	public void setContext(final Context ctx) {
-		_ctx = ctx;
-	}
+    @Override
+    public Type kindOfType() {
+        return Type.NORMAL;
+    }
 
-	@Override
-	@NotNull
-	public Collection<TypeModifiers> getModifiers() {
-		return (tm != null ? List_of(tm) : new ArrayList<TypeModifiers>());
-	}
+    @Override
+    @NotNull
+    public Collection<TypeModifiers> getModifiers() {
+        return (tm != null ? List_of(tm) : new ArrayList<TypeModifiers>());
+    }
 
-	@Override
-	public TypeNameList getGenericPart() {
-		return genericPart;
-	}
+    @Override
+    public TypeNameList getGenericPart() {
+        return genericPart;
+    }
 
-	@Override
-	public Qualident getRealName() {
-		return pr_name;
-	}
+    @Override
+    public Qualident getRealName() {
+        return pr_name;
+    }
 
-	@Override
-	public boolean hasResolvedElement() {
-		return _resolvedElement != null;
-	}
+    @Override
+    public boolean hasResolvedElement() {
+        return _resolvedElement != null;
+    }
 
-	@Override
-	public OS_Element getResolvedElement() {
-		return _resolvedElement;
-	}
+    @Override
+    public OS_Element getResolvedElement() {
+        return _resolvedElement;
+    }
 
-	@Override
-	public void setResolvedElement(final OS_Element element) {
-		_resolvedElement = element;
-	}
+    @Override
+    public void setResolvedElement(final OS_Element element) {
+        _resolvedElement = element;
+    }
 
-	@Override
-	public boolean equals(final Object o) {
-		if (this == o)
-			return true;
-		if (!super.equals(o))
-			return false;
-		if (!(o instanceof final NormalTypeName that))
-			return false;
-		return Objects.equals(genericPart, that.getGenericPart());
-	}
+    @Override
+    public boolean equals(final Object o) {
+        if (this == o) return true;
+        if (!super.equals(o)) return false;
+        if (!(o instanceof final NormalTypeName that)) return false;
+        return Objects.equals(genericPart, that.getGenericPart());
+    }
 
-	@Override
-	public int hashCode() {
-		return Objects.hash(super.hashCode(), genericPart);
-	}
+    @Override
+    public int hashCode() {
+        return Objects.hash(super.hashCode(), genericPart);
+    }
 
-	// region Locatable
+    // region Locatable
 
-	@Override
-	public int getLine() {
-		return pr_name.parts().get(0).getLine();
-	}
+    @Override
+    public int getLine() {
+        return pr_name.parts().get(0).getLine();
+    }
 
-	@Override
-	public int getColumn() {
-		return pr_name.parts().get(0).getColumn();
-	}
+    @Override
+    public int getColumn() {
+        return pr_name.parts().get(0).getColumn();
+    }
 
-	@Override
-	public int getLineEnd() {
-		return pr_name.parts().get(pr_name.parts().size()).getLineEnd();
-	}
+    @Override
+    public int getLineEnd() {
+        return pr_name.parts().get(pr_name.parts().size()).getLineEnd();
+    }
 
-	@Override
-	public int getColumnEnd() {
-		return pr_name.parts().get(pr_name.parts().size()).getColumnEnd();
-	}
+    @Override
+    public int getColumnEnd() {
+        return pr_name.parts().get(pr_name.parts().size()).getColumnEnd();
+    }
 
-	@Override
-	public File getFile() {
-		return pr_name.parts().get(0).getFile();
-	}
+    @Override
+    public File getFile() {
+        return pr_name.parts().get(0).getFile();
+    }
 
-	// endregion
+    // endregion
 }
 
 //

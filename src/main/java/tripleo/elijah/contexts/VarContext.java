@@ -9,49 +9,51 @@
 package tripleo.elijah.contexts;
 
 import tripleo.elijah.lang.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah_fluffy.util.Helpers;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * Created 8/30/20 1:39 PM
  */
 public class VarContext extends Context {
 
-	private final VariableSequence carrier;
-	private final Context _parent;
+    private final VariableSequence carrier;
+    private final Context _parent;
 
-	public VarContext(final VariableSequence carrier, final Context _parent) {
-		this.carrier = carrier;
-		this._parent = _parent;
-	}
+    public VarContext(final VariableSequence carrier, final Context _parent) {
+        this.carrier = carrier;
+        this._parent = _parent;
+    }
 
-	@Override
-	public LookupResultList lookup(final String name, final int level, final LookupResultList Result,
-			final List<Context> alreadySearched, final boolean one) {
-		alreadySearched.add(carrier.getContext());
+    @Override
+    public LookupResultList lookup(
+            final String name,
+            final int level,
+            final LookupResultList Result,
+            final List<Context> alreadySearched,
+            final boolean one) {
+        alreadySearched.add(carrier.getContext());
 
-		for (final VariableStatement vs : carrier.items()) {
-			if (vs.getName().equals(name)) {
-				final IdentExpression ie = new IdentExpression(Helpers.makeToken(vs.getName()));
-				Result.add(name, level, ie, this); // TODO getNameToken
-			}
-		}
+        for (final VariableStatement vs : carrier.items()) {
+            if (vs.getName().equals(name)) {
+                final IdentExpression ie = new IdentExpression(Helpers.makeToken(vs.getName()));
+                Result.add(name, level, ie, this); // TODO getNameToken
+            }
+        }
 
-		if (carrier.getParent() != null) {
-			final Context context = getParent();
-			if (!alreadySearched.contains(context) || !one)
-				context.lookup(name, level + 1, Result, alreadySearched, false); // TODO test this
-		}
-		return Result;
+        if (carrier.getParent() != null) {
+            final Context context = getParent();
+            if (!alreadySearched.contains(context) || !one)
+                context.lookup(name, level + 1, Result, alreadySearched, false); // TODO test this
+        }
+        return Result;
+    }
 
-	}
-
-	@Override
-	public Context getParent() {
-		return _parent;
-	}
-
+    @Override
+    public Context getParent() {
+        return _parent;
+    }
 }
 
 //

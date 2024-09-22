@@ -13,26 +13,23 @@ package tripleo.elijah.lang;
  */
 public class UnaryExpression extends AbstractExpression {
 
-	public UnaryExpression(final ExpressionKind aKind, final IExpression aExpression) {
-		_kind = aKind;
-		left = aExpression;
-	}
+    public UnaryExpression(final ExpressionKind aKind, final IExpression aExpression) {
+        _kind = aKind;
+        left = aExpression;
+    }
 
-	@Override
-	public boolean is_simple() {
-		return false;
-	}
+    @Override
+    public boolean is_simple() {
+        return false;
+    }
 
-	@Override
-	public OS_Type getType() {
-		return null;
-	}
+    @Override
+    public OS_Type getType() {
+        return null;
+    }
 
-	@Override
-	public void setType(final OS_Type deducedExpression) {
-
-	}
-
+    @Override
+    public void setType(final OS_Type deducedExpression) {}
 }
 
 //

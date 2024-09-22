@@ -8,28 +8,31 @@
  */
 package tripleo.elijah.entrypoints;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.ClassStatement;
+import tripleo.elijah.lang.FunctionDef;
+import tripleo.elijah.lang.NamespaceStatement;
+import tripleo.elijah.lang.OS_Element;
 
 /**
  * Created 6/14/21 7:24 AM
  */
 public class ArbitraryFunctionEntryPoint implements EntryPoint {
-	FunctionDef fd;
+    FunctionDef fd;
 
-	public ArbitraryFunctionEntryPoint(final FunctionDef aFunction) {
-		final OS_Element parent = aFunction.getParent();
-		if (!(parent instanceof ClassStatement || parent instanceof NamespaceStatement))
-			throw new IllegalStateException("Invalid parent");
-		fd = aFunction;
-	}
+    public ArbitraryFunctionEntryPoint(final FunctionDef aFunction) {
+        final OS_Element parent = aFunction.getParent();
+        if (!(parent instanceof ClassStatement || parent instanceof NamespaceStatement))
+            throw new IllegalStateException("Invalid parent");
+        fd = aFunction;
+    }
 
-	public FunctionDef getFunction() {
-		return fd;
-	}
+    public FunctionDef getFunction() {
+        return fd;
+    }
 
-	public OS_Element getParent() {
-		return fd.getParent();
-	}
+    public OS_Element getParent() {
+        return fd.getParent();
+    }
 }
 
 //

@@ -8,38 +8,40 @@
  */
 package tripleo.elijah.lang.imports;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.AccessNotation;
+import tripleo.elijah.lang.El_Category;
+import tripleo.elijah.lang.ImportStatement;
 
 /**
  * Created 3/26/21 4:55 AM
  */
 public abstract class _BaseImportStatement implements ImportStatement {
-	// region ClassItem
+    // region ClassItem
 
-	private AccessNotation access_note;
-	private El_Category category;
+    private AccessNotation access_note;
+    private El_Category category;
 
-	@Override
-	public void setCategory(final El_Category aCategory) {
-		category = aCategory;
-	}
+    @Override
+    public El_Category getCategory() {
+        return category;
+    }
 
-	@Override
-	public void setAccess(final AccessNotation aNotation) {
-		access_note = aNotation;
-	}
+    @Override
+    public void setCategory(final El_Category aCategory) {
+        category = aCategory;
+    }
 
-	@Override
-	public El_Category getCategory() {
-		return category;
-	}
+    @Override
+    public AccessNotation getAccess() {
+        return access_note;
+    }
 
-	@Override
-	public AccessNotation getAccess() {
-		return access_note;
-	}
+    @Override
+    public void setAccess(final AccessNotation aNotation) {
+        access_note = aNotation;
+    }
 
-	// endregion
+    // endregion
 
 }
 

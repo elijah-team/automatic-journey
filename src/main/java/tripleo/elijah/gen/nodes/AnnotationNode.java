@@ -14,14 +14,14 @@ package tripleo.elijah.gen.nodes;
 import tripleo.elijah.lang.AnnotationClause;
 
 public class AnnotationNode {
-	// Qualident name;
-	// ExpressionList arguments;
+    // Qualident name;
+    // ExpressionList arguments;
 
-	AnnotationClause ac;
+    AnnotationClause ac;
 
-	public AnnotationNode(final AnnotationClause ac) {
-		this.ac = ac;
-	}
+    public AnnotationNode(final AnnotationClause ac) {
+        this.ac = ac;
+    }
 }
 
 //

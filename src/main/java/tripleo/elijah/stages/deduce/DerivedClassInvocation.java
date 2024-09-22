@@ -9,27 +9,27 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.ClassStatement;
 
 /**
  * Created 1/5/22 11:27 PM
  */
 class DerivedClassInvocation extends ClassInvocation {
-	private final ClassInvocation derivation;
+    private final ClassInvocation derivation;
 
-	public DerivedClassInvocation(final ClassStatement aClassStatement, final ClassInvocation aClassInvocation) {
-		super(aClassStatement, null);
-		derivation = aClassInvocation;
-	}
+    public DerivedClassInvocation(final ClassStatement aClassStatement, final ClassInvocation aClassInvocation) {
+        super(aClassStatement, null);
+        derivation = aClassInvocation;
+    }
 
-	@Override
-	public void setForFunctionInvocation(final FunctionInvocation aFunctionInvocation) {
-		aFunctionInvocation.setClassInvocation(this);
-	}
+    @Override
+    public void setForFunctionInvocation(final FunctionInvocation aFunctionInvocation) {
+        aFunctionInvocation.setClassInvocation(this);
+    }
 
-	public ClassInvocation getDerivation() {
-		return derivation;
-	}
+    public ClassInvocation getDerivation() {
+        return derivation;
+    }
 }
 
 //

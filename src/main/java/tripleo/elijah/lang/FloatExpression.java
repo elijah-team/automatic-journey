@@ -14,67 +14,67 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.*;
-import tripleo.elijah_fluffy.util.*;
+import antlr.Token;
+import tripleo.elijah_fluffy.util.NotImplementedException;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
 public class FloatExpression implements IExpression {
 
-	final float carrier;
-	private final Token n;
-	OS_Type _type;
+    final float carrier;
+    private final Token n;
+    OS_Type _type;
 
-	public FloatExpression(final Token n) {
-		this.n = n;
-		carrier = Float.parseFloat(n.getText());
-	}
+    public FloatExpression(final Token n) {
+        this.n = n;
+        carrier = Float.parseFloat(n.getText());
+    }
 
-	@Override
-	public ExpressionKind getKind() {
-		return ExpressionKind.FLOAT; // TODO
-	}
+    @Override
+    public ExpressionKind getKind() {
+        return ExpressionKind.FLOAT; // TODO
+    }
 
-	@Override
-	public void setKind(final ExpressionKind aType) {
-		// log and ignore
-		SimplePrintLoggerToRemoveSoon
-				.println_err2("Trying to set ExpressionType of FloatExpression to " + aType.toString());
-	}
+    @Override
+    public void setKind(final ExpressionKind aType) {
+        // log and ignore
+        SimplePrintLoggerToRemoveSoon.println_err2(
+                "Trying to set ExpressionType of FloatExpression to " + aType.toString());
+    }
 
-	@Override
-	public IExpression getLeft() {
-		return this;
-	}
+    @Override
+    public IExpression getLeft() {
+        return this;
+    }
 
-	@Override
-	public void setLeft(final IExpression aLeft) {
-		throw new NotImplementedException(); // TODO
-	}
+    @Override
+    public void setLeft(final IExpression aLeft) {
+        throw new NotImplementedException(); // TODO
+    }
 
-	@Override
-	public String repr_() {
-		return toString();
-	}
+    @Override
+    public String repr_() {
+        return toString();
+    }
 
-	@Override
-	public String toString() {
-		return String.format("FloatExpression (%f)", carrier);
-	}
+    @Override
+    public String toString() {
+        return String.format("FloatExpression (%f)", carrier);
+    }
 
-	@Override
-	public boolean is_simple() {
-		return true;
-	}
+    @Override
+    public boolean is_simple() {
+        return true;
+    }
 
-	@Override
-	public OS_Type getType() {
-		return _type;
-	}
+    @Override
+    public OS_Type getType() {
+        return _type;
+    }
 
-	@Override
-	public void setType(final OS_Type deducedExpression) {
-		_type = deducedExpression;
-	}
-
+    @Override
+    public void setType(final OS_Type deducedExpression) {
+        _type = deducedExpression;
+    }
 }
 
 //

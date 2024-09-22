@@ -1,7 +1,7 @@
 package tripleo.elijah_fluffy.util;
 
 public interface IFixedList<T> {
-	int size();
+    int size();
 
-	T get(int at);
+    T get(int at);
 }

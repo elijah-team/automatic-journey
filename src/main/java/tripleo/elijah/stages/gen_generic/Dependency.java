@@ -25,51 +25,53 @@ import java.util.Set;
  * Created 9/13/21 4:00 AM
  */
 public class Dependency {
-	public final IDependencyReferent referent;
-	public final Set<Dependency> deps = new HashSet<>();
+    public final IDependencyReferent referent;
+    public final Set<Dependency> deps = new HashSet<>();
 
-	public DependencyRef dref;
-	public OS_Element resolved;
+    public DependencyRef dref;
+    public OS_Element resolved;
 
-	public Dependency(final IDependencyReferent aReferent) {
-		referent = aReferent;
-	}
+    public Dependency(final IDependencyReferent aReferent) {
+        referent = aReferent;
+    }
 
-	public DependencyRef getRef() {
-		return dref;
-	}
+    public DependencyRef getRef() {
+        return dref;
+    }
 
-	public void setRef(final DependencyRef aDref) {
-		dref = aDref;
-	}
+    public void setRef(final DependencyRef aDref) {
+        dref = aDref;
+    }
 
-	public void noteDependencies(final AbstractDependencyTracker aDependencyTracker,
-			final List<FunctionInvocation> aDependentFunctions, final List<GenType> aDependentTypes) {
-		for (final FunctionInvocation dependentFunction : aDependentFunctions) {
-			final BaseGeneratedFunction generatedFunction = dependentFunction.getGenerated();
-			if (generatedFunction != null)
-				deps.add(generatedFunction.getDependency());
-			else
-				SimplePrintLoggerToRemoveSoon.println_err2("52 false FunctionInvocation " + dependentFunction);
-		}
-		for (final GenType dependentType : aDependentTypes) {
-			final GeneratedContainerNC node = (GeneratedContainerNC) dependentType.getNode();
-			if (node != null)
-				deps.add(node.getDependency());
-			else {
-				SimplePrintLoggerToRemoveSoon.println_err2("46 node is null "
-						+ (dependentType.getResolved() != null ? dependentType.getResolved() : dependentType.getResolvedn()));
-				final Dependency d = new Dependency(null);
-				d.resolved = dependentType.getResolved() != null ? dependentType.getResolved().getClassOf()
-						: dependentType.getResolvedn();
-				deps.add(d);
-			}
-		}
-	}
+    public void noteDependencies(
+            final AbstractDependencyTracker aDependencyTracker,
+            final List<FunctionInvocation> aDependentFunctions,
+            final List<GenType> aDependentTypes) {
+        for (final FunctionInvocation dependentFunction : aDependentFunctions) {
+            final BaseGeneratedFunction generatedFunction = dependentFunction.getGenerated();
+            if (generatedFunction != null) deps.add(generatedFunction.getDependency());
+            else SimplePrintLoggerToRemoveSoon.println_err2("52 false FunctionInvocation " + dependentFunction);
+        }
+        for (final GenType dependentType : aDependentTypes) {
+            final GeneratedContainerNC node = (GeneratedContainerNC) dependentType.getNode();
+            if (node != null) deps.add(node.getDependency());
+            else {
+                SimplePrintLoggerToRemoveSoon.println_err2("46 node is null "
+                        + (dependentType.getResolved() != null
+                                ? dependentType.getResolved()
+                                : dependentType.getResolvedn()));
+                final Dependency d = new Dependency(null);
+                d.resolved = dependentType.getResolved() != null
+                        ? dependentType.getResolved().getClassOf()
+                        : dependentType.getResolvedn();
+                deps.add(d);
+            }
+        }
+    }
 
-	public @NotNull Set<Dependency> getNotedDeps() {
-		return deps;
-	}
+    public @NotNull Set<Dependency> getNotedDeps() {
+        return deps;
+    }
 }
 
 //

@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.lang;
 
-import antlr.*;
+import antlr.Token;
 
 /**
  * @author Tripleo
@@ -17,21 +17,21 @@ import antlr.*;
  */
 public class IndexingStatement {
 
-	private Token name;
-	private ExpressionList exprs;
-	private OS_Module parent;
+    private Token name;
+    private ExpressionList exprs;
+    private OS_Module parent;
 
-	public void setName(final Token i1) {
-		name = i1;
-	}
+    public void setName(final Token i1) {
+        name = i1;
+    }
 
-	public void setExprs(final ExpressionList el) {
-		exprs = el;
-	}
+    public void setExprs(final ExpressionList el) {
+        exprs = el;
+    }
 
-	public void setModule(final OS_Module module) {
-		parent = module;
-	}
+    public void setModule(final OS_Module module) {
+        parent = module;
+    }
 }
 
 //

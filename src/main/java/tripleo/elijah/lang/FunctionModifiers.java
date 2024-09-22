@@ -12,7 +12,10 @@ package tripleo.elijah.lang;
  * Created 8/15/20 6:27 PM
  */
 public enum FunctionModifiers {
-	NORMAL, ABSTRACT, IMMUTABLE, CONST
+    NORMAL,
+    ABSTRACT,
+    IMMUTABLE,
+    CONST
 }
 
 //

@@ -8,7 +8,7 @@
  */
 package tripleo.elijah.lang;
 
-import tripleo.elijah.gen.*;
+import tripleo.elijah.gen.Node;
 
 /*
  * Created on 5/19/2019 at 02:09
@@ -17,43 +17,42 @@ import tripleo.elijah.gen.*;
  *
  */
 public class Attached {
-	int _code;
-	Context _context;
-	Node _node;
+    int _code;
+    Context _context;
+    Node _node;
 
-	public Attached(final Context aContext) {
-		_context = aContext;
-	}
+    public Attached(final Context aContext) {
+        _context = aContext;
+    }
 
-	public Attached() {
+    public Attached() {
 
-		// TODO Auto-generated constructor stub
-	}
+        // TODO Auto-generated constructor stub
+    }
 
-	public int getCode() {
-		return _code;
-	}
+    public int getCode() {
+        return _code;
+    }
 
-	public void setCode(final int aCode) {
-		_code = aCode;
-	}
+    public void setCode(final int aCode) {
+        _code = aCode;
+    }
 
-	public Context getContext() {
-		return _context;
-	}
+    public Context getContext() {
+        return _context;
+    }
 
-	public void setContext(final Context aContext) {
-		_context = aContext;
-	}
+    public void setContext(final Context aContext) {
+        _context = aContext;
+    }
 
-	public Node getNode() {
-		return _node;
-	}
+    public Node getNode() {
+        return _node;
+    }
 
-	public void setNode(final Node aNode) {
-		_node = aNode;
-	}
-
+    public void setNode(final Node aNode) {
+        _node = aNode;
+    }
 }
 
 //

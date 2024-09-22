@@ -8,16 +8,17 @@
  */
 package tripleo.elijah.lang;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class QualidentList {
 
-	public final List<Qualident> parts = new ArrayList<Qualident>();
+    public final List<Qualident> parts = new ArrayList<Qualident>();
 
-	public void add(final Qualident qid) {
-		// TODO Auto-generated method stub
-		parts.add(qid);
-	}
+    public void add(final Qualident qid) {
+        // TODO Auto-generated method stub
+        parts.add(qid);
+    }
 }
 
 //

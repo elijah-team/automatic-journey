@@ -9,37 +9,39 @@
  */
 package tripleo.elijah.stages.deduce;
 
-import tripleo.elijah.comp.*;
-import tripleo.elijah.stages.gen_fn.*;
-import tripleo.elijah.stages.gen_generic.*;
+import tripleo.elijah.comp.Compilation;
+import tripleo.elijah.stages.gen_fn.BaseGeneratedFunction;
+import tripleo.elijah.stages.gen_fn.GeneratedClass;
+import tripleo.elijah.stages.gen_fn.GeneratedNamespace;
+import tripleo.elijah.stages.gen_generic.ICodeRegistrar;
 
 /**
  * Created 11/28/21 4:52 PM
  */
 public class DefaultCodeRegistrar implements ICodeRegistrar {
-	private final Compilation compilation;
+    private final Compilation compilation;
 
-	public DefaultCodeRegistrar(final Compilation aCompilation) {
-		compilation = aCompilation;
-	}
+    public DefaultCodeRegistrar(final Compilation aCompilation) {
+        compilation = aCompilation;
+    }
 
-	@Override
-	public void registerNamespace(final GeneratedNamespace aNamespace) {
-		final int code = compilation.nextClassCode();
-		aNamespace.setCode(code);
-	}
+    @Override
+    public void registerNamespace(final GeneratedNamespace aNamespace) {
+        final int code = compilation.nextClassCode();
+        aNamespace.setCode(code);
+    }
 
-	@Override
-	public void registerClass(final GeneratedClass aClass) {
-		final int code = compilation.nextClassCode();
-		aClass.setCode(code);
-	}
+    @Override
+    public void registerClass(final GeneratedClass aClass) {
+        final int code = compilation.nextClassCode();
+        aClass.setCode(code);
+    }
 
-	@Override
-	public void registerFunction(final BaseGeneratedFunction aFunction) {
-		final int code = compilation.nextFunctionCode();
-		aFunction.setCode(code);
-	}
+    @Override
+    public void registerFunction(final BaseGeneratedFunction aFunction) {
+        final int code = compilation.nextFunctionCode();
+        aFunction.setCode(code);
+    }
 }
 
 //

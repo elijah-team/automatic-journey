@@ -3,7 +3,7 @@
  */
 package tripleo.elijah.lang;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * @author Tripleo(sb)
@@ -12,9 +12,9 @@ import java.util.*;
  */
 public interface OS_Container extends Documentable {
 
-	List<OS_Element2> items();
+    List<OS_Element2> items();
 
-	void add(OS_Element anElement);
+    void add(OS_Element anElement);
 }
 
 //

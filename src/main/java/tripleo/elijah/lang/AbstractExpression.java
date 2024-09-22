@@ -11,43 +11,43 @@ package tripleo.elijah.lang;
 
 public abstract class AbstractExpression implements IExpression {
 
-	public IExpression left;
-	public ExpressionKind _kind;
+    public IExpression left;
+    public ExpressionKind _kind;
 
-	public AbstractExpression() {
-		left = null;
-		_kind = null;
-	}
+    public AbstractExpression() {
+        left = null;
+        _kind = null;
+    }
 
-	public AbstractExpression(final IExpression aLeft, final ExpressionKind aType) {
-		left = aLeft;
-		_kind = aType;
-	}
+    public AbstractExpression(final IExpression aLeft, final ExpressionKind aType) {
+        left = aLeft;
+        _kind = aType;
+    }
 
-	@Override
-	public ExpressionKind getKind() {
-		return _kind;
-	}
+    @Override
+    public ExpressionKind getKind() {
+        return _kind;
+    }
 
-	@Override
-	public void setKind(final ExpressionKind type1) {
-		_kind = type1;
-	}
+    @Override
+    public void setKind(final ExpressionKind type1) {
+        _kind = type1;
+    }
 
-	@Override
-	public IExpression getLeft() {
-		return left;
-	}
+    @Override
+    public IExpression getLeft() {
+        return left;
+    }
 
-	@Override
-	public void setLeft(final IExpression aLeft) {
-		left = aLeft;
-	}
+    @Override
+    public void setLeft(final IExpression aLeft) {
+        left = aLeft;
+    }
 
-	@Override
-	public String repr_() {
-		return String.format("<Expression %s %s>", left, _kind);
-	}
+    @Override
+    public String repr_() {
+        return String.format("<Expression %s %s>", left, _kind);
+    }
 }
 
 //

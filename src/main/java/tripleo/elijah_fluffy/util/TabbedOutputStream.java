@@ -8,144 +8,135 @@
  */
 package tripleo.elijah_fluffy.util;
 
-import org.jetbrains.annotations.*;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.*;
 
 public class TabbedOutputStream {
 
-	int tabwidth;
-	@Nullable
-	Writer myStream;
-	private boolean dont_close = false;
-	private boolean do_tabs = false;
+    int tabwidth;
 
-	public TabbedOutputStream(final OutputStream os) {
-		tabwidth = 0;
-		if (os == System.out)
-			dont_close = true;
-		myStream = new BufferedWriter(new OutputStreamWriter(os));
-	}
+    @Nullable
+    Writer myStream;
 
-	public TabbedOutputStream(final Writer w, final boolean buffer_it) {
-		tabwidth = 0;
-		// if (os == System.out) dont_close = true;
-		if (buffer_it)
-			myStream = new BufferedWriter(w);// new BufferedWriter(new OutputStreamWriter(os));
-		else
-			myStream = w;
-	}
+    private boolean dont_close = false;
+    private boolean do_tabs = false;
 
-	public static void main(final String[] args) {
-		final TabbedOutputStream tos = new TabbedOutputStream(System.out);
-//		int i = 0;
-//		int j = 0;
-		try {
-//			for (; i < 10; i++) {
-//				tos.put_string_ln((Integer.valueOf(i)).toString());
-//				tos.incr_tabs();
-//			}
+    public TabbedOutputStream(final OutputStream os) {
+        tabwidth = 0;
+        if (os == System.out) dont_close = true;
+        myStream = new BufferedWriter(new OutputStreamWriter(os));
+    }
 
-			{
-				tos.put_string_ln("class Class {");
-				tos.incr_tabs();
+    public TabbedOutputStream(final Writer w, final boolean buffer_it) {
+        tabwidth = 0;
+        // if (os == System.out) dont_close = true;
+        if (buffer_it) myStream = new BufferedWriter(w); // new BufferedWriter(new OutputStreamWriter(os));
+        else myStream = w;
+    }
 
-				tos.put_string_ln("public void main() {");
-//				put_function_def((FunctionDef)item, tos);
-				tos.put_string_ln("}");
+    public static void main(final String[] args) {
+        final TabbedOutputStream tos = new TabbedOutputStream(System.out);
+        //		int i = 0;
+        //		int j = 0;
+        try {
+            //			for (; i < 10; i++) {
+            //				tos.put_string_ln((Integer.valueOf(i)).toString());
+            //				tos.incr_tabs();
+            //			}
 
-				tos.dec_tabs();
-				tos.put_string_ln("}");
+            {
+                tos.put_string_ln("class Class {");
+                tos.incr_tabs();
 
-			}
+                tos.put_string_ln("public void main() {");
+                //				put_function_def((FunctionDef)item, tos);
+                tos.put_string_ln("}");
 
-			tos.close();
-		} catch (final IOException ex) {
-			SimplePrintLoggerToRemoveSoon.println2("error");
-		}
-	}
+                tos.dec_tabs();
+                tos.put_string_ln("}");
+            }
 
-	public void put_string_ln(final String s) throws IOException {
-		if (!is_connected())
-			throw new IllegalStateException("is_connected assertion failed");
+            tos.close();
+        } catch (final IOException ex) {
+            SimplePrintLoggerToRemoveSoon.println2("error");
+        }
+    }
 
-		if (do_tabs)
-			doIndent();
-		myStream.write(s);
-		myStream.write('\n');
-//		doIndent();
-		do_tabs = true;
-	}
+    public void put_string_ln(final String s) throws IOException {
+        if (!is_connected()) throw new IllegalStateException("is_connected assertion failed");
 
-	public void incr_tabs() {
-		tabwidth++;
-	}
+        if (do_tabs) doIndent();
+        myStream.write(s);
+        myStream.write('\n');
+        //		doIndent();
+        do_tabs = true;
+    }
 
-	public void dec_tabs() {
-		tabwidth--;
-	}
+    public void incr_tabs() {
+        tabwidth++;
+    }
 
-	public void close() throws IOException {
-		if (!is_connected())
-			throw new IllegalStateException("is_connected assertion failed; closing twice");
+    public void dec_tabs() {
+        tabwidth--;
+    }
 
-		if (!dont_close)
-			myStream.close();
-		myStream = null;
-	}
+    public void close() throws IOException {
+        if (!is_connected()) throw new IllegalStateException("is_connected assertion failed; closing twice");
 
-	public boolean is_connected() {
-		return myStream != null;
-	}
+        if (!dont_close) myStream.close();
+        myStream = null;
+    }
 
-	void doIndent() throws IOException {
-		for (int i = 0; i < tabwidth; i++)
-			myStream.write('\t');
-	}
+    public boolean is_connected() {
+        return myStream != null;
+    }
 
-	public void put_string_ln_no_tabs(final String s) throws IOException {
-		if (!is_connected())
-			throw new IllegalStateException("is_connected assertion failed");
+    void doIndent() throws IOException {
+        for (int i = 0; i < tabwidth; i++) myStream.write('\t');
+    }
 
-		myStream.write(s);
-		myStream.write('\n');
-//		do_tabs = true;
-	}
+    public void put_string_ln_no_tabs(final String s) throws IOException {
+        if (!is_connected()) throw new IllegalStateException("is_connected assertion failed");
 
-	public void put_string(final String s) throws IOException {
-		if (!is_connected())
-			throw new IllegalStateException("is_connected assertion failed");
+        myStream.write(s);
+        myStream.write('\n');
+        //		do_tabs = true;
+    }
 
-//		if (do_tabs)
-//			doIndent();
-		myStream.write(s);
-//		do_tabs = false;
-	}
+    public void put_string(final String s) throws IOException {
+        if (!is_connected()) throw new IllegalStateException("is_connected assertion failed");
 
-	public void put_newline() throws IOException {
-		doIndent();
-	}
+        //		if (do_tabs)
+        //			doIndent();
+        myStream.write(s);
+        //		do_tabs = false;
+    }
 
-	public int t() {
-		return tabwidth;
-	}
+    public void put_newline() throws IOException {
+        doIndent();
+    }
 
-	public void quote_string(final @NotNull String s) throws IOException {
-		if (!is_connected())
-			throw new IllegalStateException("is_connected assertion failed");
+    public int t() {
+        return tabwidth;
+    }
 
-		myStream.write(34);
-		myStream.write(s);
-		myStream.write(34);
-	}
+    public void quote_string(final @NotNull String s) throws IOException {
+        if (!is_connected()) throw new IllegalStateException("is_connected assertion failed");
 
-	public void flush() throws IOException {
-		myStream.flush();
-	}
+        myStream.write(34);
+        myStream.write(s);
+        myStream.write(34);
+    }
 
-	public Writer getStream() {
-		return myStream;
-	}
+    public void flush() throws IOException {
+        myStream.flush();
+    }
+
+    public Writer getStream() {
+        return myStream;
+    }
 }
 
 //

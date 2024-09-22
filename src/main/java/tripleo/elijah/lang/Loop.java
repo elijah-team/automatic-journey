@@ -8,119 +8,119 @@
  */
 package tripleo.elijah.lang;
 
-import tripleo.elijah.contexts.*;
-import tripleo.elijah.lang2.*;
-import tripleo.elijah_fluffy.util.*;
+import tripleo.elijah.contexts.LoopContext;
+import tripleo.elijah.lang2.ElElementVisitor;
+import tripleo.elijah_fluffy.util.SimplePrintLoggerToRemoveSoon;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class Loop implements StatementItem, FunctionItem, OS_Element {
 
-	private final OS_Element parent;
-	private final Attached _a = new Attached();
-	IdentExpression iterName;
-	private Scope3 scope3;
-	/**
-	 * @category type
-	 */
-	private LoopTypes type;
-	private IExpression topart, frompart;
-	private IExpression expr;
+    private final OS_Element parent;
+    private final Attached _a = new Attached();
+    IdentExpression iterName;
+    private Scope3 scope3;
+    /**
+     * @category type
+     */
+    private LoopTypes type;
 
-	@Deprecated
-	public Loop(final OS_Element aParent) {
-		// document assumption
-		if (!(aParent instanceof FunctionDef) && !(aParent instanceof Loop))
-			SimplePrintLoggerToRemoveSoon.println2("parent is not FunctionDef or Loop");
-		parent = aParent;
-	}
+    private IExpression topart, frompart;
+    private IExpression expr;
 
-	public Loop(final OS_Element aParent, final Context ctx) {
-		// document assumption
-		if (!(aParent instanceof FunctionDef) && !(aParent instanceof Loop))
-			SimplePrintLoggerToRemoveSoon.println2("parent is not FunctionDef or Loop");
-		parent = aParent;
-		_a.setContext(new LoopContext(ctx, this));
-	}
+    @Deprecated
+    public Loop(final OS_Element aParent) {
+        // document assumption
+        if (!(aParent instanceof FunctionDef) && !(aParent instanceof Loop))
+            SimplePrintLoggerToRemoveSoon.println2("parent is not FunctionDef or Loop");
+        parent = aParent;
+    }
 
-	public void type(final LoopTypes aType) {
-		type = aType;
-	}
+    public Loop(final OS_Element aParent, final Context ctx) {
+        // document assumption
+        if (!(aParent instanceof FunctionDef) && !(aParent instanceof Loop))
+            SimplePrintLoggerToRemoveSoon.println2("parent is not FunctionDef or Loop");
+        parent = aParent;
+        _a.setContext(new LoopContext(ctx, this));
+    }
 
-	public void expr(final IExpression aExpr) {
-		expr = aExpr;
-	}
+    public void type(final LoopTypes aType) {
+        type = aType;
+    }
 
-	public void topart(final IExpression aExpr) {
-		topart = aExpr;
-	}
+    public void expr(final IExpression aExpr) {
+        expr = aExpr;
+    }
 
-	public void frompart(final IExpression aExpr) {
-		frompart = aExpr;
-	}
+    public void topart(final IExpression aExpr) {
+        topart = aExpr;
+    }
 
-	public void iterName(final IdentExpression s) {
-//		assert type == ITER_TYPE;
-		iterName = s;
-	}
+    public void frompart(final IExpression aExpr) {
+        frompart = aExpr;
+    }
 
-	public List<StatementItem> getItems() {
-		final List<StatementItem> collection = new ArrayList<StatementItem>();
-		for (final OS_Element element : scope3.items()) {
-			if (element instanceof FunctionItem)
-				collection.add((StatementItem) element);
-		}
-		return collection;
-//		return items;
-	}
+    public void iterName(final IdentExpression s) {
+        //		assert type == ITER_TYPE;
+        iterName = s;
+    }
 
-	@Override // OS_Element
-	public void visitGen(final ElElementVisitor visit) {
-		visit.visitLoop(this);
-	}
+    public List<StatementItem> getItems() {
+        final List<StatementItem> collection = new ArrayList<StatementItem>();
+        for (final OS_Element element : scope3.items()) {
+            if (element instanceof FunctionItem) collection.add((StatementItem) element);
+        }
+        return collection;
+        //		return items;
+    }
 
-	@Override
-	public Context getContext() {
-		return _a.getContext();
-	}
+    @Override // OS_Element
+    public void visitGen(final ElElementVisitor visit) {
+        visit.visitLoop(this);
+    }
 
-	public void setContext(final LoopContext ctx) {
-		_a.setContext(ctx);
-	}
+    @Override
+    public Context getContext() {
+        return _a.getContext();
+    }
 
-	@Override
-	public OS_Element getParent() {
-		return parent;
-	}
+    public void setContext(final LoopContext ctx) {
+        _a.setContext(ctx);
+    }
 
-	public String getIterName() {
-		return iterName.getText();
-	}
+    @Override
+    public OS_Element getParent() {
+        return parent;
+    }
 
-	public LoopTypes getType() {
-		return type;
-	}
+    public String getIterName() {
+        return iterName.getText();
+    }
 
-	public IExpression getToPart() {
-		return topart;
-	}
+    public LoopTypes getType() {
+        return type;
+    }
 
-	public IExpression getExpr() {
-		return expr;
-	}
+    public IExpression getToPart() {
+        return topart;
+    }
 
-	public IExpression getFromPart() {
-		return frompart;
-	}
+    public IExpression getExpr() {
+        return expr;
+    }
 
-	public IdentExpression getIterNameToken() {
-		return iterName;
-	}
+    public IExpression getFromPart() {
+        return frompart;
+    }
 
-	public void scope(final Scope3 sco) {
-		scope3 = sco;
-	}
+    public IdentExpression getIterNameToken() {
+        return iterName;
+    }
 
+    public void scope(final Scope3 sco) {
+        scope3 = sco;
+    }
 }
 
 //

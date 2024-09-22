@@ -9,9 +9,12 @@
 package tripleo.elijah.lang;
 
 public enum LoopTypes {
-
-	FROM_TO_TYPE, TO_TYPE, ITER_TYPE, EXPR_TYPE, WHILE, DO_WHILE
-
+    FROM_TO_TYPE,
+    TO_TYPE,
+    ITER_TYPE,
+    EXPR_TYPE,
+    WHILE,
+    DO_WHILE
 }
 
 //

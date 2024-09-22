@@ -9,43 +9,46 @@
  */
 package tripleo.elijah.contexts;
 
-import tripleo.elijah.lang.*;
+import tripleo.elijah.lang.ClassStatement;
+import tripleo.elijah.lang.NormalTypeName;
 
 /**
  * Created 11/29/21 12:24 AM
  */
 public class ClassInfo implements ContextInfo {
-	private final ClassStatement classStatement;
-	private final ClassInfoType classInfoType;
-	private final NormalTypeName typeName;
+    private final ClassStatement classStatement;
+    private final ClassInfoType classInfoType;
+    private final NormalTypeName typeName;
 
-	public ClassInfo(final ClassStatement aClassStatement, final ClassInfoType aClassInfoType) {
-		classStatement = aClassStatement;
-		classInfoType = aClassInfoType;
-		typeName = null;
-	}
+    public ClassInfo(final ClassStatement aClassStatement, final ClassInfoType aClassInfoType) {
+        classStatement = aClassStatement;
+        classInfoType = aClassInfoType;
+        typeName = null;
+    }
 
-	public ClassInfo(final NormalTypeName aTypeName, final ClassInfoType aClassInfoType) {
-		classStatement = null;
-		classInfoType = aClassInfoType;
-		typeName = aTypeName;
-	}
+    public ClassInfo(final NormalTypeName aTypeName, final ClassInfoType aClassInfoType) {
+        classStatement = null;
+        classInfoType = aClassInfoType;
+        typeName = aTypeName;
+    }
 
-	public ClassStatement getClassStatement() {
-		return classStatement;
-	}
+    public ClassStatement getClassStatement() {
+        return classStatement;
+    }
 
-	public ClassInfoType getClassInfoType() {
-		return classInfoType;
-	}
+    public ClassInfoType getClassInfoType() {
+        return classInfoType;
+    }
 
-	public NormalTypeName getTypeName() {
-		return typeName;
-	}
+    public NormalTypeName getTypeName() {
+        return typeName;
+    }
 
-	public enum ClassInfoType {
-		DIRECT, INHERITED, GENERIC
-	}
+    public enum ClassInfoType {
+        DIRECT,
+        INHERITED,
+        GENERIC
+    }
 }
 
 //

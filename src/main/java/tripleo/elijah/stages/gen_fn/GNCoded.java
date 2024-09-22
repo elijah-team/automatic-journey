@@ -14,15 +14,17 @@ package tripleo.elijah.stages.gen_fn;
  * Created 11/19/21 9:08 PM
  */
 public interface GNCoded {
-	int getCode();
+    int getCode();
 
-	void setCode(int aCode);
+    void setCode(int aCode);
 
-	Role getRole();
+    Role getRole();
 
-	enum Role {
-		FUNCTION, CLASS, NAMESPACE
-	}
+    enum Role {
+        FUNCTION,
+        CLASS,
+        NAMESPACE
+    }
 }
 
 //

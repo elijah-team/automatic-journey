@@ -1,9 +1,9 @@
 package tripleo.elijah.stages.deduce.post_bytecode;
 
 public interface State {
-	void apply(DefaultStateful element);
+    void apply(DefaultStateful element);
 
-	void setIdentity(int aId);
+    void setIdentity(int aId);
 
-	boolean checkState(DefaultStateful aElement3);
+    boolean checkState(DefaultStateful aElement3);
 }

@@ -5,13 +5,13 @@ import tripleo.elijah.comp.Compilation;
 import java.util.List;
 
 public interface CompilerController {
-	void printUsage();
+    void printUsage();
 
-	void processOptions();
+    void processOptions();
 
-	void runner();
+    void runner();
 
-	void setInputs(Compilation aCompilation, List<String> aArgumentList);
+    void setInputs(Compilation aCompilation, List<String> aArgumentList);
 
-	ICompilationBus getCB();
+    ICompilationBus getCB();
 }
